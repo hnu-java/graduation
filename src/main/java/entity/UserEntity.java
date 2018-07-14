@@ -1,7 +1,5 @@
 package entity;
 
-import java.util.Date;
-
 /**
  * Created by DELL on 2017/11/28.
  *
@@ -21,21 +19,30 @@ public class UserEntity {
     private String tel;
     private int status;
     private int rank;
+    private int flag;
+
+    public int getVerification() {
+        return verification;
+    }
+
+    public void setVerification(int verification) {
+        this.verification = verification;
+    }
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
+
     public int getId_user() {
         return id_user;
     }
 
     public void setId_user(int id_user) {
         this.id_user = id_user;
-    }
-
-    //验证码
-    public int getverification() {
-        return verification;
-    }
-
-    public void setverification(int verification) {
-        this.verification = verification;
     }
 
     public String getPassword() {
@@ -126,10 +133,7 @@ public class UserEntity {
         this.rank = rank;
     }
 
-    public UserEntity() {
-    }
-
-    public UserEntity(int id_user, int verification, String password, String name, String gender, String address, String introduce, java.sql.Date dob, String mail, String qq, String tel, int status, int rank) {
+    public UserEntity(int id_user, int verification, String password, String name, String gender, String address, String introduce, java.sql.Date dob, String mail, String qq, String tel, int status, int rank, int flag) {
         this.id_user = id_user;
         this.verification = verification;
         this.password = password;
@@ -143,5 +147,9 @@ public class UserEntity {
         this.tel = tel;
         this.status = status;
         this.rank = rank;
+        this.flag = flag;
+    }
+
+    public UserEntity() {
     }
 }

@@ -78,9 +78,14 @@
                 type: "Post",
                 async: "false",
                 success: function (result) {
-                    if (result.res === true) {
-                        showtoast("success", "登录成功", "操作成功")
-                        location.href = "user-jmpTemp";
+                    if (result.res === true){
+                        if (result.flag===0){
+                            showtoast("success", "登录成功", "操作成功");
+                            location.href = "user-jmpTemp";
+                        }
+                        else{
+                            showtoast("error", "账号已封停", "请联系管理员");
+                        }
                     }
                     else showtoast("error", "登录失败", "用户名或密码错误")
                 },
