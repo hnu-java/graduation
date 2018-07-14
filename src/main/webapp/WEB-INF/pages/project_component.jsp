@@ -22,7 +22,7 @@
     <link href="/css/lzf.css" rel="stylesheet">
     <style>
         a   {color: black}
-        a:link {color:grey;} /*未访问颜色*/
+        a:link {color:black;} /*未访问颜色*/
         a:visited {color:gray;} /*已访问颜色*/
         a:hover {color:grey;} /*悬浮（鼠标经过）时颜色*/
         a:active {color:beige;} /*点击时的颜色*/
