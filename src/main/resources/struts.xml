@@ -92,16 +92,6 @@
             <allowed-methods>showInfo,Accept,Refuse</allowed-methods>
         </action>
 
-
-        <action name="showApplyOrg-*" class="action.ShowApplyOrgAction" method="{1}">
-            <result name="success" type="json">
-                <param name="root">dataMap</param>
-            </result>
-            <result name="RES" type="json"><param name="root">dataMap</param></result>
-        <interceptor-ref name="myStack"/>
-            <allowed-methods>showList,showOthers,agreeOrg,refuseOrg</allowed-methods>
-        </action>
-
         <action name="orgInvite-*" class="action.OrgInviteAction" method="{1}">
             <result name="res" type="json">
                 <param name="root">dataMap</param>
@@ -111,14 +101,6 @@
             </result>
         <interceptor-ref name="myStack"/>
             <allowed-methods>InviteUser,showList,grantOrg,deleteUser,reInviteUser</allowed-methods>
-        </action>
-
-        <action name="showExitOrg-*" class="action.ShowExitOrgAction" method="{1}">
-            <result name="exitOrgList" type="json">
-                <param name="root">dataMap</param>
-            </result>
-        <interceptor-ref name="myStack"/>
-            <allowed-methods>showList</allowed-methods>
         </action>
 
         <action name="catalog-*" class="action.CatalogAction" method="{1}">

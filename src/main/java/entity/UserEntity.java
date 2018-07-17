@@ -20,7 +20,7 @@ public class UserEntity {
     private int status;
     private int rank;
     private int flag;
-
+    private int points;
     public int getVerification() {
         return verification;
     }
@@ -133,7 +133,15 @@ public class UserEntity {
         this.rank = rank;
     }
 
-    public UserEntity(int id_user, int verification, String password, String name, String gender, String address, String introduce, java.sql.Date dob, String mail, String qq, String tel, int status, int rank, int flag) {
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public UserEntity(int id_user, int verification, String password, String name, String gender, String address, String introduce, java.sql.Date dob, String mail, String qq, String tel, int status, int rank, int flag, int points) {
         this.id_user = id_user;
         this.verification = verification;
         this.password = password;
@@ -148,6 +156,7 @@ public class UserEntity {
         this.status = status;
         this.rank = rank;
         this.flag = flag;
+        this.points = points;
     }
 
     public UserEntity() {

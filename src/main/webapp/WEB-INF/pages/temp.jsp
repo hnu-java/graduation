@@ -41,11 +41,6 @@
                         <li  class="J_tabShowActive"><a id="test1"  class="J_menuItem" href="user-jmpMyprofile">个人中心</a>
                         </li>
                         <li class="divider"></li>
-                        <s:if test='#session.sysManager!="0"'>
-                            <li class="J_tabShowActive"><a id="test2" class="J_menuItem" href="user-jmpSysManager1">系统管理</a>
-                            </li>
-                            <li class="divider"></li>
-                        </s:if>
                         <s:if test='#session.orgManager!="0"'>
                         <li class="J_tabShowActive"><a id="test3" class="J_menuItem" href="Organization-jmpOrgManager1">机构管理</a>
                         </li>
