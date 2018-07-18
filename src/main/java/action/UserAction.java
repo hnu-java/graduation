@@ -45,13 +45,11 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         dataMap.put("res", res);
         if(res==true) {
             user = userDao.getOne(user.getName());
-            int days = user.getDays();
             dataMap.put("flag",user.getFlag());
-            dataMap.put("days",days);
+            dataMap.put("days",user.getDays());
             int orgManager=userDao.orgManager(user.getId_user());
             session.put("user",user);
             session.put("orgManager",orgManager);
-            System.out.println(user+"and"+"and"+orgManager);
             System.out.println(user.getFlag());
         }
         return "RES";
