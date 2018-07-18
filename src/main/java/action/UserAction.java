@@ -59,16 +59,15 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         userDao = new UserDaoImp();
         int temp=(int)session.get("verification");
         String sessionVerification=Integer.toString(temp);
+        verification = Integer.toString(user.getVerification()) ;
         System.out.println(user.getName() + " " + user.getPassword()+" "+tempPassword+" "+user.getMail()+" "+verification+" "+"session注册码:"+session.get("verification"));
         if(sessionVerification.equals(verification) && verification!="") {
             boolean res = userDao.registration(user.getName(), user.getPassword(), tempPassword, user.getMail());
             dataMap.put("res", res);
-            System.out.println(res);
         }
         else{
             String res="error";
             dataMap.put("consequence",res);
-            System.out.println(res);
         }
         return SUCCESS;
     }
@@ -76,11 +75,11 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     public String replacepassword() {
         dataMap = new HashMap<String, Object>();
         userDao = new UserDaoImp();
-        int temp=(int)session.get("replaceverification");
+        int temp=(int)session.get("verification");
         String sessionReplaceVerification=Integer.toString(temp);
-        System.out.println(user.getName() + " " + " "+newPassword+"  "+"session注册码:"+session.get("replaceverification")+" "+user.getMail());
+        verification = Integer.toString(user.getVerification()) ;
+        System.out.println(user.getName() + " " + " "+newPassword+"  "+"session注册码:"+session.get("verification")+" "+user.getMail());
         if(sessionReplaceVerification.equals(verification) && verification!="") {
-            System.out.println("verificationSuccess");
             boolean res = userDao.replacepassword(user.getName(),tempPassword, newPassword);
             dataMap.put("res", res);
         }
@@ -138,7 +137,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
             System.out.println("helloverficication");
             int temp = (int) ((Math.random() * 9 + 1) * 100000);
             String email = user.getMail();
-            session.put("replaceverification", temp);
+            session.put("verification", temp);
             System.out.println("email:" + email + "  verification:" + session.get("replaceverification"));
             String mail = user.getMail(); //发送对象的邮箱
             String title = "快易需求助手修改密码验证码";
