@@ -76,6 +76,7 @@
 <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
 <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
 <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+<script src="<%=basePath%>/js/md5.js"></script>
 </body>
 
 <script>
@@ -150,12 +151,16 @@
 
         }
         else {
+            var md5PWD1 = $("input#password1").val();
+            var tempPassword1 = hex_md5(md5PWD1);
+            var md5PWD2 = $("input#password2").val();
+            var tempPassword2 = hex_md5(md5PWD2);
             $.ajax({
                 url: "login-registration",
                 data: {
                     name: $("input#name").val(),
-                    password: $("input#password1").val(),
-                    tempPassword: $("input#password2").val(),
+                    password: tempPassword1,
+                    tempPassword: tempPassword2,
                     mail: $("input#email").val(),
                     verification: $("input#verification").val()
                 },

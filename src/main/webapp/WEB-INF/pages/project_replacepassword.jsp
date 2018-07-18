@@ -77,6 +77,7 @@
 <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
 <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
 <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+    <script src="<%=basePath%>/js/md5.js"></script>
 </body>
 <script>
     //表单验证
@@ -147,13 +148,17 @@
 
         }
         else{
+            var md5PWD1 = $("input#password1").val();
+            var tempPassword1 = hex_md5(md5PWD1);
+            var md5PWD2 = $("input#password2").val();
+            var tempPassword2 = hex_md5(md5PWD2);
             $.ajax({
                 url: "login-replacepassword",
                 data: {
                     name: $("input#name").val(),
                     mail: $("input#email").val(),
-                    tempPassword: $("input#password1").val(),
-                    newPassword: $("input#password2").val(),
+                    tempPassword: tempPassword1,
+                    newPassword: tempPassword2,
                     verification: $("input#verification").val()
                 },
                 dataType: "json",

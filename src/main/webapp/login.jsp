@@ -68,12 +68,15 @@
 <script src="<%=basePath%>/js/mjy.js"></script>
 <script src="<%=basePath%>/js/plugins/suggest/bootstrap-suggest.min.js"></script>
 <script src="<%=basePath%>/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="<%=basePath%>/js/md5.js"></script>
 </body>
 <script>
     function verification() {
+        var md5PWD = $("input#password").val();
+        var tempPassword = hex_md5(md5PWD);
             $.ajax({
                 url: "login-login",
-                data: {name: $("input#name").val(), password: $("input#password").val()},
+                data: {name: $("input#name").val(), password: tempPassword},
                 dataType: "json",
                 type: "Post",
                 async: "false",
