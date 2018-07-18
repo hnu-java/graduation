@@ -41,15 +41,17 @@
         </ol>
     </div>
 
-    <div style="padding: 20px" class="col-md-6">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <div style="float: left;margin-left: 5px"><span><strong>基本资料</strong></span></div>
-                <div id="test1" style="float: left;margin-left: 10px"><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">修改资料</button></div>
-            </div>
-            <div style="padding-left: 80px" class="ibox-content">
+    <div style="padding: 20px" class="col-md-12">
+        <div style="float: left" class="col-md-6">
+            <div>
+                <div class="ibox-title">
+                    <div style="float: left;margin-left: 5px"><span><strong>基本资料</strong></span></div>
+                    <div id="test1" style="float: left;margin-left: 10px;width: 70px"><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">修改资料</button></div>
+                    <div id="test2" style="float: left"><button type="button" class="btn btn-primary btn-xs" >会员续费</button></div>
+                </div>
+                <div style="padding-left: 80px" class="ibox-content">
                 <table class="table" style="width:400px;border-left: none;border-right: none">
-                    <tbody>
+                    <tbody style="font-size:20px;font-family:KaiTi">
                     <tr >
                         <th style="width: 150px;text-align: center">用户名:</th>
                         <th>
@@ -69,7 +71,7 @@
                         <th style="width: 150px;text-align: center">邮箱:</th>
                         <th>
                             <s:if test='#session.user.mail==""'>
-                                <s:property value="" default="未填写" />
+                                <s:property value="" default="-" />
                             </s:if>
                             <s:else>
                                 <s:property value="#session.user.mail"/>
@@ -80,7 +82,7 @@
                         <th style="width: 150px;text-align: center">QQ:</th>
                         <th>
                             <s:if test='#session.user.qq==""'>
-                                <s:property value="" default="未填写" />
+                                <s:property value="" default="-" />
                             </s:if>
                             <s:else>
                                 <s:property value="#session.user.qq"/>
@@ -91,7 +93,7 @@
                         <th style="width: 150px;text-align: center">联系电话:</th>
                         <th>
                             <s:if test='#session.user.tel==""'>
-                                <s:property value="" default="未填写" />
+                                <s:property value="" default="-" />
                             </s:if>
                             <s:else>
                                 <s:property value="#session.user.tel"/>
@@ -102,7 +104,7 @@
                         <th style="width: 150px;text-align: center">所在地:</th>
                         <th>
                             <s:if test='#session.user.address==""'>
-                                <s:property value="" default="未填写" />
+                                <s:property value="" default="-" />
                             </s:if>
                             <s:else>
                                 <s:property value="#session.user.address"/>
@@ -113,7 +115,7 @@
                         <th style="width: 150px;text-align: center">个性签名:</th>
                         <th>
                             <s:if test='#session.user.introduce==""'>
-                                <s:property value="" default="写点东西介绍自己吧!" />
+                                <s:property value="" default="-" />
                             </s:if>
                             <s:else>
                                 <s:property value="#session.user.introduce"/>
@@ -123,8 +125,13 @@
                     </tbody>
                 </table>
             </div>
+            <div style="padding: 38px 0px 28px 20px;font-family: KaiTi;font-size: 17px;color: red" class="white-bg">
+                <p>会员有效期☞：${sessionScope.user.deadline}</p>
+            </div>
+            </div>
         </div>
-        <div class="ibox float-e-margins">
+
+        <div style="float: left" class="col-md-6">
             <div class="ibox-title">
                 <div style="float: left;margin-left: 5px"><span><strong>我的机构</strong></span></div>
                 <div style="float: left;margin-left: 10px"><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newOrg">申请机构</button></div>
@@ -144,67 +151,13 @@
                        data-halign="center"
                        data-striped="true"
                        data-page-size="5"
-                       data-height="400"
+                       data-height="415"
                        data-sort-order="desc"
                        data-pagination-v-align="top"
                        data-sort-stable="true"
                 >
                 </table>
             </div>
-        </div>
-    </div>
-    <div style="padding: 20px" class="col-md-6 float-e-margins">
-        <div class="ibox-title">
-            <div style="float: left;margin-left: 5px"><div style="float: left;margin-left: 5px"><span><strong>当前消息</strong></span></div></div>
-        </div>
-        <div class="bootstrap-table ibox-content">
-            <table id="info" data-toggle="table"
-                   data-classes="table table-no-bordered"
-                   data-sort-order="desc"
-                   data-url="project-showList"
-                   data-click-to-select="true"
-                   data-search="true"
-                   data-show-refresh="true"
-                   data-show-toggle="true"
-                   data-show-columns="true"
-                   data-toolbar="#toolbar"
-                   data-query-params="quefryParams"
-                   data-pagination="true"
-                   data-halign="center"
-                   data-striped="true"
-                   data-page-size="5"
-                   data-height="400"
-                   data-pagination-v-align="top"
-                   data-sort-stable="true"
-                   data-page-list="[8]"
-            >
-            </table>
-        </div>
-        <br>
-        <div class="ibox-title">
-            <div style="float: left;margin-left: 5px"><span><strong>历史消息</strong></span></div>
-        </div>
-        <div class="bootstrap-table ibox-content">
-            <table id="info1" data-toggle="table"
-                   data-classes="table table-no-bordered"
-                   data-sort-order="desc"
-                   data-url="project-showList"
-                   data-click-to-select="true"
-                   data-search="true"
-                   data-show-refresh="true"
-                   data-show-toggle="true"
-                   data-show-columns="true"
-                   data-toolbar="#toolbar"
-                   data-query-params="quefryParams"
-                   data-pagination="true"
-                   data-halign="center"
-                   data-striped="true"
-                   data-page-size="3"
-                   data-height="320"
-                   data-pagination-v-align="top"
-                   data-sort-stable="true"
-            >
-            </table>
         </div>
     </div>
     <div  class="modal inmodal" id="newOrg" tabindex="-1" role="dialog" aria-hidden="true">
@@ -439,48 +392,6 @@
             ]
         }
     );
-    $('#info').bootstrapTable({
-            columns: [
-                {
-                    field: 'MESSAGE',
-                    title: '消息',
-                    sortable: true,
-                    align: 'center',
-                },
-                {
-                    field: 'DATE',
-                    title: '时间',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
-                    field: 'operate',
-                    title: '操作',
-                    align: 'right',
-                    events: "NewActionEvents",
-                    formatter: "operateFormatter"
-                }
-            ]
-        }
-    );
-    $('#info1').bootstrapTable({
-            columns: [
-                {
-                    field: 'CONTENT',
-                    title: '消息',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
-                    field: 'DATE',
-                    title: '时间',
-                    sortable: true,
-                    sortOrder: "desc",
-                    align: 'center'
-                },
-            ]
-        }
-    );
     /**
      * @return {string}
      */
@@ -494,38 +405,6 @@
                 var proList = JSON.parse(json.listorg);
                 //finishingTask为table的id
                 $('#finishingTask').bootstrapTable('load',proList);
-            },
-            error:function(){
-                alert("错误");
-            }
-        }
-    )
-
-    $.ajax(
-        {
-            type:"GET",
-            url:"infomation-showInfo",
-            dataType:"json",
-            success:function(json){
-                var infolist = JSON.parse(json.listinfo);
-                //finishingTask为table的id
-                $('#info').bootstrapTable('load',infolist);
-            },
-            error:function(){
-                alert("错误");
-            }
-        }
-    )
-
-    $.ajax(
-        {
-            type:"GET",
-            url:"history-showHistory",
-            dataType:"json",
-            success:function(json){
-                var History = JSON.parse(json.listHistory);
-                //finishingTask为table的id
-                $('#info1').bootstrapTable('load',History);
             },
             error:function(){
                 alert("错误");
@@ -578,146 +457,5 @@
         }
     };
 
-    /**
-     * 消息中心
-     * @param value
-     * @param row
-     * @param index
-     * @returns {string}
-     */
-    function operateFormatter(value,row,index) {
-        return[
-            '<a class="agree" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >同意</button></a>',
-            '<a class="refuse" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >拒绝</button></a>'
-        ].join('');
-    }
-    window.NewActionEvents = {
-        'click .agree': function (e, value, row, index) {
-            //修改操作
-            swal({
-                title: "您确定要接受这个邀请吗",
-                text: "点击确定将接受这个邀请！",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#18a689",
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
-                closeOnConfirm: false
-            }, function () {
-                var id_ORG = row.ID_ORGANIZATION;
-                var ID_ORGANIZATION = parseInt(id_ORG);
-                var ID_PROJECT = parseInt(row.ID_PROJECT);
-                if (isNaN(ID_ORGANIZATION)) {
-                    $.ajax({
-                        url: "infomation-Accept?ID_PROJECT=" + ID_PROJECT,
-                        dataType: "json",
-                        type: "Post",
-                        async: "false",
-                        success: function (result) {
-                            if (result.res === true) {
-                                swal({
-                                    title: "同意成功",
-                                    type: "success",
-                                    confirmButtonColor: "#18a689",
-                                    confirmButtonText: "OK"
-                                }, function () {
-                                    location.href = "user-jmpMyprofile";
-                                })
-                            }
-                            else swal("接受失败！", "接受失败", "failed");
-                        }, error: function () {
-                            swal("接收失败！", "请检查你的网络", "failed");
-                        }
-                    })
-                }
-                else if (isNaN(ID_PROJECT)) {
-                    $.ajax({
-                        url: "infomation-Accept?ID_ORGANIZATION=" + ID_ORGANIZATION,
-                        dataType: "json",
-                        type: "Post",
-                        async: "false",
-                        success: function (result) {
-                            if (result.res === true) {
-                                swal({
-                                    title: "同意成功",
-                                    type: "success",
-                                    confirmButtonColor: "#18a689",
-                                    confirmButtonText: "OK"
-                                }, function () {
-                                    location.href = "user-jmpMyprofile";
-                                })
-                            }
-                            else swal("接受失败！", "接受失败", "failed");
-                        }, error: function () {
-                            swal("接收失败！", "请检查你的网络", "failed");
-                        }
-                    })
-                }
-            })
-        },
-        'click .refuse': function (e, value, row, index) {
-            //修改操作
-            swal({
-                title: "您确定要拒绝这个邀请吗",
-                text: "点击确定将拒绝这个邀请！",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
-                closeOnConfirm: false
-            }, function () {
-                var id_ORG = row.ID_ORGANIZATION;
-                var ID_ORGANIZATION = parseInt(id_ORG);
-                var ID_PROJECT = parseInt(row.ID_PROJECT);
-                if (isNaN(ID_ORGANIZATION)) {
-                    $.ajax({
-                        url: "infomation-Refuse?ID_PROJECT=" + ID_PROJECT,
-                        dataType: "json",
-                        type: "Post",
-                        async: "false",
-                        success: function (result) {
-                            if (result.res === true) {
-                                swal({
-                                    title: "拒绝成功",
-                                    type: "success",
-                                    confirmButtonColor: "#18a689",
-                                    confirmButtonText: "OK"
-                                }, function () {
-                                    location.href = "user-jmpMyprofile";
-                                })
-                            }
-                            else swal("拒绝失败！", "拒绝失败", "failed");
-                        }, error: function () {
-                            swal("拒绝失败！", "请检查你的网络", "failed");
-                        }
-                    })
-                }
-                else if (isNaN(ID_PROJECT)) {
-                    $.ajax({
-                        url: "infomation-Refuse?ID_ORGANIZATION=" + ID_ORGANIZATION,
-                        dataType: "json",
-                        type: "Post",
-                        async: "false",
-                        success: function (result) {
-                            if (result.res === true) {
-                                swal({
-                                    title: "拒绝成功",
-                                    type: "success",
-                                    confirmButtonColor: "#18a689",
-                                    confirmButtonText: "OK"
-                                }, function () {
-                                    location.href = "user-jmpMyprofile";
-                                })
-                            }
-                            else swal("拒绝失败！", "拒绝失败", "failed");
-                        }, error: function () {
-                            swal("拒绝失败！", "请检查你的网络", "failed");
-                        }
-                    })
-                }
-            })
-        }
-    }
 </script>
 </html>

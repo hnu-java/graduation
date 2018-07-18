@@ -220,6 +220,9 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     public String jmpPayment(){
         return "PaymentPage";
     }
+    public String jmpMessageCenter(){
+        return "messageCenterPage";
+    }
     @Override
     public UserEntity getModel() {
         return user;

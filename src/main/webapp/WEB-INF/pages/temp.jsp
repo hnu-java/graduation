@@ -39,6 +39,9 @@
                     </a>
                     <ul  role="menu" class="dropdown-menu dropdown-menu-right">
                         <li  class="J_tabShowActive"><a id="test1"  class="J_menuItem" href="user-jmpMyprofile">个人中心</a>
+                    </li>
+                        <li class="divider"></li>
+                        <li  class="J_tabShowActive"><a id="test2"  class="J_menuItem" href="user-jmpMessageCenter">消息中心</a>
                         </li>
                         <li class="divider"></li>
                         <s:if test='#session.orgManager!="0"'>
