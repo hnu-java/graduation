@@ -8,6 +8,9 @@ import util.MailUtil;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,12 +22,8 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
     public boolean login(String name,String password)
     {
         String sql="SELECT COUNT(*) from USER WHERE NAME=? and PASSWORD=?";
-//        String sql1 = "SELECT STATUS FROM USER WHERE NAME=? and PASSWORD=?";
-//        String sql2 = "UPDATE USER SET STATUS = 1 WHERE NAME=? AND PASSWORD=?";
         int count=Integer.valueOf(getForValue(sql,name,password).toString());
-//        int status = Integer.valueOf(getForValue(sql1,name,password).toString());
         if(count==1) {
-//            update(sql2,name,password);
             return true;
         }
         else return false;
@@ -81,9 +80,17 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
         return true;
     }
 
-    public UserEntity getOne(String name) {
+    public UserEntity getOne(String name) throws ParseException {
         String sql = "select * from USER where name=?";
         UserEntity user1 = get(sql, name);
+        String sql1="SELECT DATEDIFF(?,?) AS DiffDate";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String tmp = sdf.format(date);
+        java.text.SimpleDateFormat formatter = new  SimpleDateFormat( "yyyy-MM-dd");
+        date = formatter.parse(tmp);
+        int res = Integer.valueOf(getForValue(sql1,user1.getDeadline(),date).toString());
+        user1.setDays(res);
         return user1;
     }
     public UserEntity getOne1(int id) {

@@ -1,5 +1,7 @@
 package dao;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 import entity.UserEntity;
@@ -14,7 +16,7 @@ public interface UserDao {
 
 	boolean edit(String username,String qq,String address,String tel,String introduce,String gender);
 
-	UserEntity getOne(String name);
+	UserEntity getOne(String name) throws ParseException;
 
     List<UserEntity> getAll();
 	int Mycollectcount(int id_user);
