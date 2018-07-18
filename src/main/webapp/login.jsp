@@ -83,8 +83,21 @@
                 success: function (result) {
                     if (result.res === true){
                         if (result.flag===0){
-                            showtoast("success", "登录成功", "操作成功");
-                            location.href = "user-jmpTemp";
+                            if(result.days<0){
+                                swal({
+                                    title: "账户已到期!",
+                                    text: "点击跳转到充值页面",
+                                    type: "error",
+                                    confirmButtonColor: "#18a689",
+                                    confirmButtonText: "OK"
+                                }, function () {
+                                    location.href = "login-jmpPayment"
+                                })
+                            }
+                            else {
+                                showtoast("success", "登录成功", "操作成功");
+                                location.href = "user-jmpTemp";
+                            }
                         }
                         else{
                             showtoast("error", "账号已封停", "请联系管理员");

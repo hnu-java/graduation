@@ -14,6 +14,7 @@ import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,14 +38,16 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     private Map<String, Object> dataMap;
     private String verification;
 
-    public String login() {
+    public String login() throws ParseException {
         dataMap = new HashMap<String, Object>();
         userDao = new UserDaoImp();
         boolean res = userDao.login(user.getName(), user.getPassword());
         dataMap.put("res", res);
         if(res==true) {
             user = userDao.getOne(user.getName());
+            int days = user.getDays();
             dataMap.put("flag",user.getFlag());
+            dataMap.put("days",days);
             int orgManager=userDao.orgManager(user.getId_user());
             session.put("user",user);
             session.put("orgManager",orgManager);
@@ -91,7 +94,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         return SUCCESS;
     }
 
-    public String editProfile() {
+    public String editProfile() throws ParseException {
         System.out.println("start editProfile");
         dataMap = new HashMap<String, Object>();
         userDao = new UserDaoImp();
@@ -216,6 +219,9 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         return "completedProjectList";
     }
 
+    public String jmpPayment(){
+        return "PaymentPage";
+    }
     @Override
     public UserEntity getModel() {
         return user;

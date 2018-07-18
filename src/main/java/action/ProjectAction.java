@@ -25,6 +25,7 @@ import org.json.JSONObject;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -176,7 +177,7 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         return SUCCESS;
     }
 
-    public String alterPM(){
+    public String alterPM() throws ParseException {
         dataMap = new HashMap<String, Object>();
         String username = project.getUsername();
         UserDao userDao = new UserDaoImp();
@@ -257,7 +258,7 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         return SUCCESS;
     }
 
-    public String inviteMember(){
+    public String inviteMember() throws ParseException {
         dataMap = new HashMap<String, Object>();
 
         String username = project.getUsername();

@@ -24,7 +24,7 @@ public class UserEntity {
     private int flag;
     private int points;
     private Date deadline;
-
+    private int days;
     public Date getDeadline() {
         return deadline;
     }
@@ -153,8 +153,15 @@ public class UserEntity {
         this.points = points;
     }
 
+    public int getDays() {
+        return days;
+    }
 
-    public UserEntity(int id_user, int verification, String password, String name, String gender, String address, String introduce, java.sql.Date dob, String mail, String qq, String tel, int status, int rank, int flag, int points,Date deadline) {
+    public void setDays(int days) {
+        this.days = days;
+    }
+
+    public UserEntity(int id_user, int verification, String password, String name, String gender, String address, String introduce, java.sql.Date dob, String mail, String qq, String tel, int status, int rank, int flag, int points, Date deadline, int days) {
         this.id_user = id_user;
         this.verification = verification;
         this.password = password;
@@ -171,6 +178,7 @@ public class UserEntity {
         this.flag = flag;
         this.points = points;
         this.deadline = deadline;
+        this.days = days;
     }
 
     public UserEntity() {
