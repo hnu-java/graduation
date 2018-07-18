@@ -380,9 +380,13 @@
                         dataType: "json",
                         type: "Post",
                         async: "false",
-                        success: function () {
-                            swal("申请成功!扣除5积分！", "机构申请已受理", "success");
-                            $('button#cancel-apply').click();
+                        success: function (result) {
+                            if (result.res === true) {
+                                swal("申请成功发出!", "机构申请已受理", "success");
+                                $('button#cancel-apply').click();
+                            }
+                            else if(result.res === false)
+                                swal("申请失败！", "机构名被占用。", "error");
                         },
                         error: function () {
                             swal({

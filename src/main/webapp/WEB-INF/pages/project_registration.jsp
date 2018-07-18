@@ -152,16 +152,16 @@
 
         }
         else {
-            // var md5PWD1 = $("input#password1").val();
-            // var tempPassword1 = hex_md5(md5PWD1);
-            // var md5PWD2 = $("input#password2").val();
-            // var tempPassword2 = hex_md5(md5PWD2);
+            var md5PWD1 = $("input#password1").val();
+            var tempPassword1 = hex_md5(md5PWD1);
+            var md5PWD2 = $("input#password2").val();
+            var tempPassword2 = hex_md5(md5PWD2);
             $.ajax({
                 url: "login-registration",
                 data: {
                     name: $("input#name").val(),
-                    password: $("input#password1").val(),
-                    tempPassword: $("input#password2").val(),
+                    password: tempPassword1,
+                    tempPassword: tempPassword2,
                     mail: $("input#email").val(),
                     verification: $("input#verification").val()
                 },

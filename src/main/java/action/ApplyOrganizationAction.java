@@ -53,4 +53,11 @@ public class ApplyOrganizationAction extends ActionSupport implements RequestAwa
     public void setRequest(Map<String, Object> request) {
         this.request = request;
     }
+
+    public Map<String, Object> getDataMap() {
+        return dataMap;
+    }
+    public void setDataMap(Map<String, Object> dataMap) {
+        this.dataMap = dataMap;
+    }
 }
