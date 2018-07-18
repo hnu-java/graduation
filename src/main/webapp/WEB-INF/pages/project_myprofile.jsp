@@ -381,12 +381,16 @@
                         type: "Post",
                         async: "false",
                         success: function (result) {
-                            if (result.res === true) {
+                            var points = "${session.user.points}";
+                            if(points>5){
+                                if (result.res === true) {
                                 swal("申请成功发出!", "机构申请已受理", "success");
                                 $('button#cancel-apply').click();
                             }
-                            else if(result.res === false)
-                                swal("申请失败！", "机构名被占用。", "error");
+                                else if(result.res === false)
+                                    swal("申请失败！", "机构名被占用。", "error");
+                            }
+                            else swal("申请失败！", "您的积分少于5，请充值。", "error");
                         },
                         error: function () {
                             swal({
