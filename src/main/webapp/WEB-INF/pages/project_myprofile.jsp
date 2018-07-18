@@ -381,7 +381,7 @@
                         type: "Post",
                         async: "false",
                         success: function () {
-                            swal("申请成功！", "机构申请已受理", "success");
+                            swal("申请成功!扣除5积分！", "机构申请已受理", "success");
                             $('button#cancel-apply').click();
                         },
                         error: function () {

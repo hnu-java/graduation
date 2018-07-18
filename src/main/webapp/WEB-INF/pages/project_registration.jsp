@@ -152,16 +152,16 @@
 
         }
         else {
-            var md5PWD1 = $("input#password1").val();
-            var tempPassword1 = hex_md5(md5PWD1);
-            var md5PWD2 = $("input#password2").val();
-            var tempPassword2 = hex_md5(md5PWD2);
+            // var md5PWD1 = $("input#password1").val();
+            // var tempPassword1 = hex_md5(md5PWD1);
+            // var md5PWD2 = $("input#password2").val();
+            // var tempPassword2 = hex_md5(md5PWD2);
             $.ajax({
                 url: "login-registration",
                 data: {
                     name: $("input#name").val(),
-                    password: tempPassword1,
-                    tempPassword: tempPassword2,
+                    password: $("input#password1").val(),
+                    tempPassword: $("input#password2").val(),
                     mail: $("input#email").val(),
                     verification: $("input#verification").val()
                 },
@@ -174,7 +174,7 @@
                     }
                     else if (result.res === true) {
                         swal({
-                            title: "注册成功!",
+                            title: "注册成功!获得30积分!",
                             text: "点击下方按钮回登陆页面",
                             type:"success",
                             confirmButtonColor: "#18a689",

@@ -30,10 +30,10 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
     }
 
     public boolean registration(String name, String password1, String password2, String mail) {
-            String sql = "insert into USER(NAME,PASSWORD,MAIL,deadline) values(?,?,?,?)";
-            Timestamp NowTime = new Timestamp(new java.util.Date().getTime());
+            String sql = "insert into USER(NAME,PASSWORD,MAIL,POINT,deadline) values(?,?,?,?,?)";
+        Timestamp NowTime = new Timestamp(new java.util.Date().getTime());
             try {
-                updateThrowException(sql, name, password1,mail,NowTime);
+                updateThrowException(sql, name, password1,mail,30,NowTime);
             }catch (SQLException e) {
                 e.printStackTrace();
                 return false;
