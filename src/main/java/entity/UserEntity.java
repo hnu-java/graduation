@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Date;
+
 /**
  * Created by DELL on 2017/11/28.
  *
@@ -21,6 +23,7 @@ public class UserEntity {
     private int rank;
     private int flag;
     private int points;
+
     public int getVerification() {
         return verification;
     }
@@ -140,6 +143,7 @@ public class UserEntity {
     public void setPoints(int points) {
         this.points = points;
     }
+
 
     public UserEntity(int id_user, int verification, String password, String name, String gender, String address, String introduce, java.sql.Date dob, String mail, String qq, String tel, int status, int rank, int flag, int points) {
         this.id_user = id_user;

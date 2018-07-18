@@ -30,9 +30,9 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
     }
 
     public boolean registration(String name, String password1, String password2, String mail) {
-            String sql = "insert into USER(NAME,PASSWORD,MAIL) values(?,?,?)";
+            String sql = "insert into USER(NAME,PASSWORD,MAIL,POINT) values(?,?,?,?)";
             try {
-                updateThrowException(sql, name, password1,mail);
+                updateThrowException(sql, name, password1,mail,30);
             }catch (SQLException e) {
                 e.printStackTrace();
                 return false;

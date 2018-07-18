@@ -59,6 +59,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         userDao = new UserDaoImp();
         int temp=(int)session.get("verification");
         String sessionVerification=Integer.toString(temp);
+        verification = Integer.toString(user.getVerification());
         System.out.println(user.getName() + " " + user.getPassword()+" "+tempPassword+" "+user.getMail()+" "+verification+" "+"session注册码:"+session.get("verification"));
         if(sessionVerification.equals(verification) && verification!="") {
             boolean res = userDao.registration(user.getName(), user.getPassword(), tempPassword, user.getMail());
@@ -78,6 +79,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         userDao = new UserDaoImp();
         int temp=(int)session.get("replaceverification");
         String sessionReplaceVerification=Integer.toString(temp);
+        verification = Integer.toString(user.getVerification());
         System.out.println(user.getName() + " " + " "+newPassword+"  "+"session注册码:"+session.get("replaceverification")+" "+user.getMail());
         if(sessionReplaceVerification.equals(verification) && verification!="") {
             System.out.println("verificationSuccess");
