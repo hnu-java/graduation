@@ -174,8 +174,8 @@
                     }
                     else if (result.res === true) {
                         swal({
-                            title: "注册成功!获得30积分!",
-                            text: "点击下方按钮回登陆页面",
+                            title: "注册成功!",
+                            text: "获得30积分与30天试用期！",
                             type:"success",
                             confirmButtonColor: "#18a689",
                             confirmButtonText: "OK"

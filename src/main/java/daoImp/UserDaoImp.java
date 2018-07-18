@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -31,14 +32,24 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
 
     public boolean registration(String name, String password1, String password2, String mail) {
         String sql = "insert into USER(NAME,PASSWORD,MAIL,POINTS,deadline) values(?,?,?,?,?)";
-        Timestamp NowTime = new Timestamp(new java.util.Date().getTime());
             try {
-                updateThrowException(sql, name, password1,mail,30,NowTime);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = new Date();
+                String tmp = sdf.format(date);
+                java.text.SimpleDateFormat formatter = new  SimpleDateFormat( "yyyy-MM-dd");
+                date = formatter.parse(tmp);
+                Calendar c = Calendar.getInstance();
+                c.setTime(date);
+                c.add(Calendar.DATE,30);
+                date = c.getTime();
+                updateThrowException(sql, name, password1,mail,30,date);
             }catch (SQLException e) {
                 e.printStackTrace();
                 return false;
+            }catch (ParseException e) {
+                e.printStackTrace();
             }
-           return true;
+        return true;
     }
 
     public boolean postmail(postmailEntity info, String title){
