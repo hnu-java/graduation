@@ -55,6 +55,22 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         return "RES";
     }
 
+    public String payment()throws ParseException{
+        dataMap = new HashMap<String, Object>();
+        userDao = new UserDaoImp();
+        boolean res = userDao.login(user.getName(), user.getPassword());
+        dataMap.put("res", res);
+        if(res==true) {
+            int Mpoints = user.getPoints();
+            user = userDao.getOne(user.getName());
+            boolean res1 = userDao.payment(user.getId_user(),Mpoints);
+            System.out.println(user.getId_user()+" "+Mpoints);
+            System.out.println(res1);
+            dataMap.put("res1", res1);
+        }
+        return "RES";
+    }
+
     public String registration() {
         dataMap = new HashMap<String, Object>();
         userDao = new UserDaoImp();
