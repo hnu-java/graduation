@@ -47,8 +47,8 @@
                 <div class="ibox-title">
                     <div style="float: left;margin-left: 5px"><span><strong>基本资料</strong></span></div>
                     <div id="test1" style="float: left;margin-left: 10px;width: 70px"><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">修改资料</button></div>
-                    <div id="test2" style="float: left;width: 70px""><button type="button" class="btn btn-primary btn-xs" >会员续费</button></div>
-                    <div id="test3" style="float: left"><button type="button" class="btn btn-primary btn-xs" >积分记录</button></div>
+                    <div id="test2" style="float: left;width: 70px"><a href="user-jmpPayment"><button type="button" class="btn btn-primary btn-xs" >会员续费</button></a></div>
+                    <div id="test3" style="float: left"><a href="user-jmpPointsRecord"><button type="button" class="btn btn-primary btn-xs" >积分记录</button></a></div>
                 </div>
                 <div style="padding-left: 80px" class="ibox-content">
                 <table class="table" style="width:400px;border-left: none;border-right: none">

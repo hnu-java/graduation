@@ -1,4 +1,5 @@
 package action;
+import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
@@ -6,6 +7,9 @@ import dao.PersonalCenterDao;
 import dao.UserDao;
 import daoImp.SysManagerDaoImp;
 import daoImp.UserDaoImp;
+import dao.ShowPointsRecordDao;
+import daoImp.ShowPointsRecordDaoImp;
+import entity.PointsRecordEntity;
 import entity.PersonalCenterEntity;
 import entity.SysManagerEntity;
 import entity.UserEntity;
@@ -38,6 +42,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     private Map<String, Object> dataMap;
     private String verification;
 
+
     public String login() throws ParseException {
         dataMap = new HashMap<String, Object>();
         userDao = new UserDaoImp();
@@ -69,6 +74,26 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
             dataMap.put("res1", res1);
         }
         return "RES";
+    }
+
+    public String proPayment()throws ParseException{
+        dataMap = new HashMap<String, Object>();
+        userDao = new UserDaoImp();
+        boolean res = userDao.login(user.getName(), user.getPassword());
+        dataMap.put("res", res);
+        if(res==true) {
+            int Mpoints = user.getPoints();
+            user = userDao.getOne(user.getName());
+            boolean res1 = userDao.proPayment(user.getId_user(),Mpoints);
+            if(res1==true){
+                user = userDao.getOne(user.getName());
+                session.put("user",user);
+            }
+            System.out.println(user.getId_user()+" "+Mpoints);
+            System.out.println(res1);
+            dataMap.put("res1", res1);
+        }
+        return "success";
     }
 
     public String registration() {
@@ -171,6 +196,18 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         return "RES";
     }
 
+    public String showPointsRecord(){
+        dataMap = new HashMap<>();
+        ShowPointsRecordDao showRecordDao= new ShowPointsRecordDaoImp();
+        UserEntity seesionUser=(UserEntity)session.get("user");
+        List<PointsRecordEntity> recordlist = showRecordDao.showPointsRecord(seesionUser.getId_user());
+        Gson gson = new Gson();
+        String json = gson.toJson(recordlist);
+        System.out.println(recordlist);
+        dataMap.put("res",json);
+        return "success";
+    }
+
     public String jmpLogin(){
         session.put("user",null);
         session.put("sysManager",0);
@@ -238,6 +275,9 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     }
     public String jmpMessageCenter(){
         return "messageCenterPage";
+    }
+    public String jmpPointsRecord(){
+        return "pointsRecordPage";
     }
     @Override
     public UserEntity getModel() {
