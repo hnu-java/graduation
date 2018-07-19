@@ -25,6 +25,8 @@ public class UserEntity {
     private int points;
     private Date deadline;
     private int days;
+
+
     public Date getDeadline() {
         return deadline;
     }

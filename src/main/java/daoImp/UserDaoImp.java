@@ -30,6 +30,39 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
         else return false;
     }
 
+    public boolean payment(int id_user,int m_point)
+    {
+        String sql="SELECT COUNT(*) from USER WHERE ID_USER=? and POINTS>=?";
+        int count=Integer.valueOf(getForValue(sql,id_user,m_point).toString());
+        System.out.println(count);
+        if(count==1) {
+            String sql1="update USER set points = points - ? WHERE ID_USER=?";
+            update(sql1,m_point,id_user);
+            try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = new Date();
+            String tmp = sdf.format(date);
+            java.text.SimpleDateFormat formatter = new  SimpleDateFormat( "yyyy-MM-dd");
+            date = formatter.parse(tmp);
+            Calendar c = Calendar.getInstance();
+            c.setTime(date);
+            c.add(Calendar.DATE,m_point*3);
+            date = c.getTime();
+            String sql2="update user set deadline = ? WHERE ID_USER=?";
+            update(sql2,date,id_user);
+
+            String sql3="insert into USER(id_user,content,date) values(?,?,?)";
+            Timestamp createDate = new Timestamp(new java.util.Date().getTime());
+            String content = "于" + createDate + "消耗" + m_point + "积分，开通会员" + m_point*3 + "天";
+            update(sql3,id_user,content,createDate);
+            } catch (ParseException e) {
+            e.printStackTrace();
+            }
+            return true;
+        }
+        else return false;
+    }
+
     public boolean registration(String name, String password1, String password2, String mail) {
         String sql = "insert into USER(NAME,PASSWORD,MAIL,POINTS,deadline) values(?,?,?,?,?)";
             try {
