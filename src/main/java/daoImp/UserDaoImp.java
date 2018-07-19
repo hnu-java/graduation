@@ -51,7 +51,7 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
             String sql2="update user set deadline = ? WHERE ID_USER=?";
             update(sql2,date,id_user);
 
-            String sql3="insert into USER(id_user,content,date) values(?,?,?)";
+            String sql3="insert into points_record(id_user,content,date) values(?,?,?)";
             Timestamp createDate = new Timestamp(new java.util.Date().getTime());
             String content = "于" + createDate + "消耗" + m_point + "积分，开通会员" + m_point*3 + "天";
             update(sql3,id_user,content,createDate);
