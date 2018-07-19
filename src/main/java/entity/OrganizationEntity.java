@@ -7,6 +7,7 @@ public class OrganizationEntity {
     private String NAME;
     private int ID_USER;
     private Date TIME;
+    private int FLAG;
 
     public int getID_ORGANIZATION() {
         return ID_ORGANIZATION;
@@ -40,11 +41,20 @@ public class OrganizationEntity {
         this.TIME = TIME;
     }
 
-    public OrganizationEntity(int ID_ORGANIZATION, String NAME, int ID_USER, Date TIME) {
+    public int getFLAG() {
+        return FLAG;
+    }
+
+    public void setFLAG(int FLAG) {
+        this.FLAG = FLAG;
+    }
+
+    public OrganizationEntity(int ID_ORGANIZATION, String NAME, int ID_USER, Date TIME, int FLAG) {
         this.ID_ORGANIZATION = ID_ORGANIZATION;
         this.NAME = NAME;
         this.ID_USER = ID_USER;
         this.TIME = TIME;
+        this.FLAG = FLAG;
     }
 
     public OrganizationEntity() {
