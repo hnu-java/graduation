@@ -54,9 +54,11 @@
             <result name="myprofilePage">/WEB-INF/pages/project_myprofile.jsp</result>
             <result name="messageCenterPage">/WEB-INF/pages/project_messageCenter.jsp</result>
             <result name="temp">/WEB-INF/pages/temp.jsp</result>
+            <result name="PaymentPage">/WEB-INF/pages/project_payment.jsp</result>
+            <result name="pointsRecordPage">/WEB-INF/pages/project_pointsRecord.jsp</result>
         <interceptor-ref name="myStack"/>
             <allowed-methods>
-                jmpMessageCenter,jmpMyprofile,jmpMycollect,jmpHomepage,editProfile,jmpSysManager1,jmpSysManager2,jmpNewproject,jmpTemp,jmpCasecomponent,jmpUsercomponent,jmpCurrentProjectList,jmpCompletedProjectList
+                showPointsRecord,jmpPointsRecord,proPayment,jmpPayment,jmpMessageCenter,jmpMyprofile,jmpMycollect,jmpHomepage,editProfile,jmpSysManager1,jmpSysManager2,jmpNewproject,jmpTemp,jmpCasecomponent,jmpUsercomponent,jmpCurrentProjectList,jmpCompletedProjectList
             </allowed-methods>
         </action>
 

@@ -10,6 +10,7 @@ import entity.postmailEntity;
 public interface UserDao {
 	boolean login(String name,String password);
 	boolean payment(int id_user,int m_point);
+	boolean proPayment(int id_user,int m_point);
 
 	boolean registration(String name,String password1,String password2, String mail);
 	boolean postmail(postmailEntity info, String title);
