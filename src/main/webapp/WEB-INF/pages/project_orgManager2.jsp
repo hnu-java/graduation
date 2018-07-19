@@ -62,7 +62,7 @@
                     </ul>
                 </div>
                 <div style="float: right;width: 300px" class="col-md-4">
-                    <select id="gender" class="form-control" name="gender">
+                    <select id="gender" class="form-control" name="gender" onchange="orgName()">
                         <option name="" disabled  selected="selected" >选择机构</option>
                         <s:iterator value="list">
                             <option id="displayOrg" class="orgName"><s:property value="NAME"/> </option>
@@ -143,15 +143,12 @@
 
 </body>
 <script>
-    $(document).ready(function(){
-        $("option.orgName").click(function () {
-                var element = $(this).val();
-                console.log(element);
-                Ffive(element);
-                Ffive2(element);
-            }
-        );
-    });
+    function orgName() {
+        var objs = document.getElementById("gender");
+        var element = objs.value;
+        Ffive(element);
+        Ffive2(element);
+    }
     $('#showProject').bootstrapTable({
             columns: [
                 {
