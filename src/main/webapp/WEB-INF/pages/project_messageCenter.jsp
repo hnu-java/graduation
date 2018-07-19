@@ -274,7 +274,7 @@
                                     confirmButtonColor: "#18a689",
                                     confirmButtonText: "OK"
                                 }, function () {
-                                    location.href = "user-jmpMyprofile";
+                                    location.href = "user-jmpMessageCenter";
                                 })
                             }
                             else swal("接受失败！", "接受失败", "failed");
@@ -297,7 +297,7 @@
                                     confirmButtonColor: "#18a689",
                                     confirmButtonText: "OK"
                                 }, function () {
-                                    location.href = "user-jmpMyprofile";
+                                    location.href = "user-jmpMessageCenter";
                                 })
                             }
                             else swal("接受失败！", "接受失败", "failed");
@@ -337,7 +337,7 @@
                                     confirmButtonColor: "#18a689",
                                     confirmButtonText: "OK"
                                 }, function () {
-                                    location.href = "user-jmpMyprofile";
+                                    location.href = "user-jmpMessageCenter";
                                 })
                             }
                             else swal("拒绝失败！", "拒绝失败", "failed");
@@ -360,7 +360,7 @@
                                     confirmButtonColor: "#18a689",
                                     confirmButtonText: "OK"
                                 }, function () {
-                                    location.href = "user-jmpMyprofile";
+                                    location.href = "user-jmpMessageCenter";
                                 })
                             }
                             else swal("拒绝失败！", "拒绝失败", "failed");

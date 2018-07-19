@@ -143,14 +143,19 @@
             function(e, value, row, index) {
                 //修改操作
                 var id_Project = parseInt(row.id_Project);
-
+                var orgName = row.orgName;
                 $.ajax({
                     type: "GET",
                     url: "project-getProjectInfo",
-                    data: {Id_Project:id_Project},
+                    data: {Id_Project:id_Project,orgName:orgName},
                     dataType: "json",
-                    success: function () {
-                        location.href = "project-jmpProjectInfo";
+                    success: function (result) {
+                        if(result.days<0){
+                            swal("机构管理员账户已到期，机构封停","继续使用请联系机构管理员续费","error")
+                        }
+                        else{
+                            location.href = "project-jmpProjectInfo";
+                        }
                     },
                     error: function () {
                         swal({

@@ -5,14 +5,15 @@
 
 package entity;
 
+import java.util.Date;
+
 public class PersonalCenterEntity {
     private int ID_ORGANIZATION;
-    private String ORGANIZATIONNAME;
-    private String ADMIN_NME;
-    private int NUM_USER;
+    private String ORG_NAME;
     private int ID_USER;
+    private Date TIME;
+    private String USER_NAME;
 
-//获取机构ID
     public int getID_ORGANIZATION() {
         return ID_ORGANIZATION;
     }
@@ -20,33 +21,15 @@ public class PersonalCenterEntity {
     public void setID_ORGANIZATION(int ID_ORGANIZATION) {
         this.ID_ORGANIZATION = ID_ORGANIZATION;
     }
-//获取机构名称
-    public String getORGANIZATIONNAME() {
-        return ORGANIZATIONNAME;
+
+    public String getORG_NAME() {
+        return ORG_NAME;
     }
 
-    public void setORGANIZATIONNAME(String ORGANIZATIONNAME) {
-        this.ORGANIZATIONNAME = ORGANIZATIONNAME;
+    public void setORG_NAME(String ORG_NAME) {
+        this.ORG_NAME = ORG_NAME;
     }
 
-//获取管理员名字
-    public String  getADMIN_NME() {
-        return ADMIN_NME;
-    }
-
-    public void setADMIN_NME(String ADMIN_NME) {
-        this.ADMIN_NME = ADMIN_NME;
-    }
-
-//获取机构下属人数
-    public int getNUM_USER() {
-        return NUM_USER;
-    }
-
-    public void setNUM_USER(int NUM_USER) {
-        this.NUM_USER = NUM_USER;
-    }
-//获取机构下的每个人ID
     public int getID_USER() {
         return ID_USER;
     }
@@ -55,12 +38,28 @@ public class PersonalCenterEntity {
         this.ID_USER = ID_USER;
     }
 
-    public PersonalCenterEntity(int ID_ORGANIZATION, String ORGANIZATIONNAME, String ADMIN_NME, int NUM_USER, int ID_USER) {
+    public Date getTIME() {
+        return TIME;
+    }
+
+    public void setTIME(Date TIME) {
+        this.TIME = TIME;
+    }
+
+    public String getUSER_NAME() {
+        return USER_NAME;
+    }
+
+    public void setUSER_NAME(String USER_NAME) {
+        this.USER_NAME = USER_NAME;
+    }
+
+    public PersonalCenterEntity(int ID_ORGANIZATION, String ORG_NAME, int ID_USER, Date TIME, String USER_NAME) {
         this.ID_ORGANIZATION = ID_ORGANIZATION;
-        this.ORGANIZATIONNAME = ORGANIZATIONNAME;
-        this.ADMIN_NME = ADMIN_NME;
-        this.NUM_USER = NUM_USER;
+        this.ORG_NAME = ORG_NAME;
         this.ID_USER = ID_USER;
+        this.TIME = TIME;
+        this.USER_NAME = USER_NAME;
     }
 
     public PersonalCenterEntity() {

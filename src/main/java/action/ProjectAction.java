@@ -41,12 +41,26 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     private Map<String, Object> dataMap;
     private int documentId;
 
-    public String create() {
+    public String create() throws ParseException {
         dataMap = new HashMap<String, Object>();
         projectDao = new ProjectDaoImp();
+        OrganizationDao organizationDao = new OrganizationDaoImp();
 //        System.out.println(project.getName()+" "+project.getDocument_Name());
-        boolean res= projectDao.save(project);
-        dataMap.put("res",res);
+        System.out.println(project.getOrgName());
+        if (project.getOrgName() != null && project.getOrgName() != ""){
+            int days = organizationDao.days(project.getOrgName());
+            if( days < 0){
+                dataMap.put("days",days);
+            }else{
+                dataMap.put("days",days);
+                boolean res= projectDao.save(project);
+                dataMap.put("res",res);
+            }
+        }else{
+            dataMap.put("days",0);
+            boolean res= projectDao.save(project);
+            dataMap.put("res",res);
+        }
         return SUCCESS;
     }
 
@@ -121,7 +135,8 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         return "projectDocument";
     }
 
-    public String getProjectInfo(){
+    public String getProjectInfo() throws ParseException {
+        dataMap = new HashMap<>();
         int id_Project = project.getId_Project();
         projectDao = new ProjectDaoImp();
         project = projectDao.getOne(id_Project);
@@ -132,11 +147,17 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         int rank = projectDao.getRank(id_Project,user.getId_user());
         DocumentDao documentDao = new DocumentDaoImp();
         int version = documentDao.getVersion(id_Project);
-
         session.put("version",version);
         session.put("rank",rank);
         session.put("PM",pm);
         session.put("project",project);
+        OrganizationDao organizationDao = new OrganizationDaoImp();
+        if (project.getOrgName() != null){
+            int days = organizationDao.days(project.getOrgName());
+            dataMap.put("days",days);
+        }else{
+            dataMap.put("days",0);
+        }
         return SUCCESS;
     }
     public String getProjectMember(){

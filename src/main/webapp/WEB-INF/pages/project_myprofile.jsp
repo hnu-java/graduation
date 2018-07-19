@@ -145,7 +145,7 @@
 
         <div style="float: left" class="col-md-6">
             <div class="ibox-title">
-                <div style="float: left;margin-left: 5px"><span><strong>我的机构</strong></span></div>
+                <div style="float: left;margin-left: 5px"><span><strong>我加入的机构</strong></span></div>
                 <div style="float: left;margin-left: 10px"><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newOrg">申请机构</button></div>
             </div>
             <div class="bootstrap-table  ibox-content">
@@ -378,19 +378,13 @@
                     valign: 'middle'
                 },
                 {
-                    field: 'ORGANIZATIONNAME',
+                    field: 'ORG_NAME',
                     title: '机构名称',
                     sortable: true,
                     align: 'center'
                 }, {
-                    field: 'ADMIN_NME',
+                    field: 'USER_NAME',
                     title: '管理员',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
-                    field: 'NUM_USER',
-                    title: '机构人数',
                     sortable: true,
                     align: 'center'
                 },
@@ -431,41 +425,48 @@
     }
     window.actionEvents = {
         'click .exit': function (e, value, row, index) {
-            swal({
-                title: "您确定要退出这个机构吗",
-                text: "点击确定后讲退出机构，请谨慎操作！",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
-                closeOnConfirm: false
-            }, function () {
-                var id = row.ID_ORGANIZATION;
-                var ID_ORGANIZATION = parseInt(id);
-                $.ajax({
-                    url: "personalcenter-quitorg?ID_ORGANIZATION=" + ID_ORGANIZATION,
-                    dataType: "json",
-                    type: "Post",
-                    async: "false",
-                    success: function (result) {
-                        if (result.res === true){
-                            swal({
-                                title: "退出成功",
-                                type: "success",
-                                confirmButtonColor: "#18a689",
-                                confirmButtonText: "OK"
-                            },function(){
-                                location.href = "user-jmpMyprofile";
-                            })
+            var id_admin = parseInt(row.ID_USER);
+            var id_user = ${sessionScope.user.id_user};
+            if(id_admin === id_user){
+                swal("错误", "机构管理员不能退出自己的机构", "error");
+            }
+            else {
+                swal({
+                    title: "您确定要退出这个机构吗",
+                    text: "点击确定后讲退出机构，请谨慎操作！",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: false
+                }, function () {
+                    var id = row.ID_ORGANIZATION;
+                    var ID_ORGANIZATION = parseInt(id);
+                    $.ajax({
+                        url: "personalcenter-quitorg?ID_ORGANIZATION=" + ID_ORGANIZATION,
+                        dataType: "json",
+                        type: "Post",
+                        async: "false",
+                        success: function (result) {
+                            if (result.res === true) {
+                                swal({
+                                    title: "退出成功",
+                                    type: "success",
+                                    confirmButtonColor: "#18a689",
+                                    confirmButtonText: "OK"
+                                }, function () {
+                                    location.href = "user-jmpMyprofile";
+                                })
+                            }
+                            else swal("退出失败！", "机构管理员不能退出自己的机构", "error");
+                        }, error: function () {
+                            swal("退出！", "请检查你的网络", "error");
                         }
-                        else swal("退出失败！", "机构管理员不能退出自己的机构", "error");
-                    }, error: function () {
-                        swal("退出！", "请检查你的网络", "error");
-                    }
+                    })
                 })
-            })
-            //修改操作
+                //修改操作
+            }
         }
     };
 

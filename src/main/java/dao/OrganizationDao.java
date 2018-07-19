@@ -8,6 +8,7 @@ package dao;
 import entity.ApplyOrganizationEntity;
 import entity.OrganizationEntity;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface OrganizationDao {
@@ -19,4 +20,5 @@ public interface OrganizationDao {
     List<OrganizationEntity> getMyOrg(int id);
     String findName(int ID_ORGANIZATION);  //获取机构ID对应的NAME
     String findAdminName(int ID_ORGANIZATION);
+    int days(String org_name) throws ParseException;
 }

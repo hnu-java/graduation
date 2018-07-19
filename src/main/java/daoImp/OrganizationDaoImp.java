@@ -11,6 +11,8 @@ import entity.ApplyOrganizationEntity;
 import entity.OrganizationEntity;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class OrganizationDaoImp extends DAO<OrganizationEntity> implements OrganizationDao {
@@ -18,7 +20,7 @@ public class OrganizationDaoImp extends DAO<OrganizationEntity> implements Organ
     @Override
     public List<OrganizationEntity> getMatched(int id_User, String name) {
         name="%"+name+"%";
-        String sql = "select * from VIEW_ORGINFO where ID_USER = ? and NAME LIKE ?";
+        String sql = "select * from VIEW_ORGINFO where MEMBERID = ? and NAME LIKE ?";
         return getForList(sql,id_User,name);
     }
 
@@ -65,6 +67,26 @@ public class OrganizationDaoImp extends DAO<OrganizationEntity> implements Organ
         String AdminName = getForValue(sql1,AdminID);
         System.out.println("adminname:"+AdminName);
         return AdminName;
+    }
+
+    @Override
+    public int days(String org_name) throws ParseException {
+        String sql1="select ID_ORGANIZATION from ORGANIZATION where name=?";
+        String sql2="select deadline from view_admin_org where ID_ORGANIZATION = ? and STATU = 1";
+        String sql3="SELECT DATEDIFF(?,?) AS DiffDate";
+        String tmp1;
+        java.util.Date date1;
+        int days;
+        int id_org = Integer.valueOf(getForValue(sql1,org_name).toString());
+        tmp1 = getForValue(sql2,id_org).toString();
+        java.text.SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd");
+        date1 = formatter.parse(tmp1);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date date2 = new java.util.Date();
+        String tmp2 = sdf.format(date2);
+        date2 = formatter.parse(tmp2);
+        days = Integer.valueOf(getForValue(sql3,date1,date2).toString());
+        return days;
     }
 
 

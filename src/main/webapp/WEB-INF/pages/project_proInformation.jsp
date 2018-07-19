@@ -174,13 +174,13 @@
                             <div class="panel-options">
                                 <ul class="nav nav-tabs">
                                     <li class="active">
-                                        <a href="#tab-1" data-toggle="tab">讨论区</a>
+                                        <a href="#tab-1" data-toggle="tab">文档管理</a>
                                     </li>
                                     <li>
                                         <a href="#tab-2" data-toggle="tab">成员管理</a>
                                     </li>
                                     <li>
-                                        <a href="#tab-3" data-toggle="tab">文档列表</a>
+                                        <a href="#tab-3" data-toggle="tab">讨论区</a>
                                     </li>
                                 </ul>
                             </div>
@@ -189,7 +189,7 @@
                         <div class="panel-body">
 
                             <div class="tab-content">
-                                <div class="tab-pane active" id="tab-1">
+                                <div class="tab-pane" id="tab-3">
                                     <!--自己的留言开始-->
                                     <div class="row">
                                         <div class="ibox float-e-margins">
@@ -258,7 +258,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="tab-pane" id="tab-3">
+                                <div class="tab-pane active" id="tab-1">
 
                                     <div id="toolbar2">
 <s:if test='#session.project.state==1'>
