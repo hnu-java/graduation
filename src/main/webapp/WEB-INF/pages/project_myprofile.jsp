@@ -47,7 +47,8 @@
                 <div class="ibox-title">
                     <div style="float: left;margin-left: 5px"><span><strong>基本资料</strong></span></div>
                     <div id="test1" style="float: left;margin-left: 10px;width: 70px"><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">修改资料</button></div>
-                    <div id="test2" style="float: left"><button type="button" class="btn btn-primary btn-xs" >会员续费</button></div>
+                    <div id="test2" style="float: left;width: 70px""><button type="button" class="btn btn-primary btn-xs" >会员续费</button></div>
+                    <div id="test3" style="float: left"><button type="button" class="btn btn-primary btn-xs" >积分记录</button></div>
                 </div>
                 <div style="padding-left: 80px" class="ibox-content">
                 <table class="table" style="width:400px;border-left: none;border-right: none">
@@ -119,6 +120,17 @@
                             </s:if>
                             <s:else>
                                 <s:property value="#session.user.introduce"/>
+                            </s:else>
+                        </th>
+                    </tr>
+                    <tr >
+                        <th style="width: 150px;text-align: center">账户积分:</th>
+                        <th>
+                            <s:if test='#session.user.points==""'>
+                                <s:property value="" default="-" />
+                            </s:if>
+                            <s:else>
+                                <s:property value="#session.user.points"/>
                             </s:else>
                         </th>
                     </tr>
