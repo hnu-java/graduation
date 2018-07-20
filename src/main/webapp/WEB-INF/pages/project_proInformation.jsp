@@ -166,12 +166,12 @@
                     <s:if test='#session.project.state==1'>
                         <s:if test='#session.rank==3'>
                         <s:if test='#session.project.id_Organization!=""'>
-                            <dt><h3>权限设置：</h3></dt>
+                            <dt><h3>文档权限：</h3></dt>
                             <dd><h3><s:if test='#session.project.flag==0'>
-                                        允许机构管理员查看文档
+                                        开放
                                     </s:if>
                                     <s:if test='#session.project.flag==1'>
-                                        拒绝机构管理员查看文档
+                                        封闭
                                     </s:if>
                                     <button id="modified" class="btn btn-info btn-xs">更改</button>
                             </h3></dd>
@@ -806,11 +806,10 @@
 
     $("button#modified").click(function () {
         var flag= parseInt(${sessionScope.project.flag});
-        alert(flag);
         if(flag === 1){
             swal(
                 {
-                    title: "您确认更改权限设置为允许吗",
+                    title: "您确认更改文档权限为开放吗",
                     text: "更改后机构管理员可以查看您机构的文档",
                     type: "warning",
                     showCancelButton: true,
@@ -828,8 +827,11 @@
                         },
                         type: "Post",
                         async: "false",
-                        success: function (){
-                            swal("成功","成功","success")
+                        success: function (result){
+                            if(result.res) {
+                                showtoast("success", "更改成功", "操作成功");
+                                location.href="project-jmpProjectInfo";
+                            }
                         }, error: function () {
                             swal("更改失败！", "请检查你的网络", "failed");
                         }
@@ -839,7 +841,7 @@
         else{
             swal(
                 {
-                    title: "您确认更改权限设置为不允许吗",
+                    title: "您确认更改文档权限为封闭吗",
                     text: "更改后机构管理员无法查看您项目的文档",
                     type: "warning",
                     showCancelButton: true,
@@ -857,8 +859,9 @@
                         },
                         type: "Post",
                         async: "false",
-                        success: function () {
-                            swal("成功","成功","success");
+                        success: function (result) {
+                            showtoast("success", "更改成功", "操作成功");
+                            location.href="project-jmpProjectInfo";
                         }, error: function () {
                             swal("更改失败！", "请检查你的网络", "failed");
                         }

@@ -368,7 +368,7 @@
                         }
                     })
                 })
-        }
+         }
     };
     window.actionEvents2 = {
         'click .reAgree': function(e, value, row, index) {

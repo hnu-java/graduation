@@ -33,7 +33,7 @@
         <ol class="breadcrumb" style="margin-left: 40px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage">首页</a> >><a href="Organization-jmpOrgManager1">机构管理</a>>>查看项目
+                    <a href="user-jmpHomepage">首页</a> >><a href="Organization-jmpOrgManager1">机构管理</a>>> <a href="Organization-jmpOrgManager2">查看项目</a>
                 </strong>
             </li>
         </ol>
@@ -136,11 +136,18 @@
 <script src="<%=basePath%>/js/jquery.min.js?v=2.1.4"></script>
 <script src="<%=basePath%>/js/bootstrap.min.js?v=3.3.6"></script>
 <script src="<%=basePath%>/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
-<script src="<%=basePath%>/js/content.min.js?v=1.0.0"></script>
+<script src="<%=basePath%>/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="<%=basePath%>/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="<%=basePath%>/js/plugins/layer/layer.min.js"></script>
+<script src="<%=basePath%>/js/hplus.min.js?v=4.1.0"></script>
+<script type="text/javascript" src="<%=basePath%>/js/contabs.min.js"></script>
+<script src="<%=basePath%>/js/plugins/pace/pace.min.js"></script>
+<script src="<%=basePath%>/js/plugins/sweetalert/sweetalert.min.js"></script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 <script src="<%=basePath%>/js/plugins/toastr/toastr.min.js"></script>
 <script src="<%=basePath%>/js/mjy.js"></script>
+<script src="<%=basePath%>/js/plugins/suggest/bootstrap-suggest.min.js"></script>
 <script src="<%=basePath%>/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-
 </body>
 <script>
     function orgName() {
@@ -180,6 +187,7 @@
                     title: '操作',
                     sortable: true,
                     align: 'center',
+                    events: "actionEvents",
                     formatter: "rename"
                 }
             ]
@@ -198,13 +206,24 @@
                     valign: 'middle'
                 },
                 {
-                    field: 'intro',
-                    title: '简介',
+                    field: 'document_name',
+                    title: '文档',
+                    sortable: true,
+                    align: 'center'
+                }, {
+                    field: 'id_document',
+                    title: '文档编号',
+                    sortable: true,
                     align: 'center'
                 },
                 {
                     field: 'user_name',
                     title: '项目组长',
+                    sortable: true,
+                    align: 'center'
+                }, {
+                    field: 'mail',
+                    title: '邮箱',
                     sortable: true,
                     align: 'center'
                 },
@@ -213,7 +232,7 @@
                     title: '操作',
                     sortable: true,
                     align: 'center',
-                    events: "actionEvents2",
+                    events: "actionEvents",
                     formatter: "rename"
                 }
             ]
@@ -227,9 +246,9 @@
     function rename(value,row,index) {
         var flag=parseInt(row.flag);
         if(flag===0)
-            return ['<button class="btn btn-info text-center btn-xs " >查看详情</button>'].join('');
+            return ['<a class="view"><button class="btn btn-info text-center btn-xs " >查看文档</button></a>'].join('');
         else if(flag===1)
-            return ['<button class="btn btn-info text-center btn-xs " >不可查看</button>'].join('');
+            return ['<a class="refuse"><button class="btn btn-danger text-center btn-xs " >不可查看</button></a>'].join('');
     }
 
     function Ffive(element) {
@@ -271,5 +290,16 @@
         )
     }
 
+    window.actionEvents = {
+        'click .refuse': function(e,value,row){
+            showtoast("error", "项目组长设置项目拒绝他人访问", "如需查看文档请联系项目组长修改权限");
+        },
+        'click .view':
+            function(e, value, row, index) {
+                var id = row.id_document;
+                var id_Project = row.id_project;
+                location.href = "catalog-jmpOrgTemplate?documentId="+id+"&rank="+5+"&projectId="+id_Project+"&state="+row.state;
+            },
+    }
 </script>
 </html>

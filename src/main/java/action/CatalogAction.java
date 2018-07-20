@@ -69,6 +69,14 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         request.put("rank",rank);
         return "document";
     }
+
+    public String jmpOrgTemplate(){
+        request.put("documentId",documentId);
+        request.put("projectId",projectId);
+        request.put("state",state);
+        request.put("rank",rank);
+        return "orgTemplatePage";
+    }
     public String addState1(){//下一级别，需要新增ul
         String[] tempList=catalogIndex.split(" ");
         dataMap=new HashMap<>();
