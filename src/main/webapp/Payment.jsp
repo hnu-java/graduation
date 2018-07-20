@@ -48,9 +48,9 @@
         <div class="form-group col-sm-8 col-md-offset-2 loginLine">
             <select id="select" name="select" style="width:  210px;height: 30px">
                 <option value="0" selected="selected">请选择兑换天数</option>
-                <option value="10">兑换30天-10积分</option>
-                <option value="30">兑换90天-30积分</option>
-                <option value="60">兑换180天-60积分</option>
+                <option value="30">兑换30天-${sessionScope.Mpoint}积分</option>
+                <option value="90">兑换90天-${(sessionScope.Mpoint)*3}积分</option>
+                <option value="180">兑换180天-${(sessionScope.Mpoint)*6}积分</option>
             </select>
         </div>
         <div class="form-group">
@@ -79,10 +79,10 @@
     function verification() {
         var md5PWD = $("input#password").val();
         var tempPassword = hex_md5(md5PWD);
-        var point = $("#select").val();
+        var day = $("#select").val();
         $.ajax({
             url: "login-payment",
-            data: {name: $("input#name").val(), password: tempPassword,points: point},
+            data: {name: $("input#name").val(), password: tempPassword,days: day},
             dataType: "json",
             type: "Post",
             async: "false",
@@ -90,7 +90,7 @@
                 if (result.res === true){
                     if (result.res1 === true){
                             swal({
-                                title: "充值成功!",
+                                title: "兑换成功!",
                                 text: "点击跳转到登录页面",
                                 type: "success",
                                 confirmButtonColor: "#18a689",
@@ -99,12 +99,12 @@
                                 location.href = "login-jmpLogin"
                             })
                         }
-                    else showtoast("error", "登录失败", "积分不足");
+                    else showtoast("error", "兑换失败", "积分不足");
                 }
-                else showtoast("error", "登录失败", "用户名或密码错误");
+                else showtoast("error", "兑换失败", "用户名或密码错误");
             },
             error: function (result) {
-                showtoast("error", "登录失败", "请检查你的网络");
+                showtoast("error", "兑换失败", "请检查你的网络");
             }
         })
     }

@@ -55,6 +55,8 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
             int orgManager=userDao.orgManager(user.getId_user());
             session.put("user",user);
             session.put("orgManager",orgManager);
+            int Mpoint=userDao.Mpoint();
+            session.put("Mpoint",Mpoint);
             System.out.println(user.getFlag());
         }
         return "RES";
@@ -66,10 +68,10 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         boolean res = userDao.login(user.getName(), user.getPassword());
         dataMap.put("res", res);
         if(res==true) {
-            int Mpoints = user.getPoints();
+            int day = user.getDays();
             user = userDao.getOne(user.getName());
-            boolean res1 = userDao.payment(user.getId_user(),Mpoints);
-            System.out.println(user.getId_user()+" "+Mpoints);
+            boolean res1 = userDao.payment(user.getId_user(),day);
+            System.out.println(user.getId_user()+" "+day);
             System.out.println(res1);
             dataMap.put("res1", res1);
         }
@@ -82,14 +84,14 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         boolean res = userDao.login(user.getName(), user.getPassword());
         dataMap.put("res", res);
         if(res==true) {
-            int Mpoints = user.getPoints();
+            int day = user.getDays();
             user = userDao.getOne(user.getName());
-            boolean res1 = userDao.proPayment(user.getId_user(),Mpoints);
+            boolean res1 = userDao.proPayment(user.getId_user(),day);
             if(res1==true){
                 user = userDao.getOne(user.getName());
                 session.put("user",user);
             }
-            System.out.println(user.getId_user()+" "+Mpoints);
+            System.out.println(user.getId_user()+" "+day);
             System.out.println(res1);
             dataMap.put("res1", res1);
         }
