@@ -52,7 +52,7 @@
         <div style="float: left" class="col-md-4">
             <div id="addAdmin">
                 <div class="ibox-title">
-                    <div style="float: left;margin-left: 5px"><span><strong>兑换</strong></span></div>
+                    <div style="float: left;margin-left: 5px"><span><strong>会员续期</strong></span></div>
                 </div>
                 <div style="padding-left: 80px" class="ibox-content">
                     <form class="form" id="addForm" style="width:300px;border-left: none;border-right: none">
@@ -89,30 +89,10 @@
         </div>
         <div style="float: left" class="col-md-6">
             <div class="ibox-title">
-                <div style="float: left;margin-left: 5px"><span><strong>我的机构</strong></span></div>
+                <div style="float: left;margin-left: 5px"><span><strong>充值积分</strong></span></div>
                 <div style="float: left;margin-left: 10px"><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newOrg">申请机构</button></div>
             </div>
             <div class="bootstrap-table  ibox-content">
-                <table id="finishingTask" data-toggle="table"
-                       data-classes="table table-no-bordered"
-                       data-url="project-showList"
-                       data-click-to-select="true"
-                       data-search="true"
-                       data-show-refresh="true"
-                       data-show-toggle="true"
-                       data-show-columns="true"
-                       data-toolbar="#toolbar"
-                       data-query-params="quefryParams"
-                       data-pagination="true"
-                       data-halign="center"
-                       data-striped="true"
-                       data-page-size="5"
-                       data-height="415"
-                       data-sort-order="desc"
-                       data-pagination-v-align="top"
-                       data-sort-stable="true"
-                >
-                </table>
             </div>
         </div>
     </div>

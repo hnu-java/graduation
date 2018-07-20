@@ -66,7 +66,7 @@
                     <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#invite">邀请用户</button>
                 </div>
                 <div style="float: right;width: 300px" class="col-md-4">
-                    <select id="gender" class="form-control" name="gender">
+                    <select id="gender" class="form-control" name="gender" onchange="orgName()">
                         <option name="" disabled  selected="selected" >选择机构</option>
                         <s:iterator value="list">
                             <option name="displayOrg" class="orgName"><s:property value="NAME"/> </option>
@@ -174,15 +174,13 @@
 <script src="<%=basePath%>/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 </body>
 <script>
-    $(document).ready(function(){
-        $("option.orgName").click(function () {
-            var element = $(this).val();
-            console.log(element);
-            Ffive(element);
-            Ffive2(element);
-            }
-        );
-    });
+    function orgName() {
+        var objs = document.getElementById("gender");
+        var element = objs.value;
+        Ffive(element);
+        Ffive2(element);
+    }
+
     $('#showOrgMember').bootstrapTable({
             columns: [
                 {

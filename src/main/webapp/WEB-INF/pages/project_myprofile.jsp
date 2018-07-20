@@ -137,7 +137,7 @@
                     </tbody>
                 </table>
             </div>
-            <div style="padding: 38px 0px 28px 20px;font-family: KaiTi;font-size: 17px;color: red" class="white-bg">
+            <div style="padding: 25px 0px 20px 18px;font-family: KaiTi;font-size: 17px;color: red" class="white-bg">
                 <p>会员有效期☞：${sessionScope.user.deadline}</p>
             </div>
             </div>
