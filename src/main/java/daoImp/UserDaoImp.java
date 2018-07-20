@@ -30,9 +30,12 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
         else return false;
     }
 
-    public boolean payment(int id_user,int m_point)
+    public boolean payment(int id_user,int day)
     {
         String sql="SELECT COUNT(*) from USER WHERE ID_USER=? and POINTS>=?";
+        String sql8="select points from points_rule where id_rule = ?";
+        int points = getForValue(sql8,2);
+        int m_point = day/30*points;
         int count=Integer.valueOf(getForValue(sql,id_user,m_point).toString());
         if(count==1) {
             String sql1="update USER set points = points - ? WHERE ID_USER=?";
@@ -45,14 +48,14 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
             date = formatter.parse(tmp);
             Calendar c = Calendar.getInstance();
             c.setTime(date);
-            c.add(Calendar.DATE,m_point*3);
+            c.add(Calendar.DATE,day);
             date = c.getTime();
             String sql2="update user set deadline = ? WHERE ID_USER=?";
             update(sql2,date,id_user);
 
             String sql3="insert into points_record(id_user,content,date) values(?,?,?)";
             Timestamp createDate = new Timestamp(new java.util.Date().getTime());
-            String content = "于" + createDate + "消耗" + m_point + "积分，开通会员" + m_point*3 + "天";
+            String content = "于" + createDate + "消耗" + m_point + "积分，开通会员" + day + "天";
             update(sql3,id_user,content,createDate);
             } catch (ParseException e) {
             e.printStackTrace();
@@ -62,9 +65,18 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
         else return false;
     }
 
-    public boolean proPayment(int id_user,int m_point)
+    public int Mpoint(){
+        String sql = "select points from points_rule where id_rule = ?";
+        int points = getForValue(sql,2);
+        return points;
+    }
+
+    public boolean proPayment(int id_user,int day)
     {
         String sql="SELECT COUNT(*) from USER WHERE ID_USER=? and POINTS>=?";
+        String sql8="select points from points_rule where id_rule = ?";
+        int points = getForValue(sql8,2);
+        int m_point = day/30*points;
         int count=Integer.valueOf(getForValue(sql,id_user,m_point).toString());
         if(count==1) {
             String sql1="update USER set points = points - ? WHERE ID_USER=?";
@@ -78,14 +90,14 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
                 date = formatter.parse(tmp);
                 Calendar c = Calendar.getInstance();
                 c.setTime(date);
-                c.add(Calendar.DATE,m_point*3);
+                c.add(Calendar.DATE,day);
                 date = c.getTime();
                 String sql2="update user set deadline = ? WHERE ID_USER=?";
                 update(sql2,date,id_user);
 
                 String sql3="insert into points_record(id_user,content,date) values(?,?,?)";
                 Timestamp createDate = new Timestamp(new java.util.Date().getTime());
-                String content = "于" + createDate + "消耗" + m_point + "积分，开通会员" + m_point*3 + "天";
+                String content = "于" + createDate + "消耗" + m_point + "积分，开通会员" + day + "天";
                 update(sql3,id_user,content,createDate);
             } catch (ParseException e) {
                 e.printStackTrace();

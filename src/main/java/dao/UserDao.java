@@ -9,8 +9,8 @@ import entity.postmailEntity;
 
 public interface UserDao {
 	boolean login(String name,String password);
-	boolean payment(int id_user,int m_point);
-	boolean proPayment(int id_user,int m_point);
+	boolean payment(int id_user,int day);
+	boolean proPayment(int id_user,int day);
 
 	boolean registration(String name,String password1,String password2, String mail);
 	boolean postmail(postmailEntity info, String title);
@@ -27,6 +27,7 @@ public interface UserDao {
     int projectNumberNow(int id);
 	int projectNumberHistory(int id);
 	int nowNews(int id);
+	int Mpoint();
 	List<UserEntity> getOrgAllMem(int user_id,String name);
 	boolean nameAndMail(String name, String email);
 	//找名字
