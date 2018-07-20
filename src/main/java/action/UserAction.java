@@ -16,8 +16,10 @@ import entity.UserEntity;
 import entity.postmailEntity;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.*;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,6 +38,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     private PersonalCenterEntity PersonaCenter;
     private UserEntity user;
     private Map<String,Object> request;
+    private Map<String,Object> response;
     private Map<String,Object> session;
     private String tempPassword;
     private String newPassword;
@@ -57,7 +60,9 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
             session.put("orgManager",orgManager);
             int Mpoint=userDao.Mpoint();
             session.put("Mpoint",Mpoint);
-            System.out.println(user.getFlag());
+            String msgNum = Integer.toString(userDao.msgNum(user.getId_user()));
+            Cookie cookie = new Cookie("msgNum",msgNum);
+            System.out.println(cookie.getValue());
         }
         return "RES";
     }

@@ -98,7 +98,15 @@
 <script src="<%=basePath %>/js/plugins/toastr/toastr.min.js"></script>
 <script src="<%=basePath %>/js/mjy.js"></script>
 </body>
+<script>
+    //写cookies，一个小时过期
+    function setCookie(name, value) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() + 24 * 60 * 60 * 1000);
+        document.cookie = name + "=" +  + ";expires=" + exp.toGMTString() + ";path=/";
+    }
 
+</script>
 
 <!-- Mirrored from www.zi-han.net/theme/hplus/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:17:11 GMT -->
 </html>

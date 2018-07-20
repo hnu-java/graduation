@@ -54,7 +54,7 @@
                     </ul>
 
                     <li class="dropdown hidden-xs">
-                        <a class="right-sidebar-toggle" aria-expanded="false" href="login-jmpLogin"">
+                        <a class="right-sidebar-toggle" aria-expanded="false" href="login-jmpLogin">
                             <img src="<%=basePath %>/img/exit.png">
                         </a>
                     </li>

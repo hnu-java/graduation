@@ -71,6 +71,12 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
         return points;
     }
 
+    public int msgNum(int id_user){
+        String sql = "select COUNT(*) from message where id_user = ?";
+        int msgNum= Integer.valueOf(getForValue(sql,id_user).toString());
+        return msgNum;
+    }
+
     public boolean proPayment(int id_user,int day)
     {
         String sql="SELECT COUNT(*) from USER WHERE ID_USER=? and POINTS>=?";
