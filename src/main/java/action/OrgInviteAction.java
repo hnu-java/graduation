@@ -97,7 +97,7 @@ public class OrgInviteAction extends ActionSupport implements RequestAware, Sess
         boolean res=orgInviteDao.deleteUser(orgInvite.getID_USER(),orgInvite.getORG_NAME());
         if (res) {
             String content1 = orgInvite.getUSER_NAME()+"已被您移出机构"+orgInvite.getORG_NAME();
-            String Adminname = org.findAdminName(orgInvite.getID_ORGANIZATION());
+            String Adminname = org.findUserName(orgInvite.getORG_NAME());
             String content2 = "您已被"+Adminname+"移出机构"+orgInvite.getORG_NAME();
             Date dt=new Date();
             history.hasAcceptorDeleteORG(sessionUser.getId_user(),content1, dt,orgInvite.getORG_NAME());

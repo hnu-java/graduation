@@ -24,4 +24,6 @@ public interface ProjectDao {
     String findName(int id_Project);        //获取项目ID对应的NAME
     String findAdminName(int id_project);
     boolean copyAll(int id_document,int new_idDocument,int version);
+
+    boolean modified(int flag,int id_project);
 }

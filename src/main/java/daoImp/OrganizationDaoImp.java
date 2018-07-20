@@ -58,10 +58,20 @@ public class OrganizationDaoImp extends DAO<OrganizationEntity> implements Organ
         return name;
     }
     @Override
-    public String findAdminName(int ID_ORGANIZATION) {
+    public String findUserName(String ORG_NAME) {
         //查询机构管理员ID
+        String sql0 = "select ID_USER from ORGANIZATION where NAME = ?";
+        int AdminID = Integer.valueOf(getForValue(sql0,ORG_NAME).toString());
+        //查询机构管理员名字
+        String sql1 = "select NAME from USER where ID_USER = ?";
+        String AdminName = getForValue(sql1,AdminID);
+        System.out.println("adminname:"+AdminName);
+        return AdminName;
+    }
+
+    public String findAdminName(int ID_ORGANIZATION) {
         String sql0 = "select ID_USER from ORGANIZATION where ID_ORGANIZATION = ?";
-        int AdminID = getForValue(sql0,ID_ORGANIZATION);
+        int AdminID = Integer.valueOf(getForValue(sql0,ID_ORGANIZATION).toString());
         //查询机构管理员名字
         String sql1 = "select NAME from USER where ID_USER = ?";
         String AdminName = getForValue(sql1,AdminID);

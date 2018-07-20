@@ -44,8 +44,8 @@
     <div style="padding: 20px" class="col-md-12 float-e-margins">
         <div class="col-md-6">
             <div class="ibox-title">
-            <div style="float: left;margin-left: 5px"><div style="float: left;margin-left: 5px"><span><strong>当前消息</strong></span></div></div>
-        </div>
+                <div style="float: left;margin-left: 5px"><div style="float: left;margin-left: 5px"><span><strong>当前消息</strong></span></div></div>
+            </div>
             <div class="bootstrap-table ibox-content">
             <table id="info" data-toggle="table"
                    data-classes="table table-no-bordered"

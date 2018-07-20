@@ -159,8 +159,8 @@
                     valign: 'middle'
                 },
                 {
-                    field: 'intro',
-                    title: '简介',
+                    field: 'document_name',
+                    title: '文档',
                     sortable: true,
                     align: 'center'
                 },
@@ -175,6 +175,12 @@
                     title: '邮箱',
                     sortable: true,
                     align: 'center'
+                },{
+                    field: 'flag',
+                    title: '操作',
+                    sortable: true,
+                    align: 'center',
+                    formatter: "rename"
                 }
             ]
         },
@@ -203,9 +209,12 @@
                     align: 'center'
                 },
                 {
-                    field: 'mail',
-                    title: '邮箱',
-                    align: 'center'
+                    field: 'flag',
+                    title: '操作',
+                    sortable: true,
+                    align: 'center',
+                    events: "actionEvents2",
+                    formatter: "rename"
                 }
             ]
         },
@@ -214,6 +223,15 @@
             Ffive2(element)
         }
     );
+
+    function rename(value,row,index) {
+        var flag=parseInt(row.flag);
+        if(flag===0)
+            return ['<button class="btn btn-info text-center btn-xs " >查看详情</button>'].join('');
+        else if(flag===1)
+            return ['<button class="btn btn-info text-center btn-xs " >不可查看</button>'].join('');
+    }
+
     function Ffive(element) {
         $.ajax(
             {

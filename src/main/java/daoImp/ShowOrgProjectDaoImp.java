@@ -12,7 +12,7 @@ public class ShowOrgProjectDaoImp extends DAO<ShowOrgProjectEntity> implements S
         String sql1 = "select ID_ORGANIZATION from ORGANIZATION where NAME=?";
         int id_org=getForValue(sql1,name);
         System.out.println(id_org);
-        String sql2 = "select * from VIEW_showORGPROJECT where ID_ORGANIZATION=? and STATE=1";
+        String sql2 = "select * from view_org_project where ID_ORGANIZATION=? and STATE=1";
         List<ShowOrgProjectEntity> list=getForList(sql2,id_org);
         return list;
     }
@@ -22,7 +22,7 @@ public class ShowOrgProjectDaoImp extends DAO<ShowOrgProjectEntity> implements S
         String sql1 = "select ID_ORGANIZATION from ORGANIZATION where NAME=?";
         int id_org=getForValue(sql1,name);
         System.out.println(id_org);
-        String sql2 = "select * from VIEW_showORGPROJECT where ID_ORGANIZATION=? and STATE=0";
+        String sql2 = "select * from view_org_project where ID_ORGANIZATION=? and STATE=0";
         List<ShowOrgProjectEntity> list=getForList(sql2,id_org);
         return list;
     }

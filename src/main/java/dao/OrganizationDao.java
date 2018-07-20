@@ -20,5 +20,6 @@ public interface OrganizationDao {
     List<OrganizationEntity> getMyOrg(int id);
     String findName(int ID_ORGANIZATION);  //获取机构ID对应的NAME
     String findAdminName(int ID_ORGANIZATION);
+    String findUserName(String ORG_NAME);
     int days(String org_name) throws ParseException;
 }

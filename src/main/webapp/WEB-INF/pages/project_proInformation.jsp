@@ -126,6 +126,8 @@
                             <s:if test='#session.project.state==0'>
                                 <span class="label label-default">已完成</span>
                             </s:if>
+
+
                         </h2>
                     </div>
                 </div>
@@ -133,7 +135,9 @@
                     <s:if test='#session.project.state==1'>
                         <s:if test='#session.rank==3'>
                             <%--<button id="createDoc" class="btn btn-success"><i class="fa fa-file"></i>新建文档</button>--%>
-                            <button id="endProject" class="btn btn-danger pull-right">结束项目</button>
+                            <div style="float: right;margin-right: 20px">
+                                <button id="endProject"  class="btn btn-danger">结束项目</button>
+                            </div>
                         </s:if>
                     </s:if>
                 </div>
@@ -141,13 +145,14 @@
             <div class="row">
                 <div class="col-sm-5">
                     <dl class="dl-horizontal">
-
                         <dt><h3>项目组长：</h3></dt>
                         <dd><h3><s:property value="#session.PM.name"/></h3></dd>
 
-                        <dt><h3>所属机构：</h3></dt>
-                        <dd><h3><s:property value="#session.project.orgName"/></h3></dd>
+                        <dt><h3>创建时间：</h3></dt>
+                        <dd><h3><s:property value="#session.project.date"/></h3></dd>
 
+                        <dt><h3>项目简介：</h3></dt>
+                        <dd><h3><s:property value="#session.project.intro"/></h3></dd>
                     </dl>
                 </div>
                 <div class="col-sm-7">
@@ -156,16 +161,25 @@
                         <dt><h3>当前版本：</h3></dt>
                         <dd><h3><s:property value="#session.version"/></h3></dd>
 
-                        <dt><h3>创建时间：</h3></dt>
-                        <dd><h3><s:property value="#session.project.date"/></h3></dd>
+                        <dt><h3>所属机构：</h3></dt>
+                        <dd><h3><s:property value="#session.project.orgName"/></h3></dd>
+                    <s:if test='#session.project.state==1'>
+                        <s:if test='#session.rank==3'>
+                        <s:if test='#session.project.id_Organization!=""'>
+                            <dt><h3>权限设置：</h3></dt>
+                            <dd><h3><s:if test='#session.project.flag==0'>
+                                        允许机构管理员查看文档
+                                    </s:if>
+                                    <s:if test='#session.project.flag==1'>
+                                        拒绝机构管理员查看文档
+                                    </s:if>
+                                    <button id="modified" class="btn btn-info btn-xs">更改</button>
+                            </h3></dd>
+                        </s:if>
+                        </s:if>
+                    </s:if>
                     </dl>
                 </div>
-            </div>
-            <div class="row col-sm-12 ">
-                    <dl class="dl-horizontal">
-                        <dt><h3>项目简介：</h3></dt>
-                        <dd><h3><s:property value="#session.project.intro"/></h3></dd>
-                    </dl>
             </div>
             <div class="row m-t-sm">
                 <div class="col-sm-12">
@@ -789,6 +803,69 @@
             }
         })
     });
+
+    $("button#modified").click(function () {
+        var flag= parseInt(${sessionScope.project.flag});
+        alert(flag);
+        if(flag === 1){
+            swal(
+                {
+                    title: "您确认更改权限设置为允许吗",
+                    text: "更改后机构管理员可以查看您机构的文档",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: true
+                },function () {
+                    $.ajax({
+                        url: "project-modified",
+                        dataType: "json",
+                        data: {
+                            Id_Project: id_Project,
+                            flag: flag
+                        },
+                        type: "Post",
+                        async: "false",
+                        success: function (){
+                            swal("成功","成功","success")
+                        }, error: function () {
+                            swal("更改失败！", "请检查你的网络", "failed");
+                        }
+                    })
+                })
+        }
+        else{
+            swal(
+                {
+                    title: "您确认更改权限设置为不允许吗",
+                    text: "更改后机构管理员无法查看您项目的文档",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: true
+                },function () {
+                    $.ajax({
+                        url: "project-modified",
+                        dataType: "json",
+                        data: {
+                            Id_Project: id_Project,
+                            flag: flag
+                        },
+                        type: "Post",
+                        async: "false",
+                        success: function () {
+                            swal("成功","成功","success");
+                        }, error: function () {
+                            swal("更改失败！", "请检查你的网络", "failed");
+                        }
+                    })
+                })
+        }
+    })
 </script>
 
 <%--评论区--%>

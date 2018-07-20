@@ -118,6 +118,20 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         dataMap.put("res",json);
         return SUCCESS;
     }
+
+    public String modified(){
+        System.out.println(project.getFlag());
+        dataMap = new HashMap<>();
+        projectDao = new ProjectDaoImp();
+        boolean res = projectDao.modified(project.getFlag(),project.getId_Project());
+        if(res){
+            project = projectDao.getOne(project.getId_Project());
+        }
+        session.put("project",project);
+        dataMap.put("res",res);
+        return SUCCESS;
+    }
+
     @Override
     public String execute() throws Exception {
         dataMap = new HashMap<String, Object>();

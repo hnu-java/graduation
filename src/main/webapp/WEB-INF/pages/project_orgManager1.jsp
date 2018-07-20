@@ -287,6 +287,7 @@
             '<a class="delete" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >踢出机构</button></a>'
         ].join('');
     }
+
     function rename(value,row,index) {
         var state=parseInt(row.STATE);
         if(state==0)

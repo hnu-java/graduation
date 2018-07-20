@@ -11,10 +11,9 @@ public class ShowOrgProjectEntity {
     private int state;
     private int id_organization;
     private String intro;
+    private int flag;
     private int id_user;
-    private int rank;
     private String user_name;
-    private String tel;
     private String mail;
 
     public int getId_project() {
@@ -73,20 +72,20 @@ public class ShowOrgProjectEntity {
         this.intro = intro;
     }
 
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
+
     public int getId_user() {
         return id_user;
     }
 
     public void setId_user(int id_user) {
         this.id_user = id_user;
-    }
-
-    public int getRank() {
-        return rank;
-    }
-
-    public void setRank(int rank) {
-        this.rank = rank;
     }
 
     public String getUser_name() {
@@ -97,14 +96,6 @@ public class ShowOrgProjectEntity {
         this.user_name = user_name;
     }
 
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
-
     public String getMail() {
         return mail;
     }
@@ -113,7 +104,7 @@ public class ShowOrgProjectEntity {
         this.mail = mail;
     }
 
-    public ShowOrgProjectEntity(int id_project, String project_name, Timestamp date, String document_name, int state, int id_organization, String intro, int id_user, int rank, String user_name, String tel, String mail) {
+    public ShowOrgProjectEntity(int id_project, String project_name, Timestamp date, String document_name, int state, int id_organization, String intro, int flag, int id_user, String user_name, String mail) {
         this.id_project = id_project;
         this.project_name = project_name;
         this.date = date;
@@ -121,10 +112,9 @@ public class ShowOrgProjectEntity {
         this.state = state;
         this.id_organization = id_organization;
         this.intro = intro;
+        this.flag = flag;
         this.id_user = id_user;
-        this.rank = rank;
         this.user_name = user_name;
-        this.tel = tel;
         this.mail = mail;
     }
 

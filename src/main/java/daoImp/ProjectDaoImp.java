@@ -231,5 +231,22 @@ public class ProjectDaoImp extends DAO<ProjectEntity> implements ProjectDao {
         return true;
     }
 
+    @Override
+    public boolean modified(int flag,int id_project) {
+        try{
+            if(flag == 1){
+                String sql1="update project set FLAG = 0 where ID_PROJECT = ?";
+                update(sql1,id_project);
+            }else if(flag == 0){
+                String sql1="update project set FLAG = 1 where ID_PROJECT = ?";
+                update(sql1,id_project);
+            }
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+
+    }
+
 
 }

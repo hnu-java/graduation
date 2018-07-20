@@ -65,8 +65,8 @@
             <span style="color:black">个构件库</span>
         </div>
         <div class="col-md-2 ">
-            <a href="user-jmpMyprofile"><img src="<%=basePath %>/img/Home4.jpg" height="160px"><br/></a>
-            <span style="color:#365063 ">个人中心</span><br/>
+            <a href="user-jmpMessageCenter"><img src="<%=basePath %>/img/Home4.jpg" height="160px"><br/></a>
+            <span style="color:#365063 ">消息中心</span><br/>
             <span style="color:black">收到了</span>
             <span style="color: #ff0000">
                 <s:if test='#session.nowNews==null'>
