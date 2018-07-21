@@ -27,7 +27,7 @@ public interface UserDao {
     int projectNumberNow(int id);
 	int projectNumberHistory(int id);
 	int nowNews(int id);
-	int Mpoint();
+	int Mpoint(int id_rule);
 	int msgNum(int id_user);
 	List<UserEntity> getOrgAllMem(int user_id,String name);
 	boolean nameAndMail(String name, String email);

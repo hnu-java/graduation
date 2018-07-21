@@ -347,15 +347,16 @@
                         async: "false",
                         success: function (result) {
                             var points = "${session.user.points}";
-                            if(points>5){
+                            var Npoints = "${session.Mpoint1}";
+                            if(points>Npoints){
                                 if (result.res === true) {
-                                swal("申请成功发出!", "机构申请已受理", "success");
+                                swal("申请成功发出!", "机构申请已受理,管理员同意后则扣除${session.Mpoint1}积分", "success");
                                 $('button#cancel-apply').click();
                             }
                                 else if(result.res === false)
                                     swal("申请失败！", "机构名被占用。", "error");
                             }
-                            else swal("申请失败！", "您的积分少于5，请充值。", "error");
+                            else swal("申请失败！", "您的积分少于${sessionScope.Mpoint1}，请充值。", "error");
                         },
                         error: function () {
                             swal({

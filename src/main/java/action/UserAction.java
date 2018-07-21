@@ -58,8 +58,14 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
             int orgManager=userDao.orgManager(user.getId_user());
             session.put("user",user);
             session.put("orgManager",orgManager);
-            int Mpoint=userDao.Mpoint();
-            session.put("Mpoint",Mpoint);
+            int Mpoint1=userDao.Mpoint(1);
+            int Mpoint2=userDao.Mpoint(2);
+            int Mpoint3=userDao.Mpoint(3);
+            int day4=userDao.Mpoint(4);
+            session.put("Mpoint1",Mpoint1);
+            session.put("Mpoint2",Mpoint2);
+            session.put("Mpoint3",Mpoint3);
+            session.put("day4",day4);
             String msgNum = Integer.toString(userDao.msgNum(user.getId_user()));
             Cookie cookie = new Cookie("msgNum",msgNum);
             System.out.println(cookie.getValue());
@@ -96,8 +102,6 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
                 user = userDao.getOne(user.getName());
                 session.put("user",user);
             }
-            System.out.println(user.getId_user()+" "+day);
-            System.out.println(res1);
             dataMap.put("res1", res1);
         }
         return "success";
@@ -230,6 +234,10 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         return "registrationPage";
     }
     public String jmpReplacepassword(){
+        int Mpoint3=userDao.Mpoint(3);
+        int day4=userDao.Mpoint(4);
+        session.put("Mpoint3",Mpoint3);
+        session.put("day4",day4);
         return "replacepasswordPage";
     }
     public String jmpHomepage() {

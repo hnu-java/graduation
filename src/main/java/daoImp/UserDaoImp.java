@@ -65,9 +65,9 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
         else return false;
     }
 
-    public int Mpoint(){
+    public int Mpoint(int id_rule){
         String sql = "select points from points_rule where id_rule = ?";
-        int points = getForValue(sql,2);
+        int points = getForValue(sql,id_rule);
         return points;
     }
 
@@ -114,6 +114,9 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
     }
 
     public boolean registration(String name, String password1, String password2, String mail) {
+        String sql8="select points from points_rule where id_rule = ?";
+        int points = getForValue(sql8,3);
+        int days = getForValue(sql8,4);
         String sql = "insert into USER(NAME,PASSWORD,MAIL,POINTS,deadline) values(?,?,?,?,?)";
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -123,9 +126,9 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
                 date = formatter.parse(tmp);
                 Calendar c = Calendar.getInstance();
                 c.setTime(date);
-                c.add(Calendar.DATE,30);
+                c.add(Calendar.DATE,days);
                 date = c.getTime();
-                updateThrowException(sql, name, password1,mail,30,date);
+                updateThrowException(sql, name, password1,mail,points,date);
             }catch (SQLException e) {
                 e.printStackTrace();
                 return false;
