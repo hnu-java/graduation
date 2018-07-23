@@ -233,13 +233,14 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         return "myprofilePage";
     }
     public String jmpRegistration() {
-        return "registrationPage";
-    }
-    public String jmpReplacepassword(){
+        userDao = new UserDaoImp();
         int Mpoint3=userDao.Mpoint(3);
         int day4=userDao.Mpoint(4);
         session.put("Mpoint3",Mpoint3);
         session.put("day4",day4);
+        return "registrationPage";
+    }
+    public String jmpReplacepassword(){
         return "replacepasswordPage";
     }
     public String jmpHomepage() {

@@ -74,9 +74,9 @@
                         <tr >
                             <select id="select" name="select" style="width:  300px;height: 30px">
                                 <option value="0" selected="selected">请选择兑换天数</option>
-                                <option value="30">兑换30天-${sessionScope.Mpoint}积分</option>
-                                <option value="90">兑换90天-${(sessionScope.Mpoint)*3}积分</option>
-                                <option value="180">兑换180天-${(sessionScope.Mpoint)*6}积分</option>
+                                <option value="30">兑换30天-${sessionScope.Mpoint2}积分</option>
+                                <option value="90">兑换90天-${(sessionScope.Mpoint2)*3}积分</option>
+                                <option value="180">兑换180天-${(sessionScope.Mpoint2)*6}积分</option>
                             </select>
                         </tr>
                         </tbody>
