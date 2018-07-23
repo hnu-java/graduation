@@ -180,14 +180,14 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
     public UserEntity getOne(String name) throws ParseException {
         String sql = "select * from USER where name=?";
         UserEntity user1 = get(sql, name);
-        String sql1="SELECT DATEDIFF(?,?) AS DiffDate";
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        String tmp = sdf.format(date);
-        java.text.SimpleDateFormat formatter = new  SimpleDateFormat( "yyyy-MM-dd");
-        date = formatter.parse(tmp);
-        int res = Integer.valueOf(getForValue(sql1,user1.getDeadline(),date).toString());
-        user1.setDays(res);
+//        String sql1="SELECT DATEDIFF(?,?) AS DiffDate";
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        Date date = new Date();
+//        String tmp = sdf.format(date);
+//        java.text.SimpleDateFormat formatter = new  SimpleDateFormat( "yyyy-MM-dd");
+//        date = formatter.parse(tmp);
+//        int res = Integer.valueOf(getForValue(sql1,user1.getDeadline(),date).toString());
+//        user1.setDays(res);
         return user1;
     }
     public UserEntity getOne1(int id) {

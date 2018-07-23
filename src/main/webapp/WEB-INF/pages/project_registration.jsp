@@ -173,7 +173,7 @@
                         swal("验证码错误！", "请检查您的验证码输入是否正确", "error");
                     }
                     else if (result.res === true) {
-                        var content = "获得" + "${sessionScope.Mpoint3}" + "积分与" + "${sessionScope.day4}" +"天试用期";
+                        var content = "获得" + "${sessionScope.Mpoint3}" + "积分";
                         swal({
                             title: "注册成功!",
                             text: content,

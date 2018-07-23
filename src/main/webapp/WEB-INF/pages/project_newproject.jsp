@@ -178,7 +178,7 @@
             async: "false",
             success: function (result) {
                 if(result.points >= ${sessionScope.Mpoint5}) {
-                    if (result.days >= 0) {
+                    // if (result.days >= 0) {
                         if (result.res === true) {
                             swal(
                                 {
@@ -198,9 +198,9 @@
                         else {
                             showtoast2("error", "创建失败", "操作失败");
                         }
-                    } else {
-                        swal("您选择的机构已封停！", "请重新选择机构或联系机构管理员续费", "error")
-                    }
+                    // } else {
+                    //     swal("您选择的机构已封停！", "请重新选择机构或联系机构管理员续费", "error")
+                    // }
                 }else{
                     swal("您剩余的积分不足！","请充值（需要${sessionScope.Mpoint5}积分）","error")
                 }

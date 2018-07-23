@@ -54,19 +54,17 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         if(res==true) {
             user = userDao.getOne(user.getName());
             dataMap.put("flag",user.getFlag());
-            dataMap.put("days",user.getDays());
+//            dataMap.put("days",user.getDays());
             int orgManager=userDao.orgManager(user.getId_user());
             session.put("user",user);
             session.put("orgManager",orgManager);
             int Mpoint1=userDao.Mpoint(1);
             int Mpoint2=userDao.Mpoint(2);
             int Mpoint3=userDao.Mpoint(3);
-            int day4=userDao.Mpoint(4);
             int Mpoint5=userDao.Mpoint(5);
             session.put("Mpoint1",Mpoint1);
             session.put("Mpoint2",Mpoint2);
             session.put("Mpoint3",Mpoint3);
-            session.put("day4",day4);
             session.put("Mpoint5",Mpoint5);
             String msgNum = Integer.toString(userDao.msgNum(user.getId_user()));
             Cookie cookie = new Cookie("msgNum",msgNum);
