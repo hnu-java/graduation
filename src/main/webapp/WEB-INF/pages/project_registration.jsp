@@ -169,7 +169,6 @@
                 type: "Post",
                 async: "false",
                 success: function (result) {
-                    alert("${sessionScope.Mpoint3}");
                     if(result.consequence === "error"){
                         swal("验证码错误！", "请检查您的验证码输入是否正确", "error");
                     }
