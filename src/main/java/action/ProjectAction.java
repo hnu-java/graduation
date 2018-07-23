@@ -40,27 +40,38 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     private Map<String,Object> session;
     private Map<String, Object> dataMap;
     private int documentId;
+    private UserDao userDao;
+    private UserEntity user;
 
     public String create() throws ParseException {
         dataMap = new HashMap<String, Object>();
         projectDao = new ProjectDaoImp();
+        userDao = new UserDaoImp();
         OrganizationDao organizationDao = new OrganizationDaoImp();
 //        System.out.println(project.getName()+" "+project.getDocument_Name());
         System.out.println(project.getOrgName());
-        if (project.getOrgName() != null && project.getOrgName() != ""){
-            int days = organizationDao.days(project.getOrgName());
-            if( days < 0){
-                dataMap.put("days",days);
-            }else{
-                dataMap.put("days",days);
-                boolean res= projectDao.save(project);
-                dataMap.put("res",res);
+        UserEntity seesionUser=(UserEntity)session.get("user");
+        int points = seesionUser.getPoints();
+        int Npoints = (Integer)session.get("Mpoint5");
+        dataMap.put("points",points);
+        if(points >= Npoints) {
+            if (project.getOrgName() != null && project.getOrgName() != "") {
+                int days = organizationDao.days(project.getOrgName());
+                if (days < 0) {
+                    dataMap.put("days", days);
+                } else {
+                    dataMap.put("days", days);
+                    boolean res = projectDao.save(project);
+                    dataMap.put("res", res);
+                }
+            } else {
+                dataMap.put("days", 0);
+                boolean res = projectDao.save(project);
+                dataMap.put("res", res);
             }
-        }else{
-            dataMap.put("days",0);
-            boolean res= projectDao.save(project);
-            dataMap.put("res",res);
         }
+        user = userDao.getOne(seesionUser.getName());
+        session.put("user",user);
         return SUCCESS;
     }
 

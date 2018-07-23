@@ -177,28 +177,32 @@
             type: "Post",
             async: "false",
             success: function (result) {
-                if(result.days >= 0){
-                    if(result.res===true) {
-                        swal(
-                            {
-                                title: "创建成功",
-                                text: "点击跳转项目列表",
-                                type: "",
-                                showCancelButton: true,
-                                confirmButtonColor: "#18a689",
-                                confirmButtonText: "确定",
-                                cancelButtonText: "取消",
-                                closeOnConfirm: false
-                            },function () {
-                                location.href = "user-jmpCurrentProjectList";
-                            }
+                if(result.points >= ${sessionScope.Mpoint5}) {
+                    if (result.days >= 0) {
+                        if (result.res === true) {
+                            swal(
+                                {
+                                    title: "创建成功",
+                                    text: "点击跳转项目列表",
+                                    type: "",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#18a689",
+                                    confirmButtonText: "确定",
+                                    cancelButtonText: "取消",
+                                    closeOnConfirm: false
+                                }, function () {
+                                    location.href = "user-jmpCurrentProjectList";
+                                }
                             )
-                    }
-                    else{
-                        showtoast2("error", "创建失败", "操作失败");
+                        }
+                        else {
+                            showtoast2("error", "创建失败", "操作失败");
+                        }
+                    } else {
+                        swal("您选择的机构已封停！", "请重新选择机构或联系机构管理员续费", "error")
                     }
                 }else{
-                    swal("您选择的机构已封停！","请重新选择机构或联系机构管理员续费","error")
+                    swal("您剩余的积分不足！","请充值（需要${sessionScope.Mpoint5}积分）","error")
                 }
             },
             error: function (result) {

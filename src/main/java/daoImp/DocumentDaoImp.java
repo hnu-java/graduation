@@ -12,8 +12,21 @@ public class DocumentDaoImp extends DAO<DocumentEntity> implements DocumentDao {
     @Override
     public int create(int id_project, int version, Timestamp timestamp, int id_user) {
         String sql = "insert into DOCUMENT(ID_PROJECT, VERSION, DATE, ID_USER) VALUES (?,?,?,?)";
+        String sql1="select points from points_rule where id_rule = ?";
+        String sql2="update USER set points = points - ? WHERE ID_USER=?";
+        String sql3="insert into points_record(id_user,content,date) values(?,?,?)";
+        String sql4="select name from project where id_project = ?";
+        String sql5="select document_name from project where id_project = ?";
+        Timestamp createDate = new Timestamp(new java.util.Date().getTime());
         try {
             int id =  insert(sql,id_project,version,timestamp,id_user);
+            //扣分，记录
+            int points = getForValue(sql1,5);
+            update(sql2,points,id_user);
+            String name = (String)getForValue(sql4,id_project);
+            String doc_name = (String)getForValue(sql5,id_project);
+            String content = "于" + createDate + "消耗" + points + "积分，创建“" + name +"”项目的“" + doc_name + "”文档";
+            update(sql3,id_user,content,createDate);
             return id;
         } catch (SQLException e) {
             e.printStackTrace();

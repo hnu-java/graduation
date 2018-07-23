@@ -86,6 +86,7 @@
             <tr><td>&nbsp</td></tr>
         </table>
         <span class="col-md-6 col-md-offset-4">创建一个项目成为组长，或者接受别人的项目邀请成为组员就可以参与项目需求文档的编写啦！</span>
+        <span class="col-md-6 col-md-offset-4" style="color: red">需要${sessionScope.Mpoint5}积分创建项目</span>
         <a href="user-jmpNewproject"><img class="col-md-offset-1" src="<%=basePath %>/img/u7.png"></a>
         <div class="row J_mainContent" id="content-main">
             <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="" frameborder="0" data-id="" seamless></iframe>
