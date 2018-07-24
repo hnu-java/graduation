@@ -56,7 +56,7 @@
 
         <label class="control-label col-sm-3"><button class="btn-circle btn-default"><img src="<%=basePath %>img/u11.png" style="height: 18px;width: 20px"></button>　项目名称：*</label>
         <div class="col-sm-4">
-            <input type="text"  id="proName" class="form-control text-center" placeholder="请输入项目名称  (必填）" required="true"/>
+            <input type="text"  id="proName" class="form-control text-center" maxlength="45" placeholder="请输入项目名称  (必填）" required="true"/>
             <i id="warning1"></i>
         </div>
 
@@ -69,7 +69,7 @@
     <div class="form-group has-feedback">
         <label class="control-label col-sm-3"><button class="btn-circle btn-default"><img src="<%=basePath %>img/u12.png" style="height: 18px;width: 20px"></button>　文档名称：*</label>
         <div class="col-sm-4">
-            <input type="text"  id="docName" class="form-control text-center" placeholder="请输入文档名称（必填）" required="true"/>
+            <input type="text"  id="docName" class="form-control text-center" maxlength="30" placeholder="请输入文档名称（必填）" required="true"/>
             <i id="warning2"></i>
         </div>
     </div>
@@ -102,7 +102,7 @@
     <div class="form-group has-feedback">
         <label class="control-label col-sm-3"><button class="btn-circle btn-default"><img src="<%=basePath %>img/u14.png" style="height: 18px;width: 20px"></button>　项目简介：</label>
         <div class="col-sm-4">
-            <textarea type="text"  id="intro" class="form-control text-center" placeholder="输入项目的基本介绍" rows="6"></textarea>
+            <textarea type="text"  id="intro" class="form-control text-center"  maxlength="120" placeholder="输入项目的基本介绍" rows="6"></textarea>
             <a class="glyphicon glyphicon-remove form-control-feedback"style="pointer-events: auto"></a>
         </div>
     </div>

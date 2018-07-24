@@ -62,7 +62,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label>邀请</label>
-                    <input id="UserName" type="text" placeholder="请输入用户名" class="form-control" required="true" autocomplete="off">
+                    <input id="UserName" type="text" maxlength="20" placeholder="请输入用户名" class="form-control" required="true" autocomplete="off">
                 </div>
             </div>
             <div class="modal-footer">
@@ -758,7 +758,7 @@
                             showtoast("success", "转移成功", "成功转移组长给该成员");
                             location.href = "user-jmpCurrentProjectList";
                         }
-                        else showtoast("error", "转移失败", "用户名不存在!");
+                        else showtoast("error", "转移失败", "该用户不在此项目组内");
                     },
                     error: function (result) {
                         showtoast("error", "转移失败", "用户名不存在!")
