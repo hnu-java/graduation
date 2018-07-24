@@ -47,7 +47,7 @@
                 <div class="ibox-title">
                     <div style="float: left;margin-left: 5px"><span><strong>基本资料</strong></span></div>
                     <div id="test1" style="float: left;margin-left: 10px;width: 70px"><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">修改资料</button></div>
-                    <div id="test2" style="float: left;width: 70px"><a href="user-jmpPayment"><button type="button" class="btn btn-primary btn-xs" >会员续费</button></a></div>
+                    <div id="test2" style="float: left;width: 70px"><a href="user-jmpPayment"><button type="button" class="btn btn-primary btn-xs" >积分充值</button></a></div>
                     <div id="test3" style="float: left"><a href="user-jmpPointsRecord"><button type="button" class="btn btn-primary btn-xs" >积分记录</button></a></div>
                 </div>
                 <div style="padding-left: 80px" class="ibox-content">
@@ -348,9 +348,13 @@
                         success: function (result) {
                             var points = "${session.user.points}";
                             var Npoints = "${session.Mpoint1}";
-                            if(points>Npoints){
+                            alert(points);
+                            alert(Npoints);
+                            alert(result.res);
+                            if(points > Npoints){
+                                alert(result.res);
                                 if (result.res === true) {
-                                swal("申请成功发出!", "机构申请已受理,管理员同意后则扣除${session.Mpoint1}积分", "success");
+                                    swal("申请成功发出!", "机构申请已受理,管理员同意后则扣除${session.Mpoint1}积分", "success");
                                 $('button#cancel-apply').click();
                             }
                                 else if(result.res === false)
