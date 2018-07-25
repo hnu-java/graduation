@@ -138,7 +138,7 @@
                 </table>
             </div>
             <div style="padding: 25px 0px 20px 18px;font-family: KaiTi;font-size: 17px;color: red" class="white-bg">
-                <p>会员有效期☞：${sessionScope.user.deadline}</p>
+                <%--<p>会员有效期☞：${sessionScope.user.deadline}</p>--%>
             </div>
             </div>
         </div>
@@ -181,7 +181,7 @@
                     <h4 class="modal-title">申请机构</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group"><label>机构名</label> <input id="org_name" type="text" placeholder="请输入机构名(必填，不超过30字符)" maxlength="30" class="form-control" required="required"></div>
+                    <div class="form-group"><label>机构名</label> <input id="org_name" type="text" placeholder="请输入机构名(必填，不超过30字符)" maxlength="40" class="form-control" required="required"></div>
                     <div class="form-group"><label>备注</label> <input id="message" type="text" placeholder="请输入备注(可不填，不超过60字符)"  maxlength="60" class="form-control" required="required"></div>
                 </div>
                 <div class="modal-footer">

@@ -315,17 +315,21 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
 
         UserDao userDao = new UserDaoImp();
         UserEntity user = userDao.getOne(username);
-
-        projectDao = new ProjectDaoImp();
-        project = projectDao.getOne(id_Project);
-
-        UserEntity pm = projectDao.getPM(project);
-
-        String content = pm.getName() + "邀请你加入"+project.getName();
-
-        boolean res = projectDao.inviteMember(user.getId_user(),id_Project,content);
-
-        dataMap.put("res",res);
+        if(user == null){
+            boolean res = false;
+            dataMap.put("One",0);
+            dataMap.put("res",res);
+        }
+        else {
+            projectDao = new ProjectDaoImp();
+            project = projectDao.getOne(id_Project);
+            UserEntity pm = projectDao.getPM(project);
+            String content = pm.getName() + "邀请你加入" + project.getName();
+            boolean res = projectDao.inviteMember(user.getId_user(), id_Project, content);
+            int One = userDao.JudgmentOne(username);
+            dataMap.put("One",One);
+            dataMap.put("res",res);
+        }
         return SUCCESS;
     }
 

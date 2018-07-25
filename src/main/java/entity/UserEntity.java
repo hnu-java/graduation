@@ -26,13 +26,12 @@ public class UserEntity {
     private Date deadline;
     private int days;
 
-
-    public Date getDeadline() {
-        return deadline;
+    public int getId_user() {
+        return id_user;
     }
 
-    public void setDeadline(Date deadline) {
-        this.deadline = deadline;
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
     }
 
     public int getVerification() {
@@ -41,22 +40,6 @@ public class UserEntity {
 
     public void setVerification(int verification) {
         this.verification = verification;
-    }
-
-    public int getFlag() {
-        return flag;
-    }
-
-    public void setFlag(int flag) {
-        this.flag = flag;
-    }
-
-    public int getId_user() {
-        return id_user;
-    }
-
-    public void setId_user(int id_user) {
-        this.id_user = id_user;
     }
 
     public String getPassword() {
@@ -147,12 +130,28 @@ public class UserEntity {
         this.rank = rank;
     }
 
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
+
     public int getPoints() {
         return points;
     }
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
     }
 
     public int getDays() {
