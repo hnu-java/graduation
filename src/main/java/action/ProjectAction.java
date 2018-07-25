@@ -55,19 +55,27 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         int Npoints = (Integer)session.get("Mpoint5");
         dataMap.put("points",points);
         if(points >= Npoints) {
-//            if (project.getOrgName() != null && project.getOrgName() != "") {
+          if (project.getOrgName() != null && project.getOrgName() != "") {
 //                int days = organizationDao.days(project.getOrgName());
 //                if (days < 0) {
 //                    dataMap.put("days", days);
 //                } else {
 //                    dataMap.put("days", days);
-//                    boolean res = projectDao.save(project);
-//                    dataMap.put("res", res);
+              boolean res = projectDao.save(project);
+              dataMap.put("res", res);
+              boolean exist = projectDao.exist(project.getOrgName());
+              boolean belong = projectDao.belong(project.getOrgName(),seesionUser.getId_user());
+              System.out.println(belong);
+              dataMap.put("belong", belong);
+              dataMap.put("exist", exist);
 //                }
-//            } else {
+           } else {
 //                dataMap.put("days", 0);
-                boolean res = projectDao.save(project);
-                dataMap.put("res", res);
+              boolean res = projectDao.save(project);
+              dataMap.put("res", res);
+              dataMap.put("exist", true);
+              dataMap.put("belong", true);
+          }
         }
         user = userDao.getOne(seesionUser.getName());
         session.put("user",user);

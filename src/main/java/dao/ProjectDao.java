@@ -26,4 +26,6 @@ public interface ProjectDao {
     boolean copyAll(int id_document,int new_idDocument,int version);
 
     boolean modified(int flag,int id_project);
+    boolean exist(String org_name);
+    boolean belong(String org_name,int id_user);
 }
