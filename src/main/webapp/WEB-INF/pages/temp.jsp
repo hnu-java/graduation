@@ -24,6 +24,7 @@
     <link href="<%=basePath %>/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
     <link href="<%=basePath %>/css/animate.min.css" rel="stylesheet">
     <link href="<%=basePath %>/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="<%=basePath%>/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 </head>
 
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
@@ -49,12 +50,12 @@
                         </li>
                         <li class="divider"></li>
                         </s:if>
-                        <li class="J_tabCloseAll"><a class="J_menuItem" href="login-jmpLogin">安全退出</a>
+                        <li class="J_tabCloseAll"><a id="exit" class="J_menuItem" >安全退出</a>
                         </li>
                     </ul>
 
                     <li class="dropdown hidden-xs">
-                        <a class="right-sidebar-toggle" aria-expanded="false" href="login-jmpLogin">
+                        <a id="exit1" class="right-sidebar-toggle" aria-expanded="false" >
                             <img src="<%=basePath %>/img/exit.png">
                         </a>
                     </li>
@@ -78,6 +79,8 @@
 <script src="<%=basePath %>/js/plugins/pace/pace.min.js"></script>
 <script src="<%=basePath %>/js/plugins/toastr/toastr.min.js"></script>
 <script src="<%=basePath %>/js/mjy.js"></script>
+<script src="<%=basePath%>/js/plugins/sweetalert/sweetalert.min.js"></script>
+
 
 </body>
 <script>
@@ -98,6 +101,36 @@
         oDiv.onclick = function(){
         };
         oDiv.click();
+    })
+    $("#exit").click(function () {
+        swal(
+            {
+                title: "您确认退出吗？",
+                text: "确认请点击退出",
+                type: "",
+                showCancelButton: true,
+                confirmButtonColor: "#18a689",
+                confirmButtonText: "退出",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            }, function () {
+                location.href = "login-jmpLogin";
+        })
+    }),
+    $("#exit1").click(function () {
+        swal(
+            {
+                title: "您确认退出吗？",
+                text: "确认请点击退出",
+                type: "",
+                showCancelButton: true,
+                confirmButtonColor: "#18a689",
+                confirmButtonText: "退出",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            }, function () {
+                location.href = "login-jmpLogin";
+            })
     })
 </script>
 <!-- Mirrored from www.zi-han.net/theme/hplus/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:17:11 GMT -->

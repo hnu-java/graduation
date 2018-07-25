@@ -348,17 +348,14 @@
                         success: function (result) {
                             var points = "${session.user.points}";
                             var Npoints = "${session.Mpoint1}";
-                            alert(points);
-                            alert(Npoints);
-                            alert(result.res);
-                            if(points > Npoints){
-                                alert(result.res);
+                            if(parseInt(points) >= parseInt(Npoints)){
                                 if (result.res === true) {
                                     swal("申请成功发出!", "机构申请已受理,管理员同意后则扣除${session.Mpoint1}积分", "success");
-                                $('button#cancel-apply').click();
-                            }
-                                else if(result.res === false)
+                                    $('button#cancel-apply').click();
+                                }
+                                else if(result.res == false) {
                                     swal("申请失败！", "机构名被占用。", "error");
+                                }
                             }
                             else swal("申请失败！", "您的积分少于${sessionScope.Mpoint1}，请充值。", "error");
                         },
