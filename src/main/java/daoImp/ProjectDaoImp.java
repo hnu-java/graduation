@@ -248,5 +248,37 @@ public class ProjectDaoImp extends DAO<ProjectEntity> implements ProjectDao {
 
     }
 
+    @Override
+    public boolean exist(String org_name) {
+        try{
+            String sql1="select COUNT(*) from organization where name = ?";
+            int count=Integer.valueOf(getForValueThrowsExp(sql1,org_name).toString());
+            if (count==1){
+                return true;
+            }
+            return false;
+        }catch (Exception e){
+            return false;
+        }
+    }
 
+        @Override
+        public boolean belong(String org_name,int id_user) {
+            try{
+                String sql1="select COUNT(*) from organization where name = ?";
+                int count=Integer.valueOf(getForValueThrowsExp(sql1,org_name).toString());
+                if (count==1){
+                    String sql2="select id_organization from organization where name = ?";
+                    String sql3="select count(*) from org_member where id_user = ? and id_organization = ?";
+                    int id_organization = Integer.valueOf(getForValueThrowsExp(sql2,org_name).toString());
+                    System.out.println(id_organization);
+                    int count1 = Integer.valueOf(getForValueThrowsExp(sql3,id_user,id_organization).toString());
+                    System.out.println(count1);
+                    return count1 == 1;
+                }
+                return false;
+            }catch (Exception e){
+                return false;
+            }
+        }
 }

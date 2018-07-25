@@ -976,7 +976,13 @@
                 type: "Post",
                 async: false,
                 success: function (result) {
-                    showtoast("success","成功","评论提交成功");
+                    swal({
+                        title: "评论提交成功",
+                        text: "两个小时内可自行删除",
+                        type:"success",
+                        confirmButtonColor: "#18a689",
+                        confirmButtonText: "OK"
+                    })
                     discussReload2(0);
                     discussInit();
                 },
@@ -988,7 +994,13 @@
 
         else {
             $('#fileupload').fileinput('upload').fileinput('clear').on('filebatchuploadsuccess', function(event, data) {
-                showtoast("success","成功","评论提交成功");
+                swal({
+                    title: "评论提交成功",
+                    text: "两个小时内可自行删除",
+                    type:"success",
+                    confirmButtonColor: "#18a689",
+                    confirmButtonText: "OK"
+                })
                 discussReload2(0);
                 discussInit();
             });
