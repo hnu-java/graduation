@@ -719,14 +719,20 @@
             type: "Post",
             async: "false",
             success: function (result) {
-                if(result.res===true)  {
-                    showtoast("success", "邀请成功", "成功发送邀请");
+                if(result.res===true) {
+                    swal("邀请成功！", "您已向该用户发出邀请。", "success");
                     $('button#button_cancel').click();
                 }
-                else  showtoast("error", "邀请失败", "用户名不存在或已在项目中！");
+                else{
+                    if(result.One === 1){
+                        swal("邀请失败！", "该用户已在项目中。", "error");
+                    }else {
+                        swal("邀请失败！", "用户名不存在。", "error");
+                    }
+                }
             },
-            error: function (result) {
-                showtoast("error", "邀请失败", "用户名不存在或已在项目中！");
+            error: function () {
+                swal("邀请失败！", "服务器异常。", "error");
             }
         })
     });

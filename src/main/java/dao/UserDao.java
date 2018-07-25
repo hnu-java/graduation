@@ -33,4 +33,5 @@ public interface UserDao {
 	boolean nameAndMail(String name, String email);
 	//找名字
 	String FindName(int id_user);
+	int JudgmentOne(String user_name);
 }

@@ -253,4 +253,14 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
         String name = getForValue(sql,id_user);
         return name;
     }
+
+    @Override
+    public int JudgmentOne(String user_name) {
+        String sql="SELECT COUNT(*) from USER WHERE NAME=?";
+        int count=Integer.valueOf(getForValue(sql,user_name).toString());
+        if(count == 1){
+            return count;
+        }
+        return 0;
+    }
 }

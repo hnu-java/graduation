@@ -450,10 +450,16 @@
                                     $('#showOperate').bootstrapTable('load', orgOperateList);
                                     $('button#cancel-invite').click();
                                 }
-                                else  swal("邀请失败！", "用户名不存在或该用户已在机构中。", "error");
+                                else{
+                                    if(result.One === 1){
+                                        swal("邀请失败！", "该用户已在机构中。", "error");
+                                    }else {
+                                        swal("邀请失败！", "用户名不存在。", "error");
+                                    }
+                                }
                             },
                             error: function () {
-                                swal("邀请失败！", "用户名不存在或该用户已在机构中。", "error");
+                                swal("邀请失败！", "服务器异常。", "error");
                             }
                         }
                     )

@@ -33,7 +33,7 @@
         </div>
         <form class="cmxform" id="signupForm">
             <div class="form-group col-sm-8 col-md-offset-2 loginLine">
-            <input name="email" id="email"  class="form-control loginLine valiadate" style="font-size:12px" placeholder="请输入邮箱" >
+            <input name="email" id="email"  class="form-control loginLine valiadate" style="font-size:12px" placeholder="请输入邮箱(不可更改)" >
         </div>
             <div class="form-group col-sm-8 col-md-offset-2 loginLine">
             <input name="name" id="name" type="text" aria-required="true" aria-invalid="true" class="form-control loginLine valiadate" style="font-size:12px" maxlength="20" placeholder="设置用户名（注册成功后不可更改）" required="">

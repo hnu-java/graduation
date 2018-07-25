@@ -5,7 +5,12 @@ import dao.OrgInviteDao;
 import entity.OrgInviteEntity;
 import entity.UserEntity;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class OrgInviteDaoImp extends DAO<OrgInviteEntity> implements OrgInviteDao {
@@ -14,10 +19,10 @@ public class OrgInviteDaoImp extends DAO<OrgInviteEntity> implements OrgInviteDa
         String sql1 = "select ID_ORGANIZATION from ORGANIZATION where NAME=?";
         int id_org = getForValue(sql1,a.getORG_NAME());
         String sql2 = "select ID_USER from USER where NAME = ? and ID_USER not in (select ID_USER from ORG_MEMBER where ID_ORGANIZATION=?)";
-        int id_user = getForValue(sql2,a.getUSER_NAME(),id_org);
         Timestamp date = new Timestamp(new java.util.Date().getTime());
-        String sql3 = "insert into ORG_USER_APPLY (ID_ORGANIZATION,ID_USER,DATE,MESSAGE) value(?,?,?,?)";
         try {
+            int id_user = getForValue(sql2,a.getUSER_NAME(),id_org);
+            String sql3 = "insert into ORG_USER_APPLY (ID_ORGANIZATION,ID_USER,DATE,MESSAGE) value(?,?,?,?)";
             update(sql3,id_org,id_user,date,content);
             return true;
         }catch (Exception e){
