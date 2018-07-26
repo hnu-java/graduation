@@ -67,9 +67,20 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
             session.put("Mpoint3",Mpoint3);
             session.put("Mpoint5",Mpoint5);
             String msgNum = Integer.toString(userDao.msgNum(user.getId_user()));
-            Cookie cookie = new Cookie("msgNum",msgNum);
-            System.out.println(cookie.getValue());
+            session.put("msgNum",msgNum);
+            //Cookie cookie = new Cookie("msgNum",msgNum);
+            //System.out.println(cookie.getValue());
         }
+        return "RES";
+    }
+
+    public String msgNum(){
+        dataMap = new HashMap<String, Object>();
+        userDao = new UserDaoImp();
+        UserEntity seesionUser=(UserEntity)session.get("user");
+        String msgNum = Integer.toString(userDao.msgNum(seesionUser.getId_user()));
+        dataMap.put("msgNum",msgNum);
+        session.put("msgNum",msgNum);
         return "RES";
     }
 
