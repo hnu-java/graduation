@@ -146,7 +146,8 @@
         <div style="float: left" class="col-md-6">
             <div class="ibox-title">
                 <div style="float: left;margin-left: 5px"><span><strong>我加入的机构</strong></span></div>
-                <div style="float: left;margin-left: 10px"><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newOrg">申请机构</button></div>
+                <div style="float: left;margin-left: 10px"><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newOrg">申请创建机构</button></div>
+                <div style="float: left;margin-left: 10px"><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#joinOrg">申请加入机构</button></div>
             </div>
             <div class="bootstrap-table  ibox-content">
                 <table id="finishingTask" data-toggle="table"
@@ -178,7 +179,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
                     </button>
-                    <h4 class="modal-title">申请机构</h4>
+                    <h4 class="modal-title">申请创建机构</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group"><label>机构名</label> <input id="org_name" type="text" placeholder="请输入机构名(必填，不超过30字符)" maxlength="40" class="form-control" required="required"></div>
@@ -187,6 +188,25 @@
                 <div class="modal-footer">
                     <button id="cancel-apply" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
                     <button id="newOrg-button" type="submit" class="btn btn-primary">申请</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div  class="modal inmodal" id="joinOrg" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                    </button>
+                    <h4 class="modal-title">申请加入机构</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group"><label>机构名</label> <input id="join_org_name" type="text" placeholder="请输入机构名(必填，不超过30字符)" maxlength="40" class="form-control" required="required"></div>
+                    <div class="form-group"><label>留言</label> <input id="join_message" type="text" placeholder="请输入留言(可不填，不超过60字符)"  maxlength="60" class="form-control" required="required"></div>
+                </div>
+                <div class="modal-footer">
+                    <button id="join-cancel-apply" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                    <button id="joinOrg-button" type="submit" class="btn btn-primary">申请</button>
                 </div>
             </div>
         </div>
@@ -327,7 +347,7 @@
         else {
             swal(
                 {
-                    title: "您确认申请该机构吗？",
+                    title: "您确认申请创建该机构吗？",
                     text: "确认请点击申请",
                     type: "",
                     showCancelButton: true,
@@ -358,6 +378,63 @@
                                 }
                             }
                             else swal("申请失败！", "您的积分少于${sessionScope.Mpoint1}，请充值。", "error");
+                        },
+                        error: function () {
+                            swal({
+                                icon: "error"
+                            });
+                        }
+                    })
+                })
+        }
+    })
+
+    $("button#joinOrg-button").click(function () {
+        var join_org_name = $("input#join_org_name");
+        console.log(join_org_name);
+        if(join_org_name === "" || join_org_name === null) {
+            swal("申请失败！", "请填写机构名", "error");
+        }
+        else {
+            swal(
+                {
+                    title: "您确认申请加入该机构吗？",
+                    text: "确认请点击申请",
+                    type: "",
+                    showCancelButton: true,
+                    confirmButtonColor: "#18a689",
+                    confirmButtonText: "申请",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: false
+                }, function () {
+                    $.ajax({
+                        url: "joinOranization-joinOrg",
+                        data: {
+                            org_name: $("input#join_org_name").val(),
+                            message: $("input#join_message").val(),
+                        },
+                        dataType: "json",
+                        type: "Post",
+                        async: "false",
+                        success: function (result) {
+                            if(result.resExist === true) {
+                                if(result.resBelong === true) {
+                                    swal("申请失败", "已经在该机构中", "error");
+                                }
+                                else {
+                                    if (result.res === true) {
+                                        swal("加入申请成功发出!", "机构加入申请已受理,等待机构管理员同意", "success");
+                                        $('button#join-cancel-apply').click();
+                                    }
+                                    else if (result.res === false) {
+                                        swal("申请失败！", "被拒绝。", "error");
+                                    }
+                                }
+                            }
+                            else {
+                                swal("申请失败", "输入的机构不存在", "error");
+                            }
+
                         },
                         error: function () {
                             swal({

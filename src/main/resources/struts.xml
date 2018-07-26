@@ -72,6 +72,14 @@
             <allowed-methods>applyOrg</allowed-methods>
         </action>
 
+        <action name="joinOranization-*" class="action.JoinOrganizationAction" method="{1}">
+            <result name="success" type="json">
+                <param name="root">dataMap</param>
+            </result>
+            <interceptor-ref name="myStack"/>
+            <allowed-methods>joinOrg</allowed-methods>
+        </action>
+
         <action name="Organization-*" class="action.OrganizationAction" method="{1}">
             <result name="OrgManager1Page">/WEB-INF/pages/project_orgManager1.jsp</result>
             <result name="OrgManager2Page">/WEB-INF/pages/project_orgManager2.jsp</result>
