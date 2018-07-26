@@ -25,7 +25,7 @@ public class UserEntity {
     private int points;
     private Date deadline;
     private int days;
-
+    private String photo;
     public int getId_user() {
         return id_user;
     }
@@ -162,7 +162,15 @@ public class UserEntity {
         this.days = days;
     }
 
-    public UserEntity(int id_user, int verification, String password, String name, String gender, String address, String introduce, java.sql.Date dob, String mail, String qq, String tel, int status, int rank, int flag, int points, Date deadline, int days) {
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public UserEntity(int id_user, int verification, String password, String name, String gender, String address, String introduce, java.sql.Date dob, String mail, String qq, String tel, int status, int rank, int flag, int points, Date deadline, int days, String photo) {
         this.id_user = id_user;
         this.verification = verification;
         this.password = password;
@@ -180,6 +188,7 @@ public class UserEntity {
         this.points = points;
         this.deadline = deadline;
         this.days = days;
+        this.photo = photo;
     }
 
     public UserEntity() {

@@ -408,7 +408,7 @@
                     closeOnConfirm: false
                 }, function () {
                     $.ajax({
-                        url: "applyOrganization-applyOrg",
+                        url: "joinOranization-joinOrg",
                         data: {
                             org_name: $("input#join_org_name").val(),
                             message: $("input#join_message").val(),
@@ -417,18 +417,24 @@
                         type: "Post",
                         async: "false",
                         success: function (result) {
-                            var points = "${session.user.points}";
-                            var Npoints = "${session.Mpoint1}";
-                            if(parseInt(points) >= parseInt(Npoints)){
-                                if (result.res === true) {
-                                    swal("申请成功发出!", "机构申请已受理,管理员同意后则扣除${session.Mpoint1}积分", "success");
-                                    $('button#cancel-apply').click();
+                            if(result.resExist === true) {
+                                if(result.resBelong === true) {
+                                    swal("申请失败", "已经在该机构中", "error");
                                 }
-                                else if(result.res == false) {
-                                    swal("申请失败！", "机构名被占用。", "error");
+                                else {
+                                    if (result.res === true) {
+                                        swal("加入申请成功发出!", "机构加入申请已受理,等待机构管理员同意", "success");
+                                        $('button#join-cancel-apply').click();
+                                    }
+                                    else if (result.res === false) {
+                                        swal("申请失败！", "被拒绝。", "error");
+                                    }
                                 }
                             }
-                            else swal("申请失败！", "您的积分少于${sessionScope.Mpoint1}，请充值。", "error");
+                            else {
+                                swal("申请失败", "输入的机构不存在", "error");
+                            }
+
                         },
                         error: function () {
                             swal({
@@ -436,7 +442,7 @@
                             });
                         }
                     })
-            )
+                })
         }
     })
 </script>
