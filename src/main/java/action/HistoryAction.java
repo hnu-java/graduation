@@ -30,14 +30,11 @@ public class HistoryAction extends ActionSupport implements RequestAware, Sessio
     private Map<String, Object> dataMap;
 
     public String showHistory(){
-        System.out.println("helloHistory");
         dataMap = new HashMap<String, Object>();
         historydao = new HistoryInfoDaoImp();
         List<HistoryInfoEntity> list = new ArrayList<>();
         user = (UserEntity)session.get("user");
-        System.out.println(user.getId_user());
         list = historydao.showHistory(user.getId_user());
-        System.out.println(list);
         Gson gson = new Gson();
         String infoList = gson.toJson(list);
         dataMap.put("listHistory",infoList);
