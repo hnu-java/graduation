@@ -112,7 +112,7 @@
                 }
             })
         }
-    //写cookies，一个小时过期
+    //写cookies，24个小时过期
     function setCookie(name, value) {
         var exp = new Date();
         exp.setTime(exp.getTime() + 24 * 60 * 60 * 1000);

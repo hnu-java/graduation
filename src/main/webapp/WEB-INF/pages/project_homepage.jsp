@@ -174,7 +174,7 @@
                 cancelButtonText: "取消",
                 closeOnConfirm: true
             }, function () {
-                document.cookie="msgNum=${sessionScope.msgNum}";
+                document.cookie="msgNum"+"${sessionScope.user_name}"+"=${sessionScope.msgNum}";
                 location.href = "user-jmpMessageCenter"
             })
             }
