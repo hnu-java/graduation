@@ -95,7 +95,7 @@
                             //     })
                             // }
                             // else {
-                            if((getCookie("msgNum"+"${sessionScope.user_name}")=="undefined")||(getCookie("msgNum"+"${sessionScope.user_name}")==null)){
+                            if((getCookie("msgNum"+"${sessionScope.user_name}")=="undefined")||(getCookie("msgNum"+"${sessionScope.user_name}")==null)||(getCookie("msgNum"+"${sessionScope.user_name}")=="")){
                                 setCookie("msgNum"+"${sessionScope.user_name}",${sessionScope.msgNum});
                             }
                                 showtoast("success", "登录成功", "操作成功");
@@ -127,6 +127,13 @@
             return unescape(arr[2]);
         else
             return null;
+    }
+    function delCookie(name) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 24 * 60 * 60 * 1000);
+        var cval = getCookie(name);
+        if (cval != null)
+            document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString() + ";path=/";
     }
 </script>
 
