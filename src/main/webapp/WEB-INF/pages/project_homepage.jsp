@@ -148,21 +148,21 @@
 
     function delCookie(name) {
         var exp = new Date();
-        exp.setTime(exp.getTime() - 60 * 60 * 1000);
+        exp.setTime(exp.getTime() - 24 * 60 * 60 * 1000);
         var cval = getCookie(name);
         if (cval != null)
             document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString() + ";path=/";
     }
 
-        function newMsg() {
-        alert("cookies"+getCookie("msgNum"));
+    function newMsg() {
+        alert("cookies"+getCookie("msgNum"+"${sessionScope.user_name}"));
         $.ajax({
             url: "login-msgNum",
             type: "Post",
             async: false,
             success: function(result) {
                 alert("result"+result.msgNum);
-            if (parseInt(result.msgNum) > parseInt(getCookie("msgNum")))
+            if (parseInt(result.msgNum) > parseInt(getCookie("msgNum"+"${sessionScope.user_name}")))
             {
             swal({
                 title: "新消息提醒",

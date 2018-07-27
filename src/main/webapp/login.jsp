@@ -95,8 +95,8 @@
                             //     })
                             // }
                             // else {
-                            if(getCookie("msgNum")==null){
-                                setCookie("msgNum",${sessionScope.msgNum});
+                            if((getCookie("msgNum"+"${sessionScope.user_name}")=="undefined")||(getCookie("msgNum"+"${sessionScope.user_name}")==null)){
+                                setCookie("msgNum"+"${sessionScope.user_name}",${sessionScope.msgNum});
                             }
                                 showtoast("success", "登录成功", "操作成功");
                                 location.href = "user-jmpTemp";
@@ -115,7 +115,7 @@
     //写cookies，一个小时过期
     function setCookie(name, value) {
         var exp = new Date();
-        exp.setTime(exp.getTime() + 60 * 60 * 1000);
+        exp.setTime(exp.getTime() + 24 * 60 * 60 * 1000);
         document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=/";
     }
     //读取cookies
