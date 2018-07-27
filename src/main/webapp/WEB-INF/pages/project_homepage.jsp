@@ -135,6 +135,11 @@
 <script src="<%=basePath %>/js/mjy.js"></script>
 </body>
 <script>
+    function setCookie(name, value) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() + 24 * 60 * 60 * 1000);
+        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=/";
+    }
     //读取cookies
     function getCookie(name) {
         var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
@@ -155,6 +160,9 @@
     }
 
     function newMsg() {
+        if((getCookie("msgNum"+"${sessionScope.user_name}")=="undefined")||(getCookie("msgNum"+"${sessionScope.user_name}")==null)||(getCookie("msgNum"+"${sessionScope.user_name}")=="")){
+            setCookie("msgNum"+"${sessionScope.user_name}",${sessionScope.msgNum});
+        }
         alert("cookies"+getCookie("msgNum"+"${sessionScope.user_name}"));
         $.ajax({
             url: "login-msgNum",
@@ -174,7 +182,7 @@
                 cancelButtonText: "取消",
                 closeOnConfirm: true
             }, function () {
-                document.cookie="msgNum"+"${sessionScope.user_name}"+"=${sessionScope.msgNum}";
+                document.cookie="msgNum${sessionScope.user_name}"+"=${result.msgNum}";
                 location.href = "user-jmpMessageCenter"
             })
             }
