@@ -163,13 +163,11 @@
         if((getCookie("msgNum"+"${sessionScope.user_name}")=="undefined")||(getCookie("msgNum"+"${sessionScope.user_name}")==null)||(getCookie("msgNum"+"${sessionScope.user_name}")=="")){
             setCookie("msgNum"+"${sessionScope.user_name}",${sessionScope.msgNum});
         }
-        alert("cookies"+getCookie("msgNum"+"${sessionScope.user_name}"));
         $.ajax({
             url: "login-msgNum",
             type: "Post",
             async: false,
             success: function(result) {
-                alert("result"+result.msgNum);
             if (parseInt(result.msgNum) > parseInt(getCookie("msgNum"+"${sessionScope.user_name}")))
             {
             swal({
