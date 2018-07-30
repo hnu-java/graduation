@@ -100,7 +100,7 @@
                     </div>
                     <div style="float: left;font-size:18px;width: 30px;text-align: center">|</div>
                     <div style="float: left">
-                        <a href="library-jmpUserLibrary"><div style="float: left;font-size:18px;text-align: left">用户构件库</div></a>
+                        <a href="library-jmpUserLibrary"><div style="float: left;font-size:18px;text-align: left;color: black">用户构件库</div></a>
                     </div>
                     <div style="float: left;font-size:18px;width: 30px;text-align: center">|</div>
                     <div style="float: left">
@@ -125,7 +125,7 @@
                                 </div>
                                 <div style="margin: 10px;float: left">
                                     <h3><s:property value="name"/></h3>
-                                    <p>贡献人：官方<br>发布时间：<s:property value="time"/></p>
+                                    <p>贡献人：<s:property value="user_name"/>  <br> 构件库类型：<s:property value="title"/></p>
                                 </div>
                                 <div style="height:60px;clear: both;margin: 0px 10px 0px 10px;overflow: hidden">
                                     <p>
