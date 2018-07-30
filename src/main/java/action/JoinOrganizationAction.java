@@ -1,5 +1,6 @@
 package action;
 
+import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
@@ -10,16 +11,19 @@ import daoImp.JoinOrganizationDaoImp;
 import daoImp.ProjectDaoImp;
 import daoImp.UserDaoImp;
 import entity.JoinOrganizationEntity;
+import entity.OrganizationEntity;
 import entity.UserEntity;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class JoinOrganizationAction extends ActionSupport implements RequestAware, SessionAware, ModelDriven<JoinOrganizationEntity>, Preparable {
     private JoinOrganizationDao joinorganizationdao;
     private JoinOrganizationEntity joinorganization;
+    private OrganizationEntity organization;
     private Map<String, Object> session;
     private Map<String, Object> request;
     private Map<String, Object> dataMap;
@@ -38,6 +42,8 @@ public class JoinOrganizationAction extends ActionSupport implements RequestAwar
         dataMap.put("res", res);
         dataMap.put("resExist", resExist);
         dataMap.put("resBelong", resBelong);
+        boolean res2=joinorganizationdao.joinOrg(seesionUser.getId_user(),joinorganization);
+        dataMap.put("res2", res2);
         return SUCCESS;
     }
 
@@ -48,17 +54,26 @@ public class JoinOrganizationAction extends ActionSupport implements RequestAwar
         if(res == true) {
             dataMap.put("res", res);
         }
+        List<JoinOrganizationEntity> orgInvited = joinorganizationdao.getMyInvited(joinorganization.getOrg_name());
+        Gson gson = new Gson();
+        String json = gson.toJson(orgInvited);
+        System.out.println("OrgAllInvited:"+json);
+        dataMap.put("res2",json);
         return SUCCESS;
     }
 
     public String refuseApplication() {
         dataMap = new HashMap<String, Object>();
-        System.out.println("bk1");
         joinorganizationdao = new JoinOrganizationDaoImp();
         boolean res = joinorganizationdao.refuse(joinorganization.getId_user(), joinorganization.getId_organization());
         if(res == true) {
             dataMap.put("res", res);
         }
+        List<JoinOrganizationEntity> orgInvited = joinorganizationdao.getMyInvited(joinorganization.getOrg_name());
+        Gson gson = new Gson();
+        String json = gson.toJson(orgInvited);
+        System.out.println("OrgAllInvited:"+json);
+        dataMap.put("res2",json);
         return SUCCESS;
     }
 

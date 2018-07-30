@@ -231,9 +231,9 @@
                 type: "Get",
                 async: "false",
                 success:function(json){
-                    var orgInvite = JSON.parse(json.res);
+                    var showOrgInvite = JSON.parse(json.res);
                     //finishingTask为table的id
-                    $('#showOrgInvite').bootstrapTable('load',orgInvite);
+                    $('#showOrgInvite').bootstrapTable('load',showOrgInvite);
                 },
                 error:function(){
                     alert(" 错误");
@@ -250,9 +250,9 @@
                 type: "Get",
                 async: "false",
                 success:function(json){
-                    var orgInvite = JSON.parse(json.res);
+                    var showOrgInvited = JSON.parse(json.res);
                     //finishingTask为table的id
-                    $('#showOrgInvited').bootstrapTable('load',orgInvite);
+                    $('#showOrgInvited').bootstrapTable('load',showOrgInvited);
                 },
                 error:function(){
                     alert(" 错误");
@@ -281,6 +281,7 @@
             var id_organization = parseInt(row.id_organization);
             var id_user = parseInt(row.id_user);
             var user_name = row.name;
+            var org_name = row.org_name;
             var currentOrg=$("#gender").val();
             swal(
                 {
@@ -296,18 +297,23 @@
                     $.ajax({
                         type: "GET",
                         url: "joinOrganization-acceptApplication",
-                        data: {id_user: id_user,user_name: user_name, id_organization: id_organization},
+                        data: {id_user: id_user,user_name: user_name, id_organization: id_organization, org_name: org_name},
                         dataType: "json",
-                        success: function () {
+                        success: function (json) {
                             swal({
                                 title: "同意成功",
-                                text: "点击返回首页！",
                                 type:"success",
                                 confirmButtonColor: "#18a689",
                                 confirmButtonText: "OK"
-                            },function(){
-                                location.href = "user-jmpHomepage";
-                            })
+                            });
+                            $('#showOrgInvite').bootstrapTable('remove', {
+                                field: 'user_name',
+                                values: [row.user_name]
+                            });
+                            var showOrgInvite = JSON.parse(json.res);
+                            $('#showOrgInvite').bootstrapTable('load',showOrgInvite);
+                            var showOrgInvited = JSON.parse(json.res2);
+                            $('#showOrgInvited').bootstrapTable('load',showOrgInvited);
                         },
                         error: function (result) {
                             swal("操作失败！", "出现未知错误，请重试。", "error");
@@ -316,12 +322,11 @@
                 })
         },
         'click .refuse' : function(e, value, row, index) {
-            //踢出机构
             var id_user = parseInt(row.id_user);
             var id_organization = parseInt(row.id_organization);
-            alert(id_organization);
             var currentOrg=$("#gender").val();
             var user_name=row.user_name;
+            var org_name=row.org_name;
             swal(
                 {
                     title: "确认拒绝申请吗",
@@ -336,12 +341,19 @@
                     $.ajax({
                         type: "GET",
                         url: "joinOrganization-refuseApplication",
-                        data: {id_user: id_user, user_name: user_name,id_organization: id_organization},
+                        data: {id_user: id_user, user_name: user_name,id_organization: id_organization, org_name: org_name},
                         dataType: "json",
                         success: function (json) {
                             swal("拒绝成功！", "您已拒绝该用户请求。", "success");
-                            var orgMemberList = JSON.parse(json.res);
-                            $('#showOrgMember').bootstrapTable('load',orgMemberList);
+                            $('#showOrgInvite').bootstrapTable('remove',{
+                                field: 'user_name',
+                                values: [row.user_name]
+                            });
+                            var showOrgInvite = JSON.parse(json.res);
+                            $('#showOrgInvite').bootstrapTable('load',showOrgInvite);
+                            var showOrgInvited = JSON.parse(json.res2);
+                            $('#showOrgInvited').bootstrapTable('load',showOrgInvited);
+
                         },
                         error: function (result) {
                             showtoast("error", "拒绝失败", "操作失败")
@@ -356,6 +368,7 @@
             var id_organization = parseInt(row.id_organization);
             var id_user = parseInt(row.id_user);
             var user_name = row.name;
+            var org_name = row.org_name;
             var currentOrg=$("#gender").val();
             swal(
                 {
@@ -367,22 +380,23 @@
                     confirmButtonText: "确认",
                     cancelButtonText: "取消",
                     closeOnConfirm: false
-                },function () {
+                },function (json) {
                     $.ajax({
                         type: "GET",
                         url: "joinOrganization-acceptApplication",
-                        data: {id_user: id_user,user_name: user_name, id_organization: id_organization},
+                        data: {id_user: id_user,user_name: user_name, id_organization: id_organization, org_name: org_name},
                         dataType: "json",
-                        success: function () {
+                        success: function (json) {
                             swal({
-                                title: "同意成功",
-                                text: "点击返回首页！",
+                                title: "重新同意成功",
                                 type:"success",
                                 confirmButtonColor: "#18a689",
                                 confirmButtonText: "OK"
-                            },function(){
-                                location.href = "user-jmpHomepage";
-                            })
+                            });
+
+                            var showOrgInvited = JSON.parse(json.res2);
+                            $('#showOrgInvited').bootstrapTable('load',showOrgInvited);
+
                         },
                         error: function (result) {
                             swal("操作失败！", "出现未知错误，请重试。", "error");
