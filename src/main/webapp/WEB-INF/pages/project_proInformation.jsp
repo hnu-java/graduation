@@ -961,6 +961,9 @@
                     else content+=" btn-default ";
 
                     content+="btn-xs col-lg-push-1 m-l-sm deleteDis'  type='button'  style='margin-top: -3px'>删除</button> ";
+                    if(tempDis.id_Document != 0){
+                        content+="<button  class='btn btn-danger btn-xs col-lg-push-1 m-l-sm shiftDis'  type='button'  style='margin-top: -3px'>跳转</button>";
+                    }
                     content+="<div class='ibox-tools'>";
 
                     for (var j=0;j<tempDis.accessoryEntityList.length;j++) {
@@ -976,7 +979,7 @@
                 $("div.allDiscuss").html(content);
             },
             error: function (result) {
-                showtoast("dangerous","加载失败","加载目录失败")
+                showtoast("error","加载失败","加载目录失败")
             }
         })
     }
@@ -986,7 +989,7 @@
     function commitDiscuss() {
          discuss = $(".discuss").summernote('code');
         if($('#fileupload').val()==""&&discuss.trim()=="") {
-            showtoast("dangerous","失败","评论不能为空");
+            showtoast("error","失败","评论不能为空");
             return;
         }
         if($('#fileupload').val()=="") {
@@ -1008,7 +1011,7 @@
                     discussInit();
                 },
                 error: function (result) {
-                    showtoast("dangerous","失败","评论不能为空");
+                    showtoast("error","失败","评论不能为空");
                 }
             })
         }
@@ -1047,6 +1050,12 @@
 
     );
 
+    //评论跳转按钮
+    $(document).on("click",".shiftDis",function (e, value, row, index) {
+        var id = row.id_Document;
+        location.href = "catalog-jmpTemplate?documentId="+id+"&rank="+rank+"&projectId="+id_Project+"&state="+row.state;
+    });
+
     //评论删除按钮
     $(document).on("click",".deleteDis",function () {
         if ($(this).hasClass("btn-danger")){
@@ -1073,7 +1082,7 @@
                         discussReload2(0)
                     },
                     error: function (result) {
-                        showtoast("dangerous","失败","删除评论失败")
+                        showtoast("error","失败","删除评论失败")
                     }
                 })
             });}

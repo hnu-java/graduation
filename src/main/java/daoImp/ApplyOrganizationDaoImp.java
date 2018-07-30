@@ -14,9 +14,11 @@ public class ApplyOrganizationDaoImp extends DAO<ApplyOrganizationEntity> implem
     public boolean applyOrg(int id,ApplyOrganizationEntity apply) {
         String sql="insert into ORG_APPLY(ID_USER,ORG_NAME,DATE,MESSAGE,TEL) values(?,?,?,?,?)";
         String sql1="select COUNT(*) from organization where name = ?";
+        String sql2="select COUNT(*) from org_apply where org_name = ?";
         Timestamp createDate = new Timestamp(new java.util.Date().getTime());
         int count=Integer.valueOf(getForValue(sql1,apply.getOrg_name()).toString());
-        if(count ==1){
+        int count1=Integer.valueOf(getForValue(sql2,apply.getOrg_name()).toString());
+        if(count ==1 || count1==1){
             return false;
         }
         try {

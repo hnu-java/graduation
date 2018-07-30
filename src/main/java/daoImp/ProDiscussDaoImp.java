@@ -91,9 +91,11 @@ public class ProDiscussDaoImp extends DAO<ProDiscussEntity> implements ProDiscus
 
     @Override
     public List<ProDiscussEntity> getProjectDis(int id_project,int page) {
-        String sql="select * from VIEW_PRO_DISCUSS where ID_PROJECT = ? LIMIT ?,3;";
+        String sql="select * from VIEW_PRO_DISCUSS where ID_PROJECT = ? or ID_DOCUMENT = ? LIMIT ?,3;";
+        String sql1="select id_document from DOCUMENT where ID_PROJECT = ? ";
+        int id_document = Integer.valueOf(getForValue(sql1,id_project).toString());
 
-        List<ProDiscussEntity> proDiscussEntityList = getForList(sql,id_project,page);
+        List<ProDiscussEntity> proDiscussEntityList = getForList(sql,id_project,id_document,page);
 
         AccessoryDao accessoryDao = new AccessoryDaoImp();
 
@@ -124,8 +126,10 @@ public class ProDiscussDaoImp extends DAO<ProDiscussEntity> implements ProDiscus
 
     @Override
     public int getProDisNum(int id_project) {
-        String sql = "select count(*) from VIEW_PRO_DISCUSS where ID_PROJECT = ? ";
-        int num = Integer.valueOf(getForValue(sql,id_project).toString());
+        String sql = "select count(*) from VIEW_PRO_DISCUSS where ID_PROJECT = ? or ID_DOCUMENT = ?";
+        String sql1="select id_document from DOCUMENT where ID_PROJECT = ? ";
+        int id_document = Integer.valueOf(getForValue(sql1,id_project).toString());
+        int num = Integer.valueOf(getForValue(sql,id_project,id_document).toString());
         return num;
     }
 }
