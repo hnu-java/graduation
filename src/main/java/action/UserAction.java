@@ -57,6 +57,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
 //            dataMap.put("days",user.getDays());
             int orgManager=userDao.orgManager(user.getId_user());
             session.put("user",user);
+            session.put("user_name",user.getName());
             session.put("orgManager",orgManager);
             int Mpoint1=userDao.Mpoint(1);
             int Mpoint2=userDao.Mpoint(2);
@@ -66,10 +67,21 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
             session.put("Mpoint2",Mpoint2);
             session.put("Mpoint3",Mpoint3);
             session.put("Mpoint5",Mpoint5);
-            String msgNum = Integer.toString(userDao.msgNum(user.getId_user()));
-            Cookie cookie = new Cookie("msgNum",msgNum);
-            System.out.println(cookie.getValue());
+//            String msgNum = Integer.toString(userDao.msgNum(user.getId_user()));
+//            session.put("msgNum",msgNum);
+//            Cookie cookie = new Cookie("msgNum",msgNum);
+//            System.out.println(cookie.getValue());
         }
+        return "RES";
+    }
+
+    public String msgNum(){
+        dataMap = new HashMap<String, Object>();
+        userDao = new UserDaoImp();
+        UserEntity seesionUser=(UserEntity)session.get("user");
+        String msgNum = Integer.toString(userDao.msgNum(seesionUser.getId_user()));
+        dataMap.put("msgNum",msgNum);
+        session.put("msgNum",msgNum);
         return "RES";
     }
 

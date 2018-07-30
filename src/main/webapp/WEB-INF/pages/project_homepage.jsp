@@ -19,14 +19,31 @@
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
 
-    <link rel="shortcut icon" href="/example/favicon.ico">
+    <link rel="shortcut icon" href="../example/favicon.ico">
+    <link href="<%=basePath %>/css/bootstrap.min.css" rel="stylesheet">
     <link href="<%=basePath %>/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
     <link href="<%=basePath %>/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
     <link href="<%=basePath %>/css/animate.min.css" rel="stylesheet">
     <link href="<%=basePath %>/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+
+    <!-- bootstrap-table -->
+    <link href="<%=basePath %>/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+
+    <link href="<%=basePath %>/css/z_style.css" rel="stylesheet">
+    <link href="<%=basePath %>/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <link href="<%=basePath %>/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
+    <link href="<%=basePath %>/css/plugins/summernote/summernote.css" rel="stylesheet">
+    <link href="<%=basePath %>/css/plugins/summernote/summernote-bs4.css" rel="stylesheet">
+    <link href="<%=basePath %>/css/plugins/summernote/summernote-lite.css" rel="stylesheet">
+
+    <link href="<%=basePath %>/css/xzw.css" rel="stylesheet">
+    <link href="<%=basePath %>/css/plugins/bootstrap-fileinput/fileinput.min.css" rel="stylesheet">
+
 </head>
 
-<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
+<body onload="newMsg()" class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
 <div class="animated fadeInDown">
     <div class="col-md-9 form-group" style="margin-top: 20px">
         <div class="col-md-2 col-md-offset-4">
@@ -94,19 +111,82 @@
     </div>
 </div>
 <script src="<%=basePath %>/js/jquery.min.js?v=2.1.4"></script>
-<script src="<%=basePath %>/js/bootstrap.min.js?v=3.3.6"></script>
-<script src="<%=basePath %>/js/content.min.js?v=1.0.0"></script>
+<script src="<%=basePath %>/js/bootstrap.min.js"></script>
+<%--bootstrap-table--%>
+<script src="<%=basePath %>/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="<%=basePath %>/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+
+<script src="<%=basePath %>/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="<%=basePath %>/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="<%=basePath %>/js/plugins/layer/layer.min.js"></script>
+<script src="<%=basePath %>/js/hplus.min.js?v=4.1.0"></script>
+<script type="text/javascript" src="<%=basePath %>/js/contabs.min.js"></script>
+<script src="<%=basePath %>/js/plugins/pace/pace.min.js"></script>
 <script src="<%=basePath %>/js/plugins/toastr/toastr.min.js"></script>
+<script src="<%=basePath %>/js/plugins/sweetalert/sweetalert.min.js"></script>
+
+<script src="<%=basePath %>/js/plugins/summernote/summernote.min.js"></script>
+<script src="<%=basePath %>/js/plugins/summernote/summernote-bs4.min.js"></script>
+<script src="<%=basePath %>/js/plugins/summernote/summernote-lite.js"></script>
+<script src="<%=basePath %>/js/plugins/summernote/summernote-zh-CN.js"></script>
+<script src="<%=basePath %>/js/plugins/bootstrap-fileinput/fileinput.js"></script>
+<script src="<%=basePath %>/js/plugins/bootstrap-fileinput/plugins/sortable.min.js"></script>
+<script src="<%=basePath %>/js/plugins/bootstrap-fileinput/locales/zh.js"></script>
 <script src="<%=basePath %>/js/mjy.js"></script>
 </body>
 <script>
-    //写cookies，一个小时过期
     function setCookie(name, value) {
         var exp = new Date();
         exp.setTime(exp.getTime() + 24 * 60 * 60 * 1000);
-        document.cookie = name + "=" +  + ";expires=" + exp.toGMTString() + ";path=/";
+        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=/";
+    }
+    //读取cookies
+    function getCookie(name) {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+
+        if (arr = document.cookie.match(reg))
+
+            return unescape(arr[2]);
+        else
+            return null;
     }
 
+    function delCookie(name) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 24 * 60 * 60 * 1000);
+        var cval = getCookie(name);
+        if (cval != null)
+            document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString() + ";path=/";
+    }
+
+    function newMsg() {
+        if((getCookie("msgNum"+"${sessionScope.user_name}")=="undefined")||(getCookie("msgNum"+"${sessionScope.user_name}")==null)||(getCookie("msgNum"+"${sessionScope.user_name}")=="")){
+            setCookie("msgNum"+"${sessionScope.user_name}",${sessionScope.msgNum});
+        }
+        $.ajax({
+            url: "login-msgNum",
+            type: "Post",
+            async: false,
+            success: function(result) {
+            if (parseInt(result.msgNum) > parseInt(getCookie("msgNum"+"${sessionScope.user_name}")))
+            {
+            swal({
+                title: "新消息提醒",
+                text: "您有新消息！",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确认",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            }, function () {
+                document.cookie="msgNum${sessionScope.user_name}"+"=${result.msgNum}";
+                location.href = "user-jmpMessageCenter"
+            })
+            }
+            }
+        })
+    }
 </script>
 
 <!-- Mirrored from www.zi-han.net/theme/hplus/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:17:11 GMT -->
