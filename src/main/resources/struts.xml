@@ -152,8 +152,9 @@
             <result name="getpicture">/WEB-INF/pages/project_picture_library.jsp</result>
             <result name="libraryPage">/WEB-INF/pages/project_library.jsp</result>
             <result name="getMycollect">/WEB-INF/pages/project_mycollect.jsp</result>
+            <result name="userLibraryPage">/WEB-INF/pages/project_userLibrary.jsp</result>
         <interceptor-ref name="myStack"/>
-            <allowed-methods>get,getagain,getcommon,getcommonagain,getuser,getuseragain,getcase,getcaseagain,getpicture,getpictureagain,Mycollect,Mycollectagain</allowed-methods>
+            <allowed-methods>getUserAllAgain,jmpUserLibrary,get,getagain,getcommon,getcommonagain,getuser,getuseragain,getcase,getcaseagain,getpicture,getpictureagain,Mycollect,Mycollectagain</allowed-methods>
         </action>
 
         <action name="librarycollect-*" class="action.LibrarycollectAction" method="{1}">

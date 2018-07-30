@@ -214,7 +214,7 @@
                     sortable: true,
                     align: 'center'
                 }, {
-                    field: 'id_document',
+                    field: 'version',
                     title: '文档编号',
                     sortable: true,
                     align: 'center'

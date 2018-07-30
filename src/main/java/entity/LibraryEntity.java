@@ -12,6 +12,9 @@ public class LibraryEntity {
     private int collect_num;
     private String mention;
     private Date time;
+    private int flag;
+    private String user_name;
+    private String title;
 
     public Date getTime() {
         return time;
@@ -69,7 +72,31 @@ public class LibraryEntity {
         this.collect_num = collect_num;
     }
 
-    public LibraryEntity(int id_library, String name, int id_template, int id_user, int collect_num, String mention, Date time) {
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public LibraryEntity(int id_library, String name, int id_template, int id_user, int collect_num, String mention, Date time, int flag, String user_name, String title) {
         this.id_library = id_library;
         this.name = name;
         this.id_template = id_template;
@@ -77,8 +104,11 @@ public class LibraryEntity {
         this.collect_num = collect_num;
         this.mention = mention;
         this.time = time;
+        this.flag = flag;
+        this.user_name = user_name;
+        this.title = title;
     }
-    public LibraryEntity() {
 
+    public LibraryEntity() {
     }
 }

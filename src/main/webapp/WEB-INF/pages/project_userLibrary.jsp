@@ -64,7 +64,7 @@
             <ol class="breadcrumb" style="margin-left: 50px">
                 <li style="font-size: 15px">
                     <strong>
-                        <a href="user-jmpHomepage"><span class="lzf_b">首页</span></a> >><a href="library-get"><span class="lzf_b">构件库</span></a>
+                        <a href="user-jmpHomepage"><span class="lzf_b">首页</span></a> >><a href="library-get"><span class="lzf_b">构件库</span></a> >> <a href="library-jmpUserLibrary">用户构件库</a>
                     </strong>
                 </li>
             </ol>
@@ -73,34 +73,17 @@
             <div id="head" style="width:100%;height: 70px;font-size:x-small;margin: 0 auto">
                 <div style="float: left;height: 60px;padding: 20px 20px 0px 20px" class="col-md-4">
                     <div style="float: left;margin: 0px 0px 0px 50px">
-                        <div id="choose_menu">
-                            <a href="library-get"><div style="font-size: 18px;color: black" onmouseover="toshow()" onmouseout="tomiss()">官方构件库</div></a>
-                        </div>
-                        <div id="component_choose" style="border-top: red solid 1.7px;  position: absolute;width: 90px;height: 200px;z-index: 999;overflow: hidden;margin-top: 6px">
-                            <div id="component_menu" style="background-color:lightgrey;width: 90px;height: 150px;margin-top:-5px;display:none">
-                                <ul style="list-style: none;text-align: center;padding: 0px" role="menu">
-                                    <li style="margin: 5px" class="J_tabShowActive">
-                                        <a href="library-get"><span class="lzf_a" style="font-size: 18px "><u>全部</u></span></a>
-                                    </li>
-                                    <li style="margin: 5px" class="J_tabShowActive">
-                                        <a href="library-getcommon" ><span class="lzf_a" style="font-size: 18px ">通用</span></a>
-                                    </li>
-                                    <li style="margin: 5px" class="J_tabShowActive">
-                                        <a href="library-getuser"><span class="lzf_a" style="font-size: 18px ">用户</span></a>
-                                    </li>
-                                    <li style="margin: 5px" class="J_tabShowActive">
-                                        <a href="library-getcase" ><span class="lzf_a" style="font-size: 18px ">用例</span></a>
-                                    </li>
-                                    <li style="margin: 5px" class="J_tabShowActive">
-                                        <a href="library-getpicture" ><span class="lzf_a" style="font-size: 18px ">图片</span></a>
-                                    </li>
-                                </ul>
-                            </div>
+                        <div>
+                            <a href="library-get"><div style="font-size: 18px;color: black">官方构件库</div></a>
                         </div>
                     </div>
                     <div style="float: left;font-size:18px;width: 30px;text-align: center">|</div>
                     <div style="float: left">
-                        <a href="library-jmpUserLibrary"><div style="float: left;font-size:18px;text-align: left;color: black">用户构件库</div></a>
+                        <div>
+                            <a href="library-jmpUserLibrary"><div style="float: left;font-size:18px;text-align: left;color: black">用户构件库</div></a>
+                        </div>
+                        <div style="border-top: red solid 1.7px;  position: absolute;width: 90px;height: 200px;z-index: 999;overflow: hidden;margin-top: 31px">
+                    </div>
                     </div>
                     <div style="float: left;font-size:18px;width: 30px;text-align: center">|</div>
                     <div style="float: left">
@@ -125,7 +108,7 @@
                                 </div>
                                 <div style="margin: 10px;float: left">
                                     <h3><s:property value="name"/></h3>
-                                    <p>贡献人：<s:property value="user_name"/>  <br> 构件库类型：<s:property value="title"/></p>
+                                    <p>贡献人：官方<br>发布时间：<s:property value="time"/></p>
                                 </div>
                                 <div style="height:60px;clear: both;margin: 0px 10px 0px 10px;overflow: hidden">
                                     <p>
@@ -134,19 +117,19 @@
                                 </div>
                                 </div>
                                 <input style="display:none" type="text" value="<s:property value="id_library"/>">
-                                <div style="float: right;z-index:99999999;margin: -14px -19px 0px 0px">
-                                    <s:if test="#request.id_user==#session.user.id_user">
-                                        <a class="btn btn-white btn-bitbucket nocollect" style="border: none" >
-                                        <i class="fa fa-star modal-icon " style="font-size: 20px"></i>
-                                        </a>
-                                    </s:if>
-                                    <s:else>
-                                        <a class="btn btn-white btn-bitbucket collect" style="border: none" >
-                                            <i class="fa fa-star-o modal-icon " style="font-size: 20px"></i>
-                                        </a>
-                                    </s:else>
-                                    <input style="display:none" type="text" value="<s:property value="id_library"/>">
-                                </div>
+                                <%--<div style="float: right;z-index:99999999;margin: -14px -19px 0px 0px">--%>
+                                    <%--<s:if test="#request.id_user==#session.user.id_user">--%>
+                                        <%--<a class="btn btn-white btn-bitbucket nocollect" style="border: none" >--%>
+                                        <%--<i class="fa fa-star modal-icon " style="font-size: 20px"></i>--%>
+                                        <%--</a>--%>
+                                    <%--</s:if>--%>
+                                    <%--<s:else>--%>
+                                        <%--<a class="btn btn-white btn-bitbucket collect" style="border: none" >--%>
+                                            <%--<i class="fa fa-star-o modal-icon " style="font-size: 20px"></i>--%>
+                                        <%--</a>--%>
+                                    <%--</s:else>--%>
+                                    <%--<input style="display:none" type="text" value="<s:property value="id_library"/>">--%>
+                                <%--</div>--%>
                             </div>
                         </div>
                     </div>
@@ -188,7 +171,7 @@
 <script>
     $(document).ready(function(){
         $("button.pagenum").click(function(){
-            location.href="library-getagain?page="+$(this).html();
+            location.href="library-getUserAllAgain?page="+$(this).html();
         });
     });
 </script>
@@ -197,10 +180,10 @@
         $("button.turnpage").click(function(){
             if($(this).hasClass("lastPage"))
             {   var p=parseInt($("button.nowpage").html())-1;
-                location.href="library-getagain?page="+p;}
+                location.href="library-getUserAllAgain?page="+p;}
             else
             {   var p=parseInt($("button.nowpage").html())+1;
-                location.href="library-getagain?page="+p;}
+                location.href="library-getUserAllAgain?page="+p;}
         });
     });
 </script>
@@ -212,56 +195,56 @@
     });
 </script>
 </body>
-<script>
-    $(document).on("click","a.collect",function () {
-        $(this).addClass("nocollect");
-        $(this).removeClass("collect");
-        $(this).children().addClass("fa-star");
-        $(this).children().removeClass("fa-star-o");
-        $.ajax({
-            url: "librarycollect-collect",
-            data: {id_library: $(this).next().val()},
-            dataType: "json",
-            type: "Post",
-            async: "false",
-            success: function (result) {
-                if(result.res===true)  {
-                    showtoast("success", "收藏成功", "操作成功")
+<%--<script>--%>
+    <%--$(document).on("click","a.collect",function () {--%>
+        <%--$(this).addClass("nocollect");--%>
+        <%--$(this).removeClass("collect");--%>
+        <%--$(this).children().addClass("fa-star");--%>
+        <%--$(this).children().removeClass("fa-star-o");--%>
+        <%--$.ajax({--%>
+            <%--url: "librarycollect-collect",--%>
+            <%--data: {id_library: $(this).next().val()},--%>
+            <%--dataType: "json",--%>
+            <%--type: "Post",--%>
+            <%--async: "false",--%>
+            <%--success: function (result) {--%>
+                <%--if(result.res===true)  {--%>
+                    <%--showtoast("success", "收藏成功", "操作成功")--%>
 
-                }
-                else  showtoast("error", "收藏失败", "操作失败")
-            },
-            error: function (result) {
-                showtoast("error", "收藏失败", "操作失败")
-            }
-        })
-    })
-</script>
-<script>
-    $(document).on("click","a.nocollect",function () {
-        $(this).addClass("collect");
-        $(this).removeClass("nocollect");
-        $(this).children().addClass("fa-star-o");
-        $(this).children().removeClass("fa-star");
-        $.ajax({
-            url: "librarycollect-nocollect",
-            data: {id_library: $(this).next().val()},
-            dataType: "json",
-            type: "Post",
-            async: "false",
-            success: function (result) {
-                if(result.res===true)  {
-                    showtoast("success", "取消收藏成功", "操作成功")
+                <%--}--%>
+                <%--else  showtoast("error", "收藏失败", "操作失败")--%>
+            <%--},--%>
+            <%--error: function (result) {--%>
+                <%--showtoast("error", "收藏失败", "操作失败")--%>
+            <%--}--%>
+        <%--})--%>
+    <%--})--%>
+<%--</script>--%>
+<%--<script>--%>
+    <%--$(document).on("click","a.nocollect",function () {--%>
+        <%--$(this).addClass("collect");--%>
+        <%--$(this).removeClass("nocollect");--%>
+        <%--$(this).children().addClass("fa-star-o");--%>
+        <%--$(this).children().removeClass("fa-star");--%>
+        <%--$.ajax({--%>
+            <%--url: "librarycollect-nocollect",--%>
+            <%--data: {id_library: $(this).next().val()},--%>
+            <%--dataType: "json",--%>
+            <%--type: "Post",--%>
+            <%--async: "false",--%>
+            <%--success: function (result) {--%>
+                <%--if(result.res===true)  {--%>
+                    <%--showtoast("success", "取消收藏成功", "操作成功")--%>
 
-                }
-                else  showtoast("error", "取消收藏失败", "操作失败")
-            },
-            error: function (result) {
-                showtoast("error", "取消收藏失败", "操作失败")
-            }
-        })
-    })
-</script>
+                <%--}--%>
+                <%--else  showtoast("error", "取消收藏失败", "操作失败")--%>
+            <%--},--%>
+            <%--error: function (result) {--%>
+                <%--showtoast("error", "取消收藏失败", "操作失败")--%>
+            <%--}--%>
+        <%--})--%>
+    <%--})--%>
+<%--</script>--%>
 <!-- Mirrored from www.zi-han.net/theme/hplus/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:17:11 GMT -->
 </html>
 
