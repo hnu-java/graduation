@@ -74,7 +74,7 @@
                 <div style="float: left;height: 60px;padding: 20px 20px 0px 20px" class="col-md-4">
                     <div style="float: left;margin: 0px 0px 0px 50px">
                         <div id="choose_menu">
-                            <div style="font-size: 18px;color: black" onmouseover="toshow()" onmouseout="tomiss()">官方构件库</div>
+                            <a href="library-get"><div style="font-size: 18px;color: black" onmouseover="toshow()" onmouseout="tomiss()">官方构件库</div></a>
                         </div>
                         <div id="component_choose" style="border-top: red solid 1.7px;  position: absolute;width: 90px;height: 200px;z-index: 999;overflow: hidden;margin-top: 6px">
                             <div id="component_menu" style="background-color:lightgrey;width: 90px;height: 150px;margin-top:-5px;display:none">
@@ -100,7 +100,7 @@
                     </div>
                     <div style="float: left;font-size:18px;width: 30px;text-align: center">|</div>
                     <div style="float: left">
-                        <div style="float: left;font-size:18px;text-align: left;color: #999999">用户构件库</div>
+                        <a href="library-jmpUserLibrary"><div style="float: left;font-size:18px;text-align: left;color: #999999">用户构件库</div></a>
                     </div>
                     <div style="float: left;font-size:18px;width: 30px;text-align: center">|</div>
                     <div style="float: left">

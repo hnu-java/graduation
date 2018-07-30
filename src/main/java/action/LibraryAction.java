@@ -25,11 +25,6 @@ public class LibraryAction extends ActionSupport implements RequestAware, Sessio
     private Map<String,Object> session;
     private Map<String, Object> dataMap;
     private  int page;
-    private int id_user;
-
-    public void setId_user(int id_user) {
-        this.id_user = id_user;
-    }
 
     public String get() {
         dataMap = new HashMap<String, Object>();
@@ -281,7 +276,26 @@ public class LibraryAction extends ActionSupport implements RequestAware, Sessio
         return "getMycollect";
     }
 
-
+    public String jmpUserLibrary(){
+        dataMap = new HashMap<String, Object>();
+        libraryDao = new LibraryDaoImp();
+        List<LibraryEntity> libraryAll;
+        int page=1;
+        libraryAll=libraryDao.getAll((((UserEntity)session.get("user")).getId_user()),(page-1)*6,(page-1)*0+6);
+        ActionContext.getContext().getValueStack().set("list",libraryAll);
+        int count=libraryDao.getAllcount();
+        if(count%6==0) {
+            int num = count / 6;
+            request.put("num", num);
+        }
+        else if(count%6!=0)
+        {
+            int num = count / 6 +1;
+            request.put("num", num);
+        }
+        request.put("page",page);
+        return "userLibraryPage";
+    }
 
     @Override
     public LibraryEntity getModel() {

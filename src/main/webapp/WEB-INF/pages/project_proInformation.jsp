@@ -95,6 +95,35 @@
         </div>
     </div>
 </div>
+<div  class="modal inmodal" id="say" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">发表评论</h4>
+            </div>
+            <div class="modal-body">
+                <div class="ibox-content">
+                    <div class="click2edit wrapper discuss">
+                    </div>
+                </div>
+                <div class="file-loading">
+                    <!-- The file input field used as target for the file upload widget -->
+                    <input id="fileupload" name="MyFile" type="file" class="file" multiple data-msg-placeholder="选择要上传的文件">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div id="alterable" style="visibility: visible">
+                    <button id="cancel-say" type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button class="btn btn-success pull-right" onclick="commitDiscuss()" type="submit">发表评论</button>
+                    <%--<label class="pull-right">没有附件？直接点这里--></label>--%>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="animated fadeInDown">
     <div class=" row wrapper white-bg">
         <ol class="breadcrumb" style="margin-left: 40px">
@@ -205,29 +234,21 @@
                             <div class="tab-content">
                                 <div class="tab-pane" id="tab-3">
                                     <!--自己的留言开始-->
-                                    <div class="row">
+                                    <div class="row" style="height: 42px">
                                         <div class="ibox float-e-margins">
                                             <div class="ibox-title">
-                                                <h5>我的留言</h5>
-                                                <div id="alterable" style="visibility: visible">
-                                                    <button class="btn btn-success  btn-xs pull-right" onclick="commitDiscuss()" type="submit">发布评论</button>
+                                                <div class="col-md-4">
+                                                    <p>共<var id="num"></var>条留言</p>
+                                                </div>
+                                                <div id="sayComments" style="visibility: visible;float: right" class="col-md-4" >
+                                                    <button class="btn btn-success  btn-xs pull-right" data-toggle="modal" data-target="#say" type="submit">发表评论</button>
                                                     <%--<label class="pull-right">没有附件？直接点这里--></label>--%>
-                                                </div>
-                                                <div class="ibox-content">
-                                                    <div class="click2edit wrapper discuss">
-                                                    </div>
-                                                </div>
-
-                                                <div class="file-loading">
-                                                    <!-- The file input field used as target for the file upload widget -->
-                                                    <input id="fileupload" name="MyFile" type="file" class="file" multiple data-msg-placeholder="选择要上传的文件">
                                                 </div>
                                                 <!-- The file upload form used as target for the file upload widget -->
                                             </div>
                                         </div>
                                     </div>
                                     <!--自己的留言结束-->
-                                    <p>共<var id="num"></var>条留言</p>
                                     <div class="allDiscuss">
                                         <!--一行留言-->
                                         <!--一行留言结束-->
@@ -238,7 +259,6 @@
                                         共<var id="pages"></var>页
                                         <a onclick="next()">下一页</a>
                                     </div>
-
                                 </div>
                                 <div class="tab-pane" id="tab-2">
                                     <div id="toolbar1">
@@ -982,7 +1002,8 @@
                         type:"success",
                         confirmButtonColor: "#18a689",
                         confirmButtonText: "OK"
-                    })
+                    });
+                    $('button#cancel-say').click();
                     discussReload2(0);
                     discussInit();
                 },

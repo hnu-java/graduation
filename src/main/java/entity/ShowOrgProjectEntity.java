@@ -16,6 +16,16 @@ public class ShowOrgProjectEntity {
     private String user_name;
     private String mail;
     private int id_document;
+    private int version;
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
     public int getId_project() {
         return id_project;
     }
@@ -112,7 +122,7 @@ public class ShowOrgProjectEntity {
         this.id_document = id_document;
     }
 
-    public ShowOrgProjectEntity(int id_project, String project_name, Timestamp date, String document_name, int state, int id_organization, String intro, int flag, int id_user, String user_name, String mail, int id_document) {
+    public ShowOrgProjectEntity(int id_project, String project_name, Timestamp date, String document_name, int state, int id_organization, String intro, int flag, int id_user, String user_name, String mail, int id_document, int version) {
         this.id_project = id_project;
         this.project_name = project_name;
         this.date = date;
@@ -125,6 +135,7 @@ public class ShowOrgProjectEntity {
         this.user_name = user_name;
         this.mail = mail;
         this.id_document = id_document;
+        this.version = version;
     }
 
     public ShowOrgProjectEntity() {
