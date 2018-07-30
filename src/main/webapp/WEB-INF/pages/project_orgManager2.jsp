@@ -46,6 +46,9 @@
             <li>
                 <a href="Organization-jmpOrgManager2"><button class="btn-warning btn">查看项目</button></a>
             </li>
+            <li>
+                <a href="Organization-jmpOrgManager3"><button class="btn-primary btn">查看申请</button></a>
+            </li>
         </ul>
     </div>
     <div class="col-md-10" style="padding: 15px 10px 0px 0px;margin-left: -50px">

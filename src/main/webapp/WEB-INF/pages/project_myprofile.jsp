@@ -408,7 +408,7 @@
                     closeOnConfirm: false
                 }, function () {
                     $.ajax({
-                        url: "joinOranization-joinOrg",
+                        url: "joinOrganization-joinOrg",
                         data: {
                             org_name: $("input#join_org_name").val(),
                             message: $("input#join_message").val(),
