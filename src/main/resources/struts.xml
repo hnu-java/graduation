@@ -72,22 +72,23 @@
             <allowed-methods>applyOrg</allowed-methods>
         </action>
 
-        <action name="joinOranization-*" class="action.JoinOrganizationAction" method="{1}">
+        <action name="joinOrganization-*" class="action.JoinOrganizationAction" method="{1}">
             <result name="success" type="json">
                 <param name="root">dataMap</param>
             </result>
             <interceptor-ref name="myStack"/>
-            <allowed-methods>joinOrg</allowed-methods>
+            <allowed-methods>joinOrg,acceptApplication,refuseApplication</allowed-methods>
         </action>
 
         <action name="Organization-*" class="action.OrganizationAction" method="{1}">
             <result name="OrgManager1Page">/WEB-INF/pages/project_orgManager1.jsp</result>
             <result name="OrgManager2Page">/WEB-INF/pages/project_orgManager2.jsp</result>
+            <result name="OrgManager3Page">/WEB-INF/pages/project_orgManager3.jsp</result>
             <result name="display" type="json">
                 <param name="root">dataMap</param>
             </result>
         <interceptor-ref name="myStack"/>
-            <allowed-methods>jmpOrgManager1,jmpOrgManager2,showAllMember,showAllProject,showHistoryProject</allowed-methods>
+            <allowed-methods>jmpOrgManager1,jmpOrgManager2,jmpOrgManager3,showAllMember,showAllProject,showHistoryProject,showAllInvite,showAllInvited</allowed-methods>
         </action>
 
         <action name="infomation-*" class="action.InfomationAction" method="{1}">

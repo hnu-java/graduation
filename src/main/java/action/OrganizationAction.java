@@ -9,12 +9,15 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
+import dao.JoinOrganizationDao;
 import dao.OrganizationDao;
 import dao.ShowOrgProjectDao;
 import dao.UserDao;
+import daoImp.JoinOrganizationDaoImp;
 import daoImp.OrganizationDaoImp;
 import daoImp.ShowOrgProjectDaoImp;
 import daoImp.UserDaoImp;
+import entity.JoinOrganizationEntity;
 import entity.OrganizationEntity;
 import entity.ShowOrgProjectEntity;
 import entity.UserEntity;
@@ -32,6 +35,9 @@ public class OrganizationAction extends ActionSupport implements RequestAware, S
     private Map<String, Object> session;
     private Map<String, Object> request;
     private Map<String, Object> dataMap;
+    private JoinOrganizationDao joinorganizationdao;
+    private JoinOrganizationEntity join;
+
     public String quitorg(){
         organizationdao = new OrganizationDaoImp();
         UserEntity user = (UserEntity) session.get("user");
@@ -72,6 +78,30 @@ public class OrganizationAction extends ActionSupport implements RequestAware, S
         return "display";
     }
 
+    public String showAllInvite() {
+        dataMap = new HashMap<String, Object>();
+        JoinOrganizationDao joinorgnizationdao = new JoinOrganizationDaoImp();
+        UserEntity seesionUser=(UserEntity)session.get("user");
+        List<JoinOrganizationEntity> orgInvite = joinorgnizationdao.getMyInvite(organization.getNAME());
+        Gson gson = new Gson();
+        String json = gson.toJson(orgInvite);
+        System.out.println("OrgAllInvite:"+json);
+        dataMap.put("res",json);
+        return "display";
+    }
+
+    public String showAllInvited() {
+        dataMap = new HashMap<String, Object>();
+        JoinOrganizationDao joinorgnizationdao = new JoinOrganizationDaoImp();
+        UserEntity seesionUser=(UserEntity)session.get("user");
+        List<JoinOrganizationEntity> orgInvite = joinorgnizationdao.getMyInvited(organization.getNAME());
+        Gson gson = new Gson();
+        String json = gson.toJson(orgInvite);
+        System.out.println("OrgAllInvited:"+json);
+        dataMap.put("res",json);
+        return "display";
+    }
+
     public String showHistoryProject(){
         dataMap = new HashMap<String, Object>();
         ShowOrgProjectDao showOrgProjectDao = new ShowOrgProjectDaoImp();
@@ -92,6 +122,17 @@ public class OrganizationAction extends ActionSupport implements RequestAware, S
         ActionContext.getContext().getValueStack().set("list",list);
         System.out.println(list);
         return "OrgManager2Page";
+    }
+
+    public String jmpOrgManager3(){
+        dataMap = new HashMap<String, Object>();
+        organizationdao = new OrganizationDaoImp();
+        UserEntity seesionUser=(UserEntity)session.get("user");
+        System.out.println(seesionUser.getId_user());
+        List<OrganizationEntity> list = organizationdao.getMyOrg(seesionUser.getId_user());
+        ActionContext.getContext().getValueStack().set("list",list);
+        System.out.println(list);
+        return "OrgManager3Page";
     }
 
     @Override

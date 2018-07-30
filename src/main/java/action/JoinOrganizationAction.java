@@ -5,8 +5,10 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
 import dao.JoinOrganizationDao;
 import dao.ProjectDao;
+import dao.UserDao;
 import daoImp.JoinOrganizationDaoImp;
 import daoImp.ProjectDaoImp;
+import daoImp.UserDaoImp;
 import entity.JoinOrganizationEntity;
 import entity.UserEntity;
 import org.apache.struts2.interceptor.RequestAware;
@@ -29,14 +31,34 @@ public class JoinOrganizationAction extends ActionSupport implements RequestAwar
         joinorganizationdao = new JoinOrganizationDaoImp();
         dataMap = new HashMap<String, Object>();
         UserEntity seesionUser=(UserEntity)session.get("user");
-        System.out.println(seesionUser.getId_user());
-        boolean res=joinorganizationdao.joinOrg(seesionUser.getId_user(),joinorganization);
-        System.out.println(joinorganization.getOrg_name());
         boolean resExist = projectdao.exist(joinorganization.getOrg_name());
         boolean resBelong = projectdao.belong(joinorganization.getOrg_name(), seesionUser.getId_user());
+        boolean res=joinorganizationdao.joinOrg(seesionUser.getId_user(),joinorganization);
+        System.out.println(joinorganization.getOrg_name());
         dataMap.put("res", res);
         dataMap.put("resExist", resExist);
         dataMap.put("resBelong", resBelong);
+        return SUCCESS;
+    }
+
+    public String acceptApplication() {
+        dataMap = new HashMap<String, Object>();
+        joinorganizationdao = new JoinOrganizationDaoImp();
+        boolean res = joinorganizationdao.accept(joinorganization.getId_user(), joinorganization.getId_organization());
+        if(res == true) {
+            dataMap.put("res", res);
+        }
+        return SUCCESS;
+    }
+
+    public String refuseApplication() {
+        dataMap = new HashMap<String, Object>();
+        System.out.println("bk1");
+        joinorganizationdao = new JoinOrganizationDaoImp();
+        boolean res = joinorganizationdao.refuse(joinorganization.getId_user(), joinorganization.getId_organization());
+        if(res == true) {
+            dataMap.put("res", res);
+        }
         return SUCCESS;
     }
 

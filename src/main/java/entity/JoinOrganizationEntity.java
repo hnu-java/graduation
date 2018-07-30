@@ -10,8 +10,9 @@ public class JoinOrganizationEntity {
     private Timestamp date;
     private String message;
     private int status;
+    private String user_name;
 
-    public JoinOrganizationEntity(int id_join_org, int id_user, int id_org, Timestamp date, String message, int status, String org_name, int id_organization) {
+    public JoinOrganizationEntity(String user_name, int id_join_org, int id_user, int id_org, Timestamp date, String message, int status, String org_name, int id_organization) {
         this.id_join_org = id_join_org;
         this.id_user = id_user;
         this.id_organization = id_organization;
@@ -19,9 +20,18 @@ public class JoinOrganizationEntity {
         this.message = message;
         this.status = status;
         this.org_name = org_name;
+        this.user_name = user_name;
     }
 
     public JoinOrganizationEntity() {
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 
     public int getId_organization() {
