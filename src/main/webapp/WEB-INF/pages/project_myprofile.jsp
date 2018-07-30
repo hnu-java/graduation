@@ -427,7 +427,7 @@
                                         $('button#join-cancel-apply').click();
                                     }
                                     else if (result.res === false) {
-                                        swal("申请失败！", "被拒绝。", "error");
+                                        swal("申请失败！", "不能向同一个机构重复发送申请", "error");
                                     }
                                 }
                             }
