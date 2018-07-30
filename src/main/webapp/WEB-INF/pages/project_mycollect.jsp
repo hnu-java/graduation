@@ -73,38 +73,21 @@
             <div id="head" style="width:100%;height: 70px;font-size:x-small;margin: 0 auto">
                 <div style="float: left;height: 60px;padding: 20px 20px 0px 20px" class="col-md-4">
                     <div style="float: left;margin: 0px 0px 0px 50px">
-                        <div id="choose_menu">
-                            <a href="library-get"><div style="font-size: 18px;color: black" onmouseover="toshow()" onmouseout="tomiss()">官方构件库</div></a>
-                        </div>
-                        <div id="component_choose" style="border-top: red solid 1.7px;  position: absolute;width: 90px;height: 200px;z-index: 999;overflow: hidden;margin-top: 6px">
-                            <div id="component_menu" style="background-color:lightgrey;width: 90px;height: 150px;margin-top:-5px;display:none">
-                                <ul style="list-style: none;text-align: center;padding: 0px" role="menu">
-                                    <li style="margin: 5px" class="J_tabShowActive">
-                                        <a href="library-get"><span class="lzf_a" style="font-size: 18px ">全部</span></a>
-                                    </li>
-                                    <li style="margin: 5px" class="J_tabShowActive">
-                                        <a href="library-getcommon" ><span class="lzf_a" style="font-size: 18px ">通用</span></a>
-                                    </li>
-                                    <li style="margin: 5px" class="J_tabShowActive">
-                                        <a href="library-getuser"><span class="lzf_a" style="font-size: 18px ">用户</span></a>
-                                    </li>
-                                    <li style="margin: 5px" class="J_tabShowActive">
-                                        <a href="library-getcase" ><span class="lzf_a" style="font-size: 18px ">用例</span></a>
-                                    </li>
-                                    <li style="margin: 5px" class="J_tabShowActive">
-                                        <a href="library-getpicture" ><span class="lzf_a" style="font-size: 18px ">图片</span></a>
-                                    </li>
-                                </ul>
-                            </div>
+                        <div>
+                            <a href="library-get"><div style="font-size: 18px;color: black">官方构件库</div></a>
                         </div>
                     </div>
                     <div style="float: left;font-size:18px;width: 30px;text-align: center">|</div>
                     <div style="float: left">
-                        <a href="library-jmpUserLibrary"><div style="float: left;font-size:18px;text-align: left;color: #999999">用户构件库</div></a>
+                        <a href="library-jmpUserLibrary"><div style="float: left;font-size:18px;text-align: left;color: black">用户构件库</div></a>
                     </div>
                     <div style="float: left;font-size:18px;width: 30px;text-align: center">|</div>
                     <div style="float: left">
-                        <div style="float: left;font-size:18px;text-align: left;color: black"><a href="library-Mycollect"><span class="lzf_a"><u>我的收藏</u></span></a></div>
+                        <div>
+                            <div style="float: left;font-size:18px;text-align: left;color: black"><a href="library-Mycollect"><span class="lzf_a">我的收藏</span></a></div>
+                        </div>
+                        <div style="border-top: red solid 1.7px;  position: absolute;width: 70px;height: 200px;z-index: 999;overflow: hidden;margin-top: 31px">
+                        </div>
                     </div>
                 </div>
             </div>
