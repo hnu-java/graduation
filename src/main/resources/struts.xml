@@ -129,7 +129,7 @@
                 <param name="bufferSize">2048</param>
             </result>
         <interceptor-ref name="myStack"/>
-            <allowed-methods>jmpOrgTemplate,generateContract,getIndex,jmpTemplate,addState1,addState2,up,down,newCatalog,getCatalog,rename,getRoleCount,saveTemplateOne,saveTemplateThree,saveTemplateTwo,getUsable</allowed-methods>
+            <allowed-methods>getTitle,jmpOrgTemplate,generateContract,getIndex,jmpTemplate,addState1,addState2,up,down,newCatalog,getCatalog,rename,getRoleCount,saveTemplateOne,saveTemplateThree,saveTemplateTwo,getUsable</allowed-methods>
         </action>
 
         <action name="project-*" class="action.ProjectAction" method="{1}">

@@ -44,6 +44,8 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
     private int state;
     private int rank;
     //3
+    private int index;
+    private int layer;
     private String funName;
     private int priority;
     private String inDiv;
@@ -264,6 +266,16 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         return "pdf";
     }
 
+    public String getTitle(){
+        CatalogDao catalogDao=new CatalogDaoImp();
+        dataMap=new HashMap<>();
+        String maptitle = catalogDao.getCatalogTitle(documentId,index,layer);
+        System.out.println(maptitle);
+        session.put("MapTitle",maptitle);
+        dataMap.put("MapTitle",maptitle);
+        return "Re";
+    }
+
     public void prepareNewCatalog(){
         catalogEntity=new CatalogEntity();
     }
@@ -386,5 +398,13 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
 
     public void setPdfStream(InputStream pdfStream) {
         this.pdfStream = pdfStream;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public void setLayer(int layer) {
+        this.layer = layer;
     }
 }

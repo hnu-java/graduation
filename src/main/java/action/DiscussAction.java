@@ -10,10 +10,7 @@ import dao.ProDiscussDao;
 import daoImp.AccessoryDaoImp;
 import daoImp.CatalogDaoImp;
 import daoImp.ProDiscussDaoImp;
-import entity.AccessoryEntity;
-import entity.ProDIscussWrapper;
-import entity.ProDiscussEntity;
-import entity.UserEntity;
+import entity.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.StrutsStatics;
@@ -62,7 +59,10 @@ public class DiscussAction extends ActionSupport implements RequestAware, Sessio
         int third=Integer.valueOf(tempList[2]);
         int fourth=Integer.valueOf(tempList[3]);
         int id_catalog=catalogDao.getIdCatalog(id_document,first,second,third,fourth);
-        proDiscussDao.commit(seesionUser.getId_user(),id_catalog,new Timestamp(new Date().getTime()),disContent);
+
+        ProjectEntity sessionProject = (ProjectEntity)session.get("project");
+        int id_project = sessionProject.getId_Project();
+        proDiscussDao.commit(seesionUser.getId_user(),id_project,id_catalog,new Timestamp(new Date().getTime()),disContent);
         return "Re";
     }
 

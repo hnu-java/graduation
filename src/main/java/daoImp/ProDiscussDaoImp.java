@@ -17,9 +17,9 @@ import java.util.List;
  */
 public class ProDiscussDaoImp extends DAO<ProDiscussEntity> implements ProDiscussDao {
     @Override
-    public void commit(int id_user, int id_catalog, Timestamp time, String content) {
-        String sql="insert into PRO_DISCUSS (id_user,id_catalog,time,content) values (?,?,?,?)";
-        update(sql,id_user,id_catalog,time,content);
+    public void commit(int id_user, int id_project, int id_catalog, Timestamp time, String content) {
+        String sql="insert into PRO_DISCUSS (id_user,id_project,id_catalog,time,content) values (?,?,?,?,?)";
+        update(sql,id_user,id_project,id_catalog,time,content);
         return;
     }
 
@@ -91,11 +91,11 @@ public class ProDiscussDaoImp extends DAO<ProDiscussEntity> implements ProDiscus
 
     @Override
     public List<ProDiscussEntity> getProjectDis(int id_project,int page) {
-        String sql="select * from VIEW_PRO_DISCUSS where ID_PROJECT = ? or ID_DOCUMENT = ? LIMIT ?,3;";
-        String sql1="select id_document from DOCUMENT where ID_PROJECT = ? ";
-        int id_document = Integer.valueOf(getForValue(sql1,id_project).toString());
+        String sql="select * from VIEW_PRO_DISCUSS where ID_PROJECT = ? LIMIT ?,3;";
+//        String sql1="select id_document from DOCUMENT where ID_PROJECT = ? ";
+//        int id_document = Integer.valueOf(getForValue(sql1,id_project).toString());
 
-        List<ProDiscussEntity> proDiscussEntityList = getForList(sql,id_project,id_document,page);
+        List<ProDiscussEntity> proDiscussEntityList = getForList(sql,id_project,page);
 
         AccessoryDao accessoryDao = new AccessoryDaoImp();
 
@@ -126,10 +126,10 @@ public class ProDiscussDaoImp extends DAO<ProDiscussEntity> implements ProDiscus
 
     @Override
     public int getProDisNum(int id_project) {
-        String sql = "select count(*) from VIEW_PRO_DISCUSS where ID_PROJECT = ? or ID_DOCUMENT = ?";
-        String sql1="select id_document from DOCUMENT where ID_PROJECT = ? ";
-        int id_document = Integer.valueOf(getForValue(sql1,id_project).toString());
-        int num = Integer.valueOf(getForValue(sql,id_project,id_document).toString());
+        String sql = "select count(*) from VIEW_PRO_DISCUSS where ID_PROJECT = ?";
+//        String sql1="select id_document from DOCUMENT where ID_PROJECT = ? ";
+//        int id_document = Integer.valueOf(getForValue(sql1,id_project).toString());
+        int num = Integer.valueOf(getForValue(sql,id_project).toString());
         return num;
     }
 }
