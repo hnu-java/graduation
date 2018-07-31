@@ -87,6 +87,26 @@
         </div>
     </div>
 </div>
+<div  class="modal inmodal" id="newUser" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">新建用户构件</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group"><label>用户名</label> <input id="content2" type="text" placeholder="请输入用户名(必填，不超过100字符)" maxlength="100" class="form-control" required="required"></div>
+                <div class="form-group"><label>用户描述</label> <textarea id="content3"  style="height: 60px" type="text" placeholder="请输入备注(必填，不超过2000字符)"  maxlength="2000" class="form-control" required="required"></textarea></div>
+                <div class="form-group"><label>用户权限</label> <textarea  id="content4"  style="height: 200px" type="text" maxlength="100000" placeholder="请输入内容" class="form-control" required="required"></textarea></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="newUser-button" type="submit" class="btn btn-primary">新建</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="wrapper" style="padding: 0px" class="wrapper wrapper-content ">
     <div id="next1" style="width: 100%;margin: 0 auto;font-weight: 400" class="gray-bg">
     <div class=" row wrapper white-bg">
@@ -326,20 +346,6 @@
 <script src="<%=basePath %>js/plugins/summernote/summernote-bs4.js"></script>
 <script src="<%=basePath %>js/plugins/summernote/summernote-bs4.min.js"></script>
 <script src="<%=basePath %>js/plugins/summernote/summernote-lite.js"></script>
-<script src="<%=basePath%>/js/jquery.min.js?v=2.1.4"></script>
-<script src="<%=basePath%>/js/bootstrap.min.js?v=3.3.6"></script>
-<script src="<%=basePath%>/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
-<script src="<%=basePath%>/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-<script src="<%=basePath%>/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-<script src="<%=basePath%>/js/plugins/layer/layer.min.js"></script>
-<script src="<%=basePath%>/js/hplus.min.js?v=4.1.0"></script>
-<script type="text/javascript" src="<%=basePath%>/js/contabs.min.js"></script>
-<script src="<%=basePath%>/js/plugins/pace/pace.min.js"></script>
-<script src="<%=basePath%>/js/plugins/sweetalert/sweetalert.min.js"></script>
-<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
-<script src="<%=basePath%>/js/mjy.js"></script>
-<script src="<%=basePath%>/js/plugins/suggest/bootstrap-suggest.min.js"></script>
-<script src="<%=basePath%>/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 <script>
     $(document).ready(function(){$(".contact-box").each(function(){animationHover(this,"pulse")})});
 </script>
@@ -438,6 +444,68 @@
                                     location.href="structure-get?pagedis="+1+'&id_template=' + $("input.id_template").val()+'&id_library='+$("input.id_library").val()+'&page='+${requestScope.page};
                                 })
                                 }
+                            else {
+                                swal("创建失败", "服务器异常", "error");
+                            }
+
+                        },
+                        error: function () {
+                            swal({
+                                icon: "error"
+                            });
+                        }
+                    })
+                })
+        }
+    })
+    $("button#newUser-button").click(function () {
+        var content1 = $("input#content2").val();
+        var content2 = $("textarea#content3").val();
+        var content3 = $("textarea#content4").val();
+        var id_library = ${requestScope.library.id_library};
+        alert(id_library);
+        if(content1 === "" || content === null) {
+            swal("创建失败！", "请填写用户名", "error");
+        }
+        else if(content2 === "" || content === null) {
+            swal("创建失败！", "请填写用户描述", "error");
+        }
+        else if(content3 === "" || content === null) {
+            swal("创建失败！", "请填写用户权限", "error");
+        }
+        else {
+            content = "{\"roleName\":\"" + content1 + "\",\"describe\":\"" + content2 + "\",\"permissions\":\"" + content3 + "\"}";
+            swal(
+                {
+                    title: "您确认创建该构件吗？",
+                    text: "确认请点击确定",
+                    type: "",
+                    showCancelButton: true,
+                    confirmButtonColor: "#18a689",
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: false
+                }, function () {
+                    $.ajax({
+                        url: "structure-create",
+                        data: {
+                            content: content,
+                            id_library:id_library
+                        },
+                        dataType: "json",
+                        type: "Post",
+                        async: "false",
+                        success: function (result) {
+                            if (result.res){
+                                swal({
+                                    title: "创建成功",
+                                    type:"success",
+                                    confirmButtonColor: "#18a689",
+                                    confirmButtonText: "OK"
+                                },function(){
+                                    location.href="structure-get?pagedis="+1+'&id_template=' + $("input.id_template").val()+'&id_library='+$("input.id_library").val()+'&page='+${requestScope.page};
+                                })
+                            }
                             else {
                                 swal("申请失败", "输入的机构不存在", "error");
                             }
