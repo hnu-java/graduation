@@ -18,13 +18,16 @@
     <![endif]-->
 
     <link rel="shortcut icon" href="<%=basePath %>/example/favicon.ico">
-    <link href="<%=basePath %>/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
-    <link href="<%=basePath %>/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
-    <link href="<%=basePath %>/css/animate.min.css" rel="stylesheet">
-    <link href="<%=basePath %>/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="<%=basePath%>/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="<%=basePath%>/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="<%=basePath%>/css/animate.min.css" rel="stylesheet">
+    <link href="<%=basePath%>/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="<%=basePath%>/css/plugins/bootstrap-table/bootstrap-table.css" rel="stylesheet">
+    <link href="<%=basePath%>/css/z_style.css" rel="stylesheet">
     <link href="<%=basePath %>/css/lzf.css" rel="stylesheet">
-    <link href="<%=basePath %>/css/z_style.css" rel="stylesheet">
-    <link href="<%=basePath %>/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="<%=basePath%>/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="<%=basePath%>/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
     <style>
         a   {color: black}
         a:link {color:grey;} /*未访问颜色*/
@@ -57,6 +60,33 @@
 
 </head>
 <body class="fixed-sidebar  gray-bg" style="overflow:hidden">
+<div  class="modal inmodal" id="newLibrary" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">新建构件库</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group"><label>构件库名</label> <input id="name" type="text" placeholder="请输入构件库名(必填，不超过30字符)" maxlength="40" class="form-control" required="required"></div>
+                <div class="form-group"><label>构件库描述</label> <input id="mention" type="text" placeholder="请输入构件库描述(可不填，不超过100字符)"  maxlength="60" class="form-control" required="required"></div>
+                <div class="form-group">
+                    <select  id="template" class="form-control">
+                        <option name="" disabled  selected="selected" >选择构件库类型(必选)</option>
+                        <option name="common">通用构件库</option>
+                        <option name="user">用户构件库</option>
+                        <option name="case">用例构件库</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-apply" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="newLib-button" type="submit" class="btn btn-primary">新建</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="wrapper" style="padding: 0px" class="wrapper wrapper-content animated fadeInDown gray-bg">
 
     <div id="next1" style="width: 100%;margin: 0 auto;font-weight: 400" class="gray-bg">
@@ -89,6 +119,9 @@
                     <div style="float: left">
                         <div style="float: left;font-size:18px;text-align: left;color: black"><a href="library-Mycollect"><span class="lzf_a">我的收藏</span></a></div>
                     </div>
+                    <div>
+                        <button class="btn btn-xs btn-primary" style="margin-left: 20px" data-toggle="modal" data-target="#newLibrary">新建构件库</button>
+                    </div>
                 </div>
             </div>
 
@@ -108,11 +141,16 @@
                                 </div>
                                 <div style="margin: 10px;float: left">
                                     <h3><s:property value="name"/></h3>
-                                    <p>贡献人：官方<br>发布时间：<s:property value="time"/></p>
+                                    <p>类型：<s:property value="title"/><br>发布时间：<s:property value="time"/></p>
                                 </div>
                                 <div style="height:60px;clear: both;margin: 0px 10px 0px 10px;overflow: hidden">
                                     <p>
-                                        <s:property value="mention"/>
+                                        <s:if test='#request.mention==""'>
+                                            描述：未填写
+                                        </s:if>
+                                        <s:else>
+                                            <s:property value="mention"/>
+                                        </s:else>
                                     </p>
                                 </div>
                                 </div>
@@ -154,17 +192,22 @@
         </div>
     </div>
 </div>
-<script src="<%=basePath %>/js/jquery.min.js?v=2.1.4"></script>
-<script src="<%=basePath %>/js/bootstrap.min.js?v=3.3.6"></script>
-<script src="<%=basePath %>/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-<script src="<%=basePath %>/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-<script src="<%=basePath %>/js/plugins/layer/layer.min.js"></script>
-<script src="<%=basePath %>/js/hplus.min.js?v=4.1.0"></script>
-<script type="text/javascript" src="<%=basePath %>/js/contabs.min.js"></script>
-<script src="<%=basePath %>/js/plugins/pace/pace.min.js"></script>
+<script src="<%=basePath%>/js/jquery.min.js?v=2.1.4"></script>
+<script src="<%=basePath%>/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="<%=basePath%>/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="<%=basePath%>/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="<%=basePath%>/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="<%=basePath%>/js/plugins/layer/layer.min.js"></script>
+<script src="<%=basePath%>/js/hplus.min.js?v=4.1.0"></script>
+<script type="text/javascript" src="<%=basePath%>/js/contabs.min.js"></script>
+<script src="<%=basePath%>/js/plugins/pace/pace.min.js"></script>
+<script src="<%=basePath%>/js/plugins/sweetalert/sweetalert.min.js"></script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+<script src="<%=basePath%>/js/plugins/toastr/toastr.min.js"></script>
+<script src="<%=basePath%>/js/mjy.js"></script>
 <script src="<%=basePath %>/js/content.min.js?v=1.0.0"></script>
-<script src="<%=basePath %>/js/plugins/toastr/toastr.min.js"></script>
-<script src="<%=basePath %>/js/mjy.js"></script>
+<script src="<%=basePath%>/js/plugins/suggest/bootstrap-suggest.min.js"></script>
+<script src="<%=basePath%>/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 <script>
     $(document).ready(function(){$(".contact-box").each(function(){animationHover(this,"pulse")})});
 </script>
@@ -195,6 +238,68 @@
     });
 </script>
 </body>
+<script>
+
+    $("button#newLib-button").click(function (){
+        var sel = document.getElementById('template');
+        var index = sel.selectedIndex;
+        var name=$("input#name").val();
+        if(name === "" || name === null){
+            swal("新建构件库失败！", "请填写构件库名", "error");
+        }else if(index === 0){
+            swal("新建构件库失败！","请选择构件库类型","error");
+        }
+        else{
+            swal(
+                {
+                    title: "您确认新建该构件库吗？",
+                    text: "确认请按确定键",
+                    type: "",
+                    showCancelButton: true,
+                    confirmButtonColor: "#18a689",
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: false
+                }, function () {
+                    $.ajax({
+                        url: "library-newLibrary",
+                        data: {
+                            name: name,
+                            mention: $("input#mention").val(),
+                            id_template:index
+                        },
+                        dataType: "json",
+                        type: "Post",
+                        async: "false",
+                        success: function (result) {
+                            if (result.res) {
+                                swal({
+                                    title: "新建成功",
+                                    type: "success",
+                                    confirmButtonColor: "#18a689",
+                                    confirmButtonText: "OK"
+                                }, function () {
+                                    location.href = "library-jmpUserLibrary";
+                                })
+                            }else{
+                                swal({
+                                    title: "新建失败,服务器异常",
+                                    type: "error",
+                                    confirmButtonColor: "#18a689",
+                                    confirmButtonText: "OK"
+                                })
+                            }
+                        },
+                        error: function () {
+                            swal({
+                                icon: "error"
+                            });
+                        }
+                    })
+                })
+        }
+    })
+</script>
 <%--<script>--%>
     <%--$(document).on("click","a.collect",function () {--%>
         <%--$(this).addClass("nocollect");--%>
