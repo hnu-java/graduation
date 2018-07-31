@@ -3,6 +3,9 @@ package daoImp;
 import dao.DAO;
 import dao.LibraryDao;
 import entity.LibraryEntity;
+
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 public class LibraryDaoImp extends DAO<LibraryEntity> implements LibraryDao{
@@ -114,6 +117,19 @@ public class LibraryDaoImp extends DAO<LibraryEntity> implements LibraryDao{
     public List<LibraryEntity> getTypeOfLib(int id_user, int id_type) {
         String sql="select * from VIEW_LIB_COLLECT_JOIN_LIBRARY where id_user=? and id_template=?";
         return getForList(sql,id_user,id_type);
+    }
+
+    @Override
+    public boolean newLibrary(String name, int id_user, int id_template, String mention) {
+        String sql = "insert into library(NAME,ID_TEMPLATE,ID_USER,TIME,MENTION) value(?,?,?,?,?)";
+        Date date = new Date();
+        try {
+            update(sql,name,id_template,id_user,date,mention);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

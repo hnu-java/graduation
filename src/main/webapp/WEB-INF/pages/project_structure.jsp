@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <title>主页</title>
+    <title>构件库</title>
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
@@ -69,27 +69,59 @@
 </head>
 
 <body class="fixed-sidebar  gray-bg animated fadeInDown" style="overflow:hidden">
+<div  class="modal inmodal" id="newCommon" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">新建通用构件</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group"><label>内容</label> <textarea  id="content"  style="height: 300px" type="text" maxlength="100000" placeholder="请输入内容" class="form-control" required="required"></textarea></div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-apply" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="newCommon-button" type="submit" class="btn btn-primary">新建</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="wrapper" style="padding: 0px" class="wrapper wrapper-content ">
     <div id="next1" style="width: 100%;margin: 0 auto;font-weight: 400" class="gray-bg">
     <div class=" row wrapper white-bg">
         <ol class="breadcrumb" style="margin-left: 50px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage"><span class="lzf_b">首页</span></a> >><a href="library-get"><span class="lzf_b">构件库</span></a>
+                    <a href="user-jmpHomepage"><span class="lzf_b">首页</span></a> >><a href="library-get"><span class="lzf_b">构件库</span></a> >> 构件
                 </strong>
             </li>
         </ol>
     </div>
         <div id="main" style="width:100%;margin-top: 10px ">
             <div id="head" style="width:1200px;font-size:x-small;margin: 0 auto">
-                <div style="float: left;height: 50px;width:350px;padding: 20px 20px 0px 20px;margin-left: 100px">
+                <div style="float: left;height: 50px;width:300px;padding: 20px 20px 0px 20px;margin-left: 100px">
                     <h2 style="font-weight:700"> ${requestScope.library.name}</h2>
                 </div>
-                <div style="float: left;height: 50px;width:100px;padding: 40px 0px 20px 0px;text-align:center;margin-top:5px">
-                        <p style="font-size: 16px;color: black">贡献人：官方</p>
+                <div style="float: left;height: 50px;width:200px;padding: 40px 0px 20px 0px;text-align:center;margin-top:5px">
+                        <p style="font-size: 16px;color: black">贡献人：${requestScope.library.user_name}</p>
                 </div>
                 <div style="float: left;height: 50px;width:200px;padding: 40px 0px 20px 0px;margin-top:5px;margin-left: 10px">
                         <p style="font-size: 16px;color: black">发布时间：${requestScope.library.time}</p>
+                </div>
+                <div style="float: left;height: 50px;width:100px;padding: 40px 0px 20px 0px;margin-top:5px;margin-left: 10px">
+                    <p style="font-size: 16px;color: black">类型：${requestScope.library.title}</p>
+                </div>
+                <div style="float: left;height: 50px;width:100px;padding: 40px 0px 20px 0px;margin-top:5px;margin-left: 10px">
+                        <s:if test="#request.id_template==1">
+                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newCommon">创建通用构件</button>
+                        </s:if>
+                        <s:elseif test="#request.id_template==2">
+                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newUser">创建用户构件</button>
+                        </s:elseif>
+                        <s:elseif test="#request.id_template==3">
+                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newCase">创建用例构件</button>
+                        </s:elseif>
                 </div>
             </div>
             <s:if test="#request.id_template==1">
@@ -275,7 +307,7 @@
     </div>
 </div>
 <script src="<%=basePath %>js/jquery.min.js?v=2.1.4"></script>
-
+<script src="<%=basePath%>/js/bootstrap.min.js?v=3.3.6"></script>
 <script src="<%=basePath %>js/plugins/metisMenu/jquery.metisMenu.js"></script>
 <script src="<%=basePath %>js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 <script src="<%=basePath %>js/plugins/layer/layer.min.js"></script>
@@ -286,6 +318,7 @@
 <script src="<%=basePath %>js/plugins/toastr/toastr.min.js"></script>
 <script src="<%=basePath %>js/mjy.js"></script>
 <script src="<%=basePath %>js/lzf.js"></script>
+<script src="<%=basePath%>/js/plugins/suggest/bootstrap-suggest.min.js"></script>
 <script src="<%=basePath %>js/plugins/sweetalert/sweetalert.min.js"></script>
 <script src="<%=basePath %>js/plugins/summernote/summernote.js"></script>
 <script src="<%=basePath %>js/plugins/summernote/summernote.min.js"></script>
@@ -293,6 +326,20 @@
 <script src="<%=basePath %>js/plugins/summernote/summernote-bs4.js"></script>
 <script src="<%=basePath %>js/plugins/summernote/summernote-bs4.min.js"></script>
 <script src="<%=basePath %>js/plugins/summernote/summernote-lite.js"></script>
+<script src="<%=basePath%>/js/jquery.min.js?v=2.1.4"></script>
+<script src="<%=basePath%>/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="<%=basePath%>/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="<%=basePath%>/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="<%=basePath%>/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="<%=basePath%>/js/plugins/layer/layer.min.js"></script>
+<script src="<%=basePath%>/js/hplus.min.js?v=4.1.0"></script>
+<script type="text/javascript" src="<%=basePath%>/js/contabs.min.js"></script>
+<script src="<%=basePath%>/js/plugins/pace/pace.min.js"></script>
+<script src="<%=basePath%>/js/plugins/sweetalert/sweetalert.min.js"></script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+<script src="<%=basePath%>/js/mjy.js"></script>
+<script src="<%=basePath%>/js/plugins/suggest/bootstrap-suggest.min.js"></script>
+<script src="<%=basePath%>/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 <script>
     $(document).ready(function(){$(".contact-box").each(function(){animationHover(this,"pulse")})});
 </script>
@@ -340,6 +387,70 @@
 
     $(document).ready(function () {
         $(window.parent.document).find("div#content-main").height($(document).height())
+    })
+</script>
+<script type="text/javascript">
+    window.onload=function(){
+        var otxt=document.getElementById("txt");
+        otxt.onkeyup=function(){
+            this.size=(this.value.length>4?this.value.length:4);
+        }
+    }
+</script>
+<script>
+    $("button#newCommon-button").click(function () {
+        var content = $("textarea#content").val();
+        var id_library = ${requestScope.library.id_library};
+        alert(id_library);
+        if(content === "" || content === null) {
+            swal("创建失败！", "请填写构件内容", "error");
+        }
+        else {
+            content = "{\"content\":\"" + content + "\"}";
+            swal(
+                {
+                    title: "您确认创建该构件吗？",
+                    text: "确认请点击确定",
+                    type: "",
+                    showCancelButton: true,
+                    confirmButtonColor: "#18a689",
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: false
+                }, function () {
+                    $.ajax({
+                        url: "structure-create",
+                        data: {
+                            content: content,
+                            id_library:id_library
+                        },
+                        dataType: "json",
+                        type: "Post",
+                        async: "false",
+                        success: function (result) {
+                            if (result.res){
+                                swal({
+                                    title: "创建成功",
+                                    type:"success",
+                                    confirmButtonColor: "#18a689",
+                                    confirmButtonText: "OK"
+                                },function(){
+                                    location.href="structure-get?pagedis="+1+'&id_template=' + $("input.id_template").val()+'&id_library='+$("input.id_library").val()+'&page='+${requestScope.page};
+                                })
+                                }
+                            else {
+                                swal("申请失败", "输入的机构不存在", "error");
+                            }
+
+                        },
+                        error: function () {
+                            swal({
+                                icon: "error"
+                            });
+                        }
+                    })
+                })
+        }
     })
 </script>
 </body>

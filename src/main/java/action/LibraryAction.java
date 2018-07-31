@@ -317,6 +317,15 @@ public class LibraryAction extends ActionSupport implements RequestAware, Sessio
         return "userLibraryPage";
     }
 
+    public String newLibrary(){
+        dataMap = new HashMap<>();
+        libraryDao = new LibraryDaoImp();
+        UserEntity user = (UserEntity) session.get("user");
+        boolean res = libraryDao.newLibrary(library.getName(),user.getId_user(),library.getId_template(),library.getMention());
+        dataMap.put("res",res);
+        return SUCCESS;
+    }
+
     @Override
     public LibraryEntity getModel() {
         return library;

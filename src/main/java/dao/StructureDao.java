@@ -6,4 +6,6 @@ public interface StructureDao {
     int count(int id_library);
 
     List<StructureEntity> getAll(int id_library);
+
+    boolean create(int id_library,String content);
 }
