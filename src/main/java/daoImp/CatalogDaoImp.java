@@ -190,6 +190,20 @@ public class CatalogDaoImp extends DAO<CatalogEntity> implements CatalogDao {
         String sql="SELECT PROJECT.DOCUMENT_NAME FROM DOCUMENT INNER JOIN PROJECT ON DOCUMENT.ID_PROJECT = PROJECT.ID_PROJECT WHERE DOCUMENT.ID_DOCUMENT=?";
         return getForValue(sql,id_document);
     }
+    @Override
+    public  String getCatalogTitle(int id_document,int index,int layer){
+        String sql1="select title from CATALOG where id_document = ? and first_index = ?";
+        String sql2="select title from CATALOG where id_document = ? and second_index = ?";
+        String sql3="select title from CATALOG where id_document = ? and third_index = ?";
+        String sql4="select title from CATALOG where id_document = ? and fourth_index = ?";
+        if (layer==1){
+            return getForValue(sql1,id_document,index);
+        } else if (layer==2){
+            return getForValue(sql2,id_document,index);
+        }else if (layer==3){
+            return getForValue(sql3,id_document,index);
+        }else return getForValue(sql4,id_document,index);
+    }
 
     @Override
     public List<CatalogEntity> getAllByDocument(int id_document) {

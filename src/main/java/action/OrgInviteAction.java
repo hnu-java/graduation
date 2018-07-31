@@ -33,11 +33,13 @@ public class OrgInviteAction extends ActionSupport implements RequestAware, Sess
         dataMap = new HashMap<String, Object>();
         orgInviteDao = new OrgInviteDaoImp();
         UserEntity sessionUser = (UserEntity)session.get("user");
-        String content = sessionUser.getName()+"邀请你加入机构 "+orgInvite.getORG_NAME();
+        String org_name = (String)session.get("org_name");
+        System.out.println(org_name);
+        String content = sessionUser.getName()+"邀请你加入机构 "+org_name;
         boolean res=orgInviteDao.inviteUser(content,orgInvite,sessionUser);
         UserDao userDao = new UserDaoImp();
         int One = userDao.JudgmentOne(orgInvite.getUSER_NAME());
-        List<OrgInviteEntity> list=orgInviteDao.getlist(orgInvite.getORG_NAME());
+        List<OrgInviteEntity> list=orgInviteDao.getlist(org_name);
         Gson gson = new Gson();
         String showOperate = gson.toJson(list);
         dataMap.put("res",res);
@@ -62,8 +64,9 @@ public class OrgInviteAction extends ActionSupport implements RequestAware, Sess
         System.out.println("start showOrgInvite");
         dataMap = new HashMap<String, Object>();
         orgInviteDao = new OrgInviteDaoImp();
-        System.out.println(orgInvite.getORG_NAME());
-        List<OrgInviteEntity> list=orgInviteDao.getlist(orgInvite.getORG_NAME());
+        String org_name = (String)session.get("org_name");
+        System.out.println(org_name);
+        List<OrgInviteEntity> list=orgInviteDao.getlist(org_name);
         Gson gson = new Gson();
         String showOperate = gson.toJson(list);
         dataMap.put("res",showOperate);

@@ -61,6 +61,16 @@
                 showPointsRecord,jmpPointsRecord,proPayment,jmpPayment,jmpMessageCenter,jmpMyprofile,jmpMycollect,jmpHomepage,editProfile,jmpSysManager1,jmpSysManager2,jmpNewproject,jmpTemp,jmpCasecomponent,jmpUsercomponent,jmpCurrentProjectList,jmpCompletedProjectList
             </allowed-methods>
         </action>
+        
+        <action name="organizationManagement-*" class="action.OrganizationManagementAction" method="{1}">
+            <result name="success" type="json">
+                <param name="root">dataMap</param>
+            </result>
+            <result name="jumpOrgManager1Page">/WEB-INF/pages/project_orgManager1.jsp</result>
+            <result name="jumpOrgManager2Page">/WEB-INF/pages/project_orgManager2.jsp</result>
+            <result name="jumpOrgManager3Page">/WEB-INF/pages/project_orgManager3.jsp</result>
+            <allowed-methods>showOrgList,saveOrgName,jumpOrgManager1Page,jumpOrgManager2Page,jumpOrgManager3Page</allowed-methods>
+        </action>
 
         <action name="applyOrganization-*" class="action.ApplyOrganizationAction" method="{1}">
             <result name="success" type="json">
@@ -81,7 +91,7 @@
         </action>
 
         <action name="Organization-*" class="action.OrganizationAction" method="{1}">
-            <result name="OrgManager1Page">/WEB-INF/pages/project_orgManager1.jsp</result>
+            <result name="OrgManager1Page">/WEB-INF/pages/organization_Management.jsp</result>
             <result name="OrgManager2Page">/WEB-INF/pages/project_orgManager2.jsp</result>
             <result name="OrgManager3Page">/WEB-INF/pages/project_orgManager3.jsp</result>
             <result name="display" type="json">
@@ -129,7 +139,7 @@
                 <param name="bufferSize">2048</param>
             </result>
         <interceptor-ref name="myStack"/>
-            <allowed-methods>jmpOrgTemplate,generateContract,getIndex,jmpTemplate,addState1,addState2,up,down,newCatalog,getCatalog,rename,getRoleCount,saveTemplateOne,saveTemplateThree,saveTemplateTwo,getUsable</allowed-methods>
+            <allowed-methods>getTitle,jmpOrgTemplate,generateContract,getIndex,jmpTemplate,addState1,addState2,up,down,newCatalog,getCatalog,rename,getRoleCount,saveTemplateOne,saveTemplateThree,saveTemplateTwo,getUsable</allowed-methods>
         </action>
 
         <action name="project-*" class="action.ProjectAction" method="{1}">

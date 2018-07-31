@@ -34,23 +34,12 @@
         <ol class="breadcrumb" style="margin-left: 40px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage">首页</a> >><a href="Organization-jmpOrgManager1">机构管理</a>>> <a href="Organization-jmpOrgManager3">查看申请</a>
+                    <a href="user-jmpHomepage">首页</a> >><a href="Organization-jmpOrgManager1">机构管理</a>>> <a href="organizationManagement-jmpOrgManager3">查看申请</a>
                 </strong>
             </li>
         </ol>
     </div>
     <div class="form-group col-md-2">
-        <ul class="nav navbar">
-            <li>
-                <a href="Organization-jmpOrgManager1"><button class="btn-primary btn">成员管理</button></a>
-            </li>
-            <li>
-                <a href="Organization-jmpOrgManager2"><button class="btn-primary btn">查看项目</button></a>
-            </li>
-            <li>
-                <a href="Organization-jmpOrgManager3"><button class="btn-warning btn">查看申请</button></a>
-            </li>
-        </ul>
     </div>
     <div class="col-md-10" style="padding: 15px 10px 0px 0px;margin-left: -50px">
         <div class="panel">
@@ -66,12 +55,6 @@
                     </ul>
                 </div>
                 <div style="float: right;width: 300px" class="col-md-4">
-                    <select id="gender" class="form-control" name="gender" onchange="orgName()">
-                        <option name="" disabled  selected="selected" >选择机构</option>
-                        <s:iterator value="list">
-                            <option name="displayOrg" class="orgName"><s:property value="NAME"/> </option>
-                        </s:iterator>
-                    </select>
                 </div>
             </div>
             <div class="panel-body">
@@ -153,12 +136,6 @@
 <script src="<%=basePath%>/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 </body>
 <script>
-    function orgName() {
-        var objs = document.getElementById("gender");
-        var element = objs.value;
-        Ffive(element);
-        Ffive2(element);
-    }
 
     $('#showOrgInvite').bootstrapTable({
             columns: [
@@ -222,11 +199,9 @@
             ]
         }
     );
-    function Ffive(element){
         $.ajax(
             {
                 url:"Organization-showAllInvite",
-                data: {NAME: element},
                 dataType:"json",
                 type: "Get",
                 async: "false",
@@ -240,26 +215,22 @@
                 }
             }
         )
-    }
-    function Ffive2(element){
-        $.ajax(
-            {
-                url:"Organization-showAllInvited",
-                data: {NAME: element},
-                dataType:"json",
-                type: "Get",
-                async: "false",
-                success:function(json){
-                    var showOrgInvited = JSON.parse(json.res);
-                    //finishingTask为table的id
-                    $('#showOrgInvited').bootstrapTable('load',showOrgInvited);
-                },
-                error:function(){
-                    alert(" 错误");
-                }
+    $.ajax(
+        {
+            url:"Organization-showAllInvited",
+            dataType:"json",
+            type: "Get",
+            async: "false",
+            success:function(json){
+                var showOrgInvited = JSON.parse(json.res);
+                //finishingTask为table的id
+                $('#showOrgInvited').bootstrapTable('load',showOrgInvited);
+            },
+            error:function(){
+                alert(" 错误");
             }
-        )
-    }
+        }
+    )
     function operateFormatter(value,row,index) {
         return[
             '<a class="accept" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >同意</button></a>',
@@ -282,7 +253,6 @@
             var id_user = parseInt(row.id_user);
             var user_name = row.name;
             var org_name = row.org_name;
-            var currentOrg=$("#gender").val();
             swal(
                 {
                     title: "确认同意申请吗",
@@ -408,7 +378,7 @@
 </script>
 <script>
     $("button#invite-button").click(function () {
-        var currentOrg = $("#gender").val();
+        var currentOrg = ${sessionScope.org_name};
         var user_name = $("input#user_name").val();
         var now_name ="<s:property value="#session.user.name"/>";
         console.log(now_name)

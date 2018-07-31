@@ -19,9 +19,54 @@ public class ProDiscussEntity {
 
     private int id_Project;
     private int id_Document;
+    private int version;
+    private int first_index;
+    private int second_index;
+    private int third_index;
+    private int fourth_index;
     private List<File> MyFile;
     private List<String> MyFileFileName;
     private List<AccessoryEntity> accessoryEntityList;
+
+    public int getSecond_index() {
+        return second_index;
+    }
+
+    public void setSecond_index(int second_index) {
+        this.second_index = second_index;
+    }
+
+    public int getThird_index() {
+        return third_index;
+    }
+
+    public void setThird_index(int third_index) {
+        this.third_index = third_index;
+    }
+
+    public int getFourth_index() {
+        return fourth_index;
+    }
+
+    public void setFourth_index(int fourth_index) {
+        this.fourth_index = fourth_index;
+    }
+
+    public int getFirst_index() {
+        return first_index;
+    }
+
+    public void setFirst_index(int first_index) {
+        this.first_index = first_index;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
     public int getId_pro_discuss() {
         return id_pro_discuss;
@@ -111,7 +156,7 @@ public class ProDiscussEntity {
         this.accessoryEntityList = accessoryEntityList;
     }
 
-    public ProDiscussEntity(int id_pro_discuss, int id_user, String name, int id_catalog, Date time, String content, int id_Project, int id_Document, List<File> myFile, List<String> myFileFileName, List<AccessoryEntity> accessoryEntityList) {
+    public ProDiscussEntity(int id_pro_discuss, int id_user, String name, int id_catalog, Date time, String content, int id_Project, int id_Document, int version, int first_index, int second_index, int third_index, int fourth_index, List<File> myFile, List<String> myFileFileName, List<AccessoryEntity> accessoryEntityList) {
         this.id_pro_discuss = id_pro_discuss;
         this.id_user = id_user;
         this.name = name;
@@ -120,6 +165,11 @@ public class ProDiscussEntity {
         this.content = content;
         this.id_Project = id_Project;
         this.id_Document = id_Document;
+        this.version = version;
+        this.first_index = first_index;
+        this.second_index = second_index;
+        this.third_index = third_index;
+        this.fourth_index = fourth_index;
         MyFile = myFile;
         MyFileFileName = myFileFileName;
         this.accessoryEntityList = accessoryEntityList;
