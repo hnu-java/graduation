@@ -11,7 +11,7 @@ import java.util.List;
  * @author MJY
  */
 public interface ProDiscussDao {
-    void commit(int id_user,int id_catalog,Timestamp time,String content);
+    void commit(int id_user,int id_project,int id_catalog,Timestamp time,String content);
 
     void commit(int id_user, int id_project, Timestamp time, String content, List<String> MyFileFileName, List<String> Path);
 
