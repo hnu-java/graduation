@@ -23,4 +23,15 @@ public class StructureDaoImp extends DAO<StructureEntity> implements StructureDa
         String sql="select * from STRUCTURE where ID_LIBRARY=?";
         return getForList(sql,id_library);
     }
+
+    @Override
+    public boolean create(int id_library, String content) {
+        String sql = "insert into STRUCTURE(ID_LIBRARY,CONTENT) value(?,?)";
+        try{
+            update(sql,id_library,content);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
 }

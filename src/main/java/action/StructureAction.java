@@ -41,6 +41,7 @@ public class StructureAction extends ActionSupport implements RequestAware, Sess
         libraryDao=new LibraryDaoImp();
 
         List<LibrarydiscussEntity> discussAll=librarydiscussDao.getAll(structure.getId_library(),(pagedis-1)*4,(pagedis-1)*0+4);
+        //拿构件库评论
         List<LiDicussE> ldList=new LinkedList<>();
         for (int i = 0; i < discussAll.size(); i++) {
             Date a=new Date();
@@ -65,13 +66,14 @@ public class StructureAction extends ActionSupport implements RequestAware, Sess
             int numdis = 1;
             request.put("numdis", numdis);
         }
+        //评论翻页
 
         request.put("pagedis",pagedis);
         request.put("dn",discussnum);
 
 
         library=libraryDao.getOne(structure.getId_library());
-        request.put("library",library);
+        request.put("library",library);//拿该构件库实体
 
         Gson gson = new Gson();
 
@@ -186,9 +188,17 @@ public class StructureAction extends ActionSupport implements RequestAware, Sess
                 psList.add(ps);
             }
             ActionContext.getContext().getValueStack().set("list4",psList);
-        }
+        }//拿构件出来
 
         return "get";
+    }
+
+    public String create(){
+        dataMap = new HashMap<>();
+        structureDao = new StructureDaoImp();
+        boolean res = structureDao.create(structure.getId_library(),structure.getContent());
+        dataMap.put("res",res);
+        return "RES";
     }
     @Override
     public StructureEntity getModel() {
