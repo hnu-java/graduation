@@ -58,7 +58,9 @@ public class OrganizationAction extends ActionSupport implements RequestAware, S
         dataMap = new HashMap<String, Object>();
         UserDao userdao = new UserDaoImp();
         UserEntity seesionUser=(UserEntity)session.get("user");
-        List<UserEntity> orgMember = userdao.getOrgAllMem(seesionUser.getId_user(),organization.getNAME());
+        String org_name = (String)session.get("org_name");
+        System.out.println(org_name);
+        List<UserEntity> orgMember = userdao.getOrgAllMem(seesionUser.getId_user(),org_name);
         Gson gson = new Gson();
         String json = gson.toJson(orgMember);
         System.out.println("OrgAllMember"+json);
@@ -69,8 +71,9 @@ public class OrganizationAction extends ActionSupport implements RequestAware, S
     public String showAllProject(){
         dataMap = new HashMap<String, Object>();
         ShowOrgProjectDao showOrgProjectDao = new ShowOrgProjectDaoImp();
-        System.out.println(organization.getNAME());
-        List<ShowOrgProjectEntity> orgProject = showOrgProjectDao.getOrgPro(organization.getNAME());
+        String org_name = (String)session.get("org_name");
+        System.out.println(org_name);
+        List<ShowOrgProjectEntity> orgProject = showOrgProjectDao.getOrgPro(org_name);
         Gson gson = new Gson();
         String json = gson.toJson(orgProject);
         System.out.println("OrgAllProject"+json);
@@ -82,10 +85,12 @@ public class OrganizationAction extends ActionSupport implements RequestAware, S
         dataMap = new HashMap<String, Object>();
         JoinOrganizationDao joinorgnizationdao = new JoinOrganizationDaoImp();
         UserEntity seesionUser=(UserEntity)session.get("user");
-        List<JoinOrganizationEntity> orgInvite = joinorgnizationdao.getMyInvite(organization.getNAME());
+        String org_name = (String)session.get("org_name");
+        System.out.println(org_name);
+        List<JoinOrganizationEntity> orgInvite = joinorgnizationdao.getMyInvite(org_name);
         Gson gson = new Gson();
         String json = gson.toJson(orgInvite);
-        System.out.println("OrgAllInvite:"+json);
+        System.out.println("Org All Invite:"+json);
         dataMap.put("res",json);
         return "display";
     }
@@ -94,7 +99,9 @@ public class OrganizationAction extends ActionSupport implements RequestAware, S
         dataMap = new HashMap<String, Object>();
         JoinOrganizationDao joinorgnizationdao = new JoinOrganizationDaoImp();
         UserEntity seesionUser=(UserEntity)session.get("user");
-        List<JoinOrganizationEntity> orgInvite = joinorgnizationdao.getMyInvited(organization.getNAME());
+        String org_name = (String)session.get("org_name");
+        System.out.println(org_name);
+        List<JoinOrganizationEntity> orgInvite = joinorgnizationdao.getMyInvited(org_name);
         Gson gson = new Gson();
         String json = gson.toJson(orgInvite);
         System.out.println("OrgAllInvited:"+json);
@@ -105,8 +112,9 @@ public class OrganizationAction extends ActionSupport implements RequestAware, S
     public String showHistoryProject(){
         dataMap = new HashMap<String, Object>();
         ShowOrgProjectDao showOrgProjectDao = new ShowOrgProjectDaoImp();
-        System.out.println(organization.getNAME());
-        List<ShowOrgProjectEntity> orgProject = showOrgProjectDao.getOrgHisPro(organization.getNAME());
+        String org_name = (String)session.get("org_name");
+        System.out.println(org_name);
+        List<ShowOrgProjectEntity> orgProject = showOrgProjectDao.getOrgHisPro(org_name);
         Gson gson = new Gson();
         String json = gson.toJson(orgProject);
         System.out.println("OrgAllHisProject"+json);

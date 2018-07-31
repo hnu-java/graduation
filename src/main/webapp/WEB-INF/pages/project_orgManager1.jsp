@@ -34,23 +34,12 @@
         <ol class="breadcrumb" style="margin-left: 40px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage">首页</a> >><a href="Organization-jmpOrgManager1">机构管理</a>>>成员机构
+                    <a href="user-jmpHomepage">首页</a> >><a href="Organization-jmpOrgManager1">机构管理</a>>><a href="organizationManagement-jumpOrgManager1Page">${sessionScope.org_name}</a>
                 </strong>
             </li>
         </ol>
     </div>
     <div class="form-group col-md-2">
-        <ul class="nav navbar">
-            <li>
-                <a href="Organization-jmpOrgManager1"><button class="btn-warning btn">成员管理</button></a>
-            </li>
-            <li>
-                <a href="Organization-jmpOrgManager2"><button class="btn-primary btn">查看项目</button></a>
-            </li>
-            <li>
-                <a href="Organization-jmpOrgManager3"><button class="btn-primary btn">查看申请</button></a>
-            </li>
-        </ul>
     </div>
     <div class="col-md-10" style="padding: 15px 10px 0px 0px;margin-left: -50px">
         <div class="panel">
@@ -69,12 +58,6 @@
                     <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#invite">邀请用户</button>
                 </div>
                 <div style="float: right;width: 300px" class="col-md-4">
-                    <select id="gender" class="form-control" name="gender" onchange="orgName()">
-                        <option name="" disabled  selected="selected" >选择机构</option>
-                        <s:iterator value="list">
-                            <option name="displayOrg" class="orgName"><s:property value="NAME"/> </option>
-                        </s:iterator>
-                    </select>
                 </div>
             </div>
             <div class="panel-body">
@@ -86,7 +69,6 @@
                                     <div class="bootstrap-table">
                                         <table id="showOrgMember"
                                                data-toggle="table"
-                                               data-url="Organization-showAllMember"
                                                data-click-to-select="true"
                                                data-search="true"
                                                data-show-refresh="true"
@@ -177,13 +159,6 @@
 <script src="<%=basePath%>/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 </body>
 <script>
-    function orgName() {
-        var objs = document.getElementById("gender");
-        var element = objs.value;
-        Ffive(element);
-        Ffive2(element);
-    }
-
     $('#showOrgMember').bootstrapTable({
             columns: [
                 {
@@ -246,11 +221,9 @@
             ]
         }
     );
-    function Ffive(element){
-        $.ajax(
+    $.ajax(
             {
                 url:"Organization-showAllMember",
-                data: {NAME: element},
                 dataType:"json",
                 type: "Get",
                 async: "false",
@@ -264,12 +237,10 @@
                 }
             }
         )
-    }
-    function Ffive2(element) {
-        $.ajax(
+
+    $.ajax(
             {
                 url:"orgInvite-showList",
-                data: {ORG_NAME: element},
                 dataType:"json",
                 type: "Get",
                 async: "false",
@@ -283,7 +254,6 @@
                 }
             }
         )
-    }
     function operateFormatter(value,row,index) {
         return[
             '<a class="grant" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >机构转移</button></a>',
@@ -306,7 +276,7 @@
             //转移机构管理权限
             var id_user = parseInt(row.id_user);
             var user_name = row.name;
-            var currentOrg=$("#gender").val();
+            var currentOrg=${sessionScope.org_name};
             swal(
                 {
                     title: "您确定将此机构转让给该用户吗",
@@ -343,7 +313,7 @@
         'click .delete' : function(e, value, row, index) {
             //踢出机构
             var id_user = parseInt(row.id_user);
-            var currentOrg=$("#gender").val();
+            var currentOrg=${sessionScope.org_name};
             var user_name=row.name;
             swal(
                 {
@@ -377,7 +347,7 @@
         'click .reAgree': function(e, value, row, index) {
             var user_name = row.USER_NAME;
             var message = row.MESSAGE;
-            var currentOrg=$("#gender").val();
+            var currentOrg=${sessionScope.org_name};
             swal(
                 {
                     title: "您确定要重新邀请该用户加入机构吗",
@@ -411,7 +381,7 @@
 </script>
 <script>
     $("button#invite-button").click(function () {
-        var currentOrg = $("#gender").val();
+        var currentOrg = ${sessionScope.org_name};
         var user_name = $("input#user_name").val();
         var now_name ="<s:property value="#session.user.name"/>";
         console.log(now_name)

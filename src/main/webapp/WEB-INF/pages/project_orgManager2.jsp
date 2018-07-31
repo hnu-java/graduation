@@ -33,23 +33,12 @@
         <ol class="breadcrumb" style="margin-left: 40px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage">首页</a> >><a href="Organization-jmpOrgManager1">机构管理</a>>> <a href="Organization-jmpOrgManager2">查看项目</a>
+                    <a href="user-jmpHomepage">首页</a> >><a href="Organization-jmpOrgManager1">机构管理</a>>> <a href="organizationManagement-jmpOrgManager2">查看项目</a>
                 </strong>
             </li>
         </ol>
     </div>
     <div class="form-group col-md-2">
-        <ul class="nav navbar">
-            <li>
-                <a href="Organization-jmpOrgManager1"><button class="btn-primary btn">成员管理</button></a>
-            </li>
-            <li>
-                <a href="Organization-jmpOrgManager2"><button class="btn-warning btn">查看项目</button></a>
-            </li>
-            <li>
-                <a href="Organization-jmpOrgManager3"><button class="btn-primary btn">查看申请</button></a>
-            </li>
-        </ul>
     </div>
     <div class="col-md-10" style="padding: 15px 10px 0px 0px;margin-left: -50px">
         <div class="panel">
@@ -65,12 +54,6 @@
                     </ul>
                 </div>
                 <div style="float: right;width: 300px" class="col-md-4">
-                    <select id="gender" class="form-control" name="gender" onchange="orgName()">
-                        <option name="" disabled  selected="selected" >选择机构</option>
-                        <s:iterator value="list">
-                            <option id="displayOrg" class="orgName"><s:property value="NAME"/> </option>
-                        </s:iterator>
-                    </select>
                 </div>
             </div>
             <div class="panel-body">
@@ -82,7 +65,6 @@
                                     <div class="bootstrap-table">
                                         <table id="showProject"
                                                data-toggle="table"
-                                               data-url="Organization-showAllProject"
                                                data-click-to-select="true"
                                                data-search="true"
                                                data-show-refresh="true"
@@ -110,7 +92,6 @@
                                     <div class="bootstrap-table">
                                         <table id="showHistoryProject"
                                                data-toggle="table"
-                                               data-url="Organization-showHistoryProject"
                                                data-click-to-select="true"
                                                data-search="true"
                                                data-show-refresh="true"
@@ -153,12 +134,6 @@
 <script src="<%=basePath%>/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 </body>
 <script>
-    function orgName() {
-        var objs = document.getElementById("gender");
-        var element = objs.value;
-        Ffive(element);
-        Ffive2(element);
-    }
     $('#showProject').bootstrapTable({
             columns: [
                 {
@@ -254,44 +229,39 @@
             return ['<a class="refuse"><button class="btn btn-danger text-center btn-xs " >不可查看</button></a>'].join('');
     }
 
-    function Ffive(element) {
-        $.ajax(
-            {
-                url:"Organization-showAllProject",
-                data: {NAME: element},
-                dataType:"json",
-                type: "Get",
-                async: "false",
-                success:function(json){
-                    var orgProjectList = JSON.parse(json.res);
-                    //finishingTask为table的id
-                    $('#showProject').bootstrapTable('load',orgProjectList);
-                },
-                error:function(){
-                    alert(" 错误");
-                }
+    $.ajax(
+        {
+            url:"Organization-showAllProject",
+            dataType:"json",
+            type: "Get",
+            async: "false",
+            success:function(json){
+                var orgProjectList = JSON.parse(json.res);
+                //finishingTask为table的id
+                $('#showProject').bootstrapTable('load',orgProjectList);
+            },
+            error:function(){
+                alert(" 错误");
             }
-        )
-    }
-    function Ffive2(element) {
-        $.ajax(
-            {
-                url:"Organization-showHistoryProject",
-                data: {NAME: element},
-                dataType:"json",
-                type: "Get",
-                async: "false",
-                success:function(json){
-                    var orgHisProjectList = JSON.parse(json.res);
-                    //finishingTask为table的id
-                    $('#showHistoryProject').bootstrapTable('load',orgHisProjectList);
-                },
-                error:function(){
-                    alert(" 错误");
-                }
+        }
+    )
+
+    $.ajax(
+        {
+            url:"Organization-showHistoryProject",
+            dataType:"json",
+            type: "Get",
+            async: "false",
+            success:function(json){
+                var orgHisProjectList = JSON.parse(json.res);
+                //finishingTask为table的id
+                $('#showHistoryProject').bootstrapTable('load',orgHisProjectList);
+            },
+            error:function(){
+                alert(" 错误");
             }
-        )
-    }
+        }
+    )
 
     window.actionEvents = {
         'click .refuse': function(e,value,row){
