@@ -56,7 +56,7 @@ void update(int id_document, int first, int second);
 
     String getCatalogName(int id_document);
 
-    String getCatalogTitle(int id_document,int index,int layer);
+    String getCatalogTitle(int id_pro_discuss);
 
     List<CatalogEntity> getAllByDocument(int id_document);
 

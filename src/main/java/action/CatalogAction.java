@@ -267,15 +267,15 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         return "pdf";
     }
 
-    public String getTitle(){
-        CatalogDao catalogDao=new CatalogDaoImp();
-        dataMap=new HashMap<>();
-        String maptitle = catalogDao.getCatalogTitle(documentId,index,layer);
-        System.out.println(maptitle);
-        session.put("MapTitle",maptitle);
-        dataMap.put("MapTitle",maptitle);
-        return "Re";
-    }
+//    public String getTitle(){
+//        CatalogDao catalogDao=new CatalogDaoImp();
+//        dataMap=new HashMap<>();
+//        String maptitle = catalogDao.getCatalogTitle(documentId,index,layer);
+//        System.out.println(maptitle);
+//        session.put("MapTitle",maptitle);
+//        dataMap.put("MapTitle",maptitle);
+//        return "Re";
+//    }
 
     public void prepareNewCatalog(){
         catalogEntity=new CatalogEntity();
