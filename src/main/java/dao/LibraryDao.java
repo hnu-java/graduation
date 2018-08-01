@@ -27,6 +27,6 @@ public interface LibraryDao {
     int getCommoncount();
     int getNowcount(int id_user);
     List<LibraryEntity> getTypeOfLib(int id_user,int id_type);
-
+    List<LibraryEntity> getTypeOfUserLib(int id_user,int id_type,int id_project);
     boolean newLibrary(String name,int id_user,int id_template,String mention);
 }

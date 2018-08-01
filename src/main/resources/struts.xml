@@ -216,7 +216,7 @@
             <result name="Re" type="json"><param name="root">dataMap</param>
             </result>
          <interceptor-ref name="myStack"/>
-            <allowed-methods>getTypeOfLib,getStructure</allowed-methods>
+            <allowed-methods>getTypeOfUserLib,getTypeOfLib,getStructure</allowed-methods>
         </action>
 
         <action name="history-*" class="action.HistoryAction" method="{1}">

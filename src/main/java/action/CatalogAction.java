@@ -67,6 +67,7 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
     public String jmpTemplate(){
         request.put("documentId",documentId);
         request.put("projectId",projectId);
+        session.put("projectId",projectId);
         request.put("state",state);
         request.put("rank",rank);
         return "document";
