@@ -209,7 +209,7 @@
                 <param name="root">dataMap</param>
             </result>
         <interceptor-ref name="myStack"/>
-            <allowed-methods>commit,getCatalogDis,delete,commit2Project,getProjectDis</allowed-methods>
+            <allowed-methods>getTitle,commit,getCatalogDis,delete,commit2Project,getProjectDis</allowed-methods>
         </action>
 
         <action name="templateLib-*" class="action.TemplateLibAction" method="{1}">

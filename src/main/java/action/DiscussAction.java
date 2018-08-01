@@ -22,6 +22,8 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -44,12 +46,29 @@ public class DiscussAction extends ActionSupport implements RequestAware, Sessio
     private ProDiscussEntity proDiscussEntity;
     private int page;
     private int projectId;
+    private int id_pro_discuss;
+
+    public String getTitle(){
+        int id_pro_discuss = proDiscussEntity.getId_pro_discuss();
+        System.out.println(id_pro_discuss);
+        CatalogDao catalogDao=new CatalogDaoImp();
+        dataMap=new HashMap<>();
+        String maptitle = catalogDao.getCatalogTitle(id_pro_discuss);
+//        System.out.println(maptitle);
+//        session.put("MapTitle",maptitle);
+//        dataMap.put("MapTitle",maptitle);
+        return "Re";
+    }
+
+    public void setId_pro_discuss(int id_pro_discuss) {
+        this.id_pro_discuss = id_pro_discuss;
+    }
 
     public void setPage(int page) {
         this.page = page;
     }
 
-    public String commit(){
+    public String commit() throws ParseException {
         catalogDao=new CatalogDaoImp();
         proDiscussDao=new ProDiscussDaoImp();
         String[] tempList=catalogIndex.split(" ");
@@ -59,10 +78,19 @@ public class DiscussAction extends ActionSupport implements RequestAware, Sessio
         int third=Integer.valueOf(tempList[2]);
         int fourth=Integer.valueOf(tempList[3]);
         int id_catalog=catalogDao.getIdCatalog(id_document,first,second,third,fourth);
-
         ProjectEntity sessionProject = (ProjectEntity)session.get("project");
         int id_project = sessionProject.getId_Project();
-        proDiscussDao.commit(seesionUser.getId_user(),id_project,id_catalog,new Timestamp(new Date().getTime()),disContent);
+        Timestamp time = new Timestamp(new Date().getTime());
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String nowTime = df.format(time);
+        java.sql.Timestamp time1 = java.sql.Timestamp.valueOf(nowTime);
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+//        String tmp = sdf.format(time);
+//        java.text.SimpleDateFormat formatter = new  SimpleDateFormat( "yyyy-mm-dd HH:mm:ss");
+//        time = (Timestamp) formatter.parse(tmp);
+        proDiscussDao.commit(seesionUser.getId_user(),id_project,id_catalog,time1,disContent);
+        int id_pro_discuss = proDiscussDao.getId(seesionUser.getId_user(),id_project,id_catalog,time1,disContent);
+        catalogDao.getCatalogTitle(id_pro_discuss);
         return "Re";
     }
 

@@ -191,18 +191,41 @@ public class CatalogDaoImp extends DAO<CatalogEntity> implements CatalogDao {
         return getForValue(sql,id_document);
     }
     @Override
-    public  String getCatalogTitle(int id_document,int index,int layer){
-        String sql1="select title from CATALOG where id_document = ? and first_index = ?";
-        String sql2="select title from CATALOG where id_document = ? and second_index = ?";
-        String sql3="select title from CATALOG where id_document = ? and third_index = ?";
-        String sql4="select title from CATALOG where id_document = ? and fourth_index = ?";
-        if (layer==1){
-            return getForValue(sql1,id_document,index);
-        } else if (layer==2){
-            return getForValue(sql2,id_document,index);
-        }else if (layer==3){
-            return getForValue(sql3,id_document,index);
-        }else return getForValue(sql4,id_document,index);
+    public String getCatalogTitle(int id_pro_discuss){
+        String sql1="select title from CATALOG where id_document = ? and first_index = ? and second_index = ? and third_index = ? and fourth_index = ?";
+        String sql2="select first_index from VIEW_PRO_DISCUSS where id_pro_discuss = ?";
+        String sql3="select second_index from VIEW_PRO_DISCUSS where id_pro_discuss = ?";
+        String sql4="select third_index from VIEW_PRO_DISCUSS where id_pro_discuss = ?";
+        String sql5="select fourth_index from VIEW_PRO_DISCUSS where id_pro_discuss = ?";
+        String sql6="select id_document from VIEW_PRO_DISCUSS where id_pro_discuss = ?";
+        String sql7="update PRO_DISCUSS set location = ? where id_pro_discuss = ?";
+        String title = "";
+        int index1 = Integer.valueOf(getForValue(sql2,id_pro_discuss).toString());
+        int index2 = Integer.valueOf(getForValue(sql3,id_pro_discuss).toString());
+        int index3 = Integer.valueOf(getForValue(sql4,id_pro_discuss).toString());
+        int index4 = Integer.valueOf(getForValue(sql5,id_pro_discuss).toString());
+        int id_document = Integer.valueOf(getForValue(sql6,id_pro_discuss).toString());
+        if(index4!=0){
+            title+=getForValue(sql1,id_document,index1,0,0,0).toString()+"/";
+            title+=getForValue(sql1,id_document,index1,index2,0,0).toString()+"/";
+            title+=getForValue(sql1,id_document,index1,index2,index3,0).toString()+"/";
+            title+=getForValue(sql1,id_document,index1,index2,index3,index4).toString();
+            update(sql7,title,id_pro_discuss);
+            return title;
+        }else if(index3!=0){
+            title+=getForValue(sql1,id_document,index1,0,0,0).toString()+"/";
+            title+=getForValue(sql1,id_document,index1,index2,0,0).toString()+"/";
+            title+=getForValue(sql1,id_document,index1,index2,index3,0).toString();
+            update(sql7,title,id_pro_discuss);
+            return title;
+        }else if(index2!=0){
+            title+=getForValue(sql1,id_document,index1,0,0,0).toString()+"/";
+            title+=getForValue(sql1,id_document,index1,index2,0,0).toString();
+            update(sql7,title,id_pro_discuss);
+            return title;
+        }else title+=getForValue(sql1,id_document,index1,0,0,0).toString();
+        update(sql7,title,id_pro_discuss);
+        return title;
     }
 
     @Override

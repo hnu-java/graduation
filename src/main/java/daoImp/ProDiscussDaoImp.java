@@ -23,6 +23,12 @@ public class ProDiscussDaoImp extends DAO<ProDiscussEntity> implements ProDiscus
         return;
     }
 
+    public int getId(int id_user, int id_project, int id_catalog, Timestamp time, String content) {
+        String sql="select id_pro_discuss from PRO_DISCUSS where id_user = ? and id_project = ? and id_catalog = ? and time = ? and content = ?";
+        int id_pro_discuss = Integer.valueOf(getForValue(sql,id_user,id_project,id_catalog,time,content).toString());
+        return id_pro_discuss;
+    }
+
     @Override
     public void commit(int id_user, int id_project, Timestamp time, String content, List<String> MyFileFileName, List<String> Path) {
         String sql="insert into PRO_DISCUSS (id_user,id_project,time,content) values (?,?,?,?)";
