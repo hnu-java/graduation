@@ -22,7 +22,7 @@
             </interceptor-stack>
         </interceptors>
         <global-results>
-            <result name="login">/login.jsp</result>
+            <result name="login">/index.html</result>
         </global-results>
         <action name="404">
             <result>/404.jsp</result>
@@ -91,14 +91,15 @@
         </action>
 
         <action name="Organization-*" class="action.OrganizationAction" method="{1}">
-            <result name="OrgManager1Page">/WEB-INF/pages/organization_Management.jsp</result>
+            <result name="OrgManagerPage">/WEB-INF/pages/organization_Management.jsp</result>
+            <result name="OrgManager1Page">/WEB-INF/pages/project_orgManager1.jsp</result>
             <result name="OrgManager2Page">/WEB-INF/pages/project_orgManager2.jsp</result>
             <result name="OrgManager3Page">/WEB-INF/pages/project_orgManager3.jsp</result>
             <result name="display" type="json">
                 <param name="root">dataMap</param>
             </result>
         <interceptor-ref name="myStack"/>
-            <allowed-methods>jmpOrgManager1,jmpOrgManager2,jmpOrgManager3,showAllMember,showAllProject,showHistoryProject,showAllInvite,showAllInvited</allowed-methods>
+            <allowed-methods>jmpOrgManager,jmpOrgManager1,jmpOrgManager2,jmpOrgManager3,showAllMember,showAllProject,showHistoryProject,showAllInvite,showAllInvited</allowed-methods>
         </action>
 
         <action name="infomation-*" class="action.InfomationAction" method="{1}">
@@ -124,6 +125,16 @@
             </result>
         <interceptor-ref name="myStack"/>
             <allowed-methods>InviteUser,showList,grantOrg,deleteUser,reInviteUser</allowed-methods>
+        </action>
+
+        <action name="orglist-*" class="action.OrgListAction" method="{1}">
+            <result name="res" type="json">
+                <param name="root">dataMap</param>
+            </result>
+            <result name="success" type="json">
+                <param name="root">dataMap</param>
+            </result>
+            <allowed-methods>viceAdmin</allowed-methods>
         </action>
 
         <action name="catalog-*" class="action.CatalogAction" method="{1}">

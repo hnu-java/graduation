@@ -32,6 +32,21 @@ public class OrganizationDaoImp extends DAO<OrganizationEntity> implements Organ
     }
 
     @Override
+    public int getStatu(int id_organization, int id_user) {
+        System.out.println(id_organization);
+        String sql = "select STATU from org_member where ID_ORGANIZATION = ? and ID_USER = ?";
+        int statu=Integer.valueOf(getForValue(sql,id_organization,id_user).toString());
+        return statu;
+    }
+
+    @Override
+    public int getIdOrganization(String org_name) {
+        String sql = "select ID_ORGANIZATION from organization where NAME = ?";
+        int id_organization = Integer.valueOf(getForValue(sql,org_name).toString());
+        return id_organization;
+    }
+
+    @Override
     public OrganizationEntity getOne(String name) {
         String sql = "select * from ORGANIZATION where NAME = ? ";
         return get(sql,name);

@@ -243,8 +243,8 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
         String sql1 = "select ID_ORGANIZATION from ORGANIZATION where NAME=?";
         int id_org=getForValue(sql1,name);
         System.out.println(id_org);
-        String sql2 = "select ID_USER,NAME,MAIL,TEL from USER where ID_USER=any(select ID_USER from ORG_MEMBER where ID_ORGANIZATION=? and ID_USER!=?)";
-        List<UserEntity> list=getForList(sql2,id_org,user_id);
+        String sql2 = "select a.ID_USER,NAME,MAIL,TEL,STATU from user a,org_member b where a.ID_USER = b.ID_USER and ID_ORGANIZATION = ? and STATU != 1";
+        List<UserEntity> list=getForList(sql2,id_org);
         return list;
     }
     @Override

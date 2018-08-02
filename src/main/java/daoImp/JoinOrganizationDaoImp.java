@@ -54,11 +54,11 @@ public class JoinOrganizationDaoImp extends DAO<JoinOrganizationEntity> implemen
     }
 
     @Override
-    public boolean accept(int id_user, int id_org) {
+    public boolean accept(int id_user, int id_org, int id_join_org) {
         String sql = "insert into org_member(ID_USER, ID_ORGANIZATION) values (?, ?)";
         update(sql, id_user, id_org);
-        String sql1 = "update join_org set STATUS = 1 where (ID_USER = ? AND ID_ORGANIZATION = ?)";
-        update(sql1, id_user, id_org);
+        String sql1 = "update join_org set STATUS = 1 where ID_JOIN_ORG = ?";
+        update(sql1, id_join_org);
         String sql2 = "insert into message(ID_USER, CONTENT, DATE, ID_ORG) values (?, ?, ?, ?)";
         Timestamp createDate = new Timestamp(new java.util.Date().getTime());
         String sql3 = "select NAME from organization where ID_ORGANIZATION = ?";
@@ -71,9 +71,9 @@ public class JoinOrganizationDaoImp extends DAO<JoinOrganizationEntity> implemen
     }
 
     @Override
-    public boolean refuse(int id_user, int id_org) {
-        String sql = "update join_org set STATUS = -1 where (ID_USER = ? AND ID_ORGANIZATION = ?)";
-        update(sql, id_user, id_org);
+    public boolean refuse(int id_user, int id_org, int id_join_org) {
+        String sql = "update join_org set STATUS = -1 where ID_JOIN_ORG = ?";
+        update(sql, id_join_org);
         String sql2 = "insert into message(ID_USER, CONTENT, DATE, ID_ORG) values (?, ?, ?, ?)";
         String sql3 = "select NAME from organization where ID_ORGANIZATION = ?";
         String orgName = getForValue(sql3, id_org).toString();

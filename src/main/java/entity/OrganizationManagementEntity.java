@@ -7,15 +7,15 @@ public class OrganizationManagementEntity {
     private String ORG_NAME;
     private int ID_USER;
     private Date TIME;
-    private String USER_NAME;
+    private String NAME;
     private String MAIL;
 
-    public OrganizationManagementEntity(int ID_ORGANIZAITION, String ORG_NAME, int ID_USER, Date TIME, String USER_NAME, String MAIL) {
+    public OrganizationManagementEntity(int ID_ORGANIZAITION, String ORG_NAME, int ID_USER, Date TIME, String NAME, String MAIL) {
         this.ID_ORGANIZAITION = ID_ORGANIZAITION;
         this.ORG_NAME = ORG_NAME;
         this.ID_USER = ID_USER;
         this.TIME = TIME;
-        this.USER_NAME = USER_NAME;
+        this.NAME = NAME;
         this.MAIL = MAIL;
     }
 
@@ -54,12 +54,12 @@ public class OrganizationManagementEntity {
         this.TIME = TIME;
     }
 
-    public String getUSER_NAME() {
-        return USER_NAME;
+    public String getNAME() {
+        return NAME;
     }
 
-    public void setUSER_NAME(String USER_NAME) {
-        this.USER_NAME = USER_NAME;
+    public void setNAME(String NAME) {
+        this.NAME = NAME;
     }
 
     public String getMAIL() {

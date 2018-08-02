@@ -5,13 +5,12 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
 import dao.OrgInviteDao;
+import dao.OrgListDao;
 import dao.OrganizationDao;
 import dao.UserDao;
-import daoImp.HistoryInfoDaoImp;
-import daoImp.OrgInviteDaoImp;
-import daoImp.OrganizationDaoImp;
-import daoImp.UserDaoImp;
+import daoImp.*;
 import entity.OrgInviteEntity;
+import entity.OrgListEntity;
 import entity.UserEntity;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -26,6 +25,8 @@ public class OrgInviteAction extends ActionSupport implements RequestAware, Sess
     private Map<String, Object> request;
     private Map<String, Object> dataMap;
     private OrgInviteEntity orgInvite;
+    private OrgListEntity orglist;
+    private OrgListDao orglistdao;
     private OrgInviteDao orgInviteDao;
     private OrganizationDao org;
 
@@ -48,12 +49,15 @@ public class OrgInviteAction extends ActionSupport implements RequestAware, Sess
         return SUCCESS;
     }
 
+
+
     public String reInviteUser(){
         dataMap = new HashMap<String, Object>();
         orgInviteDao = new OrgInviteDaoImp();
-        System.out.println("InviteUser.org"+orgInvite.getORG_NAME());
+        String org_name = (String)session.get("org_name");
+        System.out.println(org_name);
         orgInviteDao.reInviteUser(orgInvite);
-        List<OrgInviteEntity> list=orgInviteDao.getlist(orgInvite.getORG_NAME());
+        List<OrgInviteEntity> list=orgInviteDao.getlist(org_name);
         Gson gson = new Gson();
         String showOperate = gson.toJson(list);
         dataMap.put("res",showOperate);

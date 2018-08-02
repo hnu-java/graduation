@@ -33,7 +33,7 @@
         <ol class="breadcrumb" style="margin-left: 40px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage">首页</a> >><a href="Organization-jmpOrgManager1">机构管理</a>>> <a href="organizationManagement-jmpOrgManager2">查看项目</a>
+                    <a href="user-jmpHomepage">首页</a> >><a href="Organization-jmpOrgManager">机构管理</a>>> <a href="organizationManagement-jumpOrgManager2Page">查看机构${sessionScope.org_name}的项目</a>
                 </strong>
             </li>
         </ol>

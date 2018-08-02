@@ -34,7 +34,7 @@
         <ol class="breadcrumb" style="margin-left: 40px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage">首页</a> >><a href="Organization-jmpOrgManager1">机构管理</a>
+                    <a href="user-jmpHomepage">首页</a> >><a href="Organization-jmpOrgManager">机构管理</a>
                 </strong>
             </li>
         </ol>
@@ -113,7 +113,7 @@
                 sortable: true,
                 align: 'center'
             }, {
-                field: 'USER_NAME',
+                field: 'NAME',
                 title: '机构管理员',
                 sortable: true,
                 align: 'center'
@@ -171,7 +171,7 @@
                     url: "organizationManagement-saveOrgName",
                     dataType: "json",
                     success: function () {
-                        location.href = "organizationManagement-jumpOrgManager1Page";
+                        location.href = "Organization-jmpOrgManager1";
                     },
                     error: function () {
                         swal("查看记录失败！", "服务器异常。", "error");

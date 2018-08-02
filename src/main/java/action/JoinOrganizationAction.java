@@ -50,7 +50,8 @@ public class JoinOrganizationAction extends ActionSupport implements RequestAwar
     public String acceptApplication() {
         dataMap = new HashMap<String, Object>();
         joinorganizationdao = new JoinOrganizationDaoImp();
-        boolean res = joinorganizationdao.accept(joinorganization.getId_user(), joinorganization.getId_organization());
+        System.out.println("bk2323232" + joinorganization.getDate());
+        boolean res = joinorganizationdao.accept(joinorganization.getId_user(), joinorganization.getId_organization(), joinorganization.getId_join_org());
         if(res == true) {
             dataMap.put("res", res);
         }
@@ -65,8 +66,9 @@ public class JoinOrganizationAction extends ActionSupport implements RequestAwar
     public String refuseApplication() {
         dataMap = new HashMap<String, Object>();
         joinorganizationdao = new JoinOrganizationDaoImp();
-        boolean res = joinorganizationdao.refuse(joinorganization.getId_user(), joinorganization.getId_organization());
-        if(res == true) {
+        System.out.println("bkkkkkk" + joinorganization.getDate());
+        boolean res = joinorganizationdao.refuse(joinorganization.getId_user(), joinorganization.getId_organization(), joinorganization.getId_join_org());
+        if(res) {
             dataMap.put("res", res);
         }
         List<JoinOrganizationEntity> orgInvited = joinorganizationdao.getMyInvited(joinorganization.getOrg_name());
