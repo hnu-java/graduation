@@ -676,6 +676,8 @@
             function(e, value, row, index) {
                 var id = row.id_document;
                 location.href = "catalog-jmpTemplate?documentId="+id+"&rank="+rank+"&projectId="+id_Project+"&state="+row.state;
+                var a = "catalog-jmpTemplate?documentId="+id+"&rank="+rank+"&projectId="+id_Project+"&state="+row.state;
+                alert(a);
             },
         'click .delete':
             function(e, value, row, index) {
@@ -980,8 +982,18 @@
                         content+="<h5>";
                         content+="-文档版本 ";
                         content+=tempDis.version+" 目录 "+tempDis.location+" </h5>";
-                        content+="<button  class='btn btn-danger btn-xs col-lg-push-1 m-l-sm shiftDis'  type='button'  style='margin-top: -3px'>跳转</button>";
-
+                        var template = "";
+                        template+="catalog-jmpTemplate?documentId="+tempDis.id_Document+"&rank="+rank+"&projectId="+tempDis.id_Project+"&state="+tempDis.state;
+                        content+="<a href=\"catalog-jmpTemplate?documentId=";
+                        content+=tempDis.id_Document;
+                        content+="&rank=";
+                        content+=rank;
+                        content+="&projectId=";
+                        content+=tempDis.id_Project;
+                        content+="&state=";
+                        content+=tempDis.state;
+                        content+="\">";
+                        content+="<button  class='btn btn-danger btn-xs col-lg-push-1 m-l-sm shiftDis'  type='button'  style='margin-top: -3px'>跳转</button></a>";
                     }
                     content+="<div class='ibox-tools'>";
 
@@ -1069,10 +1081,10 @@
     );
 
     //评论跳转按钮
-    $(document).on("click",".shiftDis",function (e, value, row, index) {
-        var id = row.id_Document;
-        location.href = "catalog-jmpTemplate?documentId="+id+"&rank="+rank+"&projectId="+id_Project+"&state="+row.state;
-    });
+   function shift(id_document) {
+        //var id = row.id_Project;
+        location.href = "catalog-jmpTemplate?documentId="+id_document+"&rank="+rank+"&projectId="+id_Project+"&state="+state;
+    };
 
     //评论删除按钮
     $(document).on("click",".deleteDis",function () {
