@@ -34,7 +34,7 @@
         <ol class="breadcrumb" style="margin-left: 40px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage">首页</a> >><a href="Organization-jmpOrgManager1">机构管理</a>>><a href="organizationManagement-jumpOrgManager1Page">${sessionScope.org_name}</a>
+                    <a href="user-jmpHomepage">首页</a> >><a href="Organization-jmpOrgManager">机构管理</a>>><a href="organizationManagement-jumpOrgManager1Page">${sessionScope.org_name}</a>
                 </strong>
             </li>
         </ol>
@@ -159,6 +159,7 @@
 <script src="<%=basePath%>/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 </body>
 <script>
+
     $('#showOrgMember').bootstrapTable({
             columns: [
                 {
@@ -167,6 +168,13 @@
                     align: 'center',
                     sortable: true,
                     valign: 'middle'
+                },
+                {
+                    title:'职务',
+                    field:'statu',
+                    align: 'center',
+                    sortable: 'true',
+                    formatter: "rename2"
                 },
                 {
                     field: 'mail',
@@ -229,6 +237,7 @@
                 async: "false",
                 success:function(json){
                     var orgMemberList = JSON.parse(json.res);
+                    alert(1111);
                     //finishingTask为table的id
                     $('#showOrgMember').bootstrapTable('load',orgMemberList);
                 },
@@ -236,7 +245,7 @@
                     alert(" 错误");
                 }
             }
-        )
+        );
 
     $.ajax(
             {
@@ -253,12 +262,38 @@
                     alert(" 错误");
                 }
             }
-        )
+        );
+
+
     function operateFormatter(value,row,index) {
-        return[
+        <s:if test="#session.statu==1">
+        if (row.statu===0){
+            return [
+                '<a class="grant" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >机构转移</button></a>',
+                '<a class="vice" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >设为副机构管理员</button></a>',
+                '<a class="delete" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >踢出机构</button></a>'
+            ].join('');
+        }
+        else if (row.statu===2){
+            return [
             '<a class="grant" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >机构转移</button></a>',
+            '<a class="vice" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >撤销副机构管理员</button></a>',
             '<a class="delete" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >踢出机构</button></a>'
         ].join('');
+        }</s:if>
+        <s:if test="#session.statu==2">
+        alert(row.statu);
+        if (row.statu===0){
+            return [
+                '<a class="delete" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >踢出机构</button></a>'
+            ].join('');
+        }
+        }</s:if>
+/*        return[
+            '<a class="grant" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >机构转移</button></a>',
+            '<a class="vice" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >设为副机构管理员</button></a>',
+            '<a class="delete" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >踢出机构</button></a>'
+        ].join('');*/
     }
 
     function rename(value,row,index) {
@@ -271,12 +306,21 @@
             return ['已拒绝',
                 '<a class="reAgree" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >重新邀请</button></a>'].join('');
     }
+    function rename2(value,row,index) {
+        var statu=parseInt(row.statu);
+        if(statu==0)
+            return '普通用户';
+        else if(statu==1)
+            return '机构管理员';
+        else if(statu==2)
+            return '副机构管理员';
+    }
     window.actionEvents = {
         'click .grant': function(e, value, row, index) {
             //转移机构管理权限
             var id_user = parseInt(row.id_user);
             var user_name = row.name;
-            var currentOrg=${sessionScope.org_name};
+            var currentOrg="${sessionScope.org_name}";
             swal(
                 {
                     title: "您确定将此机构转让给该用户吗",
@@ -310,11 +354,53 @@
                     })
                 })
         },
+        'click .vice' : function(e, value, row, index) {
+            //设置副机构管理员
+            var id_user = parseInt(row.id_user);
+            var name = row.name;
+            var org_name="${sessionScope.org_name}";
+            alert(name);
+            swal(
+                {
+                    title: "您确定将此用户设为副机构管理员吗",
+                    text: "请谨慎操作！",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "设置",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: false
+                },function () {
+                    $.ajax({
+                        type: "GET",
+                        url: "orglist-viceAdmin",
+                        data: {id_user: id_user,name: name, org_name: org_name},
+                        dataType: "json",
+                        success: function () {
+                            swal({
+                                title: "设置成功",
+                                text: "点击返回首页！",
+                                type:"success",
+                                confirmButtonColor: "#18a689",
+                                confirmButtonText: "OK"
+                            },function(){
+                                location.href = "user-jmpHomepage";
+                            })
+                        },
+                        error: function (result) {
+                            swal("操作失败！", "出现未知错误，请重试。", "error");
+                        }
+                    })
+                })
+        },
         'click .delete' : function(e, value, row, index) {
             //踢出机构
             var id_user = parseInt(row.id_user);
-            var currentOrg=${sessionScope.org_name};
+            var currentOrg= "${sessionScope.org_name}";
             var user_name=row.name;
+            alert(id_user);
+            alert(currentOrg);
+            alert(user_name);
             swal(
                 {
                     title: "您确定将该用户移出机构吗",
@@ -347,7 +433,7 @@
         'click .reAgree': function(e, value, row, index) {
             var user_name = row.USER_NAME;
             var message = row.MESSAGE;
-            var currentOrg=${sessionScope.org_name};
+            var currentOrg="${sessionScope.org_name}";
             swal(
                 {
                     title: "您确定要重新邀请该用户加入机构吗",

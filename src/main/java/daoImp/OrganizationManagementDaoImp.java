@@ -11,7 +11,7 @@ public class OrganizationManagementDaoImp extends DAO<OrganizationManagementEnti
     @Override
     public List<OrganizationManagementEntity> getAllOrg(int id_user) {
         System.out.println(id_user);
-        String sql = "select * from view_org_user where ID_USER = ?";
+        String sql = "select * from view_org_list where ID_ORGANIZATION = any(select ID_ORGANIZATION from view_org_list where ID_USER = ? and STATU != 0) and STATU = 1";
         List<OrganizationManagementEntity> allOrg = getForList(sql, id_user);
         return allOrg;
     }

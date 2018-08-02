@@ -26,6 +26,7 @@ public class UserEntity {
     private Date deadline;
     private int days;
     private String photo;
+
     public int getId_user() {
         return id_user;
     }

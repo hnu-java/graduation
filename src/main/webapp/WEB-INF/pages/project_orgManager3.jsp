@@ -34,7 +34,7 @@
         <ol class="breadcrumb" style="margin-left: 40px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage">首页</a> >><a href="Organization-jmpOrgManager1">机构管理</a>>> <a href="organizationManagement-jmpOrgManager3">查看申请</a>
+                    <a href="user-jmpHomepage">首页</a> >><a href="Organization-jmpOrgManager1">机构管理</a>>> <a href="organizationManagement-jumpOrgManager3Page">查看机构${sessionScope.org_name}的申请</a>
                 </strong>
             </li>
         </ol>
@@ -249,10 +249,11 @@
     window.actionEvents = {
         'click .accept': function(e, value, row, index) {
             //同意加入申请
+            var id_join_org = parseInt(row.id_join_org);
+            var user_name = row.user_name;
             var id_organization = parseInt(row.id_organization);
-            var id_user = parseInt(row.id_user);
-            var user_name = row.name;
             var org_name = row.org_name;
+            var id_user = parseInt(row.id_user);
             swal(
                 {
                     title: "确认同意申请吗",
@@ -267,7 +268,7 @@
                     $.ajax({
                         type: "GET",
                         url: "joinOrganization-acceptApplication",
-                        data: {id_user: id_user,user_name: user_name, id_organization: id_organization, org_name: org_name},
+                        data: {id_join_org: id_join_org, user_name: user_name,id_organization: id_organization, org_name: org_name, id_user: id_user},
                         dataType: "json",
                         success: function (json) {
                             swal({
@@ -292,11 +293,11 @@
                 })
         },
         'click .refuse' : function(e, value, row, index) {
-            var id_user = parseInt(row.id_user);
+            var id_join_org = parseInt(row.id_join_org);
+            var user_name = row.user_name;
             var id_organization = parseInt(row.id_organization);
-            var currentOrg=$("#gender").val();
-            var user_name=row.user_name;
-            var org_name=row.org_name;
+            var org_name = row.org_name;
+            var id_user = parseInt(row.id_user);
             swal(
                 {
                     title: "确认拒绝申请吗",
@@ -311,7 +312,7 @@
                     $.ajax({
                         type: "GET",
                         url: "joinOrganization-refuseApplication",
-                        data: {id_user: id_user, user_name: user_name,id_organization: id_organization, org_name: org_name},
+                        data: {id_join_org: id_join_org, user_name: user_name,id_organization: id_organization, org_name: org_name, id_user: id_user},
                         dataType: "json",
                         success: function (json) {
                             swal("拒绝成功！", "您已拒绝该用户请求。", "success");
@@ -335,11 +336,11 @@
     window.actionEvents2 = {
         'click .reAgree': function(e, value, row, index) {
             //同意加入申请
+            var id_join_org = parseInt(row.id_join_org);
+            var user_name = row.user_name;
             var id_organization = parseInt(row.id_organization);
-            var id_user = parseInt(row.id_user);
-            var user_name = row.name;
             var org_name = row.org_name;
-            var currentOrg=$("#gender").val();
+            var id_user = parseInt(row.id_user);
             swal(
                 {
                     title: "确认重新同意申请吗",
@@ -354,7 +355,7 @@
                     $.ajax({
                         type: "GET",
                         url: "joinOrganization-acceptApplication",
-                        data: {id_user: id_user,user_name: user_name, id_organization: id_organization, org_name: org_name},
+                        data: {id_join_org: id_join_org, user_name: user_name,id_organization: id_organization, org_name: org_name, id_user: id_user},
                         dataType: "json",
                         success: function (json) {
                             swal({

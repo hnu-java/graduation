@@ -18,6 +18,8 @@ public interface OrganizationDao {
     boolean isIn(int id_user,int id_org);
     List<OrganizationEntity> getMatched(int id_User, String name);
     List<OrganizationEntity> getMyOrg(int id);
+    int getStatu(int id_organization,int id_user);
+    int getIdOrganization(String org_name);
     String findName(int ID_ORGANIZATION);  //获取机构ID对应的NAME
     String findAdminName(int ID_ORGANIZATION);
     String findUserName(String ORG_NAME);

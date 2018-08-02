@@ -9,18 +9,9 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
-import dao.JoinOrganizationDao;
-import dao.OrganizationDao;
-import dao.ShowOrgProjectDao;
-import dao.UserDao;
-import daoImp.JoinOrganizationDaoImp;
-import daoImp.OrganizationDaoImp;
-import daoImp.ShowOrgProjectDaoImp;
-import daoImp.UserDaoImp;
-import entity.JoinOrganizationEntity;
-import entity.OrganizationEntity;
-import entity.ShowOrgProjectEntity;
-import entity.UserEntity;
+import dao.*;
+import daoImp.*;
+import entity.*;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -35,8 +26,8 @@ public class OrganizationAction extends ActionSupport implements RequestAware, S
     private Map<String, Object> session;
     private Map<String, Object> request;
     private Map<String, Object> dataMap;
-    private JoinOrganizationDao joinorganizationdao;
-    private JoinOrganizationEntity join;
+    private OrgListEntity orglistentity;
+
 
     public String quitorg(){
         organizationdao = new OrganizationDaoImp();
@@ -46,24 +37,27 @@ public class OrganizationAction extends ActionSupport implements RequestAware, S
         return "quitorg";
     }
 
+    public String jmpOrgManager(){
+        return "OrgManagerPage";
+    }
     public String jmpOrgManager1(){
         dataMap = new HashMap<String, Object>();
         organizationdao = new OrganizationDaoImp();
         UserEntity seesionUser=(UserEntity)session.get("user");
-        List<OrganizationEntity> list = organizationdao.getMyOrg(seesionUser.getId_user());
-        ActionContext.getContext().getValueStack().set("list",list);
+        String org_name = (String)session.get("org_name");
+        int id_organization = organizationdao.getIdOrganization(org_name);
+        int statu = organizationdao.getStatu(id_organization,seesionUser.getId_user());
+        session.put("statu", statu);
         return "OrgManager1Page";
     }
     public String showAllMember(){
         dataMap = new HashMap<String, Object>();
-        UserDao userdao = new UserDaoImp();
-        UserEntity seesionUser=(UserEntity)session.get("user");
+        OrgListDao orglistdao = new OrgListDaoImp();
         String org_name = (String)session.get("org_name");
         System.out.println(org_name);
-        List<UserEntity> orgMember = userdao.getOrgAllMem(seesionUser.getId_user(),org_name);
+        List<OrgListEntity> orglistentity = orglistdao.getOrgAllMem(org_name);
         Gson gson = new Gson();
-        String json = gson.toJson(orgMember);
-        System.out.println("OrgAllMember"+json);
+        String json = gson.toJson(orglistentity);
         dataMap.put("res",json);
         return "display";
     }
@@ -76,7 +70,6 @@ public class OrganizationAction extends ActionSupport implements RequestAware, S
         List<ShowOrgProjectEntity> orgProject = showOrgProjectDao.getOrgPro(org_name);
         Gson gson = new Gson();
         String json = gson.toJson(orgProject);
-        System.out.println("OrgAllProject"+json);
         dataMap.put("res",json);
         return "display";
     }
@@ -90,7 +83,6 @@ public class OrganizationAction extends ActionSupport implements RequestAware, S
         List<JoinOrganizationEntity> orgInvite = joinorgnizationdao.getMyInvite(org_name);
         Gson gson = new Gson();
         String json = gson.toJson(orgInvite);
-        System.out.println("Org All Invite:"+json);
         dataMap.put("res",json);
         return "display";
     }
