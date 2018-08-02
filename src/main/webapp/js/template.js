@@ -1053,24 +1053,24 @@ $("#libraryList").change(function () {
             showtoast("dangerous", "保存失败", "内容保存失败")
         }
     })
-    
+
 })
 
 function useStructure(id_template,obj,index) {
-if(typeof (nowCatalog)=="undefined"||nowCatalog.id_template!=id_template){
-    showtoast("warning", "加载失败", "与模板类型不匹配");return;
-}
-var id=parseInt(index)
-if(id_template=="1"){
-    loadTemplateOne(structureList[id])
-}
+    if(typeof (nowCatalog)=="undefined"||nowCatalog.id_template!=id_template){
+        showtoast("warning", "加载失败", "与模板类型不匹配");return;
+    }
+    var id=parseInt(index)
+    if(id_template=="1"){
+        loadTemplateOne(structureList[id])
+    }
    else if(id_template=="2"){
         loadTemplateTwo(structureList[id])
     }
-  else  if(id_template=="3"){
-    var end=$(".funTable tbody").children(".end");
-    $(".funTable tbody").html(end)
-    $(".funTable tfoot").html("");
+    else  if(id_template=="3"){
+        var end=$(".funTable tbody").children(".end");
+        $(".funTable tbody").html(end)
+        $(".funTable tfoot").html("");
         loadTemplateThree(structureList[id])
     }
 }

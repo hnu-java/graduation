@@ -308,8 +308,50 @@
             <s:if test="#request.state==0">
             <div class="col-sm-3" >
                 <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>官方构件库</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content form-horizontal">
+                    <!--构件库中间部分开始-->
+                    <div class="form-group">
+                        <label style="padding-left: 15px">选择构建类型</label>
+                        <select class="form-control" name="structType" id="structType">
+                            <option  selected disabled>请选择构建库类型</option>
+                            <option value="1">通用模板构件库</option>
+                            <option value="2">用户模板构件库</option>
+                            <option value="3">用例模板构件库</option>
+                        </select>
+                        <br>
+                        <div class="alert alert-info" id="noneLibrary" style="display: none;">
+                            暂无该类型的收藏
+                        </div>
+                        <div class="libraryDiv" style="display: none;">
+                            <label style="padding-left: 15px">选择构建库</label>
+                            <select class="form-control" name="libraryList" id="libraryList" >
+                                <option selected disabled>请选择构件库</option>
+                            </select>
+                        </div>
+                    </div>
+                    <table  class=" col-sm-12 structTable" style="display: none;">
+                        <thead>
+                        <tr><th class="col-sm-6 text-muted">构件名</th><th class="col-sm-6 text-muted"> 操作</th></tr>
+                        </thead>
+
+                    </table>
+                    <h6>
+                        <small>.</small>
+                    </h6>
+                </div>
+            </div>
+
+                <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>构件库</h5>
+                        <h5>项目组构件库</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -320,24 +362,24 @@
                         <!--构件库中间部分开始-->
                         <div class="form-group">
                             <label style="padding-left: 15px">选择构建类型</label>
-                            <select class="form-control" name="structType" id="structType">
+                            <select class="form-control" name="structUserType" id="structUserType">
                                 <option  selected disabled>请选择构建库类型</option>
                                 <option value="1">通用模板构件库</option>
                                 <option value="2">用户模板构件库</option>
                                 <option value="3">用例模板构件库</option>
                             </select>
                             <br>
-                            <div class="alert alert-info" id="noneLibrary" style="display: none;">
+                            <div class="alert alert-info" id="noneUserLibrary" style="display: none;">
                                 暂无该类型的收藏
                             </div>
-                            <div class="libraryDiv" style="display: none;">
+                            <div class="userLibraryDiv" style="display: none;">
                                 <label style="padding-left: 15px">选择构建库</label>
-                                <select class="form-control" name="libraryList" id="libraryList" >
+                                <select class="form-control" name="libraryUserList" id="libraryUserList" >
                                     <option selected disabled>请选择构件库</option>
                                 </select>
                             </div>
                         </div>
-                        <table  class=" col-sm-12 structTable" style="display: none;">
+                        <table  class=" col-sm-12 structTable2" style="display: none;">
                             <thead>
                             <tr><th class="col-sm-6 text-muted">构件名</th><th class="col-sm-6 text-muted"> 操作</th></tr>
                             </thead>
@@ -385,3 +427,97 @@
 <script src="<%=basePath %>/js/template.js"></script>
 
 </html>
+
+<script>
+    var nowTemplate,structureList;
+    $("#structUserType").change(function () {
+        $("#libraryUserList").html("")
+        nowTemplate=$(this).val();
+        $.ajax({
+            url: "templateLib-getTypeOfUserLib",
+            data: {id_template:nowTemplate},
+            dataType: "json",
+            type: "Post",
+            async: "false",
+            success: function (result) {
+                var list=result.libraryList,content="";
+                if(list.length!=0){
+                    content+=" <option value='0' selected disabled>请选择构件库</option>"
+                    for(var i=0;i<list.length;i++){
+                        content+=" <option value='"+list[i].id_library+"'>"+list[i].name+"</option>"
+                    }
+                    $("#libraryUserList").append(content);
+                    // alert(content)
+                    $(".userLibraryDiv").show();
+                    $("#noneUserLibrary").hide();
+                    $(".structTable2").hide();
+                }
+                else {
+                    $("#userLibraryDiv").hide();
+                    $("#noneUserLibrary").show();
+                }
+
+            },
+            error: function (result) {
+                showtoast("dangerous", "保存失败", "内容保存失败")
+            }
+        })
+    })
+
+    $("#libraryUserList").change(function () {
+        var id_library=$(this).val();
+        $(".structTable2").show();
+        $.ajax({
+            url: "templateLib-getStructure",
+            data: {id_library:id_library,id_template:nowTemplate},
+            dataType: "json",
+            type: "Post",
+            async: "false",
+            success: function (result) {
+                $(".addTbody").remove();
+                structureList=result.structureList;
+                var content="<tbody class='addTbody'>";
+                if(nowTemplate=="1"){
+                    for (var i=0;i<structureList.length;i++){
+                        content+=" <tr><th >通用模板"+(i+1)+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(1,this,"+i+")'>引用</button></th></tr>";
+                    }
+                }
+                else if(nowTemplate=="2"){
+                    for (var i=0;i<structureList.length;i++){
+                        content+=" <tr><th >"+structureList[i].roleName+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(2,this,"+i+")'>引用</button></th></tr>";
+                    }
+                }
+                else if(nowTemplate=="3"){
+                    for (var i=0;i<structureList.length;i++){
+                        content+=" <tr><th >"+structureList[i].funName+"</th><th > <button class='btn btn-info   btn-xs' onclick='useStructure(3,this,"+i+")'>引用</button></th></tr>";
+                    }
+                }
+                content+="</tbody>";
+                $(".structTable2").append(content);
+            },
+            error: function (result) {
+                showtoast("dangerous", "保存失败", "内容保存失败")
+            }
+        })
+
+    })
+
+    function useStructure(id_template,obj,index) {
+        if(typeof (nowCatalog)=="undefined"||nowCatalog.id_template!=id_template){
+            showtoast("warning", "加载失败", "与模板类型不匹配");return;
+        }
+        var id=parseInt(index)
+        if(id_template=="1"){
+            loadTemplateOne(structureList[id])
+        }
+        else if(id_template=="2"){
+            loadTemplateTwo(structureList[id])
+        }
+        else  if(id_template=="3"){
+            var end=$(".funTable tbody").children(".end");
+            $(".funTable tbody").html(end)
+            $(".funTable tfoot").html("");
+            loadTemplateThree(structureList[id])
+        }
+    }
+</script>

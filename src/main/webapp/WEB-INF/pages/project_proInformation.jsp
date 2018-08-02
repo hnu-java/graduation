@@ -899,7 +899,6 @@
 
 <%--评论区--%>
 <script>
-    var location1 = "";
     var num = 1;
     var page = 1;
     var max = 1;
@@ -925,29 +924,18 @@
         $(".discuss").summernote('reset');
     }
 
-    function forTitle(id_document,index,layer) {
+    function forTitle(id_pro_discuss) {
         $.ajax({
-            url: "catalog-getTitle",
+            url: "discuss-getTitle",
             data: {
-                documentId: id_document,
-                index: index,
-                layer: layer
+                id_pro_discuss: id_pro_discuss
             },
             dataType: "json",
             type: "Get",
-            async: "false",
-            success: function (result) {
-                mapTitle = result.MapTitle;
-                location1=mapTitle;
-                getlocation(location1);
-            }
+            async: "false"
         });
     }
-var getlocation1 ="";
-    function getlocation(location1) {
-        getlocation1 = location1;
-        return getlocation1;
-    }
+
 
     //评论加载
     function discussReload2(page1) {
@@ -969,7 +957,6 @@ var getlocation1 ="";
                 $("#num").text(num);
                 var content="",tempDis,date,state;
                 var title = "";
-                var location2 ="";
                 for (var i=0;i<result.wrapperList.length;i++){
                     tempDis=result.wrapperList[i].proDiscussEntity;
                     if (tempDis.name === "<s:property value="#session.PM.name"/>"){
@@ -989,30 +976,12 @@ var getlocation1 ="";
 
                     content+="btn-xs col-lg-push-1 m-l-sm deleteDis'  type='button'  style='margin-top: -3px'>删除</button> ";
                     if(tempDis.id_Document != 0){
-                        if(tempDis.first_index != 0){
-                            forTitle(tempDis.id_Document,tempDis.first_index,1);
-                            if(tempDis.second_index != 0){
-                                forTitle(tempDis.id_Document,tempDis.second_index,2);
-                                if(tempDis.third_index != 0){
-                                    forTitle(tempDis.id_Document,tempDis.third_index,3);
-                                    if(tempDis.fourth_index != 0){
-                                        forTitle(tempDis.id_Document,tempDis.fourth_index,4);
-                                        location2+=getlocation1+"/";
-                                    }else{
-                                        location2+=getlocation1+"/";
-                                    }
-                                }else{
-                                    location2+=getlocation1+"/";
-                                }
-                            }else{
-                                location2+=getlocation1+"/";
-                            }
-                        }
-                        content+="<button  class='btn btn-danger btn-xs col-lg-push-1 m-l-sm shiftDis'  type='button'  style='margin-top: -3px'>跳转</button>";
+                        //forTitle(tempDis.id_pro_discuss);
                         content+="<h5>";
                         content+="-文档版本 ";
-                        content+=tempDis.version+" 目录 "+location2+" </h5>";
-                        delete location2;
+                        content+=tempDis.version+" 目录 "+tempDis.location+" </h5>";
+                        content+="<button  class='btn btn-danger btn-xs col-lg-push-1 m-l-sm shiftDis'  type='button'  style='margin-top: -3px'>跳转</button>";
+
                     }
                     content+="<div class='ibox-tools'>";
 
@@ -1021,7 +990,6 @@ var getlocation1 ="";
                         content += tempDis.accessoryEntityList[j].filename;
                         content += '</a>';
                     }
-
                     content+="</div> </div> <div class='ibox-content'> <div class=' wrapper'>";
                     content+=tempDis.content+"  </div> </div> </div> </div>";
                     title="";

@@ -120,6 +120,13 @@ public class LibraryDaoImp extends DAO<LibraryEntity> implements LibraryDao{
     }
 
     @Override
+    public List<LibraryEntity> getTypeOfUserLib(int id_user, int id_type,int id_project) {
+        String sql="select * from library where id_template=? and ID_USER=any(select ID_USER from project_member where ID_PROJECT = ?)";
+        return getForList(sql,id_type,id_project);
+    }
+
+
+    @Override
     public boolean newLibrary(String name, int id_user, int id_template, String mention) {
         String sql = "insert into library(NAME,ID_TEMPLATE,ID_USER,TIME,MENTION) value(?,?,?,?,?)";
         Date date = new Date();
