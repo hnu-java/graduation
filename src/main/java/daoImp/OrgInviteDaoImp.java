@@ -45,7 +45,7 @@ public class OrgInviteDaoImp extends DAO<OrgInviteEntity> implements OrgInviteDa
 
     @Override
     public List<OrgInviteEntity> getlist(String name) {
-        String sql1="select * from view_showORGINVITE where ORG_NAME=?";
+        String sql1="select * from view_showorginvite where ORG_NAME=?";
         List<OrgInviteEntity> list=getForList(sql1,name);
         return list;
     }

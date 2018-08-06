@@ -171,7 +171,7 @@
                     url: "organizationManagement-saveOrgName",
                     dataType: "json",
                     success: function () {
-                        location.href = "Organization-jmpOrgManager1";
+                        location.href = "organizationManagement-jumpOrgManager1Page";
                     },
                     error: function () {
                         swal("查看记录失败！", "服务器异常。", "error");

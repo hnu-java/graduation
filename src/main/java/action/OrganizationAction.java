@@ -50,6 +50,7 @@ public class OrganizationAction extends ActionSupport implements RequestAware, S
         session.put("statu", statu);
         return "OrgManager1Page";
     }
+/*
     public String showAllMember(){
         dataMap = new HashMap<String, Object>();
         OrgListDao orglistdao = new OrgListDaoImp();
@@ -61,7 +62,7 @@ public class OrganizationAction extends ActionSupport implements RequestAware, S
         dataMap.put("res",json);
         return "display";
     }
-
+*/
     public String showAllProject(){
         dataMap = new HashMap<String, Object>();
         ShowOrgProjectDao showOrgProjectDao = new ShowOrgProjectDaoImp();
