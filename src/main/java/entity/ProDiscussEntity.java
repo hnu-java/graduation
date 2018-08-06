@@ -24,11 +24,20 @@ public class ProDiscussEntity {
     private int second_index;
     private int third_index;
     private int fourth_index;
+    private int state;
     private String title;
     private String location;
     private List<File> MyFile;
     private List<String> MyFileFileName;
     private List<AccessoryEntity> accessoryEntityList;
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
 
     public String getLocation() {
         return location;
@@ -174,7 +183,7 @@ public class ProDiscussEntity {
         this.accessoryEntityList = accessoryEntityList;
     }
 
-    public ProDiscussEntity(int id_pro_discuss, int id_user, String name, int id_catalog, Date time, String content, int id_Project, int id_Document, int version, int first_index, int second_index, int third_index, int fourth_index, String title, String location, List<File> myFile, List<String> myFileFileName, List<AccessoryEntity> accessoryEntityList) {
+    public ProDiscussEntity(int id_pro_discuss, int id_user, String name, int id_catalog, Date time, String content, int id_Project, int id_Document, int version, int first_index, int second_index, int third_index, int fourth_index, int state, String title, String location, List<File> myFile, List<String> myFileFileName, List<AccessoryEntity> accessoryEntityList) {
         this.id_pro_discuss = id_pro_discuss;
         this.id_user = id_user;
         this.name = name;
@@ -188,6 +197,7 @@ public class ProDiscussEntity {
         this.second_index = second_index;
         this.third_index = third_index;
         this.fourth_index = fourth_index;
+        this.state = state;
         this.title = title;
         this.location = location;
         MyFile = myFile;
