@@ -15,4 +15,18 @@ public class OrganizationManagementDaoImp extends DAO<OrganizationManagementEnti
         List<OrganizationManagementEntity> allOrg = getForList(sql, id_user);
         return allOrg;
     }
+
+    @Override
+    public int getStatu(int id_org, int id_user) {
+        String sql = "select STATU from view_org_list where ID_USER = ? and ID_ORGANIZATION = ?";
+        int statu = Integer.valueOf(getForValue(sql, id_user, id_org).toString());
+        return statu;
+    }
+
+    @Override
+    public int getID_ORGANIZAITION(String org_name) {
+        String sql = "select ID_ORGANIZATION from view_org_list where ORG_NAME = ?";
+        int id_org = Integer.valueOf(getForValue(sql, org_name).toString());
+        return id_org;
+    }
 }
