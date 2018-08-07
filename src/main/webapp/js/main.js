@@ -44,8 +44,9 @@
 
 
 	var testimonialCarousel = function(){
-		var owl = $('.owl-carousel-fullwidth');
+		var owl = $('#owlplay');
 		owl.owlCarousel({
+			autoplay: 3000,
 			items: 1,
 			loop: true,
 			margin: 0,
@@ -53,7 +54,7 @@
 			nav: false,
 			dots: true,
 			smartSpeed: 500,
-			autoHeight: true
+			autoHeight: true,
 		});
 	};
 

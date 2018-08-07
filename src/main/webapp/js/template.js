@@ -903,11 +903,11 @@ function addFunlLine() {
     for (var i=0;i<roleList.length;i++){
         optionCon+="<option>"+roleList[i].roleName+"</option>";
     }
-    var content="   <tr class='funTr'> <th > <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black'></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black'></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></th> <th> " +
+    var content="   <tr class='funTr'> <th > <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black' ></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black'></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></th> <th> " +
         "<select class='form-control roleName dis' name='' name='roleName'  > " +
         optionCon +
         "</select> " +
-        "</th> <th> <textarea   class='form-control roleDescribe dis'   style='max-width: 100%' name='roleDescribe'    ></textarea> </th> <th> <button  class='btn btn-primary  btn-xs col-lg-push-1'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px'>新增可用性</button> </th> </tr>"
+        "</th> <th> <textarea   class='form-control roleDescribe dis'   style='max-width: 100%' name='roleDescribe'    ></textarea> </th> <th> <button  class='btn btn-primary  btn-xs col-lg-push-1'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px'>新增局部可用性</button> </th> </tr>"
     $(".funTable").children("tbody").children("tr:last-child").before(content);
 }
 
