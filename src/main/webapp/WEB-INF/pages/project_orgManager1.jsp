@@ -69,6 +69,7 @@
                                     <div class="bootstrap-table">
                                         <table id="showOrgMember"
                                                data-toggle="table"
+                                               data-url="orglist-showAllMember"
                                                data-click-to-select="true"
                                                data-search="true"
                                                data-show-refresh="true"
@@ -159,7 +160,6 @@
 <script src="<%=basePath%>/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 </body>
 <script>
-
     $('#showOrgMember').bootstrapTable({
             columns: [
                 {
@@ -231,13 +231,12 @@
     );
     $.ajax(
             {
-                url:"Organization-showAllMember",
+                url:"orglist-showAllMember",
                 dataType:"json",
                 type: "Get",
                 async: "false",
                 success:function(json){
                     var orgMemberList = JSON.parse(json.res);
-                    alert(1111);
                     //finishingTask为table的id
                     $('#showOrgMember').bootstrapTable('load',orgMemberList);
                 },
@@ -277,12 +276,11 @@
         else if (row.statu===2){
             return [
             '<a class="grant" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >机构转移</button></a>',
-            '<a class="vice" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >撤销副机构管理员</button></a>',
+            '<a class="moveVice" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >撤销副机构管理员</button></a>',
             '<a class="delete" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >踢出机构</button></a>'
         ].join('');
         }</s:if>
         <s:if test="#session.statu==2">
-        alert(row.statu);
         if (row.statu===0){
             return [
                 '<a class="delete" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >踢出机构</button></a>'
@@ -393,6 +391,45 @@
                     })
                 })
         },
+        'click .moveVice' : function(e, value, row, index) {
+            //设置副机构管理员
+            var id_user = parseInt(row.id_user);
+            var name = row.name;
+            var org_name="${sessionScope.org_name}";
+            alert(name);
+            swal(
+                {
+                    title: "您确定撤销该副机构管理员吗",
+                    text: "请谨慎操作！",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "撤销",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: false
+                },function () {
+                    $.ajax({
+                        type: "GET",
+                        url: "orglist-moveVice",
+                        data: {id_user: id_user,name: name, org_name: org_name},
+                        dataType: "json",
+                        success: function () {
+                            swal({
+                                title: "撤销成功",
+                                text: "点击返回首页！",
+                                type:"success",
+                                confirmButtonColor: "#18a689",
+                                confirmButtonText: "OK"
+                            },function(){
+                                location.href = "user-jmpHomepage";
+                            })
+                        },
+                        error: function (result) {
+                            swal("操作失败！", "出现未知错误，请重试。", "error");
+                        }
+                    })
+                })
+        },
         'click .delete' : function(e, value, row, index) {
             //踢出机构
             var id_user = parseInt(row.id_user);
@@ -468,8 +505,11 @@
 <script>
     $("button#invite-button").click(function () {
         var currentOrg = ${sessionScope.org_name};
+        alert(currentOrg);
         var user_name = $("input#user_name").val();
+        alert(user_name);
         var now_name ="<s:property value="#session.user.name"/>";
+        alert(now_name);
         console.log(now_name)
         if(user_name === "" || user_name===null){
             swal("邀请失败！", "请先填写用户名", "error");

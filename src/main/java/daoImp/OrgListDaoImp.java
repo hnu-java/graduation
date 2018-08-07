@@ -26,4 +26,16 @@ public class OrgListDaoImp extends DAO<OrgListEntity> implements OrgListDao {
         update(sql3, id_user, content, createDate, id_organization);
         return true;
     }
+
+    @Override
+    public boolean moveViceAdmin(int id_user, String org_name, String content) {
+        String sql1 = "select ID_ORGANIZATION from organization where NAME = ?";
+        int id_organization = Integer.valueOf(getForValue(sql1, org_name).toString());
+        String sql2 = "update org_member set STATU = 0 where ID_USER = ? and ID_ORGANIZATION = ?";
+        update(sql2, id_user, id_organization);
+        String sql3 = "insert into message(ID_USER, CONTENT, DATE, ID_ORG) values(?, ?, ?, ?)";
+        Timestamp createDate = new Timestamp(new java.util.Date().getTime());
+        update(sql3, id_user, content, createDate, id_organization);
+        return true;
+    }
 }
