@@ -205,9 +205,12 @@
                         </s:iterator>
                     </div>
                     <div style="margin: 5px 0px 0px 10px;overflow: hidden">
-                        <span style="color: black;font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;">总体可用性 ：</span><br/>
+                        <span style="color: black;font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;">可用性 ：</span><br/>
                         <s:iterator value="funUsableList">
                             <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:500;"><s:property value="usableName"/>　<s:property value="usablePara"/><br/></span>
+                        </s:iterator>
+                        <s:iterator value="funRoleList">
+                            <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:500;"><s:property value="usableName"/>  &nbsp; <s:property value="usablePara"/><br/></span>
                         </s:iterator>
                     </div>
                     <div style="margin: 5px 0px 0px 10px;overflow: hidden">

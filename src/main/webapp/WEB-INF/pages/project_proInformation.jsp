@@ -651,12 +651,12 @@
 
         <s:if test='#session.rank==4'>//项目副组长
             if (row.state===0) {
-                return '<a class="edit btn-xs btn-success">编辑</a>',
-                "<a class='generateContract btn-xs btn-primary '>导出</a>&nbsp";
+                return ["<a class='edit btn-xs btn-success'>编辑</a>",
+                "<a class='generateContract btn-xs btn-primary '>导出</a>"].join('');
             }
             else {
-                return '<a class="view btn-xs btn-info">查看</a>',
-                "<a class='generateContract btn-xs btn-primary '>导出</a>&nbsp";
+                return ['<a class="view btn-xs btn-info">查看</a>',
+                "<a class='generateContract btn-xs btn-primary '>导出</a>&nbsp"].join('');
             }
         </s:if>
 
@@ -677,7 +677,6 @@
                 var id = row.id_document;
                 location.href = "catalog-jmpTemplate?documentId="+id+"&rank="+rank+"&projectId="+id_Project+"&state="+row.state;
                 var a = "catalog-jmpTemplate?documentId="+id+"&rank="+rank+"&projectId="+id_Project+"&state="+row.state;
-                alert(a);
             },
         'click .delete':
             function(e, value, row, index) {
