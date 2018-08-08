@@ -150,7 +150,7 @@
                 <param name="bufferSize">2048</param>
             </result>
         <interceptor-ref name="myStack"/>
-            <allowed-methods>getTitle,jmpOrgTemplate,generateContract,getIndex,jmpTemplate,addState1,addState2,up,down,newCatalog,getCatalog,rename,getRoleCount,saveTemplateOne,saveTemplateThree,saveTemplateTwo,getUsable</allowed-methods>
+            <allowed-methods>getTitle,saveLibOne,saveLibThree,saveLibTwo,jmpOrgTemplate,generateContract,getIndex,jmpTemplate,addState1,addState2,up,down,newCatalog,getCatalog,rename,getRoleCount,saveTemplateOne,saveTemplateThree,saveTemplateTwo,getUsable</allowed-methods>
         </action>
 
         <action name="project-*" class="action.ProjectAction" method="{1}">
@@ -178,7 +178,7 @@
             <result name="getMycollect">/WEB-INF/pages/project_mycollect.jsp</result>
             <result name="userLibraryPage">/WEB-INF/pages/project_userLibrary.jsp</result>
         <interceptor-ref name="myStack"/>
-            <allowed-methods>newLibrary,getUserAllAgain,jmpUserLibrary,get,getagain,getcommon,getcommonagain,getuser,getuseragain,getcase,getcaseagain,getpicture,getpictureagain,Mycollect,Mycollectagain</allowed-methods>
+            <allowed-methods>deleteLibrary,newLibrary,getUserAllAgain,jmpUserLibrary,get,getagain,getcommon,getcommonagain,getuser,getuseragain,getcase,getcaseagain,getpicture,getpictureagain,Mycollect,Mycollectagain</allowed-methods>
         </action>
 
         <action name="librarycollect-*" class="action.LibrarycollectAction" method="{1}">
@@ -227,7 +227,7 @@
             <result name="Re" type="json"><param name="root">dataMap</param>
             </result>
          <interceptor-ref name="myStack"/>
-            <allowed-methods>getTypeOfUserLib,getTypeOfLib,getStructure</allowed-methods>
+            <allowed-methods>getTypeOfOneLib,getTypeOfUserLib,getTypeOfLib,getStructure</allowed-methods>
         </action>
 
         <action name="history-*" class="action.HistoryAction" method="{1}">

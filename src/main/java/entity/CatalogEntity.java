@@ -16,6 +16,15 @@ public class CatalogEntity {
     private int third_index;
     private int fourth_index;
     private int index;
+    private int id_lib;
+
+    public int getId_lib() {
+        return id_lib;
+    }
+
+    public void setId_lib(int id_lib) {
+        this.id_lib = id_lib;
+    }
 
     public int getIndex() {
         return index;
@@ -97,7 +106,7 @@ public class CatalogEntity {
         this.fourth_index = fourth_index;
     }
 
-    public CatalogEntity(int id_catalog, int id_template, int id_document, String content, String title, int first_index, int second_index, int third_index, int fourth_index, int index) {
+    public CatalogEntity(int id_catalog, int id_template, int id_document, String content, String title, int first_index, int second_index, int third_index, int fourth_index, int index, int id_lib) {
         this.id_catalog = id_catalog;
         this.id_template = id_template;
         this.id_document = id_document;
@@ -108,6 +117,7 @@ public class CatalogEntity {
         this.third_index = third_index;
         this.fourth_index = fourth_index;
         this.index = index;
+        this.id_lib = id_lib;
     }
 
     public CatalogEntity() {

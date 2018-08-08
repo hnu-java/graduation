@@ -125,6 +125,12 @@ public class LibraryDaoImp extends DAO<LibraryEntity> implements LibraryDao{
         return getForList(sql,id_type,id_project);
     }
 
+    @Override
+    public List<LibraryEntity> getTypeOfOneLib(int id_user, int id_type) {
+        String sql="select * from library where id_template=? and ID_USER=?";
+        return getForList(sql,id_type,id_user);
+    }
+
 
     @Override
     public boolean newLibrary(String name, int id_user, int id_template, String mention) {
@@ -137,6 +143,13 @@ public class LibraryDaoImp extends DAO<LibraryEntity> implements LibraryDao{
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public boolean deleteLibrary(int id_library) {
+        String sql = "delete from library where ID_LIBRARY = ?";
+        update(sql, id_library);
+        return true;
     }
 
 }

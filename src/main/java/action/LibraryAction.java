@@ -326,6 +326,14 @@ public class LibraryAction extends ActionSupport implements RequestAware, Sessio
         return SUCCESS;
     }
 
+    public String deleteLibrary() {
+        dataMap = new HashMap<>();
+        libraryDao = new LibraryDaoImp();
+        boolean res = libraryDao.deleteLibrary(library.getId_library());
+        dataMap.put("res", res);
+        return SUCCESS;
+    }
+
     @Override
     public LibraryEntity getModel() {
         return library;

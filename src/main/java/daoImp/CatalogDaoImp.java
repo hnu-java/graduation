@@ -234,4 +234,14 @@ public class CatalogDaoImp extends DAO<CatalogEntity> implements CatalogDao {
         return  getForList(sql,id_document);
     }
 
+    @Override
+    public void saveLib(int id_lib, String content) {
+        String sql = "insert into STRUCTURE(ID_LIBRARY,CONTENT) value(?,?)";
+        try{
+            update(sql,id_lib,content);
+
+        }catch (Exception e){
+        }
+    }
+
 }

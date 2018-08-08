@@ -28,5 +28,7 @@ public interface LibraryDao {
     int getNowcount(int id_user);
     List<LibraryEntity> getTypeOfLib(int id_user,int id_type);
     List<LibraryEntity> getTypeOfUserLib(int id_user,int id_type,int id_project);
+    List<LibraryEntity> getTypeOfOneLib(int id_user,int id_type);
     boolean newLibrary(String name,int id_user,int id_template,String mention);
+    boolean deleteLibrary(int id_library);
 }

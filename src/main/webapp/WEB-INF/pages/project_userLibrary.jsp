@@ -154,7 +154,10 @@
                                     </p>
                                 </div>
                                 </div>
-                                <input style="display:none" type="text" value="<s:property value="id_library"/>">
+                                <input id="idLibrary" style="display:none" type="text" value="<s:property value="id_library"/>">
+                                <div style="float: right;z-index:99999999;margin: -14px -19px 0px 0px">
+                                    <button id="delete" type="submit" class="btn btn-alert">删除</button>
+                                </div>
                                 <%--<div style="float: right;z-index:99999999;margin: -14px -19px 0px 0px">--%>
                                     <%--<s:if test="#request.id_user==#session.user.id_user">--%>
                                         <%--<a class="btn btn-white btn-bitbucket nocollect" style="border: none" >--%>
@@ -233,12 +236,64 @@
 <script>
     $(document).ready(function(){
         $("div.structure").click(function(){
+
             location.href="structure-get?id_library="+$(this).next().val()+'&id_template=' + $(this).children().val()+'&page='+1+'&pagedis='+1;
         });
     });
 </script>
 </body>
 <script>
+    
+    $("button#delete").click(function () {
+        var view = document.getElementById('idLibrary').value;
+        var id_library = view
+        alert(id_library);
+        swal(
+            {
+                title: "您确认删除该构件库吗？",
+                text: "确认请按删除键",
+                type: "",
+                showCancelButton: true,
+                confirmButtonColor: "#18a689",
+                confirmButtonText: "删除",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            }, function () {
+                $.ajax({
+                    url: "library-deleteLibrary",
+                    data: {
+                        id_library : id_library
+                    },
+                    dataType: "json",
+                    type: "Post",
+                    async: "false",
+                    success: function (result) {
+                        if (result.res) {
+                            swal({
+                                title: "删除成功",
+                                type: "success",
+                                confirmButtonColor: "#18a689",
+                                confirmButtonText: "OK"
+                            }, function () {
+                                location.href = "library-jmpUserLibrary";
+                            })
+                        }else{
+                            swal({
+                                title: "新建失败,服务器异常",
+                                type: "error",
+                                confirmButtonColor: "#18a689",
+                                confirmButtonText: "OK"
+                            })
+                        }
+                    },
+                    error: function () {
+                        swal({
+                            icon: "error"
+                        });
+                    }
+                })
+            })
+    })
 
     $("button#newLib-button").click(function (){
         var sel = document.getElementById('template');
