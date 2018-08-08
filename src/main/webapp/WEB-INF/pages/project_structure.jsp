@@ -153,6 +153,9 @@
                     <div style="height:100px;margin: 10px 0px 0px 10px;overflow: hidden">
                         <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';color: black;font-weight:700;">内容：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:500;overflow: hidden"><s:property value="content"/></span>
                     </div>
+                    <div style="float: right;z-index:99999999;margin: -40px 10px 0px 0px">
+                        <button id="deleteCommon" type="submit" class="btn btn-alert">删除</button>
+                    </div>
                 </div>
                 </s:iterator>
             </div>
@@ -174,6 +177,9 @@
                                         <s:property value="permissions"/>
                                 </span>
                         </div>
+                    </div>
+                    <div style="float: right;z-index:99999999;margin: 90px 10px 0px 0px">
+                        <button id="deleteUser" type="submit" class="btn btn-alert">删除</button>
                     </div>
                 </div>
                 </s:iterator>
