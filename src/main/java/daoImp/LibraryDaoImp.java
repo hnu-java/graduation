@@ -145,4 +145,11 @@ public class LibraryDaoImp extends DAO<LibraryEntity> implements LibraryDao{
         }
     }
 
+    @Override
+    public boolean deleteLibrary(int id_library) {
+        String sql = "delete from library where ID_LIBRARY = ?";
+        update(sql, id_library);
+        return true;
+    }
+
 }

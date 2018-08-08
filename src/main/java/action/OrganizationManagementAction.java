@@ -6,6 +6,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
 import dao.OrganizationManagementDao;
+import daoImp.OrganizationDaoImp;
 import daoImp.OrganizationManagementDaoImp;
 import entity.OrganizationEntity;
 import entity.OrganizationManagementEntity;
@@ -26,6 +27,12 @@ public class OrganizationManagementAction extends ActionSupport implements Reque
     private Map<String,Object> request;
 
     public String jumpOrgManager1Page() {
+        organizationmanagementdao = new OrganizationManagementDaoImp();
+        UserEntity seesionUser=(UserEntity)session.get("user");
+        String org_name = (String)session.get("org_name");
+        int id_organization = organizationmanagementdao.getID_ORGANIZAITION(org_name);
+        int statu = organizationmanagementdao.getStatu(id_organization,seesionUser.getId_user());
+        session.put("statu2", statu);
         return "jumpOrgManager1Page";
     }
 

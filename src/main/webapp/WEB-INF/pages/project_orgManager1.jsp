@@ -137,12 +137,13 @@
                 <div class="form-group"><label>用户名</label> <input id="user_name" type="text" placeholder="请输入用户名" maxlength="20" class="form-control" required="required"></div>
             </div>
             <div class="modal-footer">
-                <button id="cancel-invite"type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="cancel-invite" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
                 <button id="invite-button" type="button" class="btn btn-primary">邀请</button>
             </div>
         </div>
     </div>
 </div>
+
 <script src="<%=basePath%>/js/jquery.min.js?v=2.1.4"></script>
 <script src="<%=basePath%>/js/bootstrap.min.js?v=3.3.6"></script>
 <script src="<%=basePath%>/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
@@ -265,33 +266,26 @@
 
 
     function operateFormatter(value,row,index) {
-        <s:if test="#session.statu==1">
+        <s:if test="#session.statu2==1">
         if (row.statu===0){
             return [
-                '<a class="grant" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >机构转移</button></a>',
                 '<a class="vice" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >设为副机构管理员</button></a>',
+                '<a class="grant" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >机构转移</button></a>',
                 '<a class="delete" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >踢出机构</button></a>'
             ].join('');
         }
         else if (row.statu===2){
             return [
+            '<a class="moveVice" style="padding-left: 10px"><button class="btn btn-warning text-center btn-xs " >撤销副机构管理员</button></a>',
             '<a class="grant" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >机构转移</button></a>',
-            '<a class="moveVice" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >撤销副机构管理员</button></a>',
             '<a class="delete" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >踢出机构</button></a>'
         ].join('');
         }</s:if>
-        <s:if test="#session.statu==2">
+        <s:elseif test="#session.statu2==2">
         if (row.statu===0){
-            return [
-                '<a class="delete" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >踢出机构</button></a>'
-            ].join('');
+            return '<a class="delete" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >踢出机构</button></a>';
         }
-        }</s:if>
-/*        return[
-            '<a class="grant" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >机构转移</button></a>',
-            '<a class="vice" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >设为副机构管理员</button></a>',
-            '<a class="delete" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >踢出机构</button></a>'
-        ].join('');*/
+        </s:elseif>
     }
 
     function rename(value,row,index) {
@@ -435,9 +429,6 @@
             var id_user = parseInt(row.id_user);
             var currentOrg= "${sessionScope.org_name}";
             var user_name=row.name;
-            alert(id_user);
-            alert(currentOrg);
-            alert(user_name);
             swal(
                 {
                     title: "您确定将该用户移出机构吗",
@@ -502,20 +493,13 @@
         }
     };
 </script>
+
 <script>
     $("button#invite-button").click(function () {
-        var currentOrg = ${sessionScope.org_name};
-        alert(currentOrg);
+        var currentOrg = "${sessionScope.org_name}";
         var user_name = $("input#user_name").val();
-        alert(user_name);
-        var now_name ="<s:property value="#session.user.name"/>";
-        alert(now_name);
-        console.log(now_name)
         if(user_name === "" || user_name===null){
             swal("邀请失败！", "请先填写用户名", "error");
-        }
-        else if(user_name === now_name){
-            swal("邀请失败！", "您已是机构管理员", "error");
         }
         else if(currentOrg === null){
             swal("邀请失败！", "请先选择机构", "error");
@@ -537,7 +521,7 @@
                             url: "orgInvite-InviteUser",
                             data: {
                                 ORG_NAME: currentOrg,
-                                USER_NAME: $("input#user_name").val(),
+                                USER_NAME: user_name
                             },
                             dataType: "json",
                             type: "Post",
