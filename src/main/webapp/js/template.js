@@ -61,7 +61,7 @@ function disReload() {
 $(document).on("click",".dic",function () {
     editable=false;
     nowClick=$(this);
-    var catalogIndex=$(nowClick).children("span.catalogIndex").text()
+    var catalogIndex=$(nowClick).children("span.catalogIndex").text();
     $.ajax({
         url: "catalog-getCatalog",
         data: { documentId:documentId,catalogIndex:catalogIndex},
@@ -75,13 +75,13 @@ $(document).on("click",".dic",function () {
             $("div.catalogNoneContent").hide();
             $("div.catalogNotNoneContent").show();
             //模板生成
-          var   template=result.template;
+            var  template=result.template;
             $("div.content").html(template.content);
             nowCatalog=result.catalogEntity,title="";
             if (nowCatalog.first_index!="0")title+=nowCatalog.first_index;
-             if(nowCatalog.second_index!="0")title+="."+nowCatalog.second_index;
-             if(nowCatalog.third_index!="0")title+="."+nowCatalog.third_index;
-             if(nowCatalog.fourth_index!="0")title+="."+nowCatalog.fourth_index;
+            if(nowCatalog.second_index!="0")title+="."+nowCatalog.second_index;
+            if(nowCatalog.third_index!="0")title+="."+nowCatalog.third_index;
+            if(nowCatalog.fourth_index!="0")title+="."+nowCatalog.fourth_index;
             title+="  "+nowCatalog.title;
             $("h2#catalog_title").text(title);
             discussInit();
@@ -736,6 +736,7 @@ function temp_save() {
     var id_template = nowCatalog.id_template,id_catalog=nowCatalog.id_catalog;
         if (id_template == "1") {//通用
         var describe=$("#describe").summernote('code');
+        alert(describe);
         $.ajax({
             url: "catalog-saveTemplateOne",
             data: {id_catalog: id_catalog, content: describe},

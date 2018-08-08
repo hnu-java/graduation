@@ -3,6 +3,7 @@ package action;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.itextpdf.text.DocumentException;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
@@ -37,6 +38,7 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
     private int place;
     private String title;
     private String content;
+    private int id_lib;
     private int  id_catalog;
     private String describe;
     private String permissions;
@@ -174,6 +176,9 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         Gson gson = new Gson();
         dataMap = new HashMap<>();
         dataMap.put("catalogDisNum",catalogDisNum);
+//        session.put("LibType",catalogEntity.getId_template());
+//        int q = (int) session.get("LibType");
+//        System.out.println(q+"@");
         if (catalogEntity.getId_template() == 1) {//通用
             CommonStructureEntity entity = gson.fromJson(catalogEntity.getContent(), CommonStructureEntity.class);
             dataMap.put("entity", entity);
@@ -197,7 +202,12 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
             dataMap.put("template", templateEntity);
             //这个包括目录
             dataMap.put("catalogEntity", catalogEntity);
-         return "Re";
+        UserEntity seesionUser=(UserEntity)session.get("user");
+        LibraryDao libraryDao = new LibraryDaoImp();
+//        List<LibraryEntity> list = libraryDao.getTypeOfOneLib(seesionUser.getId_user(),catalogEntity.getId_template());
+//        ActionContext.getContext().getValueStack().set("libList",list);
+//        System.out.println(list);
+        return "Re";
     }
 
 
@@ -225,6 +235,14 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         return "Re";
     }
 
+    public String saveLibOne(){
+        CatalogDao catalogDao=new CatalogDaoImp();
+        CommonStructureEntity structureEntity=new CommonStructureEntity(content);
+        Gson gson = new Gson();
+        catalogDao.saveLib(id_lib,gson.toJson(structureEntity));
+        return "Re";
+    }
+
     public  String saveTemplateTwo(){
         CatalogDao catalogDao=new CatalogDaoImp();
         UserStructureEntity structureEntity=new UserStructureEntity(content,describe,permissions);
@@ -232,6 +250,15 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         catalogDao.saveContent(id_catalog,gson.toJson(structureEntity));
         return "Re";
     }
+
+    public  String saveLibTwo(){
+        CatalogDao catalogDao=new CatalogDaoImp();
+        UserStructureEntity structureEntity=new UserStructureEntity(content,describe,permissions);
+        Gson gson = new Gson();
+        catalogDao.saveLib(id_lib,gson.toJson(structureEntity));
+        return "Re";
+    }
+
     public String saveTemplateThree(){
         Gson gson=new Gson();
         CatalogDao catalogDao=new CatalogDaoImp();
@@ -243,6 +270,20 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         funRoles=gson.fromJson(funRoleList,type);
         FunStructureEntity funStructureEntity=new FunStructureEntity(funName,priority,content,funRoles,funUsables,inDiv,outDiv,basic,alternative);
         catalogDao.saveContent(id_catalog,gson.toJson(funStructureEntity));
+        return "Re";
+    }
+
+    public String saveLibThree(){
+        Gson gson=new Gson();
+        CatalogDao catalogDao=new CatalogDaoImp();
+        Type type = new TypeToken<ArrayList<FunUsable>>() {}.getType();
+        List<FunUsable> funUsables;
+        funUsables=gson.fromJson(funUsableList,type);
+        type= new TypeToken<ArrayList<FunRole>>() {}.getType();
+        List<FunRole> funRoles;
+        funRoles=gson.fromJson(funRoleList,type);
+        FunStructureEntity funStructureEntity=new FunStructureEntity(funName,priority,content,funRoles,funUsables,inDiv,outDiv,basic,alternative);
+        catalogDao.saveLib(id_lib,gson.toJson(funStructureEntity));
         return "Re";
     }
 
@@ -294,9 +335,6 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         return catalogEntity;
     }
 
-    @Override
-    public void prepare() throws Exception {
-    }
 
     @Override
     public void setSession(Map<String, Object> session) {
@@ -334,6 +372,10 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public void setId_lib(int id_lib) {
+        this.id_lib = id_lib;
     }
 
     public void setId_catalog(int id_catalog) {
@@ -407,5 +449,10 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
 
     public void setLayer(int layer) {
         this.layer = layer;
+    }
+
+    @Override
+    public void prepare() throws Exception {
+
     }
 }

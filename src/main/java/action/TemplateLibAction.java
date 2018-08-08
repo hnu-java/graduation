@@ -1,6 +1,7 @@
 package action;
 
 import com.google.gson.Gson;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
@@ -49,6 +50,15 @@ public class TemplateLibAction extends ActionSupport implements RequestAware, Se
         return "Re";
     }
 
+    public String getTypeOfOneLib(){
+        libraryDao=new LibraryDaoImp();
+        dataMap=new HashMap<>();
+        UserEntity seesionUser=(UserEntity)session.get("user");
+        int id_project = (int)session.get("projectId");
+        List<LibraryEntity> list = libraryDao.getTypeOfOneLib(seesionUser.getId_user(),libraryEntity.getId_template());
+        dataMap.put("libraryList",list);
+        return "Re";
+    }
     public  String getStructure(){
         structureDao=new StructureDaoImp();
         dataMap=new HashMap<>();
