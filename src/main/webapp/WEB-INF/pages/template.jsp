@@ -373,6 +373,9 @@
                                 <option selected disabled>请选择构件库</option>
                             </select>
                         </div>
+                            <div class="alert alert-info" id="emptyOfficalLibrary" style="display: none;">
+                                该构件库为空
+                            </div>
                     </div>
                     <table  class=" col-sm-12 structTable" style="display: none;">
                         <thead>
@@ -416,6 +419,9 @@
                                     <option selected disabled>请选择构件库</option>
                                 </select>
                             </div>
+                                <div class="alert alert-info" id="emptyLibrary" style="display: none;">
+                                    该构件库为空
+                                </div>
                         </div>
                         <table  class=" col-sm-12 structTable2" style="display: none;">
                             <thead>
@@ -502,13 +508,13 @@
 </script>
 
 <script>
-    var nowTemplate,structureList;
+    var nowTemplate_jsp,structureList;
     $("button#edit").click(function(){
         $("#libraryUserList").html("");
-        nowTemplate=nowCatalog.id_template;
+        nowTemplate_jsp=nowCatalog.id_template;
         $.ajax({
             url: "templateLib-getTypeOfUserLib",
-            data: {id_template:nowTemplate},
+            data: {id_template:nowTemplate_jsp},
             dataType: "json",
             type: "Post",
             async: "false",
@@ -529,7 +535,7 @@
                 }
                 else {
                     $(".structTable2").empty();
-                    $("#userLibraryDiv").hide();
+                    $(".userLibraryDiv").hide();
                     $("#noneUserLibrary").show();
                 }
 
@@ -545,31 +551,37 @@
         $(".structTable2").show();
         $.ajax({
             url: "templateLib-getStructure",
-            data: {id_library:id_library,id_template:nowTemplate},
+            data: {id_library:id_library,id_template:nowTemplate_jsp},
             dataType: "json",
             type: "Post",
             async: "false",
             success: function (result) {
-                $(".addTbody").remove();
+                if(result.structureList === undefined){
+                    $("#emptyLibrary").show();
+                }else{
+                    $("#emptyLibrary").hide();
+                }
+                $(".addTbodyUser").remove();
                 structureList=result.structureList;
-                var content="<tbody class='addTbody'>";
-                if(nowTemplate=="1"){
+                var content="<tbody class='addTbodyUser'>";
+                if(nowTemplate_jsp=="1"){
                     for (var i=0;i<structureList.length;i++){
                         content+=" <tr><th >通用模板"+(i+1)+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(1,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(1,this)'>预览</button></th></tr>";
                     }
                 }
-                else if(nowTemplate=="2"){
+                else if(nowTemplate_jsp=="2"){
                     for (var i=0;i<structureList.length;i++){
                         content+=" <tr><th >"+structureList[i].roleName+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(2,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(2,this)'>预览</button></th></tr>";
                     }
                 }
-                else if(nowTemplate=="3"){
+                else if(nowTemplate_jsp=="3"){
                     for (var i=0;i<structureList.length;i++){
                         content+=" <tr><th >"+structureList[i].funName+"</th><th > <button class='btn btn-info   btn-xs' onclick='useStructure(3,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(3,this)'>预览</button></th></tr>";
                     }
                 }
                 content+="</tbody>";
                 $(".structTable2").append(content);
+
             },
             error: function (result) {
                 showtoast("dangerous", "保存失败", "内容保存失败")

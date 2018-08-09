@@ -103,6 +103,16 @@ $(document).on("click",".dic",function () {
             else if (template.id_template=="1"){
                 loadTemplateOne(entity)
             }
+            $("#libraryUserList").empty();
+            $(".structTable2").empty();
+            $(".userLibraryDiv").hide();
+            $(".structTable").empty();
+            $("#libraryList").empty();
+            $(".libraryDiv").hide();
+            $("#noneLibrary").hide();
+            $("#titleLibrary").show();
+            $("#emptyLibrary").hide();
+            $("#emptyOfficalLibrary").hide();
         },
         error: function (result) {
             showtoast("dangerous","失败","获取失败")
@@ -1009,7 +1019,7 @@ $("button#edit").click(function(){
                $(".structTable").hide();
            }
            else {
-               $("#libraryDiv").hide();
+               $(".libraryDiv").hide();
                $("#noneLibrary").show();
                $(".structTable").empty();
            }
@@ -1031,6 +1041,11 @@ $("#libraryList").change(function () {
         type: "Post",
         async: "false",
         success: function (result) {
+            if(result.structureList === undefined){
+                $("#emptyOfficalLibrary").show();
+            }else{
+                $("#emptyOfficalLibrary").hide();
+            }
             $(".addTbody").remove();
             structureList=result.structureList;
             var content="<tbody class='addTbody'>";
