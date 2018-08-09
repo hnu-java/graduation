@@ -566,17 +566,17 @@
                 var content="<tbody class='addTbodyUser'>";
                 if(nowTemplate_jsp=="1"){
                     for (var i=0;i<structureList.length;i++){
-                        content+=" <tr><th >通用模板"+(i+1)+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(1,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(1,this)'>预览</button></th></tr>";
+                        content+=" <tr><th >通用模板"+(i+1)+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(1,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(1,this,"+i+")'>预览</button></th></tr>";
                     }
                 }
                 else if(nowTemplate_jsp=="2"){
                     for (var i=0;i<structureList.length;i++){
-                        content+=" <tr><th >"+structureList[i].roleName+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(2,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(2,this)'>预览</button></th></tr>";
+                        content+=" <tr><th >"+structureList[i].roleName+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(2,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(2,this,"+i+")'>预览</button></th></tr>";
                     }
                 }
                 else if(nowTemplate_jsp=="3"){
                     for (var i=0;i<structureList.length;i++){
-                        content+=" <tr><th >"+structureList[i].funName+"</th><th > <button class='btn btn-info   btn-xs' onclick='useStructure(3,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(3,this)'>预览</button></th></tr>";
+                        content+=" <tr><th >"+structureList[i].funName+"</th><th > <button class='btn btn-info   btn-xs' onclick='useStructure(3,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(3,this,"+i+")'>预览</button></th></tr>";
                     }
                 }
                 content+="</tbody>";
@@ -610,7 +610,7 @@
             else if(id_template=="2"){
             loadTemplateTwo(structureList[id])
             }
-                else  if(id_template=="3"){
+            else  if(id_template=="3"){
                 var end=$(".funTable tbody").children(".end");
                 $(".funTable tbody").html(end)
                 $(".funTable tfoot").html("");
@@ -619,6 +619,66 @@
             })
 
     }
+
+    function seeStructure(id_template,obj,index){
+        var id=parseInt(index)
+        if(id_template=="1"){
+            swal({title:"通用模板"+(id+1),text:structureList[id].content})
+        }else if(id_template=="2"){
+            swal(
+                {
+                    title:"构件名:"+structureList[id].roleName,
+                    text:"用户描述<div>"+structureList[id].describe+"</div>"
+                    +"用户权限<div>"+structureList[id].permissions+"</div>",
+                    html:true
+                })
+        }else  if(id_template=="3"){
+             var priority;
+            if(structureList[id].priority==1){
+                priority = "高"
+            }else if(structureList[id].priority==2){
+                priority = "中"
+            }else if(structureList[id].priority==3){
+                priority = "低"
+            }
+            var funRoleList ="";
+            var tmp1 = structureList[id].funRoleList.length;
+            for(var num = 0;num < tmp1; num++){
+                funRoleList+="<div>角色："+structureList[id].funRoleList[num].roleName+"</div>"
+                +"<div>描述："+structureList[id].funRoleList[num].roleDescribe+"</div>"
+                if(structureList[id].funRoleList[num].usableName!=null){
+                    funRoleList+="<div>"+structureList[id].funRoleList[num].usableName+"</div>"
+                    +"<div>"+structureList[id].funRoleList[num].usablePara+"</div>"
+                }
+            }
+            var funUsableList ="";
+            var tmp2 = structureList[id].funUsableList.length;
+            for(var num = 0;num < tmp2; num++){
+                funUsableList+="<div>"+structureList[id].funUsableList[num].usableName+"</div>"
+                    +"<div>"+structureList[id].funUsableList[num].usablePara+"</div>"
+            }
+            swal(
+                {
+                    title:"构件名:"+structureList[id].funName,
+                    text:"<div><b>优先级:</b>"+priority+"</div>"
+                    +"<div><b>功能点描述:</b>"+structureList[id].describe+"</div>"
+                    +"<div><b>用例过程:</b>"+funRoleList
+                    // +"<div>角色："+structureList[id].funRoleList[0].roleName+"</div>"
+                    // +"<div>描述："+structureList[id].funRoleList[0].roleDescribe+"</div>"
+                    // +"<div>局部可用性："+structureList[id].funRoleList[0].usableName+"</div>"
+                    // +"<div>发生条件："+structureList[id].funRoleList[0].usablePara+"</div>"
+                    +"<div><b>可用性:</b>"+funUsableList
+                    // +"<div>全局可用性："+structureList[id].funUsableList[0].usableName+"</div>"
+                    // +"<div>发生条件："+structureList[id].funUsableList[0].usablePara+"</div>"
+                    +"<div><b>输入:</b>"+structureList[id].input+"</div>"
+                    +"<div><b>输出:</b>"+structureList[id].output+"</div>"
+                    +"<div><b>基本操作流程:</b>"+structureList[id].basic+"</div>"
+                    +"<div><b>备选操作流程:</b>"+structureList[id].alternative+"</div>",
+                    html:true
+                })
+        }
+    }
+
 
     function lib_save() {
         var id_lib = $("select#libraryOneList").val();

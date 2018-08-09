@@ -1051,17 +1051,17 @@ $("#libraryList").change(function () {
             var content="<tbody class='addTbody'>";
           if(nowTemplate=="1"){
               for (var i=0;i<structureList.length;i++){
-                  content+=" <tr><th >通用模板"+(i+1)+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(1,this,"+i+")'>引用</button>  <button class='btn btn-info   btn-xs' onclick='seeStructure(1,this)'>预览</button></th></tr>";
+                  content+=" <tr><th >通用模板"+(i+1)+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(1,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(1,this,"+i+")'>预览</button></th></tr>";
               }
           }
            else if(nowTemplate=="2"){
               for (var i=0;i<structureList.length;i++){
-                  content+=" <tr><th >"+structureList[i].roleName+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(2,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(2,this)'>预览</button></th></tr>";
+                  content+=" <tr><th >"+structureList[i].roleName+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(2,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(2,this,"+i+")'>预览</button></th></tr>";
               }
           }
           else if(nowTemplate=="3"){
               for (var i=0;i<structureList.length;i++){
-                  content+=" <tr><th >"+structureList[i].funName+"</th><th > <button class='btn btn-info   btn-xs' onclick='useStructure(3,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(3,this)'>预览</button></th></tr>";
+                  content+=" <tr><th >"+structureList[i].funName+"</th><th > <button class='btn btn-info   btn-xs' onclick='useStructure(3,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(3,this,"+i+")'>预览</button></th></tr>";
               }
           }
              content+="</tbody>";
@@ -1092,6 +1092,44 @@ function useStructure(id_template,obj,index) {
         loadTemplateThree(structureList[id])
     }
 }
+
+function seeStructure(id_template,obj,index){
+    var id=parseInt(index)
+    if(id_template=="1"){
+        swal({title:"通用模板"+(id+1),text:structureList[id].content})
+    }else if(id_template=="2"){
+        swal(
+            {
+                title:"构件名:"+structureList[id].roleName,
+                text:"用户描述<div>"+structureList[id].describe+"</div>"
+                +"用户权限<div>"+structureList[id].permissions+"</div>",
+                html:true
+            })
+    }else  if(id_template=="3"){
+        var priority;
+        if(structureList[id].priority==1){
+            priority = "高"
+        }else if(structureList[id].priority==2){
+            priority = "中"
+        }else if(structureList[id].priority==3){
+            priority = "低"
+        }
+        swal(
+            {
+                title:"构件名:"+structureList[id].funName,
+                text:"<div>优先级:"+priority+"</div>"
+                +"<div>功能点描述:"+structureList[id].describe+"</div>"
+                //+"用例过程<div>"+structureList[id].funRoleList+"</div>"
+                //+"可用性<div>"+structureList[id].funUsableList+"</div>"
+                +"<div>输入:"+structureList[id].input+"</div>"
+                +"<div>输出:"+structureList[id].output+"</div>"
+                +"<div>基本操作流程:"+structureList[id].basic+"</div>"
+                +"<div>备选操作流程:"+structureList[id].alternative+"</div>",
+                html:true
+            })
+    }
+}
+
 //文本框初始化
 $('#fileupload').fileinput(
     {
