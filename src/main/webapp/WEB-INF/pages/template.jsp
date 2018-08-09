@@ -50,6 +50,39 @@
 </head>
 
 <body class="gray-bg">
+<div  class="modal inmodal" id="Encapsulation" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">封装构件</h4>
+            </div>
+            <div class="modal-body col-md-12" style="height: 200px" >
+                    <label style="padding-left: 15px" class="col-md-4">选择构建库</label>
+                    <div style="width: 300px" class="col-md-8">
+                        <div class="alert alert-info" id="noneOneLibrary" style="display: none;">
+                            暂无该类型的构件库
+                        </div>
+                        <div class="oneLibraryDiv" style="display: none;">
+                            <select class="form-control" name="libraryOneList" id="libraryOneList" >
+                            </select>
+                        </div>
+                    </div>
+                <br>
+                <br>
+                <br>
+                <div style="font-size: 20px;padding: 10px;display: none;" id="hint">
+                    将已有内容封装为构件后下次编辑可以直接引用
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="edit-button" type="button" class="btn btn-primary" onclick="lib_save()">封装</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class=" row wrapper white-bg">
     <ol class="breadcrumb" style="margin-left: 40px">
         <li style="font-size: 15px">
@@ -228,6 +261,7 @@
                             <s:if test="#request.rank!=5&&#request.state==0">
                             <div class="ibox-tools ">
                                 <i class="fa fa-commenting modal-icon discussButton" id="discussButton" style="color: #6D8389" onclick="disReload()"  data-toggle="modal" data-target="#myModal1" > </i>
+                                <button id="" class="btn btn-primary btn-xs m-l-sm" data-toggle="modal" data-target="#Encapsulation" type="button" onclick="packageLib()">封装</button>
                                 <button id="edit" class="btn btn-primary btn-xs m-l-sm" onclick="temp_edit()" type="button">编辑</button>
                                 <button id="save" class="btn btn-primary  btn-xs m-l-sm" onclick="temp_save()" type="button" style="display:none;">保存</button>
                             </div>
@@ -427,11 +461,48 @@
 <script src="<%=basePath %>/js/template.js"></script>
 
 </html>
+<script>
+    var count;
+    function packageLib() {
+        var id_tmp = nowCatalog.id_template;
+        $.ajax({
+            url: "templateLib-getTypeOfOneLib",
+            data: {id_template:id_tmp},
+            dataType: "json",
+            type: "Post",
+            async: "false",
+            success: function (result) {
+                var list=result.libraryList,content="";
+                count = list.length;
+                if(list.length!=0){
+                    content+=" <option value='0' selected disabled>请选择构件库</option>"
+                    for(var i=0;i<list.length;i++){
+                        content+=" <option value='"+list[i].id_library+"'>"+list[i].name+"</option>"
+                    }
+                    $("#libraryOneList").append(content);
+                    $(".oneLibraryDiv").show();
+                    $("#noneOneLibrary").hide();
+                    $("#hint").show();
+                }
+                else {
+                    $(".oneLibraryDiv").hide();
+                    $("#noneOneLibrary").show();
+                    $("#hint").hide();
+                }
+
+            },
+            error: function (result) {
+                showtoast("dangerous", "保存失败", "内容保存失败")
+            }
+        })
+    }
+
+</script>
 
 <script>
     var nowTemplate,structureList;
     $("#structUserType").change(function () {
-        $("#libraryUserList").html("")
+        $("#libraryUserList").html("");
         nowTemplate=$(this).val();
         $.ajax({
             url: "templateLib-getTypeOfUserLib",
@@ -462,7 +533,7 @@
                 showtoast("dangerous", "保存失败", "内容保存失败")
             }
         })
-    })
+    });
 
     $("#libraryUserList").change(function () {
         var id_library=$(this).val();
@@ -479,17 +550,17 @@
                 var content="<tbody class='addTbody'>";
                 if(nowTemplate=="1"){
                     for (var i=0;i<structureList.length;i++){
-                        content+=" <tr><th >通用模板"+(i+1)+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(1,this,"+i+")'>引用</button></th></tr>";
+                        content+=" <tr><th >通用模板"+(i+1)+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(1,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(1,this)'>预览</button></th></tr>";
                     }
                 }
                 else if(nowTemplate=="2"){
                     for (var i=0;i<structureList.length;i++){
-                        content+=" <tr><th >"+structureList[i].roleName+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(2,this,"+i+")'>引用</button></th></tr>";
+                        content+=" <tr><th >"+structureList[i].roleName+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(2,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(2,this)'>预览</button></th></tr>";
                     }
                 }
                 else if(nowTemplate=="3"){
                     for (var i=0;i<structureList.length;i++){
-                        content+=" <tr><th >"+structureList[i].funName+"</th><th > <button class='btn btn-info   btn-xs' onclick='useStructure(3,this,"+i+")'>引用</button></th></tr>";
+                        content+=" <tr><th >"+structureList[i].funName+"</th><th > <button class='btn btn-info   btn-xs' onclick='useStructure(3,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(3,this)'>预览</button></th></tr>";
                     }
                 }
                 content+="</tbody>";
@@ -500,7 +571,7 @@
             }
         })
 
-    })
+    });
 
     function useStructure(id_template,obj,index) {
         if(typeof (nowCatalog)=="undefined"||nowCatalog.id_template!=id_template){
@@ -530,6 +601,130 @@
                 loadTemplateThree(structureList[id])
             }
             })
+
+    }
+
+    function lib_save() {
+        var id_lib = $("select#libraryOneList").val();
+        if(count === 0){
+            swal(
+                {
+                    title: "封装构件需选择构件库",
+                    text: "可在构件库模块创建私有构件库",
+                    type: "",
+                    confirmButtonColor: "#18a689",
+                    cancelButtonText: "好的",
+                    closeOnConfirm: false
+                })
+        }else{
+            if(id_lib === null){
+                showtoast("error","请先选择构件库","构件封装将存入对应构件库")
+            }else{
+                $("#eg").removeClass("no-padding");
+                var aHTML=$(".click1edit").summernote('code');
+                // $(".click1edit").summernote('destroy');
+                // $("#save").attr("style","display:none");
+                // $("#edit").attr("style","display:show");
+                // $("div.hidenTh").hide();
+
+                var id_template = nowCatalog.id_template;
+                if (id_template == "1") {//通用
+                    var describe=$("#describe").summernote('code');
+                    alert(describe);
+                    $.ajax({
+                        url: "catalog-saveLibOne",
+                        data: {id_lib: id_lib, content: describe},
+                        dataType: "json",
+                        type: "Post",
+                        async: "false",
+                        success: function (result) {
+                            showtoast("success", "封装成功", "构件已生成")
+                        },
+                        error: function (result) {
+                            showtoast("dangerous", "封装失败", "构件封装失败")
+                        }
+                    })
+                }
+                else if (id_template == "2") {//角色
+                    var roleName=$("input#roleName").val();
+                    var describe=$("#describe").summernote('code');
+                    var permissions=$("#permissions").summernote('code');
+                    $.ajax({
+                        url: "catalog-saveLibTwo",
+                        data: {id_lib: id_lib, content: roleName,describe:describe,permissions:permissions},
+                        dataType: "json",
+                        type: "Post",
+                        async: "false",
+                        success: function (result) {
+                            showtoast("success", "封装成功", "构件已生成")
+                        },
+                        error: function (result) {
+                            showtoast("dangerous", "封装失败", "构件封装失败")
+                        }
+                    })
+                }
+                else  if(id_template == "3"){
+                    var funName=$("input#funName").val();
+                    var priority=$("select#priority").val();
+                    var describe=$("#describe").summernote('code');
+                    var inDiv=$("#in").summernote('code');
+                    var outDiv=$("#out").summernote('code');
+                    var basic=$("#basic").summernote('code');
+                    var alternative=$("#alternative").summernote('code');
+                    var  funRoleList="[{";
+                    var roleName,roleDescribe,usableName,usablePara,last="";
+                    $(".funTable tbody").find("tr").each(function () {
+                        if ($(this).hasClass("funTr")){//开头
+                            if (last!=""){//第一次，没有,
+                                funRoleList+="},{"
+                            }
+                            roleName=$(this).children("th").eq(1).children(".roleName").find("option:selected").text();
+                            // alert($(this).children("th").eq(2).children(".roleDescribe"))
+                            roleDescribe=$(this).children("th").eq(2).children(".roleDescribe").val();
+                            funRoleList+="\"roleName\":\""+roleName+"\",\"roleDescribe\":\""+roleDescribe+"\"";
+                            last="funTr";
+                        }
+                        else if ($(this).hasClass("usableTr")){//开头
+                            usableName=$(this).children("th:first-child").text();
+                            usablePara=$(this).children("th").eq(1).text();
+                            funRoleList+=",\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"";
+                            last="usableTr";
+                        }
+                    })
+                    funRoleList+="}]";
+
+                    var funUsableList="[",usableName,usablePara,first="yes";
+                    $(".funTable tfoot").find("tr").each(function () {
+                        if (first=="yes"){//第一次，没有,
+                            funUsableList+="{"
+                        }
+                        else   funUsableList+=",{"
+                        usableName=$(this).children("th:first-child").text();
+                        usablePara=$(this).children("th").eq(1).text();
+                        funUsableList+="\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"}";
+                        first="no";
+                    })
+                    funUsableList+="]";
+                    // alert(describe)
+                    $.ajax({
+                        url: "catalog-saveLibThree",
+                        data: {id_lib: id_lib,funName: funName, priority: priority,content:describe,
+                            inDiv:inDiv,outDiv:outDiv,basic:basic,alternative:alternative,
+                            funRoleList:funRoleList,funUsableList:funUsableList},
+                        dataType: "json",
+                        type: "Post",
+                        async: "false",
+                        success: function (result) {
+                            showtoast("success", "封装成功", "构件已生成")
+                        },
+                        error: function (result) {
+                            showtoast("dangerous", "封装失败", "构件封装失败")
+                        }
+                    })
+                }
+                // $(".dis").attr("disabled","true");
+            }
+        }
 
     }
 </script>

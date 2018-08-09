@@ -61,7 +61,7 @@ function disReload() {
 $(document).on("click",".dic",function () {
     editable=false;
     nowClick=$(this);
-    var catalogIndex=$(nowClick).children("span.catalogIndex").text()
+    var catalogIndex=$(nowClick).children("span.catalogIndex").text();
     $.ajax({
         url: "catalog-getCatalog",
         data: { documentId:documentId,catalogIndex:catalogIndex},
@@ -75,13 +75,13 @@ $(document).on("click",".dic",function () {
             $("div.catalogNoneContent").hide();
             $("div.catalogNotNoneContent").show();
             //模板生成
-          var   template=result.template;
+            var  template=result.template;
             $("div.content").html(template.content);
             nowCatalog=result.catalogEntity,title="";
             if (nowCatalog.first_index!="0")title+=nowCatalog.first_index;
-             if(nowCatalog.second_index!="0")title+="."+nowCatalog.second_index;
-             if(nowCatalog.third_index!="0")title+="."+nowCatalog.third_index;
-             if(nowCatalog.fourth_index!="0")title+="."+nowCatalog.fourth_index;
+            if(nowCatalog.second_index!="0")title+="."+nowCatalog.second_index;
+            if(nowCatalog.third_index!="0")title+="."+nowCatalog.third_index;
+            if(nowCatalog.fourth_index!="0")title+="."+nowCatalog.fourth_index;
             title+="  "+nowCatalog.title;
             $("h2#catalog_title").text(title);
             discussInit();
@@ -736,6 +736,7 @@ function temp_save() {
     var id_template = nowCatalog.id_template,id_catalog=nowCatalog.id_catalog;
         if (id_template == "1") {//通用
         var describe=$("#describe").summernote('code');
+        alert(describe);
         $.ajax({
             url: "catalog-saveTemplateOne",
             data: {id_catalog: id_catalog, content: describe},
@@ -1033,17 +1034,17 @@ $("#libraryList").change(function () {
             var content="<tbody class='addTbody'>";
           if(nowTemplate=="1"){
               for (var i=0;i<structureList.length;i++){
-                  content+=" <tr><th >通用模板"+(i+1)+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(1,this,"+i+")'>引用</button></th></tr>";
+                  content+=" <tr><th >通用模板"+(i+1)+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(1,this,"+i+")'>引用</button>  <button class='btn btn-info   btn-xs' onclick='seeStructure(1,this)'>预览</button></th></tr>";
               }
           }
            else if(nowTemplate=="2"){
               for (var i=0;i<structureList.length;i++){
-                  content+=" <tr><th >"+structureList[i].roleName+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(2,this,"+i+")'>引用</button></th></tr>";
+                  content+=" <tr><th >"+structureList[i].roleName+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(2,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(2,this)'>预览</button></th></tr>";
               }
           }
           else if(nowTemplate=="3"){
               for (var i=0;i<structureList.length;i++){
-                  content+=" <tr><th >"+structureList[i].funName+"</th><th > <button class='btn btn-info   btn-xs' onclick='useStructure(3,this,"+i+")'>引用</button></th></tr>";
+                  content+=" <tr><th >"+structureList[i].funName+"</th><th > <button class='btn btn-info   btn-xs' onclick='useStructure(3,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(3,this)'>预览</button></th></tr>";
               }
           }
              content+="</tbody>";
