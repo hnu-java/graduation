@@ -587,7 +587,6 @@
                 showtoast("dangerous", "保存失败", "内容保存失败")
             }
         })
-
     });
 
     function useStructure(id_template,obj,index) {

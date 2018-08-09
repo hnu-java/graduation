@@ -174,7 +174,7 @@ function loadTemplateThree(entity) {
         funRoleContent+="</select> </th> <th> <textarea   class='form-control roleDescribe dis'  name='roleDescribe'   style='max-width: 100%' disabled>";
         funRoleContent+=funRoleList[i].roleDescribe+"</textarea> </th>";
         if(funRoleList[i].usableName==null){//新增按钮
-            funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>新增可用性</button> </th></tr>";
+            funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>新增局部可用性</button> </th></tr>";
         }else {
             funRoleContent+="</tr>";
             funRoleContent+="<tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>"+funRoleList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funRoleList[i].usablePara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>"
@@ -886,7 +886,7 @@ function deleteUsable(obj) {
 }
 
 function addUsable(obj) {
-    $("#para").val("")
+    $("#para").val("");
     if(typeof (obj)=="undefined"){
         nowLine="undefined";
         return;
@@ -898,7 +898,7 @@ function addUsabelLine() {
     var usableName=$("#uaname").text();
     var para=$("#para").val();
     var content;
-    if (typeof (nowLine)=="undefined"||  nowLine=="undefined"){
+    if (typeof (nowLine)==="undefined" ||  nowLine==="undefined"){
         content=" <tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>全局可用性："+usableName+"</th> <th  name='usablePara' class='usablePara'>发生条件："+para+"</th> <th>  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px'>删除可用性</button></th> </tr>"
         $(".funTable tfoot").append(content);
         return;
