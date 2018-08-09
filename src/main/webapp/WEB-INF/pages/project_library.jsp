@@ -137,7 +137,7 @@
                                 <div style="float: right;z-index:99999999;margin: -14px -19px 0px 0px">
                                     <s:if test="#request.id_user==#session.user.id_user">
                                         <a class="btn btn-white btn-bitbucket nocollect" style="border: none" >
-                                        <i class="fa fa-star modal-icon " style="font-size: 20px"></i>
+                                            <i class="fa fa-star modal-icon " style="font-size: 20px"></i>
                                         </a>
                                     </s:if>
                                     <s:else>
