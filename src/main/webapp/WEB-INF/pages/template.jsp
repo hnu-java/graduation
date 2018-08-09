@@ -550,17 +550,17 @@
                 var content="<tbody class='addTbody'>";
                 if(nowTemplate=="1"){
                     for (var i=0;i<structureList.length;i++){
-                        content+=" <tr><th >通用模板"+(i+1)+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(1,this,"+i+")'>引用</button></th></tr>";
+                        content+=" <tr><th >通用模板"+(i+1)+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(1,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(1,this)'>预览</button></th></tr>";
                     }
                 }
                 else if(nowTemplate=="2"){
                     for (var i=0;i<structureList.length;i++){
-                        content+=" <tr><th >"+structureList[i].roleName+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(2,this,"+i+")'>引用</button></th></tr>";
+                        content+=" <tr><th >"+structureList[i].roleName+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(2,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(2,this)'>预览</button></th></tr>";
                     }
                 }
                 else if(nowTemplate=="3"){
                     for (var i=0;i<structureList.length;i++){
-                        content+=" <tr><th >"+structureList[i].funName+"</th><th > <button class='btn btn-info   btn-xs' onclick='useStructure(3,this,"+i+")'>引用</button></th></tr>";
+                        content+=" <tr><th >"+structureList[i].funName+"</th><th > <button class='btn btn-info   btn-xs' onclick='useStructure(3,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(3,this)'>预览</button></th></tr>";
                     }
                 }
                 content+="</tbody>";
