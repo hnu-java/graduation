@@ -736,7 +736,7 @@ function temp_save() {
     var id_template = nowCatalog.id_template,id_catalog=nowCatalog.id_catalog;
         if (id_template == "1") {//通用
         var describe=$("#describe").summernote('code');
-        alert(describe);
+        // alert(describe);
         $.ajax({
             url: "catalog-saveTemplateOne",
             data: {id_catalog: id_catalog, content: describe},
@@ -985,9 +985,9 @@ $(document).on("click",".fun_delete",function () {
 //构件JS开始了
 //点击构件类型事件
 var nowTemplate,structureList;
-$("#structType").change(function () {
+$("button#edit").click(function(){
     $("#libraryList").html("")
-    nowTemplate=$(this).val();
+    nowTemplate=nowCatalog.id_template;
     $.ajax({
         url: "templateLib-getTypeOfLib",
         data: {id_template:nowTemplate},
@@ -1001,6 +1001,7 @@ $("#structType").change(function () {
                for(var i=0;i<list.length;i++){
                content+=" <option value='"+list[i].id_library+"'>"+list[i].name+"</option>"
            }
+               $("#libraryList").empty();
                $("#libraryList").append(content);
                // alert(content)
                $(".libraryDiv").show();
@@ -1010,6 +1011,7 @@ $("#structType").change(function () {
            else {
                $("#libraryDiv").hide();
                $("#noneLibrary").show();
+               $(".structTable").empty();
            }
 
         },
