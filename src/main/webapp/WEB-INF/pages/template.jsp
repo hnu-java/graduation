@@ -630,17 +630,39 @@
             }else if(structureList[id].priority==3){
                 priority = "低"
             }
+            var funRoleList ="";
+            var tmp1 = structureList[id].funRoleList.length;
+            for(var num = 0;num < tmp1; num++){
+                funRoleList+="<div>角色："+structureList[id].funRoleList[num].roleName+"</div>"
+                +"<div>描述："+structureList[id].funRoleList[num].roleDescribe+"</div>"
+                if(structureList[id].funRoleList[num].usableName!=null){
+                    funRoleList+="<div>"+structureList[id].funRoleList[num].usableName+"</div>"
+                    +"<div>"+structureList[id].funRoleList[num].usablePara+"</div>"
+                }
+            }
+            var funUsableList ="";
+            var tmp2 = structureList[id].funUsableList.length;
+            for(var num = 0;num < tmp2; num++){
+                funUsableList+="<div>"+structureList[id].funUsableList[num].usableName+"</div>"
+                    +"<div>"+structureList[id].funUsableList[num].usablePara+"</div>"
+            }
             swal(
                 {
                     title:"构件名:"+structureList[id].funName,
-                    text:"<div>优先级:"+priority+"</div>"
-                    +"<div>功能点描述:"+structureList[id].describe+"</div>"
-                    //+"用例过程<div>"+structureList[id].funRoleList+"</div>"
-                    //+"可用性<div>"+structureList[id].funUsableList+"</div>"
-                    +"<div>输入:"+structureList[id].input+"</div>"
-                    +"<div>输出:"+structureList[id].output+"</div>"
-                    +"<div>基本操作流程:"+structureList[id].basic+"</div>"
-                    +"<div>备选操作流程:"+structureList[id].alternative+"</div>",
+                    text:"<div><b>优先级:</b>"+priority+"</div>"
+                    +"<div><b>功能点描述:</b>"+structureList[id].describe+"</div>"
+                    +"<div><b>用例过程:</b>"+funRoleList
+                    // +"<div>角色："+structureList[id].funRoleList[0].roleName+"</div>"
+                    // +"<div>描述："+structureList[id].funRoleList[0].roleDescribe+"</div>"
+                    // +"<div>局部可用性："+structureList[id].funRoleList[0].usableName+"</div>"
+                    // +"<div>发生条件："+structureList[id].funRoleList[0].usablePara+"</div>"
+                    +"<div><b>可用性:</b>"+funUsableList
+                    // +"<div>全局可用性："+structureList[id].funUsableList[0].usableName+"</div>"
+                    // +"<div>发生条件："+structureList[id].funUsableList[0].usablePara+"</div>"
+                    +"<div><b>输入:</b>"+structureList[id].input+"</div>"
+                    +"<div><b>输出:</b>"+structureList[id].output+"</div>"
+                    +"<div><b>基本操作流程:</b>"+structureList[id].basic+"</div>"
+                    +"<div><b>备选操作流程:</b>"+structureList[id].alternative+"</div>",
                     html:true
                 })
         }
