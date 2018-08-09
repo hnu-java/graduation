@@ -77,7 +77,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="cancel-button" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
                 <button id="edit-button" type="button" class="btn btn-primary" onclick="lib_save()">封装</button>
             </div>
         </div>
@@ -353,14 +353,17 @@
                 <div class="ibox-content form-horizontal">
                     <!--构件库中间部分开始-->
                     <div class="form-group">
-                        <label style="padding-left: 15px">选择构建类型</label>
-                        <select class="form-control" name="structType" id="structType">
-                            <option  selected disabled>请选择构建库类型</option>
-                            <option value="1">通用模板构件库</option>
-                            <option value="2">用户模板构件库</option>
-                            <option value="3">用例模板构件库</option>
-                        </select>
-                        <br>
+                        <%--<label style="padding-left: 15px">选择构建类型</label>--%>
+                        <%--<select class="form-control" name="structType" id="structType">--%>
+                            <%--<option  selected disabled>请选择构建库类型</option>--%>
+                            <%--<option value="1">通用模板构件库</option>--%>
+                            <%--<option value="2">用户模板构件库</option>--%>
+                            <%--<option value="3">用例模板构件库</option>--%>
+                        <%--</select>--%>
+                        <%--<br>--%>
+                            <div class="alert alert-info" id="titleLibrary" style="display: block">
+                                点击编辑即可使用构件
+                            </div>
                         <div class="alert alert-info" id="noneLibrary" style="display: none;">
                             暂无该类型的收藏
                         </div>
@@ -395,16 +398,17 @@
                     <div class="ibox-content form-horizontal">
                         <!--构件库中间部分开始-->
                         <div class="form-group">
-                            <label style="padding-left: 15px">选择构建类型</label>
-                            <select class="form-control" name="structUserType" id="structUserType">
-                                <option  selected disabled>请选择构建库类型</option>
-                                <option value="1">通用模板构件库</option>
-                                <option value="2">用户模板构件库</option>
-                                <option value="3">用例模板构件库</option>
-                            </select>
-                            <br>
+                            <%--<label style="padding-left: 15px">选择构建类型</label>--%>
+                            <%--<select class="form-control" name="structUserType" id="structUserType">--%>
+                                <%--<option  selected disabled>请选择构建库类型</option>--%>
+                                <%--<option value="1">通用模板构件库</option>--%>
+                                <%--<option value="2">用户模板构件库</option>--%>
+                                <%--<option value="3">用例模板构件库</option>--%>
+                            <%--</select>--%>
+                            <%--<br>--%>
+
                             <div class="alert alert-info" id="noneUserLibrary" style="display: none;">
-                                暂无该类型的收藏
+                                暂无该类型的构件库
                             </div>
                             <div class="userLibraryDiv" style="display: none;">
                                 <label style="padding-left: 15px">选择构建库</label>
@@ -431,9 +435,6 @@
     </div>
 
 </div>
-
-
-
 </body>
 <script src="<%=basePath %>/js/jquery.min.js?v=2.1.4"></script>
 <script src="<%=basePath %>/js/bootstrap.min.js?v=3.3.6"></script>
@@ -479,6 +480,7 @@
                     for(var i=0;i<list.length;i++){
                         content+=" <option value='"+list[i].id_library+"'>"+list[i].name+"</option>"
                     }
+                    $("#libraryOneList").empty();
                     $("#libraryOneList").append(content);
                     $(".oneLibraryDiv").show();
                     $("#noneOneLibrary").hide();
@@ -501,9 +503,9 @@
 
 <script>
     var nowTemplate,structureList;
-    $("#structUserType").change(function () {
+    $("button#edit").click(function(){
         $("#libraryUserList").html("");
-        nowTemplate=$(this).val();
+        nowTemplate=nowCatalog.id_template;
         $.ajax({
             url: "templateLib-getTypeOfUserLib",
             data: {id_template:nowTemplate},
@@ -517,13 +519,16 @@
                     for(var i=0;i<list.length;i++){
                         content+=" <option value='"+list[i].id_library+"'>"+list[i].name+"</option>"
                     }
+                    $("#libraryUserList").empty();
                     $("#libraryUserList").append(content);
                     // alert(content)
                     $(".userLibraryDiv").show();
                     $("#noneUserLibrary").hide();
+                    $("#titleLibrary").hide();
                     $(".structTable2").hide();
                 }
                 else {
+                    $(".structTable2").empty();
                     $("#userLibraryDiv").hide();
                     $("#noneUserLibrary").show();
                 }
@@ -668,7 +673,6 @@
                 var id_template = nowCatalog.id_template;
                 if (id_template == "1") {//通用
                     var describe=$("#describe").summernote('code');
-                    alert(describe);
                     $.ajax({
                         url: "catalog-saveLibOne",
                         data: {id_lib: id_lib, content: describe},
@@ -676,7 +680,8 @@
                         type: "Post",
                         async: "false",
                         success: function (result) {
-                            showtoast("success", "封装成功", "构件已生成")
+                            swal("构件封装成功!", "可在对应构件库引用该构件", "success");
+                            $('button#cancel-button').click();
                         },
                         error: function (result) {
                             showtoast("dangerous", "封装失败", "构件封装失败")
@@ -694,7 +699,8 @@
                         type: "Post",
                         async: "false",
                         success: function (result) {
-                            showtoast("success", "封装成功", "构件已生成")
+                            swal("构件封装成功!", "可在对应构件库引用该构件", "success");
+                            $('button#cancel-button').click();
                         },
                         error: function (result) {
                             showtoast("dangerous", "封装失败", "构件封装失败")
@@ -753,7 +759,8 @@
                         type: "Post",
                         async: "false",
                         success: function (result) {
-                            showtoast("success", "封装成功", "构件已生成")
+                            swal("构件封装成功!", "可在对应构件库引用该构件", "success");
+                            $('button#cancel-button').click();
                         },
                         error: function (result) {
                             showtoast("dangerous", "封装失败", "构件封装失败")
