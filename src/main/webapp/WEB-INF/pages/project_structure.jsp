@@ -178,9 +178,11 @@
                                 </span>
                         </div>
                     </div>
+                    <s:if test="#request.library.id_user == #session.user.id_user">
                     <div style="float: right;z-index:99999999;margin: 90px 10px 0px 0px">
                         <button id="deleteUser" type="submit" class="btn btn-alert">删除</button>
                     </div>
+                    </s:if>
                 </div>
                 </s:iterator>
                 </div>
