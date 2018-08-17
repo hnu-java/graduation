@@ -103,6 +103,16 @@ $(document).on("click",".dic",function () {
             else if (template.id_template=="1"){
                 loadTemplateOne(entity)
             }
+            $("#libraryUserList").empty();
+            $(".structTable2").empty();
+            $(".userLibraryDiv").hide();
+            $(".structTable").empty();
+            $("#libraryList").empty();
+            $(".libraryDiv").hide();
+            $("#noneLibrary").hide();
+            $("#titleLibrary").show();
+            $("#emptyLibrary").hide();
+            $("#emptyOfficalLibrary").hide();
         },
         error: function (result) {
             showtoast("dangerous","失败","获取失败")
@@ -164,7 +174,7 @@ function loadTemplateThree(entity) {
         funRoleContent+="</select> </th> <th> <textarea   class='form-control roleDescribe dis'  name='roleDescribe'   style='max-width: 100%' disabled>";
         funRoleContent+=funRoleList[i].roleDescribe+"</textarea> </th>";
         if(funRoleList[i].usableName==null){//新增按钮
-            funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>新增可用性</button> </th></tr>";
+            funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>新增局部可用性</button> </th></tr>";
         }else {
             funRoleContent+="</tr>";
             funRoleContent+="<tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>"+funRoleList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funRoleList[i].usablePara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>"
@@ -736,7 +746,7 @@ function temp_save() {
     var id_template = nowCatalog.id_template,id_catalog=nowCatalog.id_catalog;
         if (id_template == "1") {//通用
         var describe=$("#describe").summernote('code');
-        alert(describe);
+        // alert(describe);
         $.ajax({
             url: "catalog-saveTemplateOne",
             data: {id_catalog: id_catalog, content: describe},
@@ -876,7 +886,7 @@ function deleteUsable(obj) {
 }
 
 function addUsable(obj) {
-    $("#para").val("")
+    $("#para").val("");
     if(typeof (obj)=="undefined"){
         nowLine="undefined";
         return;
@@ -888,7 +898,7 @@ function addUsabelLine() {
     var usableName=$("#uaname").text();
     var para=$("#para").val();
     var content;
-    if (typeof (nowLine)=="undefined"||  nowLine=="undefined"){
+    if (typeof (nowLine)==="undefined" ||  nowLine==="undefined"){
         content=" <tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>全局可用性："+usableName+"</th> <th  name='usablePara' class='usablePara'>发生条件："+para+"</th> <th>  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px'>删除可用性</button></th> </tr>"
         $(".funTable tfoot").append(content);
         return;
@@ -985,9 +995,9 @@ $(document).on("click",".fun_delete",function () {
 //构件JS开始了
 //点击构件类型事件
 var nowTemplate,structureList;
-$("#structType").change(function () {
+$("button#edit").click(function(){
     $("#libraryList").html("")
-    nowTemplate=$(this).val();
+    nowTemplate=nowCatalog.id_template;
     $.ajax({
         url: "templateLib-getTypeOfLib",
         data: {id_template:nowTemplate},
@@ -1001,6 +1011,7 @@ $("#structType").change(function () {
                for(var i=0;i<list.length;i++){
                content+=" <option value='"+list[i].id_library+"'>"+list[i].name+"</option>"
            }
+               $("#libraryList").empty();
                $("#libraryList").append(content);
                // alert(content)
                $(".libraryDiv").show();
@@ -1008,8 +1019,9 @@ $("#structType").change(function () {
                $(".structTable").hide();
            }
            else {
-               $("#libraryDiv").hide();
+               $(".libraryDiv").hide();
                $("#noneLibrary").show();
+               $(".structTable").empty();
            }
 
         },
@@ -1029,22 +1041,27 @@ $("#libraryList").change(function () {
         type: "Post",
         async: "false",
         success: function (result) {
+            if(result.structureList === undefined){
+                $("#emptyOfficalLibrary").show();
+            }else{
+                $("#emptyOfficalLibrary").hide();
+            }
             $(".addTbody").remove();
             structureList=result.structureList;
             var content="<tbody class='addTbody'>";
           if(nowTemplate=="1"){
               for (var i=0;i<structureList.length;i++){
-                  content+=" <tr><th >通用模板"+(i+1)+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(1,this,"+i+")'>引用</button>  <button class='btn btn-info   btn-xs' onclick='seeStructure(1,this)'>预览</button></th></tr>";
+                  content+=" <tr><th >通用模板"+(i+1)+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(1,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(1,this,"+i+")'>预览</button></th></tr>";
               }
           }
            else if(nowTemplate=="2"){
               for (var i=0;i<structureList.length;i++){
-                  content+=" <tr><th >"+structureList[i].roleName+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(2,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(2,this)'>预览</button></th></tr>";
+                  content+=" <tr><th >"+structureList[i].roleName+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(2,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(2,this,"+i+")'>预览</button></th></tr>";
               }
           }
           else if(nowTemplate=="3"){
               for (var i=0;i<structureList.length;i++){
-                  content+=" <tr><th >"+structureList[i].funName+"</th><th > <button class='btn btn-info   btn-xs' onclick='useStructure(3,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(3,this)'>预览</button></th></tr>";
+                  content+=" <tr><th >"+structureList[i].funName+"</th><th > <button class='btn btn-info   btn-xs' onclick='useStructure(3,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(3,this,"+i+")'>预览</button></th></tr>";
               }
           }
              content+="</tbody>";
@@ -1075,6 +1092,44 @@ function useStructure(id_template,obj,index) {
         loadTemplateThree(structureList[id])
     }
 }
+
+function seeStructure(id_template,obj,index){
+    var id=parseInt(index)
+    if(id_template=="1"){
+        swal({title:"通用模板"+(id+1),text:structureList[id].content})
+    }else if(id_template=="2"){
+        swal(
+            {
+                title:"构件名:"+structureList[id].roleName,
+                text:"用户描述<div>"+structureList[id].describe+"</div>"
+                +"用户权限<div>"+structureList[id].permissions+"</div>",
+                html:true
+            })
+    }else  if(id_template=="3"){
+        var priority;
+        if(structureList[id].priority==1){
+            priority = "高"
+        }else if(structureList[id].priority==2){
+            priority = "中"
+        }else if(structureList[id].priority==3){
+            priority = "低"
+        }
+        swal(
+            {
+                title:"构件名:"+structureList[id].funName,
+                text:"<div>优先级:"+priority+"</div>"
+                +"<div>功能点描述:"+structureList[id].describe+"</div>"
+                //+"用例过程<div>"+structureList[id].funRoleList+"</div>"
+                //+"可用性<div>"+structureList[id].funUsableList+"</div>"
+                +"<div>输入:"+structureList[id].input+"</div>"
+                +"<div>输出:"+structureList[id].output+"</div>"
+                +"<div>基本操作流程:"+structureList[id].basic+"</div>"
+                +"<div>备选操作流程:"+structureList[id].alternative+"</div>",
+                html:true
+            })
+    }
+}
+
 //文本框初始化
 $('#fileupload').fileinput(
     {

@@ -77,7 +77,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="cancel-button" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
                 <button id="edit-button" type="button" class="btn btn-primary" onclick="lib_save()">封装</button>
             </div>
         </div>
@@ -353,14 +353,17 @@
                 <div class="ibox-content form-horizontal">
                     <!--构件库中间部分开始-->
                     <div class="form-group">
-                        <label style="padding-left: 15px">选择构建类型</label>
-                        <select class="form-control" name="structType" id="structType">
-                            <option  selected disabled>请选择构建库类型</option>
-                            <option value="1">通用模板构件库</option>
-                            <option value="2">用户模板构件库</option>
-                            <option value="3">用例模板构件库</option>
-                        </select>
-                        <br>
+                        <%--<label style="padding-left: 15px">选择构建类型</label>--%>
+                        <%--<select class="form-control" name="structType" id="structType">--%>
+                            <%--<option  selected disabled>请选择构建库类型</option>--%>
+                            <%--<option value="1">通用模板构件库</option>--%>
+                            <%--<option value="2">用户模板构件库</option>--%>
+                            <%--<option value="3">用例模板构件库</option>--%>
+                        <%--</select>--%>
+                        <%--<br>--%>
+                            <div class="alert alert-info" id="titleLibrary" style="display: block">
+                                点击编辑即可使用构件
+                            </div>
                         <div class="alert alert-info" id="noneLibrary" style="display: none;">
                             暂无该类型的收藏
                         </div>
@@ -370,6 +373,9 @@
                                 <option selected disabled>请选择构件库</option>
                             </select>
                         </div>
+                            <div class="alert alert-info" id="emptyOfficalLibrary" style="display: none;">
+                                该构件库为空
+                            </div>
                     </div>
                     <table  class=" col-sm-12 structTable" style="display: none;">
                         <thead>
@@ -395,16 +401,17 @@
                     <div class="ibox-content form-horizontal">
                         <!--构件库中间部分开始-->
                         <div class="form-group">
-                            <label style="padding-left: 15px">选择构建类型</label>
-                            <select class="form-control" name="structUserType" id="structUserType">
-                                <option  selected disabled>请选择构建库类型</option>
-                                <option value="1">通用模板构件库</option>
-                                <option value="2">用户模板构件库</option>
-                                <option value="3">用例模板构件库</option>
-                            </select>
-                            <br>
+                            <%--<label style="padding-left: 15px">选择构建类型</label>--%>
+                            <%--<select class="form-control" name="structUserType" id="structUserType">--%>
+                                <%--<option  selected disabled>请选择构建库类型</option>--%>
+                                <%--<option value="1">通用模板构件库</option>--%>
+                                <%--<option value="2">用户模板构件库</option>--%>
+                                <%--<option value="3">用例模板构件库</option>--%>
+                            <%--</select>--%>
+                            <%--<br>--%>
+
                             <div class="alert alert-info" id="noneUserLibrary" style="display: none;">
-                                暂无该类型的收藏
+                                暂无该类型的构件库
                             </div>
                             <div class="userLibraryDiv" style="display: none;">
                                 <label style="padding-left: 15px">选择构建库</label>
@@ -412,6 +419,9 @@
                                     <option selected disabled>请选择构件库</option>
                                 </select>
                             </div>
+                                <div class="alert alert-info" id="emptyLibrary" style="display: none;">
+                                    该构件库为空
+                                </div>
                         </div>
                         <table  class=" col-sm-12 structTable2" style="display: none;">
                             <thead>
@@ -431,9 +441,6 @@
     </div>
 
 </div>
-
-
-
 </body>
 <script src="<%=basePath %>/js/jquery.min.js?v=2.1.4"></script>
 <script src="<%=basePath %>/js/bootstrap.min.js?v=3.3.6"></script>
@@ -479,6 +486,7 @@
                     for(var i=0;i<list.length;i++){
                         content+=" <option value='"+list[i].id_library+"'>"+list[i].name+"</option>"
                     }
+                    $("#libraryOneList").empty();
                     $("#libraryOneList").append(content);
                     $(".oneLibraryDiv").show();
                     $("#noneOneLibrary").hide();
@@ -500,13 +508,13 @@
 </script>
 
 <script>
-    var nowTemplate,structureList;
-    $("#structUserType").change(function () {
+    var nowTemplate_jsp,structureList;
+    $("button#edit").click(function(){
         $("#libraryUserList").html("");
-        nowTemplate=$(this).val();
+        nowTemplate_jsp=nowCatalog.id_template;
         $.ajax({
             url: "templateLib-getTypeOfUserLib",
-            data: {id_template:nowTemplate},
+            data: {id_template:nowTemplate_jsp},
             dataType: "json",
             type: "Post",
             async: "false",
@@ -517,14 +525,17 @@
                     for(var i=0;i<list.length;i++){
                         content+=" <option value='"+list[i].id_library+"'>"+list[i].name+"</option>"
                     }
+                    $("#libraryUserList").empty();
                     $("#libraryUserList").append(content);
                     // alert(content)
                     $(".userLibraryDiv").show();
                     $("#noneUserLibrary").hide();
+                    $("#titleLibrary").hide();
                     $(".structTable2").hide();
                 }
                 else {
-                    $("#userLibraryDiv").hide();
+                    $(".structTable2").empty();
+                    $(".userLibraryDiv").hide();
                     $("#noneUserLibrary").show();
                 }
 
@@ -540,37 +551,42 @@
         $(".structTable2").show();
         $.ajax({
             url: "templateLib-getStructure",
-            data: {id_library:id_library,id_template:nowTemplate},
+            data: {id_library:id_library,id_template:nowTemplate_jsp},
             dataType: "json",
             type: "Post",
             async: "false",
             success: function (result) {
-                $(".addTbody").remove();
+                if(result.structureList === undefined){
+                    $("#emptyLibrary").show();
+                }else{
+                    $("#emptyLibrary").hide();
+                }
+                $(".addTbodyUser").remove();
                 structureList=result.structureList;
-                var content="<tbody class='addTbody'>";
-                if(nowTemplate=="1"){
+                var content="<tbody class='addTbodyUser'>";
+                if(nowTemplate_jsp=="1"){
                     for (var i=0;i<structureList.length;i++){
-                        content+=" <tr><th >通用模板"+(i+1)+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(1,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(1,this)'>预览</button></th></tr>";
+                        content+=" <tr><th >通用模板"+(i+1)+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(1,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(1,this,"+i+")'>预览</button></th></tr>";
                     }
                 }
-                else if(nowTemplate=="2"){
+                else if(nowTemplate_jsp=="2"){
                     for (var i=0;i<structureList.length;i++){
-                        content+=" <tr><th >"+structureList[i].roleName+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(2,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(2,this)'>预览</button></th></tr>";
+                        content+=" <tr><th >"+structureList[i].roleName+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(2,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(2,this,"+i+")'>预览</button></th></tr>";
                     }
                 }
-                else if(nowTemplate=="3"){
+                else if(nowTemplate_jsp=="3"){
                     for (var i=0;i<structureList.length;i++){
-                        content+=" <tr><th >"+structureList[i].funName+"</th><th > <button class='btn btn-info   btn-xs' onclick='useStructure(3,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(3,this)'>预览</button></th></tr>";
+                        content+=" <tr><th >"+structureList[i].funName+"</th><th > <button class='btn btn-info   btn-xs' onclick='useStructure(3,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(3,this,"+i+")'>预览</button></th></tr>";
                     }
                 }
                 content+="</tbody>";
                 $(".structTable2").append(content);
+
             },
             error: function (result) {
                 showtoast("dangerous", "保存失败", "内容保存失败")
             }
         })
-
     });
 
     function useStructure(id_template,obj,index) {
@@ -594,7 +610,7 @@
             else if(id_template=="2"){
             loadTemplateTwo(structureList[id])
             }
-                else  if(id_template=="3"){
+            else  if(id_template=="3"){
                 var end=$(".funTable tbody").children(".end");
                 $(".funTable tbody").html(end)
                 $(".funTable tfoot").html("");
@@ -603,6 +619,66 @@
             })
 
     }
+
+    function seeStructure(id_template,obj,index){
+        var id=parseInt(index)
+        if(id_template=="1"){
+            swal({title:"通用模板"+(id+1),text:structureList[id].content})
+        }else if(id_template=="2"){
+            swal(
+                {
+                    title:"构件名:"+structureList[id].roleName,
+                    text:"用户描述<div>"+structureList[id].describe+"</div>"
+                    +"用户权限<div>"+structureList[id].permissions+"</div>",
+                    html:true
+                })
+        }else  if(id_template=="3"){
+             var priority;
+            if(structureList[id].priority==1){
+                priority = "高"
+            }else if(structureList[id].priority==2){
+                priority = "中"
+            }else if(structureList[id].priority==3){
+                priority = "低"
+            }
+            var funRoleList ="";
+            var tmp1 = structureList[id].funRoleList.length;
+            for(var num = 0;num < tmp1; num++){
+                funRoleList+="<div>角色："+structureList[id].funRoleList[num].roleName+"</div>"
+                +"<div>描述："+structureList[id].funRoleList[num].roleDescribe+"</div>"
+                if(structureList[id].funRoleList[num].usableName!=null){
+                    funRoleList+="<div>"+structureList[id].funRoleList[num].usableName+"</div>"
+                    +"<div>"+structureList[id].funRoleList[num].usablePara+"</div>"
+                }
+            }
+            var funUsableList ="";
+            var tmp2 = structureList[id].funUsableList.length;
+            for(var num = 0;num < tmp2; num++){
+                funUsableList+="<div>"+structureList[id].funUsableList[num].usableName+"</div>"
+                    +"<div>"+structureList[id].funUsableList[num].usablePara+"</div>"
+            }
+            swal(
+                {
+                    title:"构件名:"+structureList[id].funName,
+                    text:"<div><b>优先级:</b>"+priority+"</div>"
+                    +"<div><b>功能点描述:</b>"+structureList[id].describe+"</div>"
+                    +"<div><b>用例过程:</b>"+funRoleList
+                    // +"<div>角色："+structureList[id].funRoleList[0].roleName+"</div>"
+                    // +"<div>描述："+structureList[id].funRoleList[0].roleDescribe+"</div>"
+                    // +"<div>局部可用性："+structureList[id].funRoleList[0].usableName+"</div>"
+                    // +"<div>发生条件："+structureList[id].funRoleList[0].usablePara+"</div>"
+                    +"<div><b>可用性:</b>"+funUsableList
+                    // +"<div>全局可用性："+structureList[id].funUsableList[0].usableName+"</div>"
+                    // +"<div>发生条件："+structureList[id].funUsableList[0].usablePara+"</div>"
+                    +"<div><b>输入:</b>"+structureList[id].input+"</div>"
+                    +"<div><b>输出:</b>"+structureList[id].output+"</div>"
+                    +"<div><b>基本操作流程:</b>"+structureList[id].basic+"</div>"
+                    +"<div><b>备选操作流程:</b>"+structureList[id].alternative+"</div>",
+                    html:true
+                })
+        }
+    }
+
 
     function lib_save() {
         var id_lib = $("select#libraryOneList").val();
@@ -630,7 +706,6 @@
                 var id_template = nowCatalog.id_template;
                 if (id_template == "1") {//通用
                     var describe=$("#describe").summernote('code');
-                    alert(describe);
                     $.ajax({
                         url: "catalog-saveLibOne",
                         data: {id_lib: id_lib, content: describe},
@@ -638,7 +713,8 @@
                         type: "Post",
                         async: "false",
                         success: function (result) {
-                            showtoast("success", "封装成功", "构件已生成")
+                            swal("构件封装成功!", "可在对应构件库引用该构件", "success");
+                            $('button#cancel-button').click();
                         },
                         error: function (result) {
                             showtoast("dangerous", "封装失败", "构件封装失败")
@@ -656,7 +732,8 @@
                         type: "Post",
                         async: "false",
                         success: function (result) {
-                            showtoast("success", "封装成功", "构件已生成")
+                            swal("构件封装成功!", "可在对应构件库引用该构件", "success");
+                            $('button#cancel-button').click();
                         },
                         error: function (result) {
                             showtoast("dangerous", "封装失败", "构件封装失败")
@@ -715,7 +792,8 @@
                         type: "Post",
                         async: "false",
                         success: function (result) {
-                            showtoast("success", "封装成功", "构件已生成")
+                            swal("构件封装成功!", "可在对应构件库引用该构件", "success");
+                            $('button#cancel-button').click();
                         },
                         error: function (result) {
                             showtoast("dangerous", "封装失败", "构件封装失败")
