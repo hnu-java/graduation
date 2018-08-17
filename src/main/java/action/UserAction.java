@@ -67,10 +67,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
             session.put("Mpoint2",Mpoint2);
             session.put("Mpoint3",Mpoint3);
             session.put("Mpoint5",Mpoint5);
-//            String msgNum = Integer.toString(userDao.msgNum(user.getId_user()));
-//            session.put("msgNum",msgNum);
-//            Cookie cookie = new Cookie("msgNum",msgNum);
-//            System.out.println(cookie.getValue());
+
         }
         return "RES";
     }
