@@ -7,7 +7,7 @@ import java.util.List;
 public class StructureDaoImp extends DAO<StructureEntity> implements StructureDao{
     public List<StructureEntity> getAll(int id_library,int num1,int num2)
     {
-        String sql="select CONTENT from STRUCTURE where ID_LIBRARY=? limit ?,?";
+        String sql="select * from STRUCTURE where ID_LIBRARY=? limit ?,?";
         List<StructureEntity> structure1=getForList(sql,id_library,num1,num2);
         return structure1;
     }

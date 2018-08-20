@@ -154,9 +154,9 @@
                                     </p>
                                 </div>
                                 </div>
-                                <input id="idLibrary" style="display:none" type="text" value="<s:property value="id_library"/>">
+                                <input id="idLibrary" style="display:none" type="text" myvalue="<s:property value="id_library"/>">
                                 <div style="float: right;z-index:99999999;margin: -14px -19px 0px 0px">
-                                    <button id="delete" type="submit" class="btn btn-alert">删除</button>
+                                    <button id="delete" type="submit" class="btn btn-alert" myvalue="<s:property value="id_library"/>">删除</button>
                                 </div>
                                 <%--<div style="float: right;z-index:99999999;margin: -14px -19px 0px 0px">--%>
                                     <%--<s:if test="#request.id_user==#session.user.id_user">--%>
@@ -245,7 +245,7 @@
 <script>
     
     $("button#delete").click(function () {
-        var view = document.getElementById('idLibrary').value;
+        var view = $(this).attr("myvalue");
         var id_library = view
         alert(id_library);
         swal(
