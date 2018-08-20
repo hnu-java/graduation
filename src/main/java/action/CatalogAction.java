@@ -255,6 +255,7 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         CatalogDao catalogDao=new CatalogDaoImp();
         UserStructureEntity structureEntity=new UserStructureEntity(content,describe,permissions);
         Gson gson = new Gson();
+        System.out.println(gson.toJson(structureEntity));
         catalogDao.saveLib(id_lib,gson.toJson(structureEntity));
         return "Re";
     }
