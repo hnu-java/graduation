@@ -106,7 +106,6 @@ public class StructureAction extends ActionSupport implements RequestAware, Sess
             }
             for(int i=0;i<structureAll.size();i++)
             {   CommonStructureIdEntity csie = gson.fromJson((structureAll.get(i).getContent()).substring(0, structureAll.get(i).getContent().length() - 1) + ",id_structure:" + String.valueOf(structureAll.get(i).getId_structure()) + "}", CommonStructureIdEntity.class);
-                System.out.println(csie);
                 csieList.add(csie);
             }
             ActionContext.getContext().getValueStack().set("list1",csList);
@@ -134,13 +133,18 @@ public class StructureAction extends ActionSupport implements RequestAware, Sess
             request.put("id_structure", structure.getId_structure());
             request.put("id_template",id_template);
             List usList=new LinkedList<>();
+            List usieList = new LinkedList<>();
             for(int i=0;i<structureAll.size();i++)
             {   UserStructureEntity us = gson.fromJson(structureAll.get(i).getContent(), UserStructureEntity.class);
                 usList.add(us);
             }
-            System.out.println(usList);
+            for(int i=0;i<structureAll.size();i++)
+            {   UserStructureIdEntity usie = gson.fromJson((structureAll.get(i).getContent()).substring(0, structureAll.get(i).getContent().length() - 1) + ",id_structure:" + String.valueOf(structureAll.get(i).getId_structure()) + "}", UserStructureIdEntity.class);
+                System.out.println(usie);
+                usieList.add(usie);
+            }
             System.out.println(structureAll);
-            ActionContext.getContext().getValueStack().set("list2",usList);
+            ActionContext.getContext().getValueStack().set("list2",usieList);
         }
         else if(id_template==3) {
             structureAll=structureDao.getAll(structure.getId_library(),(page-1)*2,(page-1)*0+2);
