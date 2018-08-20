@@ -50,6 +50,9 @@
             <div class="form-group">
             <input id="registration_email" type="button" class="btn btn-w-m btn-default" style="color:#333333;margin-left:-30px;margin-top:4px;height: 30px;width: 15px;font-size:12px"  onclick="sendCode(this)" value="获取邮箱验证码"/>
         </div>
+            <div class="form-group">
+                <input id="agree" type="checkbox" class=""/>阅读并接受<a href="/RegistrationAgreement.html" target="_blank">《用户协议》</a>
+            </div>
             <h6>&nbsp;</h6>
             <div style="width: 300px" class="form-group col-sm-8  col-md-offset-2 loginLine">
                 <button id="registration_button" class="btn btn-w-m btn-Bblack btn-sm">注 册</button>
@@ -112,6 +115,9 @@
                     required: true,
                     minlength: 6,
                     maxlength:6
+                },agree: {
+                    required: true,
+                    agree: true
                 }
             },messages: {
                 name: {
@@ -132,7 +138,11 @@
                     minlength: "验证码为6位",
                     maxlength: "验证码为6位"
                 },
-                email: "请输入一个正确的邮箱"
+                email:"请输入一个正确的邮箱",
+                agree:{
+                    require:"请勾选“阅读并接受用户协议”"
+                }
+
             }
         });
     });
