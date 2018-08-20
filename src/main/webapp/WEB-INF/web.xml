@@ -18,4 +18,8 @@
 
     </filter-mapping>
 
+    <listener>
+        <listener-class>listener.OnlineUserListener</listener-class>
+    </listener>
+
 </web-app>

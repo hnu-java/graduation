@@ -45,7 +45,6 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     private Map<String, Object> dataMap;
     private String verification;
 
-
     public String login() throws ParseException {
         dataMap = new HashMap<String, Object>();
         userDao = new UserDaoImp();
