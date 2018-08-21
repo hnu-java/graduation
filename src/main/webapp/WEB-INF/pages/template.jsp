@@ -356,7 +356,7 @@
                         <%--<label style="padding-left: 15px">选择构建类型</label>--%>
                         <%--<select class="form-control" name="structType" id="structType">--%>
                             <%--<option  selected disabled>请选择构建库类型</option>--%>
-                            <%--<option value="1">通用模板构件库</option>--%>
+                            <%--<option value="1">图文模板构件库</option>--%>
                             <%--<option value="2">用户模板构件库</option>--%>
                             <%--<option value="3">用例模板构件库</option>--%>
                         <%--</select>--%>
@@ -404,7 +404,7 @@
                             <%--<label style="padding-left: 15px">选择构建类型</label>--%>
                             <%--<select class="form-control" name="structUserType" id="structUserType">--%>
                                 <%--<option  selected disabled>请选择构建库类型</option>--%>
-                                <%--<option value="1">通用模板构件库</option>--%>
+                                <%--<option value="1">图文模板构件库</option>--%>
                                 <%--<option value="2">用户模板构件库</option>--%>
                                 <%--<option value="3">用例模板构件库</option>--%>
                             <%--</select>--%>
@@ -566,7 +566,7 @@
                 var content="<tbody class='addTbodyUser'>";
                 if(nowTemplate_jsp=="1"){
                     for (var i=0;i<structureList.length;i++){
-                        content+=" <tr><th >通用模板"+(i+1)+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(1,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(1,this,"+i+")'>预览</button></th></tr>";
+                        content+=" <tr><th >图文模板"+(i+1)+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(1,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(1,this,"+i+")'>预览</button></th></tr>";
                     }
                 }
                 else if(nowTemplate_jsp=="2"){
@@ -623,7 +623,7 @@
     function seeStructure(id_template,obj,index){
         var id=parseInt(index)
         if(id_template=="1"){
-            swal({title:"通用模板"+(id+1),text:structureList[id].content})
+            swal({title:"图文模板"+(id+1),text:structureList[id].content})
         }else if(id_template=="2"){
             swal(
                 {
@@ -704,7 +704,7 @@
                 // $("div.hidenTh").hide();
 
                 var id_template = nowCatalog.id_template;
-                if (id_template == "1") {//通用
+                if (id_template == "1") {//图文
                     var describe=$("#describe").summernote('code');
                     $.ajax({
                         url: "catalog-saveLibOne",
