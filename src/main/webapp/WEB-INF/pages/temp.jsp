@@ -132,6 +132,27 @@
                 location.href = "login-jmpLogin";
             })
     })
+
+    // function offLine() {
+    //     $.ajax({
+    //         url: "login-onLine",
+    //         type: "Post",
+    //         async: false,
+    //         success: function(result) {
+    //             swal(
+    //                 {
+    //                     title: "您已强制下线",
+    //                     text: "请确认账号安全",
+    //                     type: "",
+    //                     confirmButtonColor: "#18a689",
+    //                     confirmButtonText: "确认",
+    //                     closeOnConfirm: false
+    //                 }, function () {
+    //                     location.href = "login-jmpLogin";
+    //                 })
+    //         }
+    //     })
+    // }
 </script>
 <!-- Mirrored from www.zi-han.net/theme/hplus/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:17:11 GMT -->
 </html>

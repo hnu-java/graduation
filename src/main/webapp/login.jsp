@@ -98,8 +98,12 @@
                             if((getCookie("msgNum"+"${sessionScope.user_name}")=="undefined")||(getCookie("msgNum"+"${sessionScope.user_name}")==null)||(getCookie("msgNum"+"${sessionScope.user_name}")=="")){
                                 setCookie("msgNum"+"${sessionScope.user_name}",${sessionScope.msgNum});
                             }
-                                showtoast("success", "登录成功", "操作成功");
-                                location.href = "user-jmpTemp";
+                            alert(${sessionScope.onLine});
+                            if("${sessionScope.onLine}" == true){
+                                swal("warning","您的账户存在重复登录","请确认账户安全");
+                            }
+                            showtoast("success", "登录成功", "操作成功");
+                            location.href = "user-jmpTemp";
                         }
                         else{
                             showtoast("error", "账号已封停", "请联系管理员");

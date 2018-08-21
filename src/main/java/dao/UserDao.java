@@ -9,6 +9,8 @@ import entity.postmailEntity;
 
 public interface UserDao {
 	boolean login(String name,String password);
+	boolean exit(String name);
+	boolean onLine(String name);
 	boolean payment(int id_user,int day);
 	boolean proPayment(int id_user,int day);
 

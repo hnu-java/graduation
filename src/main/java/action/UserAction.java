@@ -48,6 +48,8 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     public String login() throws ParseException {
         dataMap = new HashMap<String, Object>();
         userDao = new UserDaoImp();
+        boolean onLine = userDao.onLine(user.getName());
+        session.put("onLine",onLine);
         boolean res = userDao.login(user.getName(), user.getPassword());
         dataMap.put("res", res);
         if(res==true) {
@@ -66,10 +68,16 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
             session.put("Mpoint2",Mpoint2);
             session.put("Mpoint3",Mpoint3);
             session.put("Mpoint5",Mpoint5);
-
         }
         return "RES";
     }
+
+//    public String onLine(){
+//        userDao = new UserDaoImp();
+//        UserEntity seesionUser=(UserEntity)session.get("user");
+//        boolean res = userDao.onLine(seesionUser.getName());
+//        return  "RES";
+//    }
 
     public String msgNum(){
         dataMap = new HashMap<String, Object>();
@@ -228,11 +236,14 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     }
 
     public String jmpLogin(){
-        session.put("user",null);
         session.put("sysManager",0);
         session.put("orgManager",0);
         session.put("project",null);
         session.put("PM",null);
+        userDao = new UserDaoImp();
+        UserEntity seesionUser=(UserEntity)session.get("user");
+        boolean res = userDao.exit(seesionUser.getName());
+        session.put("user",null);
         return "loginPage";
     }
     public String jmpMyprofile(){
