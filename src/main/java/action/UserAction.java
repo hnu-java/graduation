@@ -48,10 +48,11 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     public String login() throws ParseException {
         dataMap = new HashMap<String, Object>();
         userDao = new UserDaoImp();
-        boolean onLine = userDao.onLine(user.getName());
-        session.put("onLine",onLine);
         boolean res = userDao.login(user.getName(), user.getPassword());
         dataMap.put("res", res);
+        boolean onLine = userDao.onLine(user.getName());
+        System.out.println(onLine);
+        session.put("onLine",onLine);
         if(res==true) {
             user = userDao.getOne(user.getName());
             dataMap.put("flag",user.getFlag());
@@ -274,7 +275,10 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     }
 
 
-    public String jmpTemp() {
+    public String jmpTemp() { return "tempPage"; }
+    public String jmpTemp2() {
+        boolean onLine = false;
+        session.put("onLine",onLine);
         return "tempPage";
     }
     public String jmpSysManager1(){
