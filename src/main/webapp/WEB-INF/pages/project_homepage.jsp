@@ -76,7 +76,7 @@
         </div>
         <div class="col-md-2 ">
             <a href="library-get"><img src="<%=basePath %>/img/Home3.jpg" height="160px"></a><br/>
-            <span style="color:#365063 ">共享知识</span><br/>
+            <span style="color:#365063 ">文档构件</span><br/>
             <span style="color:black">收藏了</span>
             <a href="library-Mycollect"><span style="color: #ff0000" class="lzf_a">${sessionScope.Mycollectcount}</span></a>
             <span style="color:black">个构件库</span>

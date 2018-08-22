@@ -1051,7 +1051,7 @@ $("#libraryList").change(function () {
             var content="<tbody class='addTbody'>";
           if(nowTemplate=="1"){
               for (var i=0;i<structureList.length;i++){
-                  content+=" <tr><th >通用模板"+(i+1)+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(1,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(1,this,"+i+")'>预览</button></th></tr>";
+                  content+=" <tr><th >图文模板"+(i+1)+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(1,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(1,this,"+i+")'>预览</button></th></tr>";
               }
           }
            else if(nowTemplate=="2"){
@@ -1096,7 +1096,7 @@ function useStructure(id_template,obj,index) {
 function seeStructure(id_template,obj,index){
     var id=parseInt(index)
     if(id_template=="1"){
-        swal({title:"通用模板"+(id+1),text:structureList[id].content})
+        swal({title:"图文模板"+(id+1),text:structureList[id].content})
     }else if(id_template=="2"){
         swal(
             {
@@ -1130,7 +1130,7 @@ function seeStructure(id_template,obj,index){
     }
 }
 
-//文本框初始化
+//图文框初始化
 $('#fileupload').fileinput(
     {
         language: 'zh',

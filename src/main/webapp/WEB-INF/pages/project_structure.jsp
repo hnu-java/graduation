@@ -148,14 +148,17 @@
             </div>
             <s:if test="#request.id_template==1">
             <div id="mid" style="clear: both;height:450px;width:1200px;margin-left:200px;padding: 20px 75px 20px 75px;overflow: hidden">
-                <s:iterator value="list1">
+                <s:iterator value="list2">
                 <div  style="background-color: white;height: 115px;width:300px;float:left;margin: 0px 37.5px 30px 0px;padding: 5px" class="col-md-4 contact-box">
                     <div style="height:100px;margin: 10px 0px 0px 10px;overflow: hidden">
-                        <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';color: black;font-weight:700;">内容：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:500;overflow: hidden"><s:property value="content"/></span>
+                        <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';color: black;font-weight:700;" >内容：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:500;overflow: hidden" id="commonContent"><s:property value="content"/></span>
+                        <span style="display:none;font-family:'Arial Negreta', 'Arial Normal', 'Arial';color: black;font-weight:700;" id="idStructure"><s:property value="id_structure"/></span>
                     </div>
-                    <div style="float: right;z-index:99999999;margin: -40px 10px 0px 0px">
-                        <button id="deleteCommon" type="submit" class="btn btn-alert">删除</button>
-                    </div>
+                    <s:if test="#request.library.id_user == #session.user.id_user">
+                        <div style="float: right;z-index:99999999;margin: -40px 10px 0px 0px">
+                            <button id="deleteCommon" type="submit" class="btn btn-alert" myvalue="<s:property value="id_structure"/>">删除</button>
+                        </div>
+                    </s:if>
                 </div>
                 </s:iterator>
             </div>
@@ -180,7 +183,8 @@
                     </div>
                     <s:if test="#request.library.id_user == #session.user.id_user">
                     <div style="float: right;z-index:99999999;margin: 90px 10px 0px 0px">
-                        <button id="deleteUser" type="submit" class="btn btn-alert">删除</button>
+                        <span style="display:none;font-family:'Arial Negreta', 'Arial Normal', 'Arial';color: black;font-weight:700;" id="idUserStructure"><s:property value="id_structure"/></span>
+                        <button id="deleteUser" type="submit" class="btn btn-alert" myvalue="<s:property value="id_structure"/>">删除</button>
                     </div>
                     </s:if>
                 </div>
@@ -227,6 +231,11 @@
                     <div style="margin: 5px 0px 20px 10px;overflow: hidden">
                         <span style="color: black;font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;">备选操作流程 ：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:400;"><s:property escapeHtml="false" value="alternative"/></span>
                     </div>
+                    <s:if test="#request.library.id_user == #session.user.id_user">
+                        <div style="float: right;z-index:99999999;margin: 90px 10px 0px 0px">
+                            <button id="deleteUseCase" type="submit" class="btn btn-alert">删除</button>
+                        </div>
+                    </s:if>
                 </div>
                 </s:iterator>
             </div>
@@ -417,6 +426,97 @@
     }
 </script>
 <script>
+    $("button#deleteCommon").click(function() {
+        //var id_structure = document.getElementById("idStructure").innerHTML;
+        var id_structure = $(this).attr("myvalue");
+        alert(id_structure);
+        swal(
+            {
+                title: "您确认删除该构件吗？",
+                text: "确认请点击确定",
+                type: "",
+                showCancelButton: true,
+                confirmButtonColor: "#18a689",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            }, function () {
+                $.ajax({
+                    url: "commonStructureId-delete",
+                    data: {
+                        id_structure:id_structure
+                    },
+                    dataType: "json",
+                    type: "Post",
+                    async: "false",
+                    success: function (result) {
+                        if (result.res){
+                            swal({
+                                title: "删除成功",
+                                type:"success",
+                                confirmButtonColor: "#18a689",
+                                confirmButtonText: "OK"
+                            },function(){
+                                location.href="structure-get?pagedis="+1+'&id_template=' + $("input.id_template").val()+'&id_library='+$("input.id_library").val()+'&page='+${requestScope.page};
+                            })
+                        }
+                        else {
+                            swal("删除失败", "服务器异常", "error");
+                        }
+                    },
+                    error: function () {
+                        swal({
+                            icon: "error"
+                        });
+                    }
+                })
+            })
+    })
+    $("button#deleteUser").click(function () {
+        var id_structure = $(this).attr("myvalue");
+        alert(id_structure);
+        swal(
+            {
+                title: "您确认删除该构件吗？",
+                text: "确认请点击确定",
+                type: "",
+                showCancelButton: true,
+                confirmButtonColor: "#18a689",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            }, function () {
+                $.ajax({
+                    url: "userStructureId-delete",
+                    data: {
+                        id_structure:id_structure
+                    },
+                    dataType: "json",
+                    type: "Post",
+                    async: "false",
+                    success: function (result) {
+                        if (result.res){
+                            swal({
+                                title: "删除成功",
+                                type:"success",
+                                confirmButtonColor: "#18a689",
+                                confirmButtonText: "OK"
+                            },function(){
+                                location.href="structure-get?pagedis="+1+'&id_template=' + $("input.id_template").val()+'&id_library='+$("input.id_library").val()+'&page='+${requestScope.page};
+                            })
+                        }
+                        else {
+                            swal("删除失败", "服务器异常", "error");
+                        }
+                    },
+                    error: function () {
+                        swal({
+                            icon: "error"
+                        });
+                    }
+                })
+            })
+    })
     $("button#newCommon-button").click(function () {
         var content = $("textarea#content").val();
         var id_library = ${requestScope.library.id_library};
