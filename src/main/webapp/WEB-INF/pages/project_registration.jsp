@@ -56,7 +56,7 @@
             <h6>&nbsp;</h6>
             <div style="width: 300px" class="form-group col-sm-8  col-md-offset-2 loginLine">
                 <button id="registration_button" class="btn btn-w-m btn-Bblack btn-sm">注 册</button>
-                <a href="login-jmpLogin"><small>已有账号？点我登录</small></a>
+                <a href="login-outerJmpLogin"><small>已有账号？点我登录</small></a>
             </div>
         </form>
     </div>

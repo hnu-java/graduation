@@ -249,6 +249,10 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         session.put("user",null);
         return "loginPage";
     }
+
+    public String outerJmpLogin(){
+        return "loginPage";
+    }
     public String jmpMyprofile(){
         return "myprofilePage";
     }

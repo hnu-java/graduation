@@ -54,7 +54,7 @@
             </select>
         </div>
         <div class="form-group">
-            <button id="login_button" class="btn btn-w-m btn-Bblack btn-sm" onclick="verification()">兑换</button><a href="login-jmpLogin">返回登录</a>
+            <button id="login_button" class="btn btn-w-m btn-Bblack btn-sm" onclick="verification()">兑换</button><a href="login-outerJmpLogin">返回登录</a>
         </div>
     </div>
 </div>
