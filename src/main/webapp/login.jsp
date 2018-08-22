@@ -98,8 +98,8 @@
                             if((getCookie("msgNum"+"${sessionScope.user_name}")=="undefined")||(getCookie("msgNum"+"${sessionScope.user_name}")==null)||(getCookie("msgNum"+"${sessionScope.user_name}")=="")){
                                 setCookie("msgNum"+"${sessionScope.user_name}",${sessionScope.msgNum});
                             }
-                                showtoast("success", "登录成功", "操作成功");
-                                location.href = "user-jmpTemp";
+                            showtoast("success", "登录成功", "操作成功");
+                            location.href = "user-jmpTemp";
                         }
                         else{
                             showtoast("error", "账号已封停", "请联系管理员");

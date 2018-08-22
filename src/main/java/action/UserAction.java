@@ -21,10 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by DELL on 2017/11/28.
@@ -45,10 +42,12 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     private Map<String, Object> dataMap;
     private String verification;
 
-
     public String login() throws ParseException {
         dataMap = new HashMap<String, Object>();
         userDao = new UserDaoImp();
+        boolean onLine = userDao.onLine(user.getName());
+        session.put("onLine",onLine);
+        System.out.println(onLine);
         boolean res = userDao.login(user.getName(), user.getPassword());
         dataMap.put("res", res);
         if(res==true) {
@@ -68,13 +67,22 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
             session.put("Mpoint2",Mpoint2);
             session.put("Mpoint3",Mpoint3);
             session.put("Mpoint5",Mpoint5);
-//            String msgNum = Integer.toString(userDao.msgNum(user.getId_user()));
-//            session.put("msgNum",msgNum);
-//            Cookie cookie = new Cookie("msgNum",msgNum);
-//            System.out.println(cookie.getValue());
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                public void run() {
+                    userDao.exit(user.getName());
+                }
+            }, 2*60*60*1000);// 设定指定的时间time,此处单位为毫秒
         }
         return "RES";
     }
+
+//    public String onLine(){
+//        userDao = new UserDaoImp();
+//        UserEntity seesionUser=(UserEntity)session.get("user");
+//        boolean res = userDao.onLine(seesionUser.getName());
+//        return  "RES";
+//    }
 
     public String msgNum(){
         dataMap = new HashMap<String, Object>();
@@ -96,7 +104,6 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
             user = userDao.getOne(user.getName());
             boolean res1 = userDao.payment(user.getId_user(),day);
             System.out.println(user.getId_user()+" "+day);
-            System.out.println(res1);
             dataMap.put("res1", res1);
         }
         return "RES";
@@ -152,7 +159,6 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         else{
             String res="error";
             dataMap.put("consequence",res);
-            System.out.println(res);
         }
         return SUCCESS;
     }
@@ -233,11 +239,14 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     }
 
     public String jmpLogin(){
-        session.put("user",null);
         session.put("sysManager",0);
         session.put("orgManager",0);
         session.put("project",null);
         session.put("PM",null);
+        userDao = new UserDaoImp();
+        UserEntity seesionUser=(UserEntity)session.get("user");
+        boolean res = userDao.exit(seesionUser.getName());
+        session.put("user",null);
         return "loginPage";
     }
     public String jmpMyprofile(){
@@ -269,7 +278,10 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     }
 
 
-    public String jmpTemp() {
+    public String jmpTemp() { return "tempPage"; }
+    public String jmpTemp2() {
+        boolean onLine = false;
+        session.put("onLine",onLine);
         return "tempPage";
     }
     public String jmpSysManager1(){

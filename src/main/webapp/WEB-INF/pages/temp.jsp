@@ -27,7 +27,7 @@
     <link href="<%=basePath%>/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 </head>
 
-<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
+<body onload="warn()" class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
 <div id="wrapper">
 
     <!--右侧部分开始-->
@@ -132,6 +132,41 @@
                 location.href = "login-jmpLogin";
             })
     })
+
+    function warn() {
+        if("${sessionScope.onLine}" === "true"){
+            swal({
+                title: "您的账户存在重复登录",
+                text: "请确认账户安全",
+                type: "warning",
+                confirmButtonColor: "#18a689",
+                confirmButtonText: "OK"
+            }, function () {
+                location.href = "user-jmpTemp2"
+            })
+        }
+    }
+
+    // function offLine() {
+    //     $.ajax({
+    //         url: "login-onLine",
+    //         type: "Post",
+    //         async: false,
+    //         success: function(result) {
+    //             swal(
+    //                 {
+    //                     title: "您已强制下线",
+    //                     text: "请确认账号安全",
+    //                     type: "",
+    //                     confirmButtonColor: "#18a689",
+    //                     confirmButtonText: "确认",
+    //                     closeOnConfirm: false
+    //                 }, function () {
+    //                     location.href = "login-jmpLogin";
+    //                 })
+    //         }
+    //     })
+    // }
 </script>
 <!-- Mirrored from www.zi-han.net/theme/hplus/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:17:11 GMT -->
 </html>

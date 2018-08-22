@@ -23,8 +23,27 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
     public boolean login(String name,String password)
     {
         String sql="SELECT COUNT(*) from USER WHERE NAME=? and PASSWORD=?";
+        String sql1="update user set ID_SESSION = 1 where NAME = ?";
         int count=Integer.valueOf(getForValue(sql,name,password).toString());
         if(count==1) {
+            update(sql1,name);
+            return true;
+        }
+        else return false;
+    }
+
+    public boolean exit(String name)
+    {
+        String sql1="update user set ID_SESSION = 0 where NAME = ?";
+        update(sql1,name);
+        return true;
+    }
+
+    public boolean onLine(String name)
+    {
+        String sql1="SELECT COUNT(*) from USER where NAME = ? and ID_SESSION = 1";
+        int count=Integer.valueOf(getForValue(sql1,name).toString());
+        if(count==1){
             return true;
         }
         else return false;
