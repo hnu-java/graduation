@@ -55,7 +55,7 @@
                 <h6>&nbsp;</h6>
                 <div style="width: 300px" class="form-group col-sm-8  col-md-offset-2 loginLine">
                     <button id="replacepassword_button" class="btn btn-w-m btn-Bblack btn-sm">修改密码</button>
-                    <a href="login-jmpLogin"><small>取消修改，点我登录</small></a>
+                    <a href="login-outerJmpLogin"><small>取消修改，点我登录</small></a>
                 </div>
             </form>
         </div>

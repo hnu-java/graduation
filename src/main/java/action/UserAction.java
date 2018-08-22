@@ -52,10 +52,11 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         dataMap.put("res", res);
         if(res==true) {
             user = userDao.getOne(user.getName());
+            session.put("user",user);
+            System.out.println(user);
             dataMap.put("flag",user.getFlag());
 //            dataMap.put("days",user.getDays());
             int orgManager=userDao.orgManager(user.getId_user());
-            session.put("user",user);
             session.put("user_name",user.getName());
             session.put("orgManager",orgManager);
             int Mpoint1=userDao.Mpoint(1);
@@ -248,6 +249,10 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         session.put("user",null);
         return "loginPage";
     }
+
+    public String outerJmpLogin(){
+        return "loginPage";
+    }
     public String jmpMyprofile(){
         return "myprofilePage";
     }
@@ -262,6 +267,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     public String jmpReplacepassword(){
         return "replacepasswordPage";
     }
+
     public String jmpHomepage() {
         userDao = new UserDaoImp();
         user = (UserEntity)session.get("user");
