@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
             //取出名为user的session属性
             UserEntity user= (UserEntity) session.getAttribute("user");
             String method =  invocation.getProxy().getMethod();
-            if(user!=null){
+            if(user != null ){
                 if(Objects.equals(method, "jmpOrgManager1")|| Objects.equals(method, "jmpOrgManager2")){
                     int orgManager=(int)session.getAttribute("orgManager");
                     if(orgManager!=0)

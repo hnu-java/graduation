@@ -918,7 +918,7 @@ function addFunlLine() {
         "<select class='form-control roleName dis' name='' name='roleName'  > " +
         optionCon +
         "</select> " +
-        "</th> <th> <textarea   class='form-control roleDescribe dis'   style='max-width: 100%' name='roleDescribe'    ></textarea> </th> <th> <button  class='btn btn-primary  btn-xs col-lg-push-1'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px'>新增局部可用性</button> </th> </tr>"
+        "</th> <th> <textarea   class='form-control roleDescribe dis'   style='max-width: 100%' name='roleDescribe'    ></textarea> </th> <th> <button  class='btn btn-primary  btn-xs col-lg-push-1'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px'>可</button> </th> </tr>"
     $(".funTable").children("tbody").children("tr:last-child").before(content);
 }
 

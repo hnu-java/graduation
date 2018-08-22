@@ -370,7 +370,15 @@ h1, h2, h3, h4, h5, h6 {
   text-decoration: none !important;
 }
 
-#fh5co-services, #fh5co-testimony, #fh5co-explore, #fh5co-faq, #fh5co-team, #fh5co-trusted, #fh5co-footer {
+#fh5co-explore {
+  padding:5em 0 0 0;
+}
+
+#fh5co-footer {
+  padding:5em 0 1em 0;
+}
+
+#fh5co-services, #fh5co-testimony, #fh5co-faq, #fh5co-team, #fh5co-trusted {
   padding: 5em 0;
 }
 @media screen and (max-width: 768px) {

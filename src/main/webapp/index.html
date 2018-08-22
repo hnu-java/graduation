@@ -7,7 +7,6 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>EasySRS — 需求技术分享</title>
-	<meta name="viewport" content="width=device-width*80%, initial-scale=1">
 	<meta name="description" content="EasySRS" />
 	<meta name="keywords" content="EasySRS" />
 	<meta name="author" content="EasySRS" />
@@ -44,9 +43,6 @@
 		<div class="fluid-container">
 			<nav class="navbar navbar-default">
 				<div class="navbar-header">
-					<!-- Mobile Toggle Menu Button -->
-					<!-- <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
-					<a class="navbar-brand" href="index.html"><span>U</span>nion</a>  -->
 					<div style="padding:2% 0">
 						<a href="index.html"><img src="img/logo.png" alt="EasySRS" height="10%" width="39%"></a>
 					</div>
@@ -56,9 +52,9 @@
 						<li class="active"><a href="#" data-nav-section="home"><span>首页</span></a></li>
 						<li><a href="#" data-nav-section="explore"><span>产品展示</span></a></li>
 						<li><a href="#" data-nav-section="role"><span>用户角色</span></a></li>
-						<li><a href="#" data-nav-section="trusted"><span>合作伙伴</span></a></li>
+						<!-- <li><a href="#" data-nav-section="trusted"><span>合作伙伴</span></a></li> -->
 						<li><a href="#" data-nav-section="faq"><span>常见问题</span></a></li>
-						<li class="call-to-action"><a href="login.jsp" onclick="login()"><span>点击使用</span></a></li>
+						<li class="call-to-action"><a href="javascript:void(0);" onclick="login()"><span>点击使用</span></a></li>
 					</ul>
 				</div>
 			</nav>
@@ -76,7 +72,7 @@
 							<h2 class="to-animate">致力于高效率和高质量地实现软件需求开发<br></a></h2>
 							<h2 class="to-animate"><a href="http://www.easysrs.com" target="_blank">EasySRS</a></h2>
 							<div class="call-to-action">
-								<a href="login.jsp" class="download to-animate"><big>注册 / 登录</big></a>
+								<a href="javascript:void(0);" class="download to-animate" onclick="login()"><big>注册 / 登录</big></a>
 							</div>
 						</div>
 					</div>
@@ -92,9 +88,9 @@
 					<h2 class="to-animate">产品展示</h2>
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2 subtext to-animate">
-							<h3>定义产品范围与远景，作为用户和软件开发人员之间理解和交流的基础<br>
+							<h3>定义产品远景与范围，作为用户和软件开发人员之间理解和交流的基础<br>
 								定义功能需求，规范设计系统用例，作为开发人员和用户进行开发、测试和验收的依据<br>
-								定义非功能需求，规范设计系统可用性，作为产品经理和开发人员进行软件设计和编码的基础
+								定义非功能需求，强化系统可用性和安全性，作为产品经理和开发人员进行软件设计和编码的基础
 							</h3>
 						</div>
 					</div>
@@ -130,7 +126,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-8 col-md-pull-1 to-animate-3">
-						<img class="img-responsive" src="img/showpage1.png" alt="work">
+						<img class="img-responsive" src="img/showpage3.png" alt="work">
 					</div>
 					<div class="col-md-4 to-animate-3">
 						<div class="mt">
@@ -152,21 +148,23 @@
 			</div>
 		</div>
 	</section>
+
 	<section id="fh5co-testimony" data-section="role">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-12 to-animate">
-					<div class="wrap-testimony">
+				<div class="col-md-12 section-heading text-center">						
+					<h2 class="to-animate">用户角色<br><br></h2>
+					<div class="wrap-testimony to-animate">
 						<div id="owlplay" class="owl-carousel-fullwidth">
 							<div class="item">
 								<div class="testimony-slide active text-center">
 									<figure>
 										<img src="img/administrator.png" alt="机构管理员">
-									</figure>
-										
+									</figure>												
 									<blockquote>
 										<p>机构管理员<br>
-											注册机构，邀请成员加入机构，管理机构所属项目，转让机构管理权。</p>
+											注册机构，邀请成员加入机构，管理机构所属项目。
+										</p>
 									</blockquote>
 								</div>
 							</div>
@@ -177,7 +175,8 @@
 									</figure>
 									<blockquote>
 										<p>项目管理员<br>
-											创建项目项目，邀请成员加入项目组，编辑和管理项目，转让项目管理权。</p>
+										创建项目项目，邀请成员加入项目组，编辑和管理项目。
+										</p>
 									</blockquote>
 								</div>
 							</div>
@@ -188,7 +187,8 @@
 									</figure>
 									<blockquote>
 										<p>项目成员<br>
-											申请或被邀请加入机构或项目，参与项目文档编写、留言交流、文档评议。</p>
+											申请或被邀请加入机构或项目，参与项目文档编写、留言交流、文档评议。
+										</p>
 									</blockquote>
 								</div>
 							</div>
@@ -196,7 +196,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div>	
 	</section>
 
 	<div class="getting-started getting-started-1">
@@ -208,14 +208,14 @@
 				</div>
 				<div class="col-md-6 to-animate-2">
 					<div class="call-to-action text-right">
-						<a href="login.jsp" class="sign-up">免费注册</a>
+						<a href="javascript:void(0);" class="sign-up" onclick="login()">免费注册</a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<section id="fh5co-trusted" data-section="trusted">
+	<!-- <section id="fh5co-trusted" data-section="trusted">
 		<div class="fh5co-trusted">
 			<div class="container">
 				<div class="row">
@@ -239,11 +239,11 @@
 				    		<img src="img/hnu.jpg" alt="湖南大学" class="img-responsive" style="height:50%;width:100%">
 						</div>
 				    </div>
-
+	
 				</div>
 			</div>
 		</div>
-	</section>
+	</section> -->
 
 	<section id="fh5co-faq" data-section="faq" style="background: #f1faff;">
 		<div class="fh5co-faq">
@@ -262,30 +262,30 @@
 					<div class="col-md-6">
 						<div class="box-faq to-animate-2">
 							<h3>什么是EasySRS？</h3>
-							<p>一款致力于简化和规范软件需求规格说明书编写的产品，并将其纳入软件项目管理范畴，使文档编写更加高效便捷。</p>
+							<p>EasySRS的中文名为“快易需求”，是一款致力于快捷和规范编写软件需求规格说明书（SRS）的工具，可为软件需求开发、验证和管理提供有力支撑。</p>
 						</div>
 						<div class="box-faq to-animate-2">
-							<h3>如果遇到技术上的问题，应该如何联系产品开发团队？ </h3>
+							<h3>使用时遇到问题怎么办？</h3>
 							<p>页面底部有我们的联系方式和通信地址，欢迎客户提出建议和意见。</p>
 						</div>
 						<div class="box-faq to-animate-2">
 							<h3>如何使用这款产品？</h3>
-							<p>点击页面右上角“开始使用”，开始项目需求文档的规范化编写和管理之旅吧！</p>
+							<p>点击页面右上角“开始使用”，注册、登录后即可开始项目需求文档的编写之旅了！</p>
 						</div>
 					</div>
 
 					<div class="col-md-6">
 						<div class="box-faq to-animate-2">
-							<h3>产品支持的语言？</h3>
-							<p>目前支持中文和英文哦，后续语言有待开发。</p>
+							<h3>如何注册用户名？</h3>
+							<p>进入用户注册页面，首先自定义一个用户名，系统自动进行同名检测，系统确认用户名有效后，用户需要提供一个常用邮箱进行用户帐号的验证和激活。</p>
 						</div>
 						<div class="box-faq to-animate-2">
-							<h3>可以使用已存在的用户名吗？</h3>
-							<p>若该用户名为此用户先前申请的，可通过找回密码重新的登录；若被其他用户占用，建议另外申请一个账号。</p>
+							<h3>系统使用是免费的吗？</h3>
+							<p>目前完全免费开放使用。项目创建人在创建项目时需要一定的积分，用户在注册账号时自动获得一定积分赠送，也可通过其他贡献来获得。</p>
 						</div>
 						<div class="box-faq to-animate-2">
-							<h3>“快易”需求文档编辑系统是免费的吗？</h3>
-							<p>作为项目成员可免费使用本产品，包括免费编写文档和引用构建，作为项目创始人创建项目时需要一定的积分，积分可通过上传构建获得。</p>
+							<h3>产品支持的浏览器？</h3>
+							<p>建议使用Microsoft Internet Explorer，Google Chrome，Mozilla Firefox等最新版本的浏览器，以获得最佳的用户体验。</p>
 						</div>
 					</div>
 				</div>
@@ -298,27 +298,25 @@
 			<div class="row">
 				<div class="col-md-6 to-animate">
 					<h3 class="section-title">关于我们</h3>
-					<p>湖南大学软件与知识工程实验室(SKEG)，专注于软件项目管理和软件工程实践15年，
-						不断积累项目实践经验，追求理论与应用创新，致力于研发软件需求开发与管理的易用工具。
-						本产品的贡献者包括但不限于以下人员：欧阳柳波、姜远川、孟靖尧、廖敏孜、李泽丰、
-						潘勇、周惟渭、丘家玮、林琼琼……
-					</p>
-					<p class="copy-right">&copy; 2017-2018 HNU SKEG<br>
-						<a href="http://www.easysrs.cn" target="_blank">easysrs.cn</a> All Rights Reserved. <br>
-					</p>
+					<p><small>湖南大学软件与知识工程实验室(SKEG)，专注于软件项目管理和软件工程实践15年，不断积累项目实践经验，追求理论与应用创新，致力于研发软件项目开发与管理的易用工具。本系统的贡献者包括但不限于以下人员：欧阳柳波、姜远川、孟靖尧、廖敏孜、李泽丰、潘勇、周惟渭、丘家玮、林琼琼……</small></p>
+					
 				</div>
 
 				<div class="col-md-6 to-animate">
-					<h3 class="section-title">地址</h3>
-					<ul class="contact-info">
-						<li><i class="icon-map-marker"></i>湖南省 长沙市 岳麓区 湖南大学 软件大楼</li>
-					</ul>
 					<h3 class="section-title">联系我们</h3>
 					<ul class="contact-info">
+						<li><i class="icon-map-marker"></i><small>湖南省 长沙市 岳麓区 湖南大学 软件大楼</small></li>
 						<li><i class="icon-envelope"></i>oylb@hnu.edu.cn</a></li>
 					</ul>
 				</div>
 			</div>
+		</div>
+
+		<div class="to-animate" style="text-align:center">
+			<p><small><br><br>
+				&copy; 2017-2018 HNU SKEG. All Rights Reserved.<br>
+				京公网安备xxxxxxx号 | 京ICP备xxxxxx号-x | 
+			</small></p>
 		</div>
 	</div>
 
