@@ -663,13 +663,7 @@
                     text:"<div><b>优先级:</b>"+priority+"</div>"
                     +"<div><b>功能点描述:</b>"+structureList[id].describe+"</div>"
                     +"<div><b>用例过程:</b>"+funRoleList
-                    // +"<div>角色："+structureList[id].funRoleList[0].roleName+"</div>"
-                    // +"<div>描述："+structureList[id].funRoleList[0].roleDescribe+"</div>"
-                    // +"<div>局部可用性："+structureList[id].funRoleList[0].usableName+"</div>"
-                    // +"<div>发生条件："+structureList[id].funRoleList[0].usablePara+"</div>"
                     +"<div><b>可用性:</b>"+funUsableList
-                    // +"<div>全局可用性："+structureList[id].funUsableList[0].usableName+"</div>"
-                    // +"<div>发生条件："+structureList[id].funUsableList[0].usablePara+"</div>"
                     +"<div><b>输入:</b>"+structureList[id].input+"</div>"
                     +"<div><b>输出:</b>"+structureList[id].output+"</div>"
                     +"<div><b>基本操作流程:</b>"+structureList[id].basic+"</div>"
@@ -803,6 +797,5 @@
                 // $(".dis").attr("disabled","true");
             }
         }
-
     }
 </script>

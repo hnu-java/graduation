@@ -1119,8 +1119,6 @@ function seeStructure(id_template,obj,index){
                 title:"构件名:"+structureList[id].funName,
                 text:"<div>优先级:"+priority+"</div>"
                 +"<div>功能点描述:"+structureList[id].describe+"</div>"
-                //+"用例过程<div>"+structureList[id].funRoleList+"</div>"
-                //+"可用性<div>"+structureList[id].funUsableList+"</div>"
                 +"<div>输入:"+structureList[id].input+"</div>"
                 +"<div>输出:"+structureList[id].output+"</div>"
                 +"<div>基本操作流程:"+structureList[id].basic+"</div>"
