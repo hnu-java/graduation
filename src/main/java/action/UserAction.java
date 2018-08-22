@@ -21,10 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by DELL on 2017/11/28.
@@ -48,11 +45,11 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     public String login() throws ParseException {
         dataMap = new HashMap<String, Object>();
         userDao = new UserDaoImp();
+        boolean onLine = userDao.onLine(user.getName());
+        session.put("onLine",onLine);
+        System.out.println(onLine);
         boolean res = userDao.login(user.getName(), user.getPassword());
         dataMap.put("res", res);
-        boolean onLine = userDao.onLine(user.getName());
-        System.out.println(onLine);
-        session.put("onLine",onLine);
         if(res==true) {
             user = userDao.getOne(user.getName());
             dataMap.put("flag",user.getFlag());
@@ -69,6 +66,12 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
             session.put("Mpoint2",Mpoint2);
             session.put("Mpoint3",Mpoint3);
             session.put("Mpoint5",Mpoint5);
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                public void run() {
+                    userDao.exit(user.getName());
+                }
+            }, 2*60*60*1000);// 设定指定的时间time,此处单位为毫秒
         }
         return "RES";
     }
@@ -100,7 +103,6 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
             user = userDao.getOne(user.getName());
             boolean res1 = userDao.payment(user.getId_user(),day);
             System.out.println(user.getId_user()+" "+day);
-            System.out.println(res1);
             dataMap.put("res1", res1);
         }
         return "RES";
@@ -156,7 +158,6 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         else{
             String res="error";
             dataMap.put("consequence",res);
-            System.out.println(res);
         }
         return SUCCESS;
     }
