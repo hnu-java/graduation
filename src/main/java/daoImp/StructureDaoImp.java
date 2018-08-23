@@ -34,4 +34,15 @@ public class StructureDaoImp extends DAO<StructureEntity> implements StructureDa
             return false;
         }
     }
+
+    @Override
+    public boolean edit(int id_structure, String content) {
+        String sql = "update structure set CONTENT = ? where ID_STRUCTURE = ?";
+        try{
+            update(sql, content, id_structure);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
 }

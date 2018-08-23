@@ -218,6 +218,14 @@ public class StructureAction extends ActionSupport implements RequestAware, Sess
         return "RES";
     }
 
+    public String edit() {
+        dataMap = new HashMap<>();
+        structureDao = new StructureDaoImp();
+        boolean res = structureDao.edit(structure.getId_structure(),structure.getContent());
+        dataMap.put("res",res);
+        return "RES";
+    }
+
     @Override
     public StructureEntity getModel() {
         return structure;
