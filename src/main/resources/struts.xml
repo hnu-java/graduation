@@ -58,7 +58,7 @@
             <result name="pointsRecordPage">/WEB-INF/pages/project_pointsRecord.jsp</result>
         <interceptor-ref name="myStack"/>
             <allowed-methods>
-                jmpTemp2,showPointsRecord,jmpPointsRecord,proPayment,jmpPayment,jmpMessageCenter,jmpMyprofile,jmpMycollect,jmpHomepage,editProfile,jmpSysManager1,jmpSysManager2,jmpNewproject,jmpTemp,jmpCasecomponent,jmpUsercomponent,jmpCurrentProjectList,jmpCompletedProjectList
+               warn,showPointsRecord,jmpPointsRecord,proPayment,jmpPayment,jmpMessageCenter,jmpMyprofile,jmpMycollect,jmpHomepage,editProfile,jmpSysManager1,jmpSysManager2,jmpNewproject,jmpTemp,jmpCasecomponent,jmpUsercomponent,jmpCurrentProjectList,jmpCompletedProjectList
             </allowed-methods>
         </action>
         
@@ -161,6 +161,13 @@
         </action>
 
         <action name="userStructureId-*" class="action.UserStructureIdAction" method="{1}">
+            <result name="success" type="json">
+                <param name="root">dataMap</param>
+            </result>
+            <allowed-methods>delete</allowed-methods>
+        </action>
+
+        <action name="funStructureId-*" class="action.UserStructureIdAction" method="{1}">
             <result name="success" type="json">
                 <param name="root">dataMap</param>
             </result>

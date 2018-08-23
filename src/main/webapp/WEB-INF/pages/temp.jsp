@@ -135,14 +135,19 @@
 
     function warn() {
         if("${sessionScope.onLine}" === "true"){
-            swal({
-                title: "您的账户存在重复登录",
-                text: "请确认账户安全",
-                type: "warning",
-                confirmButtonColor: "#18a689",
-                confirmButtonText: "OK"
-            }, function () {
-                location.href = "user-jmpTemp2"
+            $.ajax({
+                url: "user-warn",
+                type: "Post",
+                async: "false",
+                success: function (result) {
+                swal({
+                    title: "您的账户存在重复登录",
+                    text: "请确认账户安全",
+                    type: "warning",
+                    confirmButtonColor: "#18a689",
+                    confirmButtonText: "OK"
+                    })
+                }
             })
         }
     }
