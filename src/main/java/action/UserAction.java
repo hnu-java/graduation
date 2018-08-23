@@ -47,7 +47,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         userDao = new UserDaoImp();
         boolean onLine = userDao.onLine(user.getName());
         session.put("onLine",onLine);
-        System.out.println(onLine);
+        //System.out.println(onLine);
         boolean res = userDao.login(user.getName(), user.getPassword());
         dataMap.put("res", res);
         if(res==true) {
@@ -72,7 +72,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
                 public void run() {
                     userDao.exit(user.getName());
                 }
-            }, 2*60*60*1000);// 设定指定的时间time,此处单位为毫秒
+            }, 30*60*1000);// 设定指定的时间time,此处单位为毫秒
         }
         return "RES";
     }
@@ -238,6 +238,12 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         return "success";
     }
 
+    public String warn() {
+        boolean onLine = false;
+        session.put("onLine",onLine);
+        return "success";
+    }
+
     public String jmpLogin(){
         session.put("sysManager",0);
         session.put("orgManager",0);
@@ -245,7 +251,9 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         session.put("PM",null);
         userDao = new UserDaoImp();
         UserEntity seesionUser=(UserEntity)session.get("user");
-        boolean res = userDao.exit(seesionUser.getName());
+        if(seesionUser!=null){
+            boolean res = userDao.exit(seesionUser.getName());
+        }
         session.put("user",null);
         return "loginPage";
     }
@@ -283,11 +291,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
 
 
     public String jmpTemp() { return "tempPage"; }
-    public String jmpTemp2() {
-        boolean onLine = false;
-        session.put("onLine",onLine);
-        return "tempPage";
-    }
+
     public String jmpSysManager1(){
         return "SysManager1Page";
     }

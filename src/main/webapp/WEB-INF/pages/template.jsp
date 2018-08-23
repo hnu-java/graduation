@@ -58,7 +58,7 @@
                 </button>
                 <h4 class="modal-title">封装构件</h4>
             </div>
-            <div class="modal-body col-md-12" style="height: 200px" >
+            <div class="modal-body col-md-12" style="height: 300px" >
                     <label style="padding-left: 15px" class="col-md-4">选择构建库</label>
                     <div style="width: 300px" class="col-md-8">
                         <div class="alert alert-info" id="noneOneLibrary" style="display: none;">
@@ -69,6 +69,11 @@
                             </select>
                         </div>
                     </div>
+                <label id="new" style="padding-left: 15px" class="col-md-4">新建构建库</label>
+                <div style="width: 300px" class="col-md-8">
+                <div class="form-group" id="name1" style="display: none;"><label>构件库名</label> <input id="name" type="text" placeholder="请输入构件库名(必填，不超过30字符)" maxlength="40" class="form-control" required="required"></div>
+                <div class="form-group" id="mention1" style="display: none;"><label>构件库描述</label> <input id="mention" type="text" placeholder="请输入构件库描述(可不填，不超过100字符)"  maxlength="60" class="form-control" required="required"></div>
+                </div>
                 <br>
                 <br>
                 <br>
@@ -490,11 +495,17 @@
                     $("#libraryOneList").append(content);
                     $(".oneLibraryDiv").show();
                     $("#noneOneLibrary").hide();
+                    $("#new").hide();
+                    $("#name1").hide();
+                    $("#mention1").hide();
                     $("#hint").show();
                 }
                 else {
                     $(".oneLibraryDiv").hide();
                     $("#noneOneLibrary").show();
+                    $("#new").show();
+                    $("#name1").show();
+                    $("#mention1").show();
                     $("#hint").hide();
                 }
 
