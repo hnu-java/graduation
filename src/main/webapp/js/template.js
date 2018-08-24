@@ -175,7 +175,7 @@ function loadTemplateThree(entity) {
         funRoleContent+="</select> </th> <th> <textarea   class='form-control roleDescribe dis'  name='roleDescribe'   style='max-width: 100%' disabled>";
         funRoleContent+=funRoleList[i].roleDescribe+"</textarea> </th>";
         if(funRoleList[i].usableName==null){//新增按钮
-            funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='margin-right: 10px' disabled>安全</button> </th></tr>";
+            funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='margin-right: 10px' disabled>安全</button> </th></tr>";
         }else {
             funRoleContent+="</tr>";
             funRoleContent+="<tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>"+funRoleList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funRoleList[i].usablePara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>"
@@ -491,7 +491,7 @@ var id=parseInt($(obj).val());
         $("select#seSelect").html(content);
     }
 
-    //加载详细可用性内容
+    //加载详细安全性内容
     function SecurityClick(obj) {
         var id=parseInt($(obj).val());
         $("#sename").text(securityList[id].name);
@@ -826,7 +826,7 @@ function temp_save() {
             var basic=$("#basic").summernote('code');
             var alternative=$("#alternative").summernote('code');
             var  funRoleList="[{";
-            var roleName,roleDescribe,usableName,usablePara,last="";
+            var roleName,roleDescribe,usableName,usablePara,securityName,securityPara,last="";
             $(".funTable tbody").find("tr").each(function () {
              if ($(this).hasClass("funTr")){//开头
                   if (last!=""){//第一次，没有,
@@ -919,7 +919,12 @@ function save() {
 
 var nowLine;
 function deleteUsable(obj) {
-    $(obj).parent().parent().prev().children("th:last-child").children("button").show();
+    $(obj).parent().parent().prev().children("th:last-child").children("button:first-child").show();
+    $(obj).parent().parent().remove();
+}
+
+function deleteSecurity(obj) {
+    $(obj).parent().parent().prev().children("th:last-child").children("button:last-child").show();
     $(obj).parent().parent().remove();
 }
 
@@ -946,13 +951,13 @@ function addUsabelLine() {
     var para=$("#para").val();
     var content;
     if (typeof (nowLine)==="undefined" ||  nowLine==="undefined"){
-        content=" <tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>全局可用性："+usableName+"</th> <th  name='usablePara' class='usablePara'>发生条件："+para+"</th> <th>  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px'>删除可用性</button></th> </tr>"
+        content=" <tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>全局可用性："+usableName+"</th> <th  name='usablePara' class='usablePara'>发生条件："+para+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px'>删除可用性</button></th> </tr>"
         $(".funTable tfoot").append(content);
         return;
     }
     content=" <tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>局部可用性："+usableName+"</th> <th  name='usablePara' class='usablePara'>发生条件："+para+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px'>删除可用性</button></th> </tr>"
     $(nowLine).after(content);
-    $(nowLine).children("th:last-child").children("button").hide();
+    $(nowLine).children("th:last-child").children("button:first-child").hide();
 
 }
 
@@ -961,13 +966,13 @@ function addSecurityLine() {
     var para=$("#para2").val();
     var content;
     if (typeof (nowLine)==="undefined" ||  nowLine==="undefined"){
-        content=" <tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>全局安全性："+SecurityName+"</th> <th  name='usablePara' class='usablePara'>发生条件："+para+"</th> <th>  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px'>删除可用性</button></th> </tr>"
+        content=" <tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>全局安全性："+SecurityName+"</th> <th  name='usablePara' class='usablePara'>发生条件："+para+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px'>删除安全性</button></th> </tr>"
         $(".funTable tfoot").append(content);
         return;
     }
-    content=" <tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>局部安全性："+SecurityName+"</th> <th  name='usablePara' class='usablePara'>发生条件："+para+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px'>删除可用性</button></th> </tr>"
+    content=" <tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>局部安全性："+SecurityName+"</th> <th  name='usablePara' class='usablePara'>发生条件："+para+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px'>删除安全性</button></th> </tr>"
     $(nowLine).after(content);
-    $(nowLine).children("th:last-child").children("button").hide();
+    $(nowLine).children("th:last-child").children("button:last-child").hide();
 
 }
 
