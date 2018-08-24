@@ -39,7 +39,7 @@
                     <a id="yourName" class="dropdown J_tabClose" data-toggle="dropdown">${sessionScope.user.name}<span class="caret"></span>
                     </a>
                     <ul  role="menu" class="dropdown-menu dropdown-menu-right">
-                        <li  class="J_tabShowActive"><a id="test1"  class="J_menuItem" href="user-jmpMyprofile">个人中心</a>
+                        <li  class="J_tabShowActive"><a id="test1"  class="J_menuItem" href="user-jmpMyProfile">个人中心</a>
                     </li>
                         <li class="divider"></li>
                         <li  class="J_tabShowActive"><a id="test2"  class="J_menuItem" href="user-jmpMessageCenter">消息中心</a>
@@ -63,7 +63,7 @@
             </nav>
         </div>
         <div style="height: 1000px" class="row J_mainContent" id="content-main">
-            <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="user-jmpHomepage" frameborder="0" data-id="" seamless></iframe>
+            <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="user-jmpHomePage" frameborder="0" data-id=""></iframe>
         </div>
 
     </div>

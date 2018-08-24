@@ -296,6 +296,15 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         return "Re";
     }
 
+
+    public String getSecurity(){
+        securityDao securityDao=new securityDaoImp();
+        List<SecurityEntity> securityList=securityDao.getSecurity();
+        dataMap=new HashMap<>();
+        dataMap.put("securityList",securityList);
+        System.out.println(securityList);
+        return "Re";
+    }
     public String generateContract() {
         try {
             Template2Pdf template2Pdf = new Template2Pdf();

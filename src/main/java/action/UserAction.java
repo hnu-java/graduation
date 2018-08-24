@@ -261,8 +261,8 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     public String outerJmpLogin(){
         return "loginPage";
     }
-    public String jmpMyprofile(){
-        return "myprofilePage";
+    public String jmpMyProfile(){
+        return "myProfilePage";
     }
     public String jmpRegistration() {
         userDao = new UserDaoImp();
@@ -276,7 +276,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         return "replacepasswordPage";
     }
 
-    public String jmpHomepage() {
+    public String jmpHomePage() {
         userDao = new UserDaoImp();
         user = (UserEntity)session.get("user");
         session.put("countnow",userDao.projectNumberNow(user.getId_user()));
@@ -289,7 +289,9 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         return "homePage";
     }
 
-
+    public String jmpHomepage(){
+        return "homePage";
+    }
     public String jmpTemp() { return "tempPage"; }
 
     public String jmpSysManager1(){

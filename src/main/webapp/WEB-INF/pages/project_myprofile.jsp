@@ -35,7 +35,7 @@
         <ol class="breadcrumb" style="margin-left: 40px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage">首页</a> >><a href="user-jmpMyprofile">个人中心</a>
+                    <a href="user-jmpHomepage">首页</a> >><a href="user-jmpMyProfile">个人中心</a>
                 </strong>
             </li>
         </ol>

@@ -10,6 +10,7 @@ var nowClick,nowCatalog;
 var documentId=$("input#documentId").val();
 //初始化的时候调用getUsable()函数赋值
 var usableList;
+var securityList;
 // 加载模板3时初始化
 var roleList;
 var editable=false;
@@ -148,8 +149,8 @@ else {
 }
 //加载模板3的内容
 function loadTemplateThree(entity) {
-    UsableInit()
-
+    UsableInit();
+    SecurityInit();
     $("input#funName").val(entity.funName);
     $("select#priority").val(entity.priority);
     //生成表格
@@ -174,7 +175,7 @@ function loadTemplateThree(entity) {
         funRoleContent+="</select> </th> <th> <textarea   class='form-control roleDescribe dis'  name='roleDescribe'   style='max-width: 100%' disabled>";
         funRoleContent+=funRoleList[i].roleDescribe+"</textarea> </th>";
         if(funRoleList[i].usableName==null){//新增按钮
-            funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>新增局部可用性</button> </th></tr>";
+            funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addSecurityModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>安全</button> </th></tr>";
         }else {
             funRoleContent+="</tr>";
             funRoleContent+="<tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>"+funRoleList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funRoleList[i].usablePara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>"
@@ -431,6 +432,7 @@ $(".li_down").click(function () {
 $(".li_rename").click(function () {
     renameModelInit();
 })
+
 //获取可用性
 function getUsable() {
     $.ajax({
@@ -443,7 +445,7 @@ function getUsable() {
             usableList=result.usableList;
         },
         error: function (result) {
-            showtoast("dangerous","失败","修改标题失败")
+            showtoast("dangerous","失败","获取可用性失败")
         }
     })
 }
@@ -458,15 +460,51 @@ function UsableInit() {
 //加载详细可用性内容
 function usableClick(obj) {
 var id=parseInt($(obj).val());
-$("#uaname").text(usableList[id].name);
+    $("#uaname").text(usableList[id].name);
     $("#uaproblem").text(usableList[id].rang);
     $("#uasolution").text(usableList[id].solution);
     $("#uaexample").text(usableList[id].example);
 }
+
+    //获取安全性
+    function getSecurity() {
+        $.ajax({
+            url: "catalog-getSecurity",
+            data: {},
+            dataType: "json",
+            type: "Post",
+            async: "false",
+            success: function (result) {
+                securityList = result.securityList;
+            },
+            error: function (result) {
+                showtoast("dangerous", "失败", "获取安全性失败")
+            }
+        })
+    }
+    //安全性初始化
+    function SecurityInit() {
+        var content="";
+        for (var i=0;i<securityList.length;i++){
+            content+=" <option value='"+i+"' onclick='SecurityClick(this)'>"+(i+1)+"."+securityList[i].name+"</option>"
+        }
+        $("select#seSelect").html(content);
+    }
+
+    //加载详细可用性内容
+    function SecurityClick(obj) {
+        var id=parseInt($(obj).val());
+        $("#sename").text(securityList[id].name);
+        $("#seproblem").text(securityList[id].rang);
+        $("#sesolution").text(securityList[id].solution);
+        $("#seexample").text(securityList[id].example);
+    }
+
 //页面初始化
 $(document).ready(function () {
     templateInit();
-    getUsable()
+    getUsable();
+    getSecurity();
     edit();
 })
 
@@ -903,7 +941,22 @@ function addUsabelLine() {
         $(".funTable tfoot").append(content);
         return;
     }
-    content=" <tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>局部可用性："+usableName+"</th> <th  name='usablePara' class='usablePara'>发生条件："+para+"</th> <th>  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px'>删除可用性</button></th> </tr>"
+    content=" <tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>局部可用性："+usableName+"</th> <th  name='usablePara' class='usablePara'>发生条件："+para+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px'>删除可用性</button></th> </tr>"
+    $(nowLine).after(content);
+    $(nowLine).children("th:last-child").children("button").hide();
+
+}
+
+function addSecurityLine() {
+    var SecurityName=$("#sename").text();
+    var para=$("#para2").val();
+    var content;
+    if (typeof (nowLine)==="undefined" ||  nowLine==="undefined"){
+        content=" <tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>全局安全性："+SecurityName+"</th> <th  name='usablePara' class='usablePara'>发生条件："+para+"</th> <th>  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px'>删除可用性</button></th> </tr>"
+        $(".funTable tfoot").append(content);
+        return;
+    }
+    content=" <tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>局部安全性："+SecurityName+"</th> <th  name='usablePara' class='usablePara'>发生条件："+para+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px'>删除可用性</button></th> </tr>"
     $(nowLine).after(content);
     $(nowLine).children("th:last-child").children("button").hide();
 
@@ -918,7 +971,7 @@ function addFunlLine() {
         "<select class='form-control roleName dis' name='' name='roleName'  > " +
         optionCon +
         "</select> " +
-        "</th> <th> <textarea   class='form-control roleDescribe dis'   style='max-width: 100%' name='roleDescribe'    ></textarea> </th> <th> <button  class='btn btn-primary  btn-xs col-lg-push-1'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px'>可</button> </th> </tr>"
+        "</th> <th> <textarea   class='form-control roleDescribe dis'   style='max-width: 100%' name='roleDescribe'    ></textarea> </th> <th> <button  class='btn btn-primary  btn-xs col-lg-push-1'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px'>可用</button> <button class='btn btn-primary  btn-xs col-lg-push-1'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px'>安全</button> </th> </tr>"
     $(".funTable").children("tbody").children("tr:last-child").before(content);
 }
 
