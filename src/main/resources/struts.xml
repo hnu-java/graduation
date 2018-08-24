@@ -220,7 +220,7 @@
             <result name="RES" type="json"><param name="root">dataMap</param></result>
             <result name="get">/WEB-INF/pages/project_structure.jsp</result>
         <interceptor-ref name="myStack"/>
-            <allowed-methods>get,create</allowed-methods>
+            <allowed-methods>get,create,edit</allowed-methods>
         </action>
 
         <action name="personalcenter-*" class="action.PersonalCenterAction" method="{1}">

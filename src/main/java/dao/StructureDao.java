@@ -8,4 +8,5 @@ public interface StructureDao {
     List<StructureEntity> getAll(int id_library);
 
     boolean create(int id_library,String content);
+    boolean edit(int id_structure,String content);
 }

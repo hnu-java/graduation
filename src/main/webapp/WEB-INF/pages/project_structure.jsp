@@ -87,6 +87,7 @@
         </div>
     </div>
 </div>
+
 <div  class="modal inmodal" id="newUser" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content animated bounceInRight">
@@ -157,6 +158,25 @@
                             <s:if test="#request.library.id_user == #session.user.id_user">
                                 <div style="float: right;z-index:99999999;margin: -40px 10px 0px 0px">
                                     <button id="deleteCommon" type="submit" class="btn btn-alert" myvalue="<s:property value="id_structure"/>">删除</button>
+                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editCommon">编辑</button>
+                                    <div  class="modal inmodal" id="editCommon" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content animated bounceInRight">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                                                    </button>
+                                                    <h4 class="modal-title">编辑通用构件</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group"><label>内容</label> <textarea id="editCommonContent" style="height: 300px" type="text" maxlength="100000" class="form-control" required="required"><s:property value="content"/></textarea></div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                                                    <button id="editCommon-button" type="submit" class="btn btn-primary" myvalue="<s:property value="id_structure"/>">保存</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </s:if>
                         </div>
@@ -184,6 +204,27 @@
                             <s:if test="#request.library.id_user == #session.user.id_user">
                                 <div style="float: right;z-index:99999999;margin: 90px 10px 0px 0px">
                                     <button id="deleteUser" type="submit" class="btn btn-alert" myvalue="<s:property value="id_structure"/>">删除</button>
+                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editUser">编辑</button>
+                                    <div  class="modal inmodal" id="editUser" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content animated bounceInRight">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                                                    </button>
+                                                    <h4 class="modal-title">编辑用户构件</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group"><label>用户名</label> <input id="Usercontent2" type="text" maxlength="100" value="<s:property value="roleName"/>" class="form-control" required="required"></div>
+                                                    <div class="form-group"><label>用户描述</label> <textarea id="Usercontent3"  style="height: 60px" type="text"  maxlength="2000" class="form-control" required="required"><s:property value="describe"/></textarea></div>
+                                                    <div class="form-group"><label>用户权限</label> <textarea  id="Usercontent4"  style="height: 200px" type="text" maxlength="100000" class="form-control" required="required"><s:property value="permissions"/></textarea></div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                                                    <button id="editUser-button" type="submit" class="btn btn-primary" myvalue="<s:property value="id_structure"/>">保存</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </s:if>
                         </div>
@@ -233,6 +274,7 @@
                             <s:if test="#request.library.id_user == #session.user.id_user">
                                 <div style="float: right;z-index:99999999;margin: 90px 10px 0px 0px">
                                     <button id="deleteFun" type="submit" class="btn btn-alert" myvalue="<s:property value="id_structure"/>">删除</button>
+                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editFun">编辑</button>
                                 </div>
                             </s:if>
                         </div>
@@ -425,10 +467,126 @@
     }
 </script>
 <script>
+    $("button#editUser-button").click(function () {
+        var content1 = $("input#Usercontent2").val();
+        var content2 = $("textarea#Usercontent3").val();
+        var content3 = $("textarea#Usercontent4").val();
+        var id_structure = $(this).attr("myvalue");
+        alert(id_structure);
+        if(content1 === "" || content === null) {
+            swal("创建失败！", "请填写用户名", "error");
+        }
+        else if(content2 === "" || content === null) {
+            swal("创建失败！", "请填写用户描述", "error");
+        }
+        else if(content3 === "" || content === null) {
+            swal("创建失败！", "请填写用户权限", "error");
+        }
+        else {
+            content = "{\"roleName\":\"" + content1 + "\",\"describe\":\"" + content2 + "\",\"permissions\":\"" + content3 + "\"}";
+            swal(
+                {
+                    title: "您确认修改该构件吗？",
+                    text: "确认请点击确定",
+                    type: "",
+                    showCancelButton: true,
+                    confirmButtonColor: "#18a689",
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: false
+                }, function () {
+                    $.ajax({
+                        url: "structure-edit",
+                        data: {
+                            content: content,
+                            id_structure:id_structure
+                        },
+                        dataType: "json",
+                        type: "Post",
+                        async: "false",
+                        success: function (result) {
+                            if (result.res){
+                                swal({
+                                    title: "修改成功",
+                                    type:"success",
+                                    confirmButtonColor: "#18a689",
+                                    confirmButtonText: "OK"
+                                },function(){
+                                    location.href="structure-get?pagedis="+1+'&id_template=' + $("input.id_template").val()+'&id_library='+$("input.id_library").val()+'&page='+${requestScope.page};
+                                })
+                            }
+                            else {
+                                swal("修改失败", "输入的机构不存在", "error");
+                            }
+
+                        },
+                        error: function () {
+                            swal({
+                                icon: "error"
+                            });
+                        }
+                    })
+                })
+        }
+    })
+    $("button#editCommon-button").click(function () {
+        var content = $("textarea#editCommonContent").val();
+        var id_structure = $(this).attr("myvalue");
+        alert(content);
+        if(content === "" || content === null) {
+            swal("创建失败！", "请填写构件内容", "error");
+        }
+        else {
+            content = "{\"content\":\"" + content + "\"}";
+            swal(
+                {
+                    title: "您确认修改该构件吗？",
+                    text: "确认请点击确定",
+                    type: "",
+                    showCancelButton: true,
+                    confirmButtonColor: "#18a689",
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: false
+                }, function () {
+                    $.ajax({
+                        url: "structure-edit",
+                        data: {
+                            content: content,
+                            id_structure:id_structure
+                        },
+                        dataType: "json",
+                        type: "Post",
+                        async: "false",
+                        success: function (result) {
+                            if (result.res){
+                                swal({
+                                    title: "修改成功",
+                                    type:"success",
+                                    confirmButtonColor: "#18a689",
+                                    confirmButtonText: "OK"
+                                },function(){
+                                    location.href="structure-get?pagedis="+1+'&id_template=' + $("input.id_template").val()+'&id_library='+$("input.id_library").val()+'&page='+${requestScope.page};
+                                })
+                            }
+                            else {
+                                swal("修改失败", "服务器异常", "error");
+                            }
+
+                        },
+                        error: function () {
+                            swal({
+                                icon: "error"
+                            });
+                        }
+                    })
+                })
+        }
+    })
+
     $("button#deleteCommon").click(function() {
         //var id_structure = document.getElementById("idStructure").innerHTML;
         var id_structure = $(this).attr("myvalue");
-        alert(id_structure);
         swal(
             {
                 title: "您确认删除该构件吗？",
@@ -474,7 +632,6 @@
     $("button#deleteUser").click(function() {
         //var id_structure = document.getElementById("idStructure").innerHTML;
         var id_structure = $(this).attr("myvalue");
-        alert(id_structure);
         swal(
             {
                 title: "您确认删除该构件吗？",
@@ -521,7 +678,6 @@
     $("button#deleteFun").click(function() {
         //var id_structure = document.getElementById("idStructure").innerHTML;
         var id_structure = $(this).attr("myvalue");
-        alert(id_structure);
         swal(
             {
                 title: "您确认删除该构件吗？",
