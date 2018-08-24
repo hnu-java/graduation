@@ -45,15 +45,23 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     public String login() throws ParseException {
         dataMap = new HashMap<String, Object>();
         userDao = new UserDaoImp();
-        boolean onLine = userDao.onLine(user.getName());
-        session.put("onLine",onLine);
-        //System.out.println(onLine);
+        int count = 1;
+        if(session.get("count")!=null){
+            count = Integer.valueOf(session.get("count").toString());
+            count++;
+            System.out.println(count);
+        }
+        session.put("count",count);
+        if(Integer.valueOf(session.get("count").toString())==1){
+            boolean onLine = userDao.onLine(user.getName());
+            session.put("onLine",onLine);
+            System.out.println(onLine);
+        }
         boolean res = userDao.login(user.getName(), user.getPassword());
         dataMap.put("res", res);
         if(res==true) {
             user = userDao.getOne(user.getName());
             session.put("user",user);
-            System.out.println(user);
             dataMap.put("flag",user.getFlag());
 //            dataMap.put("days",user.getDays());
             int orgManager=userDao.orgManager(user.getId_user());
@@ -247,6 +255,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     public String jmpLogin(){
         session.put("sysManager",0);
         session.put("orgManager",0);
+        session.put("count",null);
         session.put("project",null);
         session.put("PM",null);
         userDao = new UserDaoImp();

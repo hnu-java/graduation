@@ -278,7 +278,7 @@
                             })
                         }else{
                             swal({
-                                title: "新建失败,服务器异常",
+                                title: "删除失败,服务器异常",
                                 type: "error",
                                 confirmButtonColor: "#18a689",
                                 confirmButtonText: "OK"
