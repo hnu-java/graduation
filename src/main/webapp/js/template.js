@@ -175,7 +175,7 @@ function loadTemplateThree(entity) {
         funRoleContent+="</select> </th> <th> <textarea   class='form-control roleDescribe dis'  name='roleDescribe'   style='max-width: 100%' disabled>";
         funRoleContent+=funRoleList[i].roleDescribe+"</textarea> </th>";
         if(funRoleList[i].usableName==null){//新增按钮
-            funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addSecurityModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>安全</button> </th></tr>";
+            funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='margin-right: 10px' disabled>安全</button> </th></tr>";
         }else {
             funRoleContent+="</tr>";
             funRoleContent+="<tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>"+funRoleList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funRoleList[i].usablePara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>"
@@ -925,7 +925,16 @@ function deleteUsable(obj) {
 
 function addUsable(obj) {
     $("#para").val("");
-    if(typeof (obj)=="undefined"){
+    if(typeof (obj)==="undefined"){
+        nowLine="undefined";
+        return;
+    }
+    nowLine=$(obj).parent().parent();
+}
+
+function addSecurity(obj) {
+    $("#para").val("");
+    if(typeof (obj)==="undefined"){
         nowLine="undefined";
         return;
     }
@@ -971,7 +980,7 @@ function addFunlLine() {
         "<select class='form-control roleName dis' name='' name='roleName'  > " +
         optionCon +
         "</select> " +
-        "</th> <th> <textarea   class='form-control roleDescribe dis'   style='max-width: 100%' name='roleDescribe'    ></textarea> </th> <th> <button  class='btn btn-primary  btn-xs col-lg-push-1'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px'>可用</button> <button class='btn btn-primary  btn-xs col-lg-push-1'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px'>安全</button> </th> </tr>"
+        "</th> <th> <textarea   class='form-control roleDescribe dis'   style='max-width: 100%' name='roleDescribe'    ></textarea> </th> <th> <button  class='btn btn-primary  btn-xs col-lg-push-1'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px'>可用</button> <button class='btn btn-primary  btn-xs col-lg-push-1'  id='addUsable'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='margin-right: 10px'>安全</button> </th> </tr>"
     $(".funTable").children("tbody").children("tr:last-child").before(content);
 }
 
