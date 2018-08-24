@@ -62,7 +62,7 @@
                     <label style="padding-left: 15px" class="col-md-4">选择构建库</label>
                     <div style="width: 300px" class="col-md-8">
                         <div class="alert alert-info" id="noneOneLibrary" style="display: none;">
-                            暂无该类型的构件库
+                            暂无该类型的构件库，请在下方创建
                         </div>
                         <div class="oneLibraryDiv" style="display: none;">
                             <select class="form-control" name="libraryOneList" id="libraryOneList" >
