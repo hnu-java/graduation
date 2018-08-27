@@ -174,11 +174,18 @@ function loadTemplateThree(entity) {
         }funRoleContent+=roleListContent;
         funRoleContent+="</select> </th> <th> <textarea   class='form-control roleDescribe dis'  name='roleDescribe'   style='max-width: 100%' disabled>";
         funRoleContent+=funRoleList[i].roleDescribe+"</textarea> </th>";
-        if(funRoleList[i].usableName==null){//新增按钮
+        if(funRoleList[i].usableName==null && funRoleList[i].securityName==null){//新增按钮
             funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='margin-right: 10px' disabled>安全</button> </th></tr>";
-        }else {
+        }else if(funRoleList[i].usableName==null){
+            funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='margin-right: 10px' disabled>安全</button> </th></tr>";
+            funRoleContent+="<tr class='securityTr'> <th colspan='2' name='securityName' class='securityName'>"+funRoleList[i].securityName+"</th> <th  name='securityPara' class='securityPara' >"+funRoleList[i].securityPara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteSecurity'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px' disabled>删除安全性</button></th> </tr>";
+        }else if(funRoleList[i].securityName==null){
+            funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>可用</button> </th></tr>";
+            funRoleContent+="<tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>"+funRoleList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funRoleList[i].usablePara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>";
+        }else{
             funRoleContent+="</tr>";
-            funRoleContent+="<tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>"+funRoleList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funRoleList[i].usablePara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>"
+            funRoleContent+="<tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>"+funRoleList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funRoleList[i].usablePara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>";
+            funRoleContent+="<tr class='securityTr'> <th colspan='2' name='securityName' class='securityName'>"+funRoleList[i].securityName+"</th> <th  name='securityPara' class='securityPara' >"+funRoleList[i].securityPara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteSecurity'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px' disabled>删除安全性</button></th> </tr>";
         }
     }
     $(".funTable tbody").prepend(funRoleContent);
@@ -844,6 +851,12 @@ function temp_save() {
                  funRoleList+=",\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"";
                  last="usableTr";
              }
+             else if ($(this).hasClass("securityTr")){//开头
+                 securityName=$(this).children("th:first-child").text();
+                 securityPara=$(this).children("th").eq(1).text();
+                 funRoleList+=",\"securityName\":\""+securityName+"\",\"securityPara\":\""+securityPara+"\"";
+                 last="securityTr";
+             }
             })
             funRoleList+="}]";
 
@@ -920,11 +933,13 @@ function save() {
 var nowLine;
 function deleteUsable(obj) {
     $(obj).parent().parent().prev().children("th:last-child").children("button:first-child").show();
+    $(obj).parent().parent().prev().prev().children("th:last-child").children("button:first-child").show();
     $(obj).parent().parent().remove();
 }
 
 function deleteSecurity(obj) {
     $(obj).parent().parent().prev().children("th:last-child").children("button:last-child").show();
+    $(obj).parent().parent().prev().prev().children("th:last-child").children("button:last-child").show();
     $(obj).parent().parent().remove();
 }
 
@@ -966,15 +981,21 @@ function addSecurityLine() {
     var para=$("#para2").val();
     var content;
     if (typeof (nowLine)==="undefined" ||  nowLine==="undefined"){
-        content=" <tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>全局安全性："+SecurityName+"</th> <th  name='usablePara' class='usablePara'>发生条件："+para+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px'>删除安全性</button></th> </tr>"
+        content=" <tr class='securityTr'> <th colspan='2' name='usableName' class='usableName'>全局安全性："+SecurityName+"</th> <th  name='usablePara' class='usablePara'>发生条件："+para+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px'>删除安全性</button></th> </tr>"
         $(".funTable tfoot").append(content);
         return;
     }
-    content=" <tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>局部安全性："+SecurityName+"</th> <th  name='usablePara' class='usablePara'>发生条件："+para+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px'>删除安全性</button></th> </tr>"
+    content=" <tr class='securityTr'> <th colspan='2' name='usableName' class='usableName'>局部安全性："+SecurityName+"</th> <th  name='usablePara' class='usablePara'>发生条件："+para+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px'>删除安全性</button></th> </tr>"
+    if($(nowLine.next()).hasClass("usableTr")){
+        $(nowLine.next()).after(content);
+        $(nowLine).children("th:last-child").children("button:last-child").hide();
+    }
+    else{
     $(nowLine).after(content);
     $(nowLine).children("th:last-child").children("button:last-child").hide();
-
+    }
 }
+
 
 function addFunlLine() {
     var optionCon="";
@@ -985,7 +1006,7 @@ function addFunlLine() {
         "<select class='form-control roleName dis' name='' name='roleName'  > " +
         optionCon +
         "</select> " +
-        "</th> <th> <textarea   class='form-control roleDescribe dis'   style='max-width: 100%' name='roleDescribe'    ></textarea> </th> <th> <button  class='btn btn-primary  btn-xs col-lg-push-1'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px'>可用</button> <button class='btn btn-primary  btn-xs col-lg-push-1'  id='addUsable'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='margin-right: 10px'>安全</button> </th> </tr>"
+        "</th> <th> <textarea   class='form-control roleDescribe dis'   style='max-width: 100%' name='roleDescribe'    ></textarea> </th> <th> <button  class='btn btn-primary  btn-xs col-lg-push-1'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px'>可用</button> <button class='btn btn-primary  btn-xs col-lg-push-1'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='margin-right: 10px'>安全</button> </th> </tr>"
     $(".funTable").children("tbody").children("tr:last-child").before(content);
 }
 
