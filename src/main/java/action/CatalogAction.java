@@ -309,7 +309,8 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         try {
             Template2Pdf template2Pdf = new Template2Pdf();
              pdfStream= template2Pdf.createPdf(documentId);
-            pdfStream.close();
+             pdfStream.close();
+            System.out.println(pdfStream);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (DocumentException e) {
