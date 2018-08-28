@@ -25,6 +25,7 @@ import entity.*;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.List;
+import java.lang.Object;
 
 public class Template2Pdf {
 
@@ -63,7 +64,6 @@ public class Template2Pdf {
         line = line.replaceAll("<br>", "<br />");
         line = line.replaceAll("<hr>", "<hr />");
         line = line.replaceAll(">暂无","/>暂无");
-        System.out.println(line);
 //        line = line.replaceAll("src=\"", "src=\"http://localhost:8080");
         line = "<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + line + "</div>";
         XMLWorkerHelper.getInstance().parseXHtml(writer, document,
@@ -73,7 +73,21 @@ public class Template2Pdf {
 
     }
 
+    private void add3Document(Document document, String line, PdfWriter writer) throws DocumentException, IOException {
+        Font cfont = new Font(bfChinese);
+        line = line.replaceAll("png\">", "png\" />");
+        line = line.replaceAll("<br>", "<br />");
+        line = line.replaceAll("<hr>", "<hr />");
+        line = line.replaceAll(">暂无","/>暂无");
+        System.out.println(line);
+//        line = line.replaceAll("src=\"", "src=\"http://localhost:8080");
+        line = "<div style=\"padding-left = 20px\"> " + line + "</div>";
+        XMLWorkerHelper.getInstance().parseXHtml(writer, document,
+                new ByteArrayInputStream(line.getBytes("UTF-8")),
+                null,
+                Charset.forName("UTF-8"), new pdfFont());
 
+    }
     public InputStream createPdf(int id_document) throws IOException, DocumentException {
         Gson gson = new Gson();
         Document document = new Document();
@@ -149,7 +163,7 @@ public class Template2Pdf {
                     document.add(new Paragraph("用户描述", black));
                     add2Document(document, entity.getDescribe(), writer);
                     document.add(new Paragraph("用户权限", black));
-                    add2Document(document, entity.getPermissions(), writer);
+                    add3Document(document, entity.getPermissions(), writer);
                 }
                 if (e.getId_template() == 3) {//模板类型3
                     FunStructureEntity entity = gson.fromJson(e.getContent(), FunStructureEntity.class);
@@ -173,6 +187,10 @@ public class Template2Pdf {
                         if(funRole.getUsableName() != null) {
                             document.add(new Paragraph("      "+"      " + funRole.getUsableName(), cfont));
                             document.add(new Paragraph("      "+"      " + funRole.getUsablePara(), cfont));
+                        }
+                        if(funRole.getSecurityName() != null) {
+                            document.add(new Paragraph("      "+"      " + funRole.getSecurityName(), cfont));
+                            document.add(new Paragraph("      "+"      " + funRole.getSecurityPara(), cfont));
                         }
                         document.add(BLANK);
                     }
@@ -200,6 +218,7 @@ public class Template2Pdf {
         }
 
         document.close();
+        System.out.println(document);
         InputStream inputStream = new ByteArrayInputStream(buffer.toByteArray());
 
         return inputStream;

@@ -102,7 +102,7 @@
     <div class="form-group has-feedback">
         <label class="control-label col-sm-3"><button class="btn-circle btn-default"><img src="<%=basePath %>img/u14.png" style="height: 18px;width: 20px"></button>　项目简介：</label>
         <div class="col-sm-4">
-            <textarea type="text"  id="intro" class="form-control text-center"  maxlength="120" placeholder="输入项目的基本介绍" rows="6"></textarea>
+            <textarea type="text"  id="intro" class="form-control text-center"  maxlength="120" placeholder="输入项目的基本介绍（不超过120字符）" rows="6"></textarea>
             <a class="glyphicon glyphicon-remove form-control-feedback"style="pointer-events: auto"></a>
         </div>
     </div>
