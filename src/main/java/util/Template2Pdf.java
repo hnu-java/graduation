@@ -62,13 +62,14 @@ public class Template2Pdf {
         line = line.replaceAll("png\">", "png\" />");
         line = line.replaceAll("<br>", "<br />");
         line = line.replaceAll("<hr>", "<hr />");
-        line = line.replaceAll("src=\"", "src=\"http://112.74.48.57");
+        line = line.replaceAll(">暂无","/>暂无");
+        System.out.println(line);
+//        line = line.replaceAll("src=\"", "src=\"http://localhost:8080");
         line = "<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + line + "</div>";
         XMLWorkerHelper.getInstance().parseXHtml(writer, document,
                 new ByteArrayInputStream(line.getBytes("UTF-8")),
                 null,
                 Charset.forName("UTF-8"), new pdfFont());
-
 
     }
 
@@ -109,8 +110,9 @@ public class Template2Pdf {
         headline.setAlignment(Element.ALIGN_CENTER);
         document.add(headline);
 
-
+        //获取文档内容
         java.util.List<CatalogEntity> catalogEntityList = catalogDao.getAll(id_document);
+
         String line;
         Paragraph lineParagraph = new Paragraph();
         boolean isFirstIndex = false;
@@ -139,8 +141,6 @@ public class Template2Pdf {
             if (e.getContent() != null) {//生成不同类型的文本内容
                 if (e.getId_template() == 1) {//模板类型1
                     CommonStructureEntity entity = gson.fromJson(e.getContent(), CommonStructureEntity.class);
-
-
                     add2Document(document, entity.getContent(), writer);
                 }
                 if (e.getId_template() == 2) {//模板类型2
@@ -165,13 +165,15 @@ public class Template2Pdf {
                     List<FunRole> funRoleList = entity.getFunRoleList();
                     for (int i = 0; i < funRoleList.size(); i++) {
                         FunRole funRole = funRoleList.get(i);
-                        document.add(new Paragraph("用例过程" + (i + 1), cfont));
+                        document.add(new Paragraph("      "+"用例过程" + (i + 1), black));
                         if (funRole.getRoleName() != null)
-                            document.add(new Paragraph("参与角色:  " + funRole.getRoleName(), black));
+                            document.add(new Paragraph("      "+"      参与角色:" + funRole.getRoleName(), cfont));
                         if (funRole.getRoleDescribe() != null)
-                            document.add(new Paragraph("用例描述:  " + funRole.getRoleDescribe(), black));
-                        document.add(new Paragraph(funRole.getUsableName(), black));
-                        document.add(new Paragraph(funRole.getUsablePara(), black));
+                            document.add(new Paragraph("      "+"      用例描述:  " + funRole.getRoleDescribe(), cfont));
+                        if(funRole.getUsableName() != null) {
+                            document.add(new Paragraph("      "+"      " + funRole.getUsableName(), cfont));
+                            document.add(new Paragraph("      "+"      " + funRole.getUsablePara(), cfont));
+                        }
                         document.add(BLANK);
                     }
                     List<FunUsable> funUsableList = entity.getFunUsableList();
@@ -179,9 +181,9 @@ public class Template2Pdf {
                         document.add(new Paragraph("全局可用性: ", black));
                         for (int j = 0; j < funUsableList.size(); j++) {
                             FunUsable funUsable = funUsableList.get(j);
-                            document.add(new Paragraph("全局可用性" + (j + 1), black));
-                            document.add(new Paragraph("全局可用性名称:  " + funUsable.getUsableName(), black));
-                            document.add(new Paragraph("发生条件:  " + funUsable.getUsablePara(), black));
+                            document.add(new Paragraph("      "+"全局可用性" + (j + 1), black));
+                            document.add(new Paragraph("      "+"      "+"全局可用性名称:  " + funUsable.getUsableName(), cfont));
+                            document.add(new Paragraph("      "+"      "+"发生条件:  " + funUsable.getUsablePara(), cfont));
                             document.add(BLANK);
                         }
                     }
