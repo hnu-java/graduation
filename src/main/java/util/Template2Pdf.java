@@ -25,7 +25,6 @@ import entity.*;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.List;
-import java.lang.Object;
 
 public class Template2Pdf {
 
@@ -90,7 +89,7 @@ public class Template2Pdf {
     }
     public InputStream createPdf(int id_document) throws IOException, DocumentException {
         Gson gson = new Gson();
-        Document document = new Document();
+        Document document = new Document(PageSize.A4);
         BaseFont bfChinese = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.NOT_EMBEDDED);
         Font cfont = new Font(bfChinese);
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -218,7 +217,6 @@ public class Template2Pdf {
         }
 
         document.close();
-        System.out.println(document);
         InputStream inputStream = new ByteArrayInputStream(buffer.toByteArray());
 
         return inputStream;

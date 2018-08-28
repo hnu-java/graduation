@@ -727,7 +727,6 @@ function catalogRename() {
 function temp_edit() {
     editable=true;
     $("#eg").addClass("no-padding");$(".click1edit").summernote({
-        height:100,
         minHeight:100,
         lang:"zh-CN",focus:true,toolbar: [
         // ['style', ['bold', 'italic', 'underline', 'clear']],
