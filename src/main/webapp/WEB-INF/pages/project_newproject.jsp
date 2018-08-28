@@ -40,7 +40,7 @@
     <link href="<%=basePath %>/css/plugins/bootstrap-fileinput/fileinput.min.css" rel="stylesheet">
 
 </head>
-<body class="gray-bg animated fadeInDown">
+<body onload="twiceShow()" class="gray-bg animated fadeInDown">
 <div class=" row wrapper white-bg">
     <ol class="breadcrumb" style="margin-left: 40px">
         <li style="font-size: 15px">
@@ -84,7 +84,7 @@
             <div class="input-group">
                 <input type="text" id="orgName" class="form-control text-center" autocomplete="true" placeholder="选填，置空时为私人项目,不可更改" oninput="inputSuggest()">
                 <div class="input-group-btn">
-                    <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+                    <button id="showButton" type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown" onclick="showOrg()">
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right" role="menu" style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.5s; min-width: 400px; left: -367px; right: auto;">
@@ -236,6 +236,7 @@
                     effectiveFields:["NAME"],
                     idField:"ID_ORGANIZATION",
                     keyField:"NAME",
+                    allowNoKeyword: true,
                     data:suggest,
                     ignorecase: true,
                     listStyle: {
@@ -263,6 +264,47 @@
             $('textarea')[0].value = "";
         })
     })
+
+    function showOrg() {
+        $.ajax({
+            url: "project-showOrg",
+            dataType: "json",
+            type: "get",
+            async: "false",
+            success: function (result) {
+                var orgList = result.res;
+                var suggest = "";
+                suggest = JSON.parse('{"value": ' + orgList + ', "defaults": "10000000000"}');
+                $("input#orgName").bsSuggest("destroy");
+                $("#orgName").bsSuggest({
+                    effectiveFields: ["NAME"],
+                    idField: "ID_ORGANIZATION",
+                    keyField: "NAME",
+                    data: suggest,
+                    ignorecase: true,
+                    listStyle: {
+                        'text-align': 'center',
+                        'padding-top': 0,
+                        'max-height': '375px',
+                        'max-width': '800px',
+                        'overflow': 'auto',
+                        'width': 'auto',
+                        'transition': '0.3s',
+                        '-webkit-transition': '0.3s',
+                        '-moz-transition': '0.3s',
+                        '-o-transition': '0.3s'
+                    },
+                    error: function (result) {
+                        showtoast("error", "未知错误", "操作失败");
+                    }
+                })
+            }
+        })
+    }
+    function twiceShow() {
+        $('button#showButton').click();
+        $('button#showButton').click();
+    }
 </script>
 
 </html>

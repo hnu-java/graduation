@@ -192,7 +192,11 @@ function loadTemplateThree(entity) {
     var funUsableContent="";
     if(funUsableList!=null)
     for (var i=0;i<funUsableList.length;i++){
-        funUsableContent+="<tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>"+funUsableList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funUsableList[i].usablePara+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>"
+        if(funUsableList[i].usableName!=null){
+            funUsableContent+="<tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>"+funUsableList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funUsableList[i].usablePara+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>"
+        }else if(funUsableList[i].securityName!=null){
+            funUsableContent+="<tr class='securityTr'> <th colspan='2' name='securityName' class='securityName'>"+funUsableList[i].securityName+"</th> <th  name='securityPara' class='securityPara' >"+funUsableList[i].securityPara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteSecurity'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px' disabled>删除安全性</button></th> </tr>";
+        }
     }
     $(".funTable tfoot").append(funUsableContent);
     if (editable==true){
@@ -859,16 +863,38 @@ function temp_save() {
             })
             funRoleList+="}]";
 
-            var funUsableList="[",usableName,usablePara,first="yes";
+            var funUsableList="[",usableName,usablePara,securityName,securityPara,first="yes";
             $(".funTable tfoot").find("tr").each(function () {
                     if (first=="yes"){//第一次，没有,
                         funUsableList+="{"
+                        if ($(this).hasClass("usableTr")){
+                            usableName=$(this).children("th:first-child").text();
+                            usablePara=$(this).children("th").eq(1).text();
+                            funUsableList+="\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"}";
+                            first="no";
+                        }
+                        else if ($(this).hasClass("securityTr")){//开头
+                            securityName=$(this).children("th:first-child").text();
+                            securityPara=$(this).children("th").eq(1).text();
+                            funUsableList+="\"securityName\":\""+securityName+"\",\"securityPara\":\""+securityPara+"\"}";
+                            first="no";
+                        }
                     }
-                    else   funUsableList+=",{"
-                    usableName=$(this).children("th:first-child").text();
-                    usablePara=$(this).children("th").eq(1).text();
-                funUsableList+="\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"}";
-                    first="no";
+                    else {
+                        funUsableList+=",{"
+                        if ($(this).hasClass("usableTr")){
+                            usableName=$(this).children("th:first-child").text();
+                            usablePara=$(this).children("th").eq(1).text();
+                            funUsableList+="\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"}";
+                            first="no";
+                        }
+                        else if ($(this).hasClass("securityTr")){//开头
+                            securityName=$(this).children("th:first-child").text();
+                            securityPara=$(this).children("th").eq(1).text();
+                            funUsableList+="\"securityName\":\""+securityName+"\",\"securityPara\":\""+securityPara+"\"}";
+                            first="no";
+                        }
+                    }
             })
             funUsableList+="]";
             // alert(describe)
@@ -980,11 +1006,11 @@ function addSecurityLine() {
     var para=$("#para2").val();
     var content;
     if (typeof (nowLine)==="undefined" ||  nowLine==="undefined"){
-        content=" <tr class='securityTr'> <th colspan='2' name='usableName' class='usableName'>全局安全性："+SecurityName+"</th> <th  name='usablePara' class='usablePara'>发生条件："+para+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px'>删除安全性</button></th> </tr>"
+        content=" <tr class='securityTr'> <th colspan='2' name='securityName' class='securityName'>全局安全性："+SecurityName+"</th> <th  name='securityPara' class='securityPara'>发生条件："+para+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px'>删除安全性</button></th> </tr>"
         $(".funTable tfoot").append(content);
         return;
     }
-    content=" <tr class='securityTr'> <th colspan='2' name='usableName' class='usableName'>局部安全性："+SecurityName+"</th> <th  name='usablePara' class='usablePara'>发生条件："+para+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px'>删除安全性</button></th> </tr>"
+    content=" <tr class='securityTr'> <th colspan='2' name='securityName' class='securityName'>局部安全性："+SecurityName+"</th> <th  name='securityPara' class='securityPara'>发生条件："+para+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px'>删除安全性</button></th> </tr>"
     if($(nowLine.next()).hasClass("usableTr")){
         $(nowLine.next()).after(content);
         $(nowLine).children("th:last-child").children("button:last-child").hide();
