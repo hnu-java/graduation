@@ -112,6 +112,19 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         return SUCCESS;
     }
 
+    public String showOrg() throws Exception {
+        dataMap = new HashMap<String, Object>();
+        OrganizationDao organizationDao = new OrganizationDaoImp();
+        UserEntity user = (UserEntity)ActionContext.getContext().getSession().get("user");
+        int ID_User = user.getId_user();
+        List<OrganizationEntity> list = organizationDao.getMyOrg(ID_User);
+        Gson gson = new Gson();
+        System.out.println(list.size());
+        String jsonString = gson.toJson(list);
+        dataMap.put("res",jsonString);
+        return SUCCESS;
+    }
+
     public String showCurrentList() {
         dataMap = new HashMap<String, Object>();
         projectDao = new ProjectDaoImp();
