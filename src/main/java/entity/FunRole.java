@@ -10,6 +10,24 @@ public class FunRole {
     private String roleDescribe;
     private String usableName;
     private String usablePara;
+    private String securityName;
+    private String securityPara;
+
+    public String getSecurityName() {
+        return securityName;
+    }
+
+    public void setSecurityName(String securityName) {
+        this.securityName = securityName;
+    }
+
+    public String getSecurityPara() {
+        return securityPara;
+    }
+
+    public void setSecurityPara(String securityPara) {
+        this.securityPara = securityPara;
+    }
 
     public String getRoleName() {
         return roleName;
@@ -43,11 +61,13 @@ public class FunRole {
         this.usablePara = usablePara;
     }
 
-    public FunRole(String roleName, String roleDescribe, String usableName, String usablePara) {
+    public FunRole(String roleName, String roleDescribe, String usableName, String usablePara, String securityName, String securityPara) {
         this.roleName = roleName;
         this.roleDescribe = roleDescribe;
         this.usableName = usableName;
         this.usablePara = usablePara;
+        this.securityName = securityName;
+        this.securityPara = securityPara;
     }
 
     public FunRole() {
