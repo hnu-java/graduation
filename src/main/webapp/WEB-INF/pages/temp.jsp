@@ -32,7 +32,7 @@
 
     <!--右侧部分开始-->
     <div id="page-wrapper" class="white-bg dashbard-1">
-        <div  class="row border-bottom">
+        <div style="height: 10%" class="row border-bottom">
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header"><a  href="user-jmpTemp"><img src="<%=basePath %>/img/logo.png" style="height: 50px;margin: 10px 0px 5px 50px;"> </a></div>
                 <ul class="nav navbar-top-links navbar-right">
@@ -62,7 +62,7 @@
                 </ul>
             </nav>
         </div>
-        <div style="height: 1000px" class="row J_mainContent" id="content-main">
+        <div style="height: 90%;overflow:hidden" class="row J_mainContent" id="content-main">
             <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="user-jmpHomePage" frameborder="0" data-id=""></iframe>
         </div>
 

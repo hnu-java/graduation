@@ -327,7 +327,7 @@
                                 confirmButtonColor: "#18a689",
                                 confirmButtonText: "OK"
                             },function(){
-                                location.href = "user-jmpMyprofile";
+                                location.href = "user-jmpMyProfile";
                             })
                     }
                         else swal("修改失败！", "操作失败", "success");
@@ -535,7 +535,7 @@
                                     confirmButtonColor: "#18a689",
                                     confirmButtonText: "OK"
                                 }, function () {
-                                    location.href = "user-jmpMyprofile";
+                                    location.href = "user-jmpMyProfile";
                                 })
                             }
                             else swal("退出失败！", "机构管理员不能退出自己的机构", "error");
