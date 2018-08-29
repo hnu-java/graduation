@@ -168,7 +168,7 @@
             $("#warning2").html("<i class='glyphicon glyphicon-ok-sign pull-right' style='color: green'></i>");
         }
         $.ajax({
-            url: "project-create",
+            url: "project-create_test",
             data: {
                 name: $("input#proName").val(), document_Name: $("input#docName").val(),
                 orgName: $("input#orgName").val(), intro: $("textarea#intro").val()
@@ -181,11 +181,11 @@
                     // if (result.days >= 0) {
                     if(result.exist === true) {
                     if(result.belong === true) {
-                        if (result.res === true) {
+                        //if (result.res === true) {
                             swal(
                                 {
-                                    title: "创建成功",
-                                    text: "点击跳转项目列表",
+                                    title: "您确认创建吗？",
+                                    text: "创建项目将会扣除"+"${sessionScope.Mpoint5}"+"积分",
                                     type: "",
                                     showCancelButton: true,
                                     confirmButtonColor: "#18a689",
@@ -193,13 +193,42 @@
                                     cancelButtonText: "取消",
                                     closeOnConfirm: false
                                 }, function () {
-                                    location.href = "user-jmpCurrentProjectList";
+                                    $.ajax({
+                                        url: "project-create",
+                                        data: {
+                                            name: $("input#proName").val(), document_Name: $("input#docName").val(),
+                                            orgName: $("input#orgName").val(), intro: $("textarea#intro").val()
+                                        },
+                                        dataType: "json",
+                                        type: "Post",
+                                        async: "false",
+                                        success: function (result) {
+                                            if (result.res === true) {
+                                                swal(
+                                                    {
+                                                        title: "创建成功",
+                                                        text: "点击跳转至当前项目列表",
+                                                        type: "success",
+                                                        confirmButtonColor: "#18a689",
+                                                        confirmButtonText: "OK"
+                                                    },function () {
+                                                    location.href = "user-jmpCurrentProjectList";
+                                                })
+                                            }
+                                            else {
+                                                showtoast("error", "创建失败", "操作失败");
+                                            }
+                                        },
+                                        error: function (result) {
+                                            showtoast("error", "创建失败", "操作失败");
+                                        }
+                                })
                                 }
                             )
-                        }
-                        else {
-                            showtoast("error", "创建失败", "操作失败");
-                        }
+                       // }
+                       //  else {
+                       //     showtoast("error", "创建失败", "操作失败");
+                       // }
                     }else{
                         swal("您未加入该机构！", "请重新选择机构", "error")
                     }

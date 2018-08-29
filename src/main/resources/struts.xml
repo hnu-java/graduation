@@ -183,7 +183,7 @@
             <result name="projectDocument">/mjy_index.jsp</result>
             <result name="deploy">/WEB-INF/pages/project_proInformation.jsp</result>
          <interceptor-ref name="myStack"/>
-            <allowed-methods>modified,create,showOrg,chooseOrg,jmpProjectMember,jmpProjectInfo,jmpDocument,showCurrentList,showCompletedList,getProjectInfo,getProjectMember,setVPM,dismissVPM,deleteMember,inviteMember,end,alterPM,getDocument,createDoc,deploy,delete</allowed-methods>
+            <allowed-methods>modified,create,create_test,showOrg,chooseOrg,jmpProjectMember,jmpProjectInfo,jmpDocument,showCurrentList,showCompletedList,getProjectInfo,getProjectMember,setVPM,dismissVPM,deleteMember,inviteMember,end,alterPM,getDocument,createDoc,deploy,delete</allowed-methods>
         </action>
 
         <action name="library-*" class="action.LibraryAction" method="{1}">

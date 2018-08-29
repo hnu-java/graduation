@@ -633,7 +633,6 @@
                 loadTemplateThree(structureList[id])
             }
             })
-
     }
 
     function seeStructure(id_template,obj,index){
