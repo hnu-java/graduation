@@ -59,22 +59,11 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         }
         boolean res = userDao.login(user.getName(), user.getPassword());
         dataMap.put("res", res);
-        if(res==true) {
+        if(res){
             user = userDao.getOne(user.getName());
             session.put("user",user);
             dataMap.put("flag",user.getFlag());
 //            dataMap.put("days",user.getDays());
-            int orgManager=userDao.orgManager(user.getId_user());
-            session.put("user_name",user.getName());
-            session.put("orgManager",orgManager);
-            int Mpoint1=userDao.Mpoint(1);
-            int Mpoint2=userDao.Mpoint(2);
-            int Mpoint3=userDao.Mpoint(3);
-            int Mpoint5=userDao.Mpoint(5);
-            session.put("Mpoint1",Mpoint1);
-            session.put("Mpoint2",Mpoint2);
-            session.put("Mpoint3",Mpoint3);
-            session.put("Mpoint5",Mpoint5);
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
                 public void run() {
@@ -141,7 +130,6 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         int temp=(int)session.get("verification");
         String sessionVerification=Integer.toString(temp);
         verification = Integer.toString(user.getVerification()) ;
-        System.out.println(user.getName() + " " + user.getPassword()+" "+tempPassword+" "+user.getMail()+" "+verification+" "+"session注册码:"+session.get("verification"));
         if(sessionVerification.equals(verification) && verification!="") {
             boolean res = userDao.registration(user.getName(), user.getPassword(), tempPassword, user.getMail());
             dataMap.put("res", res);
@@ -159,7 +147,6 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         int temp=(int)session.get("verification");
         String sessionReplaceVerification=Integer.toString(temp);
         verification = Integer.toString(user.getVerification()) ;
-        System.out.println(user.getName() + " " + " "+newPassword+"  "+"session注册码:"+session.get("verification")+" "+user.getMail());
         if(sessionReplaceVerification.equals(verification) && verification!="") {
             boolean res = userDao.replacepassword(user.getName(),tempPassword, newPassword);
             dataMap.put("res", res);
@@ -177,7 +164,6 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         userDao = new UserDaoImp();
         UserEntity seesionUser=(UserEntity)session.get("user");
         boolean res=userDao.edit(seesionUser.getName(),user.getQq(),user.getAddress(),user.getTel(),user.getIntroduce(),user.getGender());
-        System.out.println(user.getGender()+"location:UserAction");
         dataMap.put("res", res);
         if(res==true) {
             user = userDao.getOne(seesionUser.getName());
@@ -214,7 +200,6 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         if(confirm) {
             userDao = new UserDaoImp();
             dataMap = new HashMap<String, Object>();
-            System.out.println("helloverficication");
             int temp = (int) ((Math.random() * 9 + 1) * 100000);
             String email = user.getMail();
             session.put("verification", temp);
@@ -241,7 +226,6 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         List<PointsRecordEntity> recordlist = showRecordDao.showPointsRecord(seesionUser.getId_user());
         Gson gson = new Gson();
         String json = gson.toJson(recordlist);
-        System.out.println(recordlist);
         dataMap.put("res",json);
         return "success";
     }
@@ -270,8 +254,8 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     public String outerJmpLogin(){
         return "loginPage";
     }
-    public String jmpMyprofile(){
-        return "myprofilePage";
+    public String jmpMyProfile(){
+        return "myProfilePage";
     }
     public String jmpRegistration() {
         userDao = new UserDaoImp();
@@ -285,21 +269,47 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         return "replacepasswordPage";
     }
 
-    public String jmpHomepage() {
+    public String jmpHomePage(){
+        dataMap = new HashMap<String, Object>();
+        userDao = new UserDaoImp();
+        user = (UserEntity)session.get("user");
+        session.put("countnow",userDao.projectNumberNow(user.getId_user()));
+        session.put("counthistory",userDao.projectNumberHistory(user.getId_user()));
+        session.put("nowNews",userDao.nowNews(user.getId_user()));
+        int Mycollectcount = userDao.Mycollectcount((((UserEntity)session.get("user")).getId_user()));
+        session.put("Mycollectcount",Mycollectcount);
+        return "homePage";
+    }
+
+    public String jmpHomepage(){
         userDao = new UserDaoImp();
         user = (UserEntity)session.get("user");
         session.put("countnow",userDao.projectNumberNow(user.getId_user()));
         session.put("counthistory",userDao.projectNumberHistory(user.getId_user()));
         session.put("nowNews",userDao.nowNews(user.getId_user()));
         dataMap = new HashMap<String, Object>();
-        userDao = new UserDaoImp();
         int Mycollectcount = userDao.Mycollectcount((((UserEntity)session.get("user")).getId_user()));
         session.put("Mycollectcount",Mycollectcount);
         return "homePage";
     }
 
 
-    public String jmpTemp() { return "tempPage"; }
+    public String jmpTemp() {
+        userDao = new UserDaoImp();
+        user = (UserEntity)session.get("user");
+        int orgManager=userDao.orgManager(user.getId_user());
+        session.put("user_name",user.getName());
+        session.put("orgManager",orgManager);
+        int Mpoint1=userDao.Mpoint(1);
+        int Mpoint2=userDao.Mpoint(2);
+        int Mpoint3=userDao.Mpoint(3);
+        int Mpoint5=userDao.Mpoint(5);
+        session.put("Mpoint1",Mpoint1);
+        session.put("Mpoint2",Mpoint2);
+        session.put("Mpoint3",Mpoint3);
+        session.put("Mpoint5",Mpoint5);
+        return "tempPage";
+    }
 
     public String jmpSysManager1(){
         return "SysManager1Page";

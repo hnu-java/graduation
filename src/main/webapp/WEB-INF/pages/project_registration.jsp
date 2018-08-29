@@ -47,13 +47,12 @@
             <div class="form-group col-sm-5 col-md-offset-2 loginLine">
             <input name="verification" id="verification"  type="verification" class="form-control loginLine valiadate" style="font-size:12px" placeholder="请填写验证码" required="">
         </div>
-            <div class="form-group">
+            <div class="form-group loginLine">
             <input id="registration_email" type="button" class="btn btn-w-m btn-default" style="color:#333333;margin-left:-30px;margin-top:4px;height: 30px;width: 15px;font-size:12px"  onclick="sendCode(this)" value="获取邮箱验证码"/>
         </div>
             <div class="form-group">
                 <input id="agree" type="checkbox" class=""/>阅读并接受<a href="/RegistrationAgreement.html" target="_blank">《用户协议》</a>
             </div>
-            <h6>&nbsp;</h6>
             <div style="width: 300px" class="form-group col-sm-8  col-md-offset-2 loginLine">
                 <button id="registration_button" class="btn btn-w-m btn-Bblack btn-sm">注 册</button>
                 <a href="login-outerJmpLogin"><small>已有账号？点我登录</small></a>
@@ -138,11 +137,7 @@
                     minlength: "验证码为6位",
                     maxlength: "验证码为6位"
                 },
-                email:"请输入一个正确的邮箱",
-                agree:{
-                    require:"请勾选“阅读并接受用户协议”"
-                }
-
+                email:"请输入一个正确的邮箱"
             }
         });
     });
@@ -150,59 +145,67 @@
     var state="true";
 //注册
     $("button#registration_button").click(function () {
-        $(".valiadate").each(function(){
-            if(($(this).attr("aria-invalid")==="undefined")||$(this).attr("aria-invalid")==="true"){
-                state="false";
-                return;
-            }
-        });
-        if(state==="false") {
-            state="true";
-            swal("输入有误", "请根据提示修改您的输入的信息", "error");
-
-        }
-        else {
-            var md5PWD1 = $("input#password1").val();
-            var tempPassword1 = hex_md5(md5PWD1);
-            var md5PWD2 = $("input#password2").val();
-            var tempPassword2 = hex_md5(md5PWD2);
-            $.ajax({
-                url: "login-registration",
-                data: {
-                    name: $("input#name").val(),
-                    password: tempPassword1,
-                    tempPassword: tempPassword2,
-                    mail: $("input#email").val(),
-                    verification: $("input#verification").val()
-                },
-                dataType: "json",
-                type: "Post",
-                async: "false",
-                success: function (result) {
-                    if(result.consequence === "error"){
-                        swal("验证码错误！", "请检查您的验证码输入是否正确", "error");
-                    }
-                    else if (result.res === true) {
-                        var content = "获得" + "${sessionScope.Mpoint3}" + "积分";
-                        swal({
-                            title: "注册成功!",
-                            text: content,
-                            type:"success",
-                            confirmButtonColor: "#18a689",
-                            confirmButtonText: "OK"
-                        },function(){
-                            location.href="login-jmpLogin"
-                        })
-                    }
-                    else if(result.res === false)
-                        swal("注册失败！", "用户名被占用。", "error");
-                },
-                error: function () {
-                    swal("注册失败！", "请求未发出，请先获取验证码并保证网络通畅。", "error");
+        if($("#agree").is(":checked")){
+          $(".valiadate").each(function(){
+                if(($(this).attr("aria-invalid")==="undefined")||$(this).attr("aria-invalid")==="true"){
+                    state="false";
+                    return;
                 }
-            })
+            });
+            if(state==="false") {
+                state="true";
+                swal("输入有误", "请根据提示修改您的输入的信息", "error");
+
+            }
+            else {
+                var md5PWD1 = $("input#password1").val();
+                var tempPassword1 = hex_md5(md5PWD1);
+                var md5PWD2 = $("input#password2").val();
+                var tempPassword2 = hex_md5(md5PWD2);
+                $.ajax({
+                    url: "login-registration",
+                    data: {
+                        name: $("input#name").val(),
+                        password: tempPassword1,
+                        tempPassword: tempPassword2,
+                        mail: $("input#email").val(),
+                        verification: $("input#verification").val()
+                    },
+                    dataType: "json",
+                    type: "Post",
+                    async: "false",
+                    success: function (result) {
+                        if(result.consequence === "error"){
+                            swal("验证码错误！", "请检查您的验证码输入是否正确", "error");
+                        }
+                        else if (result.res === true) {
+                            var content = "获得" + "${sessionScope.Mpoint3}" + "积分";
+                            swal({
+                                title: "注册成功!",
+                                text: content,
+                                type:"success",
+                                confirmButtonColor: "#18a689",
+                                confirmButtonText: "OK"
+                            },function(){
+                                location.href="login-jmpLogin"
+                            })
+                        }
+                        else if(result.res === false)
+                            swal("注册失败！", "用户名被占用。", "error");
+                    },
+                    error: function () {
+                        swal("注册失败！", "请求未发出，请先获取验证码并保证网络通畅。", "error");
+                    }
+                })
+            }
+        }else{
+            swal("未同意用户协议！", "请先阅读并勾选“阅读并接受用户协议”", "error");
         }
-    })
+    });
+
+
+
+
     var clock = '';
     var nums = 60;
     var btn;

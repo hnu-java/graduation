@@ -35,7 +35,7 @@
         <ol class="breadcrumb" style="margin-left: 40px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage">首页</a> >><a href="user-jmpMyprofile">个人中心</a>
+                    <a href="user-jmpHomepage">首页</a> >><a href="user-jmpMyProfile">个人中心</a>
                 </strong>
             </li>
         </ol>
@@ -327,7 +327,7 @@
                                 confirmButtonColor: "#18a689",
                                 confirmButtonText: "OK"
                             },function(){
-                                location.href = "user-jmpMyprofile";
+                                location.href = "user-jmpMyProfile";
                             })
                     }
                         else swal("修改失败！", "操作失败", "success");
@@ -535,7 +535,7 @@
                                     confirmButtonColor: "#18a689",
                                     confirmButtonText: "OK"
                                 }, function () {
-                                    location.href = "user-jmpMyprofile";
+                                    location.href = "user-jmpMyProfile";
                                 })
                             }
                             else swal("退出失败！", "机构管理员不能退出自己的机构", "error");

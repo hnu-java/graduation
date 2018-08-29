@@ -18,6 +18,8 @@ import com.itextpdf.tool.xml.pipeline.css.CssResolverPipeline;
 import com.itextpdf.tool.xml.pipeline.end.PdfWriterPipeline;
 import com.itextpdf.tool.xml.pipeline.html.HtmlPipeline;
 import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
+import org.xhtmlrenderer.pdf.*;
+import org.xhtmlrenderer.layout.SharedContext;
 import dao.CatalogDao;
 import daoImp.CatalogDaoImp;
 import entity.*;
@@ -62,20 +64,19 @@ public class Template2Pdf {
         line = line.replaceAll("png\">", "png\" />");
         line = line.replaceAll("<br>", "<br />");
         line = line.replaceAll("<hr>", "<hr />");
-        line = line.replaceAll("src=\"", "src=\"http://112.74.48.57");
+        line = line.replaceAll(">暂无","/>暂无");
+//        line = line.replaceAll("src=\"", "src=\"http://localhost:8080");
         line = "<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " + line + "</div>";
         XMLWorkerHelper.getInstance().parseXHtml(writer, document,
                 new ByteArrayInputStream(line.getBytes("UTF-8")),
                 null,
                 Charset.forName("UTF-8"), new pdfFont());
 
-
     }
-
 
     public InputStream createPdf(int id_document) throws IOException, DocumentException {
         Gson gson = new Gson();
-        Document document = new Document();
+        Document document = new Document(PageSize.A4);
         BaseFont bfChinese = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.NOT_EMBEDDED);
         Font cfont = new Font(bfChinese);
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -109,8 +110,9 @@ public class Template2Pdf {
         headline.setAlignment(Element.ALIGN_CENTER);
         document.add(headline);
 
-
+        //获取文档内容
         java.util.List<CatalogEntity> catalogEntityList = catalogDao.getAll(id_document);
+
         String line;
         Paragraph lineParagraph = new Paragraph();
         boolean isFirstIndex = false;
@@ -139,15 +141,15 @@ public class Template2Pdf {
             if (e.getContent() != null) {//生成不同类型的文本内容
                 if (e.getId_template() == 1) {//模板类型1
                     CommonStructureEntity entity = gson.fromJson(e.getContent(), CommonStructureEntity.class);
-
-
                     add2Document(document, entity.getContent(), writer);
                 }
                 if (e.getId_template() == 2) {//模板类型2
                     UserStructureEntity entity = gson.fromJson(e.getContent(), UserStructureEntity.class);
                     document.add(new Paragraph("用户名:" + entity.getRoleName(), black));
+                    document.add(BLANK);
                     document.add(new Paragraph("用户描述", black));
                     add2Document(document, entity.getDescribe(), writer);
+                    document.add(BLANK);
                     document.add(new Paragraph("用户权限", black));
                     add2Document(document, entity.getPermissions(), writer);
                 }
@@ -155,23 +157,32 @@ public class Template2Pdf {
                     FunStructureEntity entity = gson.fromJson(e.getContent(), FunStructureEntity.class);
                     String priorityName;
                     document.add(new Paragraph("功能点名称:" + entity.getFunName(), black));
+                    document.add(BLANK);
                     if (entity.getPriority() == 1) priorityName = "高";
                     else if (entity.getPriority() == 2) priorityName = "中";
                     else priorityName = "低";
                     document.add(new Paragraph("优先级: " + priorityName, black));
+                    document.add(BLANK);
                     document.add(new Paragraph("功能点描述: ", black));
                     add2Document(document, entity.getDescribe(), writer);
+                    document.add(BLANK);
                     document.add(new Paragraph("用例过程: ", black));
                     List<FunRole> funRoleList = entity.getFunRoleList();
                     for (int i = 0; i < funRoleList.size(); i++) {
                         FunRole funRole = funRoleList.get(i);
-                        document.add(new Paragraph("用例过程" + (i + 1), cfont));
+                        document.add(new Paragraph("      "+"用例过程" + (i + 1), black));
                         if (funRole.getRoleName() != null)
-                            document.add(new Paragraph("参与角色:  " + funRole.getRoleName(), black));
+                            document.add(new Paragraph("      "+"      参与角色:" + funRole.getRoleName(), cfont));
                         if (funRole.getRoleDescribe() != null)
-                            document.add(new Paragraph("用例描述:  " + funRole.getRoleDescribe(), black));
-                        document.add(new Paragraph(funRole.getUsableName(), black));
-                        document.add(new Paragraph(funRole.getUsablePara(), black));
+                            document.add(new Paragraph("      "+"      用例描述:  " + funRole.getRoleDescribe(), cfont));
+                        if(funRole.getUsableName() != null) {
+                            document.add(new Paragraph("      "+"      " + funRole.getUsableName(), cfont));
+                            document.add(new Paragraph("      "+"      " + funRole.getUsablePara(), cfont));
+                        }
+                        if(funRole.getSecurityName() != null) {
+                            document.add(new Paragraph("      "+"      " + funRole.getSecurityName(), cfont));
+                            document.add(new Paragraph("      "+"      " + funRole.getSecurityPara(), cfont));
+                        }
                         document.add(BLANK);
                     }
                     List<FunUsable> funUsableList = entity.getFunUsableList();
@@ -179,9 +190,9 @@ public class Template2Pdf {
                         document.add(new Paragraph("全局可用性: ", black));
                         for (int j = 0; j < funUsableList.size(); j++) {
                             FunUsable funUsable = funUsableList.get(j);
-                            document.add(new Paragraph("全局可用性" + (j + 1), black));
-                            document.add(new Paragraph("全局可用性名称:  " + funUsable.getUsableName(), black));
-                            document.add(new Paragraph("发生条件:  " + funUsable.getUsablePara(), black));
+                            document.add(new Paragraph("      "+"全局可用性" + (j + 1), black));
+                            document.add(new Paragraph("      "+"      "+"全局可用性名称:  " + funUsable.getUsableName(), cfont));
+                            document.add(new Paragraph("      "+"      "+"发生条件:  " + funUsable.getUsablePara(), cfont));
                             document.add(BLANK);
                         }
                     }
@@ -198,6 +209,14 @@ public class Template2Pdf {
         }
 
         document.close();
+
+        ITextRenderer renderer = new ITextRenderer();
+        SharedContext sharedContext = renderer.getSharedContext();
+        // 解决base64图片支持问题
+        sharedContext.setReplacedElementFactory(new B64ImgReplacedElementFactory());
+        sharedContext.getTextRenderer().setSmoothingThreshold(0);
+        renderer.setDocumentFromString(buffer.toString());
+
         InputStream inputStream = new ByteArrayInputStream(buffer.toByteArray());
 
         return inputStream;
