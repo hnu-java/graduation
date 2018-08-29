@@ -156,7 +156,8 @@
                                     </div>
                                     <input id="idLibrary" style="display: none" type="text" value="<s:property value="id_library"/>">
                                     <div style="float: right;z-index:99999999;margin: -14px -19px 0px 0px">
-                                        <button id="delete" type="submit" class="btn btn-alert" myvalue="<s:property value="id_library"/>">删除</button>
+                                        <button id="delete" type="submit" class="btn btn-warning btn-xs" myvalue="<s:property value="id_library"/>">删除</button>
+                                        <button id="publish" type="submit" class="btn btn-primary btn-xs" myvalue="<s:property value="id_library"/>">发布</button>
                                     </div>
                                         <%--<div style="float: right;z-index:99999999;margin: -14px -19px 0px 0px">--%>
                                         <%--<s:if test="#request.id_user==#session.user.id_user">--%>
@@ -195,6 +196,26 @@
         </div>
     </div>
 </div>
+
+<div  class="modal inmodal" id="publishLibrary" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">发布用例库</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group"><label>留言</label> <input id="publish_content" type="text" placeholder="请输入留言(可不填，不超过60字符)"  maxlength="60" class="form-control" required="required"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-publish" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="publish-button" type="button" class="btn btn-primary" id_library = "<s:property value="id_library"/>">发布</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="<%=basePath%>/js/jquery.min.js?v=2.1.4"></script>
 <script src="<%=basePath%>/js/bootstrap.min.js?v=3.3.6"></script>
 <script src="<%=basePath%>/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
@@ -243,9 +264,79 @@
 </body>
 <script>
 
+    $("button#publish").click(function () {
+        var id_library = $(this).attr("myvalue");
+        alert(id_library);
+        swal(
+            {
+                title: "请输入构件库描述",
+                text: "可不填，最多60个字",
+                type: "input",
+                showCancelButton: true,
+                confirmButtonColor: "#18a689",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            }, function (inputValue) {
+                $.ajax({
+                    url: "publishLibrary-publishLibrary",
+                    data: {
+                        id_library : id_library,
+                        content : inputValue
+                    },
+                    dataType: "json",
+                    type: "Post",
+                    async: "false",
+                    success: function (result) {
+                        if(result.repeat) {
+                            swal({
+                                title: "申请失败，已经发送申请",
+                                type: "error",
+                                confirmButtonColor: "#18a689",
+                                confirmButtonText: "OK"
+                            })
+                        }
+                        else {
+                            if (result.official) {
+                                swal({
+                                    title: "申请失败，已经是官方构件库",
+                                    type: "error",
+                                    confirmButtonColor: "#18a689",
+                                    confirmButtonText: "OK"
+                                })
+                            }
+                            else {
+                                if (result.res) {
+                                    swal({
+                                        title: "申请成功，等待审核通过",
+                                        type: "success",
+                                        confirmButtonColor: "#18a689",
+                                        confirmButtonText: "OK"
+                                    }, function () {
+                                        location.href = "library-jmpUserLibrary";
+                                    })
+                                }else{
+                                    swal({
+                                        title: "新建失败,服务器异常",
+                                        type: "error",
+                                        confirmButtonColor: "#18a689",
+                                        confirmButtonText: "OK"
+                                    })
+                                }
+                            }
+                        }
+                    },
+                    error: function () {
+                        swal({
+                            icon: "error"
+                        });
+                    }
+                })
+            })
+    })
+
     $("button#delete").click(function () {
-        var view = $(this).attr("myvalue");
-        var id_library = view
+        var id_library = $(this).attr("myvalue");
         alert(id_library);
         swal(
             {
