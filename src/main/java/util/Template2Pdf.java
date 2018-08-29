@@ -18,6 +18,8 @@ import com.itextpdf.tool.xml.pipeline.css.CssResolverPipeline;
 import com.itextpdf.tool.xml.pipeline.end.PdfWriterPipeline;
 import com.itextpdf.tool.xml.pipeline.html.HtmlPipeline;
 import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
+import org.xhtmlrenderer.pdf.*;
+import org.xhtmlrenderer.layout.SharedContext;
 import dao.CatalogDao;
 import daoImp.CatalogDaoImp;
 import entity.*;
@@ -72,21 +74,6 @@ public class Template2Pdf {
 
     }
 
-    private void add3Document(Document document, String line, PdfWriter writer) throws DocumentException, IOException {
-        Font cfont = new Font(bfChinese);
-        line = line.replaceAll("png\">", "png\" />");
-        line = line.replaceAll("<br>", "<br />");
-        line = line.replaceAll("<hr>", "<hr />");
-        line = line.replaceAll(">暂无","/>暂无");
-        System.out.println(line);
-//        line = line.replaceAll("src=\"", "src=\"http://localhost:8080");
-        line = "<div style=\"padding-left = 20px\"> " + line + "</div>";
-        XMLWorkerHelper.getInstance().parseXHtml(writer, document,
-                new ByteArrayInputStream(line.getBytes("UTF-8")),
-                null,
-                Charset.forName("UTF-8"), new pdfFont());
-
-    }
     public InputStream createPdf(int id_document) throws IOException, DocumentException {
         Gson gson = new Gson();
         Document document = new Document(PageSize.A4);
@@ -159,21 +146,26 @@ public class Template2Pdf {
                 if (e.getId_template() == 2) {//模板类型2
                     UserStructureEntity entity = gson.fromJson(e.getContent(), UserStructureEntity.class);
                     document.add(new Paragraph("用户名:" + entity.getRoleName(), black));
+                    document.add(BLANK);
                     document.add(new Paragraph("用户描述", black));
                     add2Document(document, entity.getDescribe(), writer);
+                    document.add(BLANK);
                     document.add(new Paragraph("用户权限", black));
-                    add3Document(document, entity.getPermissions(), writer);
+                    add2Document(document, entity.getPermissions(), writer);
                 }
                 if (e.getId_template() == 3) {//模板类型3
                     FunStructureEntity entity = gson.fromJson(e.getContent(), FunStructureEntity.class);
                     String priorityName;
                     document.add(new Paragraph("功能点名称:" + entity.getFunName(), black));
+                    document.add(BLANK);
                     if (entity.getPriority() == 1) priorityName = "高";
                     else if (entity.getPriority() == 2) priorityName = "中";
                     else priorityName = "低";
                     document.add(new Paragraph("优先级: " + priorityName, black));
+                    document.add(BLANK);
                     document.add(new Paragraph("功能点描述: ", black));
                     add2Document(document, entity.getDescribe(), writer);
+                    document.add(BLANK);
                     document.add(new Paragraph("用例过程: ", black));
                     List<FunRole> funRoleList = entity.getFunRoleList();
                     for (int i = 0; i < funRoleList.size(); i++) {
@@ -217,6 +209,14 @@ public class Template2Pdf {
         }
 
         document.close();
+
+        ITextRenderer renderer = new ITextRenderer();
+        SharedContext sharedContext = renderer.getSharedContext();
+        // 解决base64图片支持问题
+        sharedContext.setReplacedElementFactory(new B64ImgReplacedElementFactory());
+        sharedContext.getTextRenderer().setSmoothingThreshold(0);
+        renderer.setDocumentFromString(buffer.toString());
+
         InputStream inputStream = new ByteArrayInputStream(buffer.toByteArray());
 
         return inputStream;

@@ -59,22 +59,11 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         }
         boolean res = userDao.login(user.getName(), user.getPassword());
         dataMap.put("res", res);
-        if(res==true) {
+        if(res){
             user = userDao.getOne(user.getName());
             session.put("user",user);
             dataMap.put("flag",user.getFlag());
 //            dataMap.put("days",user.getDays());
-            int orgManager=userDao.orgManager(user.getId_user());
-            session.put("user_name",user.getName());
-            session.put("orgManager",orgManager);
-            int Mpoint1=userDao.Mpoint(1);
-            int Mpoint2=userDao.Mpoint(2);
-            int Mpoint3=userDao.Mpoint(3);
-            int Mpoint5=userDao.Mpoint(5);
-            session.put("Mpoint1",Mpoint1);
-            session.put("Mpoint2",Mpoint2);
-            session.put("Mpoint3",Mpoint3);
-            session.put("Mpoint5",Mpoint5);
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
                 public void run() {
@@ -280,23 +269,47 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         return "replacepasswordPage";
     }
 
-    public String jmpHomePage() {
+    public String jmpHomePage(){
+        dataMap = new HashMap<String, Object>();
         userDao = new UserDaoImp();
         user = (UserEntity)session.get("user");
         session.put("countnow",userDao.projectNumberNow(user.getId_user()));
         session.put("counthistory",userDao.projectNumberHistory(user.getId_user()));
         session.put("nowNews",userDao.nowNews(user.getId_user()));
-        dataMap = new HashMap<String, Object>();
-        userDao = new UserDaoImp();
         int Mycollectcount = userDao.Mycollectcount((((UserEntity)session.get("user")).getId_user()));
         session.put("Mycollectcount",Mycollectcount);
         return "homePage";
     }
 
     public String jmpHomepage(){
+        userDao = new UserDaoImp();
+        user = (UserEntity)session.get("user");
+        session.put("countnow",userDao.projectNumberNow(user.getId_user()));
+        session.put("counthistory",userDao.projectNumberHistory(user.getId_user()));
+        session.put("nowNews",userDao.nowNews(user.getId_user()));
+        dataMap = new HashMap<String, Object>();
+        int Mycollectcount = userDao.Mycollectcount((((UserEntity)session.get("user")).getId_user()));
+        session.put("Mycollectcount",Mycollectcount);
         return "homePage";
     }
-    public String jmpTemp() { return "tempPage"; }
+
+
+    public String jmpTemp() {
+        userDao = new UserDaoImp();
+        user = (UserEntity)session.get("user");
+        int orgManager=userDao.orgManager(user.getId_user());
+        session.put("user_name",user.getName());
+        session.put("orgManager",orgManager);
+        int Mpoint1=userDao.Mpoint(1);
+        int Mpoint2=userDao.Mpoint(2);
+        int Mpoint3=userDao.Mpoint(3);
+        int Mpoint5=userDao.Mpoint(5);
+        session.put("Mpoint1",Mpoint1);
+        session.put("Mpoint2",Mpoint2);
+        session.put("Mpoint3",Mpoint3);
+        session.put("Mpoint5",Mpoint5);
+        return "tempPage";
+    }
 
     public String jmpSysManager1(){
         return "SysManager1Page";

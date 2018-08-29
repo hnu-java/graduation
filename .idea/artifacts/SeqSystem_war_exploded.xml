@@ -36,6 +36,10 @@
           <element id="library" level="project" name="Maven: com.itextpdf:itextpdf:5.5.13" />
           <element id="library" level="project" name="Maven: com.itextpdf:itext-asian:5.2.0" />
           <element id="library" level="project" name="Maven: com.itextpdf.tool:xmlworker:5.5.9" />
+          <element id="file-copy" path="D:/qqBrowser/qqBrowserDownLoad/flying-saucer-core-9.0.6.jar" />
+          <element id="file-copy" path="E:/快易系统2018-7/iText转word/iText导出word含jar/iText-2.1.5.jar" />
+          <element id="file-copy" path="D:/qqBrowser/qqBrowserDownLoad/flying-saucer-pdf-9.0.4.jar" />
+          <element id="file-copy" path="E:/快易系统2018-7/iText转word/iText导出word含jar/iText-rtf-2.1.4.jar" />
         </element>
       </element>
       <element id="directory" name="META-INF">
