@@ -159,7 +159,7 @@ function loadTemplateThree(entity) {
     var funRoleContent="";
     if(funRoleList!=null)
     for (var i=0;i<funRoleList.length;i++){
-        funRoleContent+=" <tr class='funTr'> <th  ><div class='hidenTh' style='display: none'> <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black'></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black ' ></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></div></th> <th> <select class='form-control  roleName dis' name='roleName'   disabled>";
+        funRoleContent+=" <tr class='funTr'> <th  ><div class='hidenTh' style='display: none'> <span class='former_fun_down li_fa fa col-md-offset-1  fa-arrow-down black'></span> <span class='former_fun_up fa li_fa col-md-offset-1  fa-arrow-up black ' ></span> <span class='former_fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></div></th> <th> <select class='form-control  roleName dis' name='roleName'   disabled>";
         var undefined="true",roleListContent="";
         for (var j=0;j<roleList.length;j++){
             roleListContent+="<option";
@@ -177,15 +177,15 @@ function loadTemplateThree(entity) {
         if(funRoleList[i].usableName==null && funRoleList[i].securityName==null){//新增按钮
             funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='margin-right: 10px' disabled>安全</button> </th></tr>";
         }else if(funRoleList[i].usableName==null){
-            funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>可用</button> </th></tr>";
-            funRoleContent+="<tr class='securityTr'> <th colspan='2' name='securityName' class='securityName'>"+funRoleList[i].securityName+"</th> <th  name='securityPara' class='securityPara' >"+funRoleList[i].securityPara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteSecurity'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px' disabled>删除安全性</button></th> </tr>";
+            funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='display: none; margin-right: 10px' disabled>安全</button> </th></tr>";
+            funRoleContent+="<tr class='securityTr'> <th></th> <th name='securityName' class='securityName'>"+funRoleList[i].securityName+"</th> <th  name='securityPara' class='securityPara' >"+funRoleList[i].securityPara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteSecurity'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px' disabled>删除安全性</button></th> </tr>";
         }else if(funRoleList[i].securityName==null){
-            funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='margin-right: 10px' disabled>安全</button> </th></tr>";
-            funRoleContent+="<tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>"+funRoleList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funRoleList[i].usablePara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>";
+            funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='display: none; margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='margin-right: 10px' disabled>安全</button> </th></tr>";
+            funRoleContent+="<tr class='usableTr'> <th></th> <th name='usableName' class='usableName'>"+funRoleList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funRoleList[i].usablePara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>";
         }else{
-            funRoleContent+="</tr>";
-            funRoleContent+="<tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>"+funRoleList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funRoleList[i].usablePara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>";
-            funRoleContent+="<tr class='securityTr'> <th colspan='2' name='securityName' class='securityName'>"+funRoleList[i].securityName+"</th> <th  name='securityPara' class='securityPara' >"+funRoleList[i].securityPara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteSecurity'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px' disabled>删除安全性</button></th> </tr>";
+            funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='display: none; margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='display: none; margin-right: 10px' disabled>安全</button> </th></tr>";
+            funRoleContent+="<tr class='usableTr'> <th></th> <th name='usableName' class='usableName'>"+funRoleList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funRoleList[i].usablePara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>";
+            funRoleContent+="<tr class='securityTr'> <th></th> <th name='securityName' class='securityName'>"+funRoleList[i].securityName+"</th> <th  name='securityPara' class='securityPara' >"+funRoleList[i].securityPara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteSecurity'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px' disabled>删除安全性</button></th> </tr>";
         }
     }
     $(".funTable tbody").prepend(funRoleContent);
@@ -1037,19 +1037,48 @@ function addFunlLine() {
 
 $(document).on("click",".fun_down",function () {
     var thisLine=$(this).parent().parent();
-    if(thisLine.next("tr").hasClass("usableTr")){
+    if(thisLine.next("tr").hasClass("usableTr")||thisLine.next("tr").hasClass("securityTr")){
         var nextLine=thisLine.next();
-        if(nextLine.next().hasClass("end"))
-            showtoast("warning","失败","已经到底部");
-        else {
-            var afterFunTr=nextLine.next("tr.funTr");
-            if (afterFunTr.next().hasClass("end")||afterFunTr.next().hasClass("funTr")){
-                afterFunTr.after(nextLine)
-                afterFunTr.after(thisLine)
+        if(nextLine.next("tr").hasClass("securityTr")){
+            var securityLine = nextLine.next();
+            if(securityLine.next().hasClass("end"))
+                showtoast("warning","失败","已经到底部");
+            else {
+                var afterFunTr=securityLine.next("tr.funTr");
+                if (afterFunTr.next().hasClass("end")||afterFunTr.next().hasClass("funTr")){
+                    afterFunTr.after(securityLine)
+                    afterFunTr.after(nextLine)
+                    afterFunTr.after(thisLine)
+                }
+                else if(afterFunTr.next().next().hasClass("securityTr") && afterFunTr.next().hasClass("usableTr")){
+                    afterFunTr.next().next().after(securityLine)
+                    afterFunTr.next().next().after(nextLine)
+                    afterFunTr.next().next().after(thisLine)
+                }
+                else{
+                    afterFunTr.next().after(securityLine)
+                    afterFunTr.next().after(nextLine)
+                    afterFunTr.next().after(thisLine)
+                }
             }
-            else{
-                afterFunTr.next().after(nextLine)
-                afterFunTr.next().after(thisLine)
+        }
+        else{
+            if(nextLine.next().hasClass("end"))
+                showtoast("warning","失败","已经到底部");
+            else {
+                var afterFunTr=nextLine.next("tr.funTr");
+                if (afterFunTr.next().hasClass("end")||afterFunTr.next().hasClass("funTr")){
+                    afterFunTr.after(nextLine)
+                    afterFunTr.after(thisLine)
+                }
+                else if(afterFunTr.next().next().hasClass("securityTr") && afterFunTr.next().hasClass("usableTr")){
+                    afterFunTr.next().next().after(nextLine)
+                    afterFunTr.next().next().after(thisLine)
+                }
+                else{
+                    afterFunTr.next().after(nextLine)
+                    afterFunTr.next().after(thisLine)
+                }
             }
         }
     }
@@ -1059,9 +1088,80 @@ $(document).on("click",".fun_down",function () {
         else {
             var afterFunTr=thisLine.next("tr.funTr");
             if (afterFunTr.next().hasClass("end")||afterFunTr.next().hasClass("funTr")){
-                afterFunTr.after(thisLine);
+                afterFunTr.after(thisLine)
             }
-            else afterFunTr.next().after(thisLine);
+            else if(afterFunTr.next().next().hasClass("securityTr") && afterFunTr.next().hasClass("usableTr")){
+                afterFunTr.next().next().after(thisLine)
+            }
+            else{
+                afterFunTr.next().after(thisLine)
+            }
+        }
+    }
+
+})
+
+$(document).on("click",".former_fun_down",function () {
+    var thisLine=$(this).parent().parent().parent();
+    if(thisLine.next("tr").hasClass("usableTr")||thisLine.next("tr").hasClass("securityTr")){
+        var nextLine=thisLine.next();
+        if(nextLine.next("tr").hasClass("securityTr")){
+            var securityLine = nextLine.next();
+            if(securityLine.next().hasClass("end"))
+                showtoast("warning","失败","已经到底部");
+            else {
+                var afterFunTr=securityLine.next("tr.funTr");
+                if (afterFunTr.next().hasClass("end")||afterFunTr.next().hasClass("funTr")){
+                    afterFunTr.after(securityLine)
+                    afterFunTr.after(nextLine)
+                    afterFunTr.after(thisLine)
+                }
+                else if(afterFunTr.next().next().hasClass("securityTr") && afterFunTr.next().hasClass("usableTr")){
+                    afterFunTr.next().next().after(securityLine)
+                    afterFunTr.next().next().after(nextLine)
+                    afterFunTr.next().next().after(thisLine)
+                }
+                else{
+                    afterFunTr.next().after(securityLine)
+                    afterFunTr.next().after(nextLine)
+                    afterFunTr.next().after(thisLine)
+                }
+            }
+        }
+        else{
+            if(nextLine.next().hasClass("end"))
+                showtoast("warning","失败","已经到底部");
+            else {
+                var afterFunTr=nextLine.next("tr.funTr");
+                if (afterFunTr.next().hasClass("end")||afterFunTr.next().hasClass("funTr")){
+                    afterFunTr.after(nextLine)
+                    afterFunTr.after(thisLine)
+                }
+                else if(afterFunTr.next().next().hasClass("securityTr") && afterFunTr.next().hasClass("usableTr")){
+                    afterFunTr.next().next().after(nextLine)
+                    afterFunTr.next().next().after(thisLine)
+                }
+                else{
+                    afterFunTr.next().after(nextLine)
+                    afterFunTr.next().after(thisLine)
+                }
+            }
+        }
+    }
+    else {
+        if(thisLine.next().hasClass("end"))
+            showtoast("warning","失败","已经到底部");
+        else {
+            var afterFunTr=thisLine.next("tr.funTr");
+            if (afterFunTr.next().hasClass("end")||afterFunTr.next().hasClass("funTr")){
+                afterFunTr.after(thisLine)
+            }
+            else if(afterFunTr.next().next().hasClass("securityTr") && afterFunTr.next().hasClass("usableTr")){
+                afterFunTr.next().next().after(thisLine)
+            }
+            else{
+                afterFunTr.next().after(thisLine)
+            }
         }
     }
 
@@ -1097,8 +1197,46 @@ $(document).on("click",".fun_up",function () {
     }
 })
 
+$(document).on("click",".former_fun_up",function () {
+    var thisLine=$(this).parent().parent().parent();
+    if(thisLine.index()==0)
+    {
+        showtoast("warning","失败","已经到顶部");return;
+    }
+    if(thisLine.next("tr").hasClass("usableTr")){
+        var nextLine=thisLine.next();
+        var beforeFunTr=thisLine.prev();
+        if (beforeFunTr.hasClass("funTr")){
+            beforeFunTr.before(thisLine)
+            beforeFunTr.before(nextLine)
+        }
+        else{
+            beforeFunTr.prev().before(thisLine)
+            beforeFunTr.prev().before(nextLine)
+        }
+    }
+    else {
+        var beforeFunTr=thisLine.prev();
+        if (beforeFunTr.hasClass("funTr")){
+            beforeFunTr.before(thisLine)
+        }
+        else{
+            beforeFunTr.prev().before(thisLine)
+        }
+
+    }
+})
+
 $(document).on("click",".fun_delete",function () {
     var thisLine=$(this).parent().parent();
+    if(thisLine.next().hasClass("usableTr")){
+        thisLine.next().remove();
+    }
+    thisLine.remove();
+})
+
+$(document).on("click",".former_fun_delete",function () {
+    var thisLine=$(this).parent().parent().parent();
     if(thisLine.next().hasClass("usableTr")){
         thisLine.next().remove();
     }
