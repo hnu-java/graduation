@@ -90,18 +90,18 @@
 <div id="wrapper" style="padding: 0px" class="wrapper wrapper-content animated fadeInDown gray-bg">
 
     <div id="next1" style="width: 100%;margin: 0 auto;font-weight: 400" class="gray-bg">
-        <div class=" row wrapper white-bg" >
-            <ol class="breadcrumb" style="margin-left: 50px">
+        <div class=" row wrapper white-bg" style="padding: 5px">
+            <ol class="breadcrumb" style="margin-left: 55px">
                 <li style="font-size: 15px">
                     <strong>
-                        <a href="user-jmpHomepage"><span class="lzf_b">首页</span></a> >><a href="library-get"><span class="lzf_b">构件库</span></a> >> <a href="library-jmpUserLibrary">用户构件库</a>
+                        <a href="user-jmpHomepage"><span class="lzf_b" style="color:#658387">首页</span></a> >> <a href="library-get"><span class="lzf_b" style="color:#658387">构件库</span></a> >> <a href="library-jmpUserLibrary">用户构件库</a>
                     </strong>
                 </li>
             </ol>
         </div>
         <div id="main" style="margin-top:10px">
             <div id="head" style="width:100%;height: 70px;font-size:x-small;margin: 0 auto">
-                <div style="float: left;height: 60px;padding: 20px 20px 0px 20px" class="col-md-4">
+                <div style="float: left;height: 60px;padding: 20px 20px 0px 20px" class="col-md-11">
                     <div style="float: left;margin: 0px 0px 0px 50px">
                         <div>
                             <a href="library-get"><div style="font-size: 18px;color: black">官方构件库</div></a>
@@ -119,10 +119,11 @@
                     <div style="float: left">
                         <div style="float: left;font-size:18px;text-align: left;color: black"><a href="library-Mycollect"><span class="lzf_a">我的收藏</span></a></div>
                     </div>
-                    <div>
-                        <button class="btn btn-xs btn-primary" style="margin-left: 20px" data-toggle="modal" data-target="#newLibrary">新建构件库</button>
+                    <div style="float:right">
+                        <button class="btn btn-success" style="margin:-3px 10px" data-toggle="modal" data-target="#newLibrary">新建构件库</button>
                     </div>
                 </div>
+
             </div>
 
             <div id="view" style="padding: 0px 70px 0px 70px;margin-top:30px;height: 450px">
@@ -155,8 +156,9 @@
                                         </div>
                                     </div>
                                     <input id="idLibrary" style="display: none" type="text" value="<s:property value="id_library"/>">
-                                    <div style="float: right;z-index:99999999;margin: -14px -19px 0px 0px">
-                                        <button id="delete" type="submit" class="btn btn-alert" myvalue="<s:property value="id_library"/>">删除</button>
+                                    <div style="float:right;z-index:99999999;margin: -14px -10px 0px 0px">
+                                        <button id="delete" type="submit" class="btn btn-danger btn-xs" myvalue="<s:property value="id_library"/>">删除</button>
+                                        <button id="publish" type="submit" class="btn btn-success btn-xs" myvalue="<s:property value="id_library"/>">发布</button>
                                     </div>
                                         <%--<div style="float: right;z-index:99999999;margin: -14px -19px 0px 0px">--%>
                                         <%--<s:if test="#request.id_user==#session.user.id_user">--%>
@@ -195,6 +197,26 @@
         </div>
     </div>
 </div>
+
+<div  class="modal inmodal" id="publishLibrary" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">发布用例库</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group"><label>留言</label> <input id="publish_content" type="text" placeholder="请输入留言(可不填，不超过60字符)"  maxlength="60" class="form-control" required="required"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-publish" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="publish-button" type="button" class="btn btn-primary" id_library = "<s:property value="id_library"/>">发布</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="<%=basePath%>/js/jquery.min.js?v=2.1.4"></script>
 <script src="<%=basePath%>/js/bootstrap.min.js?v=3.3.6"></script>
 <script src="<%=basePath%>/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
@@ -243,9 +265,79 @@
 </body>
 <script>
 
+    $("button#publish").click(function () {
+        var id_library = $(this).attr("myvalue");
+        alert(id_library);
+        swal(
+            {
+                title: "请输入构件库描述",
+                text: "可不填，最多60个字",
+                type: "input",
+                showCancelButton: true,
+                confirmButtonColor: "#18a689",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            }, function (inputValue) {
+                $.ajax({
+                    url: "publishLibrary-publishLibrary",
+                    data: {
+                        id_library : id_library,
+                        content : inputValue
+                    },
+                    dataType: "json",
+                    type: "Post",
+                    async: "false",
+                    success: function (result) {
+                        if(result.repeat) {
+                            swal({
+                                title: "申请失败，已经发送申请",
+                                type: "error",
+                                confirmButtonColor: "#18a689",
+                                confirmButtonText: "OK"
+                            })
+                        }
+                        else {
+                            if (result.official) {
+                                swal({
+                                    title: "申请失败，已经是官方构件库",
+                                    type: "error",
+                                    confirmButtonColor: "#18a689",
+                                    confirmButtonText: "OK"
+                                })
+                            }
+                            else {
+                                if (result.res) {
+                                    swal({
+                                        title: "申请成功，等待审核通过",
+                                        type: "success",
+                                        confirmButtonColor: "#18a689",
+                                        confirmButtonText: "OK"
+                                    }, function () {
+                                        location.href = "library-jmpUserLibrary";
+                                    })
+                                }else{
+                                    swal({
+                                        title: "新建失败,服务器异常",
+                                        type: "error",
+                                        confirmButtonColor: "#18a689",
+                                        confirmButtonText: "OK"
+                                    })
+                                }
+                            }
+                        }
+                    },
+                    error: function () {
+                        swal({
+                            icon: "error"
+                        });
+                    }
+                })
+            })
+    })
+
     $("button#delete").click(function () {
-        var view = $(this).attr("myvalue");
-        var id_library = view
+        var id_library = $(this).attr("myvalue");
         alert(id_library);
         swal(
             {

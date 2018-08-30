@@ -28,11 +28,11 @@
 
 <body class="gray-bg">
 <div id="page-wrapper" class="white-bg dashbard-1">
-    <div class=" row wrapper white-bg" id="content-main">
+    <div class=" row wrapper white-bg" style="padding: 5px" id="content-main">
         <ol class="breadcrumb" style="margin-left: 40px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage">首页</a> >> <a href="user-jmpMyprofile">个人中心</a> >> ${sessionScope.user.name}的积分记录
+                    <a href="user-jmpHomepage" style="color:#658387">首页</a> >> <a href="user-jmpMyprofile" style="color:#658387">个人中心</a> >> ${sessionScope.user.name}的积分记录
                 </strong>
             </li>
         </ol>

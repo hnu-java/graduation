@@ -110,22 +110,22 @@
 </div>
 <div id="wrapper" style="padding: 0px" class="wrapper wrapper-content ">
     <div id="next1" style="width: 100%;margin: 0 auto;font-weight: 400" class="gray-bg">
-        <div class=" row wrapper white-bg">
-            <ol class="breadcrumb" style="margin-left: 50px">
-                <li style="font-size: 15px">
-                    <strong>
-                        <a href="user-jmpHomepage"><span class="lzf_b">首页</span></a> >><a href="library-get"><span class="lzf_b">构件库</span></a> >> 构件
-                    </strong>
-                </li>
-            </ol>
-        </div>
+    <div class=" row wrapper white-bg" style="padding: 5px;">
+        <ol class="breadcrumb" style="margin-left: 50px">
+            <li style="font-size: 15px">
+                <strong>
+                    <a href="user-jmpHomepage"><span class="lzf_b" style="color:#658387">首页</span></a> >> <a href="library-get"><span class="lzf_b" style="color:#658387">构件库</span></a> >> 构件
+                </strong>
+            </li>
+        </ol>
+    </div>
         <div id="main" style="width:100%;margin-top: 10px ">
             <div id="head" style="width:1200px;font-size:x-small;margin: 0 auto">
                 <div style="float: left;height: 50px;width:300px;padding: 20px 20px 0px 20px;margin-left: 100px">
                     <h2 style="font-weight:700"> ${requestScope.library.name}</h2>
                 </div>
                 <div style="float: left;height: 50px;width:200px;padding: 40px 0px 20px 0px;text-align:center;margin-top:5px">
-                    <p style="font-size: 16px;color: black">贡献人：${requestScope.library.user_name}</p>
+                        <p style="font-size: 16px;color: black">贡献人：${requestScope.library.user_name}</p>
                 </div>
                 <div style="float: left;height: 50px;width:200px;padding: 40px 0px 20px 0px;margin-top:5px;margin-left: 10px">
                     <p style="font-size: 16px;color: black">发布时间：${requestScope.library.time}</p>
@@ -136,13 +136,13 @@
                 <div style="float: left;height: 50px;width:100px;padding: 40px 0px 20px 0px;margin-top:5px;margin-left: 10px">
                     <s:if test="#request.library.id_user == #session.user.id_user">
                         <s:if test="#request.id_template==1">
-                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newCommon">创建通用构件</button>
+                            <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#newCommon">创建通用构件</button>
                         </s:if>
                         <s:elseif test="#request.id_template==2">
-                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newUser">创建用户构件</button>
+                            <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#newUser">创建用户构件</button>
                         </s:elseif>
                         <s:elseif test="#request.id_template==3">
-                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newCase">创建用例构件</button>
+                            <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#newCase">创建用例构件</button>
                         </s:elseif>
                     </s:if>
                 </div>
@@ -157,7 +157,7 @@
                             </div>
                             <s:if test="#request.library.id_user == #session.user.id_user">
                                 <div style="float: right;z-index:99999999;margin: -40px 10px 0px 0px">
-                                    <button id="deleteCommon" type="submit" class="btn btn-alert" myvalue="<s:property value="id_structure"/>">删除</button>
+                                    <button id="deleteCommon" type="button" class="btn btn-warning btn-xs" myvalue="<s:property value="id_structure"/>">删除</button>
                                     <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editCommon">编辑</button>
                                     <div  class="modal inmodal" id="editCommon" tabindex="-1" role="dialog" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -187,23 +187,23 @@
                 <div id="mid" style="clear: both;height:450px;width:1300px;margin-left:150px;padding: 20px 75px 20px 75px;overflow: hidden">
                     <s:iterator value="list2">
                         <div  style="background-color: white;height: 200px;width:520px;float:left;margin: 0px 37.5px 30px 0px;padding: 5px;" class="col-md-4 contact-box">
-                            <div style="height:40px;margin: 10px 0px 0px 10px;overflow: hidden">
-                                <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;color: black">用户名：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:500;overflow: hidden"><s:property value="roleName"/></span>
+                            <div style="height:20px;margin: 10px 0px 0px 10px;overflow: hidden">
+                                <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;color: black">用户名：</span><span style="word-break:break-all;font-family:'Arial Normal', 'Arial';font-weight:500;overflow: hidden"><s:property value="roleName"/></span>
                             </div>
-                            <div style="height:80px;margin: 0px 0px 0px 10px;float: left; overflow: hidden">
-                                <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;color: black">用户描述：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:500;overflow: hidden"><s:property value="describe"/></span>
+                            <div style="height:50px;margin: 0px 0px 0px 10px;float: left; overflow: hidden">
+                                <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;color: black">用户描述：</span><span style="word-break:break-all;font-family:'Arial Normal', 'Arial';font-weight:500;overflow: hidden"><s:property value="describe"/></span>
                             </div>
-                            <div style="height:80px;margin: 0px 0px 0px 10px;float: left">
+                            <div style="height:50px;margin: 0px 0px 0px 10px;float: left;overflow: hidden">
                                 <div style="width: 60px;float: left"><span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;color: black">用户权限:</span></div>
                                 <div style="float: left">
-                                <span style="font-family:'Arial Normal', 'Arial';font-weight:500;overflow: hidden">
+                                <span style="word-break:break-all;font-family:'Arial Normal', 'Arial';font-weight:500;overflow: hidden">
                                         <s:property value="permissions"/>
                                 </span>
                                 </div>
                             </div>
                             <s:if test="#request.library.id_user == #session.user.id_user">
-                                <div style="float: right;z-index:99999999;margin: 90px 10px 0px 0px">
-                                    <button id="deleteUser" type="submit" class="btn btn-alert" myvalue="<s:property value="id_structure"/>">删除</button>
+                                <div style="z-index:99999999;margin: 130px 10px 0px 420px">
+                                    <button id="deleteUser" type="submit" class="btn btn-warning btn-xs" myvalue="<s:property value="id_structure"/>">删除</button>
                                     <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editUser">编辑</button>
                                     <div  class="modal inmodal" id="editUser" tabindex="-1" role="dialog" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -272,9 +272,9 @@
                                 <span style="color: black;font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;">备选操作流程 ：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:400;"><s:property escapeHtml="false" value="alternative"/></span>
                             </div>
                             <s:if test="#request.library.id_user == #session.user.id_user">
-                                <div style="float: right;z-index:99999999;margin: 90px 10px 0px 0px">
-                                    <button id="deleteFun" type="submit" class="btn btn-alert" myvalue="<s:property value="id_structure"/>">删除</button>
-                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editFun">编辑</button>
+                                <div style="z-index:99999999;margin: 130px 10px 0px 500px">
+                                    <button id="deleteFun" type="submit" class="btn btn-warning btn-xs" myvalue="<s:property value="id_structure"/>">删除</button>
+                                    <button type="button" class="btn btn-primary btn-xs" >编辑</button>
                                 </div>
                             </s:if>
                         </div>

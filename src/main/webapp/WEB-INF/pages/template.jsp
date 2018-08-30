@@ -89,18 +89,18 @@
         </div>
     </div>
 </div>
-<div class=" row wrapper white-bg">
+<div class=" row wrapper white-bg" style="padding:5px">
     <ol class="breadcrumb" style="margin-left: 40px">
         <li style="font-size: 15px">
             <strong>
-                <a href="user-jmpHomepage"><span class="lzf_b">首页</span></a> >>
+                <a href="user-jmpHomepage"><span class="lzf_b" style="color:#658387">首页</span></a> >>
                 <s:if test='#session.project.state==1'>
-                    <a href="user-jmpCurrentProjectList">当前项目<span class="lzf_b"></span></a>
+                    <a href="user-jmpCurrentProjectList"><span class="lzf_b" style="color:#658387">当前项目</span></a>
                 </s:if>
                 <s:if test='#session.project.state==0'>
-                    <a href="user-jmpCompletedProjectList">历史项目<span class="lzf_b"></span></a>
+                    <a href="user-jmpCompletedProjectList"><span class="lzf_b" style="color:#658387">历史项目</span></a>
                 </s:if>
-                >><a href="project-jmpProjectInfo"><span class="lzf_b">项目信息</span></a> >>
+                 >> <a href="project-jmpProjectInfo"><span class="lzf_b" style="color:#658387">项目信息</span></a> >>
                 需求文档
             </strong>
         </li>
@@ -633,7 +633,6 @@
                 loadTemplateThree(structureList[id])
             }
             })
-
     }
 
     function seeStructure(id_template,obj,index){

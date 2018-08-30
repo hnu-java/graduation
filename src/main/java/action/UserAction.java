@@ -60,6 +60,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         boolean res = userDao.login(user.getName(), user.getPassword());
         dataMap.put("res", res);
         if(res){
+            System.out.println("1212e12e12e");
             user = userDao.getOne(user.getName());
             session.put("user",user);
             dataMap.put("flag",user.getFlag());
@@ -69,7 +70,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
                 public void run() {
                     userDao.exit(user.getName());
                 }
-            }, 30*60*1000);// 设定指定的时间time,此处单位为毫秒
+            }, 5*60*1000);// 设定指定的时间time,此处单位为毫秒
         }
         return "RES";
     }

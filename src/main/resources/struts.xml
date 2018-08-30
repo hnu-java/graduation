@@ -189,7 +189,7 @@
             <result name="projectDocument">/mjy_index.jsp</result>
             <result name="deploy">/WEB-INF/pages/project_proInformation.jsp</result>
          <interceptor-ref name="myStack"/>
-            <allowed-methods>modified,create,showOrg,chooseOrg,jmpProjectMember,jmpProjectInfo,jmpDocument,showCurrentList,showCompletedList,getProjectInfo,getProjectMember,setVPM,dismissVPM,deleteMember,inviteMember,end,alterPM,getDocument,createDoc,deploy,delete</allowed-methods>
+            <allowed-methods>modified,create,create_test,showOrg,chooseOrg,jmpProjectMember,jmpProjectInfo,jmpDocument,showCurrentList,showCompletedList,getProjectInfo,getProjectMember,setVPM,dismissVPM,deleteMember,inviteMember,end,alterPM,getDocument,createDoc,deploy,delete</allowed-methods>
         </action>
 
         <action name="library-*" class="action.LibraryAction" method="{1}">
@@ -241,6 +241,12 @@
             <allowed-methods>jmpMyprofile,showList,quitorg</allowed-methods>
         </action>
 
+        <action name="publishLibrary-*" class="action.PublishLibraryAction" method="{1}">
+            <result name="success" type="json">
+                <param name="root">dataMap</param>
+            </result>
+            <allowed-methods>publishLibrary</allowed-methods>
+        </action>
 
         <action name="discuss-*" class="action.DiscussAction" method="{1}">
             <result name="Re" type="json">
