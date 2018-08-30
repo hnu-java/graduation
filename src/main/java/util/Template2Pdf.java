@@ -18,8 +18,8 @@ import com.itextpdf.tool.xml.pipeline.css.CssResolverPipeline;
 import com.itextpdf.tool.xml.pipeline.end.PdfWriterPipeline;
 import com.itextpdf.tool.xml.pipeline.html.HtmlPipeline;
 import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
-import org.xhtmlrenderer.pdf.*;
-import org.xhtmlrenderer.layout.SharedContext;
+//import org.xhtmlrenderer.pdf.*;
+//import org.xhtmlrenderer.layout.SharedContext;
 import dao.CatalogDao;
 import daoImp.CatalogDaoImp;
 import entity.*;
@@ -210,12 +210,12 @@ public class Template2Pdf {
 
         document.close();
 
-        ITextRenderer renderer = new ITextRenderer();
-        SharedContext sharedContext = renderer.getSharedContext();
-        // 解决base64图片支持问题
-        sharedContext.setReplacedElementFactory(new B64ImgReplacedElementFactory());
-        sharedContext.getTextRenderer().setSmoothingThreshold(0);
-        renderer.setDocumentFromString(buffer.toString());
+//        ITextRenderer renderer = new ITextRenderer();
+//        SharedContext sharedContext = renderer.getSharedContext();
+//        // 解决base64图片支持问题
+//        sharedContext.setReplacedElementFactory(new B64ImgReplacedElementFactory());
+//        sharedContext.getTextRenderer().setSmoothingThreshold(0);
+//        renderer.setDocumentFromString(buffer.toString());
 
         InputStream inputStream = new ByteArrayInputStream(buffer.toByteArray());
 

@@ -995,7 +995,7 @@ function addUsabelLine() {
         $(".funTable tfoot").append(content);
         return;
     }
-    content=" <tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>局部可用性："+usableName+"</th> <th  name='usablePara' class='usablePara'>发生条件："+para+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px'>删除可用性</button></th> </tr>"
+    content=" <tr class='usableTr'> <th></th> <th  name='usableName' class='usableName'>局部可用性："+usableName+"</th> <th  name='usablePara' class='usablePara'>发生条件："+para+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px'>删除可用性</button></th> </tr>"
     $(nowLine).after(content);
     $(nowLine).children("th:last-child").children("button:first-child").hide();
 
@@ -1010,7 +1010,7 @@ function addSecurityLine() {
         $(".funTable tfoot").append(content);
         return;
     }
-    content=" <tr class='securityTr'> <th colspan='2' name='securityName' class='securityName'>局部安全性："+SecurityName+"</th> <th  name='securityPara' class='securityPara'>发生条件："+para+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px'>删除安全性</button></th> </tr>"
+    content=" <tr class='securityTr'> <th></th> <th  name='securityName' class='securityName'>局部安全性："+SecurityName+"</th> <th  name='securityPara' class='securityPara'>发生条件："+para+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1' id='deleteUsable'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px'>删除安全性</button></th> </tr>"
     if($(nowLine.next()).hasClass("usableTr")){
         $(nowLine.next()).after(content);
         $(nowLine).children("th:last-child").children("button:last-child").hide();
@@ -1173,16 +1173,40 @@ $(document).on("click",".fun_up",function () {
     {
         showtoast("warning","失败","已经到顶部");return;
     }
-    if(thisLine.next("tr").hasClass("usableTr")){
+    if(thisLine.next("tr").hasClass("usableTr") ||thisLine.next("tr").hasClass("securityTr")){
         var nextLine=thisLine.next();
         var beforeFunTr=thisLine.prev();
-        if (beforeFunTr.hasClass("funTr")){
-            beforeFunTr.before(thisLine)
-            beforeFunTr.before(nextLine)
+        if(nextLine.next("tr").hasClass("securityTr")){
+            var securityLine=nextLine.next();
+            if (beforeFunTr.hasClass("funTr")){
+                beforeFunTr.before(thisLine)
+                beforeFunTr.before(nextLine)
+                beforeFunTr.before(securityLine)
+            }
+            else if(thisLine.prev().hasClass("securityTr") && thisLine.prev().prev().hasClass("usableTr")){
+                beforeFunTr.prev().prev().before(thisLine)
+                beforeFunTr.prev().prev().before(nextLine)
+                beforeFunTr.prev().prev().before(securityLine)
+            }
+            else{
+                beforeFunTr.prev().before(thisLine)
+                beforeFunTr.prev().before(nextLine)
+                beforeFunTr.prev().before(securityLine)
+            }
         }
         else{
-            beforeFunTr.prev().before(thisLine)
-            beforeFunTr.prev().before(nextLine)
+            if (beforeFunTr.hasClass("funTr")){
+                beforeFunTr.before(thisLine)
+                beforeFunTr.before(nextLine)
+            }
+            else if(thisLine.prev().hasClass("securityTr") && thisLine.prev().prev().hasClass("usableTr")){
+                beforeFunTr.prev().prev().before(thisLine)
+                beforeFunTr.prev().prev().before(nextLine)
+            }
+            else{
+                beforeFunTr.prev().before(thisLine)
+                beforeFunTr.prev().before(nextLine)
+            }
         }
     }
     else {
@@ -1190,10 +1214,12 @@ $(document).on("click",".fun_up",function () {
         if (beforeFunTr.hasClass("funTr")){
             beforeFunTr.before(thisLine)
         }
+        else if(thisLine.prev().hasClass("securityTr") && thisLine.prev().prev().hasClass("usableTr")){
+            beforeFunTr.prev().prev().before(thisLine)
+        }
         else{
             beforeFunTr.prev().before(thisLine)
         }
-
     }
 })
 
@@ -1203,16 +1229,40 @@ $(document).on("click",".former_fun_up",function () {
     {
         showtoast("warning","失败","已经到顶部");return;
     }
-    if(thisLine.next("tr").hasClass("usableTr")){
+    if(thisLine.next("tr").hasClass("usableTr") ||thisLine.next("tr").hasClass("securityTr")){
         var nextLine=thisLine.next();
         var beforeFunTr=thisLine.prev();
-        if (beforeFunTr.hasClass("funTr")){
-            beforeFunTr.before(thisLine)
-            beforeFunTr.before(nextLine)
+        if(nextLine.next("tr").hasClass("securityTr")){
+            var securityLine=nextLine.next();
+            if (beforeFunTr.hasClass("funTr")){
+                beforeFunTr.before(thisLine)
+                beforeFunTr.before(nextLine)
+                beforeFunTr.before(securityLine)
+            }
+            else if(thisLine.prev().hasClass("securityTr") && thisLine.prev().prev().hasClass("usableTr")){
+                beforeFunTr.prev().prev().before(thisLine)
+                beforeFunTr.prev().prev().before(nextLine)
+                beforeFunTr.prev().prev().before(securityLine)
+            }
+            else{
+                beforeFunTr.prev().before(thisLine)
+                beforeFunTr.prev().before(nextLine)
+                beforeFunTr.prev().before(securityLine)
+            }
         }
         else{
-            beforeFunTr.prev().before(thisLine)
-            beforeFunTr.prev().before(nextLine)
+            if (beforeFunTr.hasClass("funTr")){
+                beforeFunTr.before(thisLine)
+                beforeFunTr.before(nextLine)
+            }
+            else if(thisLine.prev().hasClass("securityTr") && thisLine.prev().prev().hasClass("usableTr")){
+                beforeFunTr.prev().prev().before(thisLine)
+                beforeFunTr.prev().prev().before(nextLine)
+            }
+            else{
+                beforeFunTr.prev().before(thisLine)
+                beforeFunTr.prev().before(nextLine)
+            }
         }
     }
     else {
@@ -1220,27 +1270,45 @@ $(document).on("click",".former_fun_up",function () {
         if (beforeFunTr.hasClass("funTr")){
             beforeFunTr.before(thisLine)
         }
+        else if(thisLine.prev().hasClass("securityTr") && thisLine.prev().prev().hasClass("usableTr")){
+            beforeFunTr.prev().prev().before(thisLine)
+        }
         else{
             beforeFunTr.prev().before(thisLine)
         }
-
     }
 })
 
 $(document).on("click",".fun_delete",function () {
     var thisLine=$(this).parent().parent();
-    if(thisLine.next().hasClass("usableTr")){
+    if(thisLine.next().hasClass("usableTr") && thisLine.next().next().hasClass("securityTr")){
+        thisLine.next().next().remove();
         thisLine.next().remove();
+        thisLine.remove();
     }
-    thisLine.remove();
+    else if(thisLine.next().hasClass("funTr") || thisLine.next().hasClass("end")){
+        thisLine.remove();
+    }
+    else{
+        thisLine.next().remove();
+        thisLine.remove();
+    }
 })
 
 $(document).on("click",".former_fun_delete",function () {
     var thisLine=$(this).parent().parent().parent();
-    if(thisLine.next().hasClass("usableTr")){
+    if(thisLine.next().hasClass("usableTr") && thisLine.next().next().hasClass("securityTr")){
+        thisLine.next().next().remove();
         thisLine.next().remove();
+        thisLine.remove();
     }
-    thisLine.remove();
+    else if(thisLine.next().hasClass("funTr") || thisLine.next().hasClass("end")){
+        thisLine.remove();
+    }
+    else{
+        thisLine.next().remove();
+        thisLine.remove();
+    }
 })
 
 //构件JS开始了
