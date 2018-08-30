@@ -156,9 +156,9 @@
                                         </div>
                                     </div>
                                     <input id="idLibrary" style="display: none" type="text" value="<s:property value="id_library"/>">
-                                    <div style="float: right;z-index:99999999;margin: -14px -19px 0px 0px">
-                                        <button id="delete" type="submit" class="btn btn-warning btn-xs" myvalue="<s:property value="id_library"/>">删除</button>
-                                        <button id="publish" type="submit" class="btn btn-primary btn-xs" myvalue="<s:property value="id_library"/>">发布</button>
+                                    <div style="float:right;z-index:99999999;margin: -14px -10px 0px 0px">
+                                        <button id="delete" type="submit" class="btn btn-danger btn-xs" myvalue="<s:property value="id_library"/>">删除</button>
+                                        <button id="publish" type="submit" class="btn btn-success btn-xs" myvalue="<s:property value="id_library"/>">发布</button>
                                     </div>
                                         <%--<div style="float: right;z-index:99999999;margin: -14px -19px 0px 0px">--%>
                                         <%--<s:if test="#request.id_user==#session.user.id_user">--%>

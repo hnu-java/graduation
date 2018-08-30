@@ -112,8 +112,8 @@
         <br/>
     </div>
 
-    <div class="col-xs-10" style="text-align: center">
-        <h4 style="font-size: 13px;">请确认项目的相关信息，组员后续可以邀请加入，若信息无误请点击确认创建按钮</h4>
+    <div class="col-xs-9" style="text-align: center">
+        <h4 style="font-size: 13px;color: red">创建该项目需要${sessionScope.Mpoint5}积分，点击提交并确认后扣除</h4>
     </div>
 
     <div class="col-md-12">
@@ -122,10 +122,10 @@
 
     <div class="col-md-5 col-xs-offset-2">
         <span class="col-md-2 col-xs-offset-2">
-            <button type="button" class="btn-danger btn" onclick="create()">确认创建</button>
+            <button type="button" class="btn-danger btn" onclick="create()">提交</button>
         </span>
         <span class="col-md-2 col-xs-offset-3">
-            <a href="user-jmpHomepage"><button type="button" class="btn btn-default" style="color:black;background-color:white">取消创建</button></a>
+            <a href="user-jmpHomepage"><button type="button" class="btn btn-default" style="color:black;background-color:white">取消</button></a>
         </span>
     </div>
 </div>

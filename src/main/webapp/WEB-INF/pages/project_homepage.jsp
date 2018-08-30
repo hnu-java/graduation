@@ -105,14 +105,19 @@
         </div>
     </div>
 
-    <div class="col-md-9 form-group" style="margin-top: 5%">
+    <%--<div class="col-md-9 form-group" style="margin-top: 5%">
         <span class="col-md-6 col-md-offset-4">创建一个项目成为组长，或者接受别人的项目邀请成为组员，就可以参与项目需求文档的编写啦！</span>
         <span class="col-md-6 col-md-offset-4" style="color: red">需要${sessionScope.Mpoint5}积分创建项目</span>
         <a href="user-jmpNewproject"><img class="col-md-offset-1" src="<%=basePath %>/img/u7.png"></a>
         <div class="row J_mainContent" id="content-main">
             <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="" frameborder="0" data-id="" seamless></iframe>
         </div>
+    </div>--%>
+
+    <div style="position:absolute; left:1150px; top: 400px">
+        <a href="user-jmpNewproject"><img src="<%=basePath %>/img/new.png" height="60px" width="60px" title="新建项目" alt="新建项目"></a>
     </div>
+    <div style="width: 66px;position: fixed;bottom: 20px;right: 25px;font-size: 0;line-height: 0;z-index: 100;">我在右下角 </div>
 </div>
 <script src="<%=basePath %>/js/jquery.min.js?v=2.1.4"></script>
 <script src="<%=basePath %>/js/bootstrap.min.js"></script>
