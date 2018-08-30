@@ -30,11 +30,11 @@
 
 <body class="gray-bg">
 <div id="page-wrapper" class="white-bg dashbard-1">
-    <div class=" row wrapper white-bg" id="content-main">
+    <div class=" row wrapper white-bg" style="padding: 5px" id="content-main">
         <ol class="breadcrumb" style="margin-left: 40px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage">首页</a> >><a href="Organization-jmpOrgManager">机构管理</a>
+                    <a href="user-jmpHomepage" style="color:#658387">首页</a> >> <a href="Organization-jmpOrgManager">机构管理</a>
                 </strong>
             </li>
         </ol>
@@ -151,9 +151,9 @@
     )
     function operateFormatter(value,row,index) {
         return[,
-            '<a class="MemberManagement" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >成员管理</button></a>',
-            '<a class="CheckProgram" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >查看项目</button></a>',
-            '<a class="CheckApplication" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >查看申请</button></a>'
+            '<a class="MemberManagement" style="padding-left: 10px"><button class="btn btn-success text-center btn-xs " >成员管理</button></a>',
+            '<a class="CheckProgram" style="padding-left: 10px"><button class="btn btn-success text-center btn-xs " >查看项目</button></a>',
+            '<a class="CheckApplication" style="padding-left: 10px"><button class="btn btn-success text-center btn-xs " >查看申请</button></a>'
         ].join('');
     }
     window.actionEvents = {

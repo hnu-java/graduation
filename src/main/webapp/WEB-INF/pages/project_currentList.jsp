@@ -32,11 +32,11 @@
 
 <body class="gray-bg animated fadeInDown">
 <div id="page-wrapper" class="gray-bg dashbard-1">
-    <div class=" row wrapper white-bg">
+    <div class=" row wrapper white-bg" style="padding: 5px;">
         <ol class="breadcrumb" style="margin-left: 40px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage"><span class="lzf_b">首页</span></a> >><a href="user-jmpCurrentProjectList"><span class="lzf_b">当前项目</span></a>
+                    <a href="user-jmpHomepage"><span class="lzf_b" style="color:#658387">首页</span></a> >> <a href="user-jmpCurrentProjectList"><span class="lzf_b">当前项目</span></a>
                 </strong>
             </li>
         </ol>
@@ -126,15 +126,15 @@
 
     function nameFormatter(value,row,index) {
         if (row.rank == 3) {
-            return row.name + ' ' + '<label class="label label-danger">我是组长</label>';
+            return row.name + ' ' + '<label class="label label-danger">组长</label>';
         }
         else if (row.rank == 4)
-            return row.name + ' ' + '<label class="label label-warning">我是副组长</label>';
+            return row.name + ' ' + '<label class="label label-warning">副组长</label>';
         else
             return row.name;
     }
     function operateFormatter(value,row,index) {
-        return '<a class="mod fa fa-folder btn btn-info">查看项目</a>'
+        return '<a class="mod fa fa-folder btn btn-success">查看项目</a>'
     }
 
     //表格  - 操作 - 事件

@@ -116,7 +116,7 @@
             <div class="modal-footer">
                 <div id="alterable" style="visibility: visible">
                     <button id="cancel-say" type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button class="btn btn-success pull-right" onclick="commitDiscuss()" type="submit">发表评论</button>
+                    <button class="btn btn-primary pull-right" onclick="commitDiscuss()" type="submit">发表评论</button>
                     <%--<label class="pull-right">没有附件？直接点这里--></label>--%>
                 </div>
             </div>
@@ -124,19 +124,19 @@
     </div>
 </div>
 
-<div class="animated fadeInDown">
-    <div class=" row wrapper white-bg">
+<div class="animated fadeInDown" style="overflow:hidden">
+    <div class=" row wrapper white-bg" style="padding:5px">
         <ol class="breadcrumb" style="margin-left: 40px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage"><span class="lzf_b">首页</span></a> >>
+                    <a href="user-jmpHomepage"><span class="lzf_b" style="color:#658387">首页</span></a> >>
                     <s:if test='#session.project.state==1'>
-                        <a href="user-jmpCurrentProjectList">当前项目<span class="lzf_b"></span></a>
+                        <a href="user-jmpCurrentProjectList"><span class="lzf_b" style="color:#658387">当前项目</span></a>
                     </s:if>
                     <s:if test='#session.project.state==0'>
-                        <a href="user-jmpCompletedProjectList">历史项目<span class="lzf_b"></span></a>
+                        <a href="user-jmpCompletedProjectList"><span class="lzf_b" style="color:#658387">历史项目</span></a>
                     </s:if>
-                    >><a href="project-jmpProjectInfo"><span class="lzf_b">项目信息</span></a>
+                     >> <a href="project-jmpProjectInfo"><span class="lzf_b">项目信息</span></a>
                 </strong>
             </li>
         </ol>
@@ -150,7 +150,7 @@
                         <h2>
                             <strong><s:property value="#session.project.name"/></strong>
                             <s:if test='#session.project.state==1'>
-                                <span class="label label-primary">进行中</span>
+                                <span class="label label-info">进行中</span>
                             </s:if>
                             <s:if test='#session.project.state==0'>
                                 <span class="label label-default">已完成</span>
@@ -202,7 +202,7 @@
                                     <s:if test='#session.project.flag==1'>
                                         封闭
                                     </s:if>
-                                    <button id="modified" class="btn btn-info btn-xs">更改</button>
+                                    <button id="modified" class="btn btn-success btn-xs">更改</button>
                             </h3></dd>
                         </s:if>
                         </s:if>
@@ -238,10 +238,10 @@
                                         <div class="ibox float-e-margins">
                                             <div class="ibox-title">
                                                 <div class="col-md-4">
-                                                    <p>共<var id="num"></var>条留言</p>
+                                                    <p>共 <var id="num"></var> 条留言</p>
                                                 </div>
                                                 <div id="sayComments" style="visibility: visible;float: right" class="col-md-4" >
-                                                    <button class="btn btn-success  btn-xs pull-right" data-toggle="modal" data-target="#say" type="submit">发表评论</button>
+                                                    <button class="btn btn-success pull-right" data-toggle="modal" data-target="#say" type="submit">发表评论</button>
                                                     <%--<label class="pull-right">没有附件？直接点这里--></label>--%>
                                                 </div>
                                                 <!-- The file upload form used as target for the file upload widget -->
@@ -253,10 +253,10 @@
                                         <!--一行留言-->
                                         <!--一行留言结束-->
                                     </div>
-                                    <div class="pull-right">
-                                        <a onclick="previous()">上一页</a>
-                                        <strong>第<var id="index"></var>页</strong>
-                                        共<var id="pages"></var>页
+                                    <div style="text-align:center;">
+                                        <a onclick="previous()">上一页</a>&nbsp;&nbsp;
+                                        <strong>第 <var id="index"></var> 页</strong>&nbsp;&nbsp;
+                                        共 <var id="pages"></var> 页&nbsp;&nbsp;
                                         <a onclick="next()">下一页</a>
                                     </div>
                                 </div>
@@ -264,11 +264,11 @@
                                     <div id="toolbar1">
                                         <s:if test='#session.project.state==1'>
                                             <s:if test="#session.rank==3">
-                                                    <button id="searchUser" class="btn btn-info" data-toggle="modal" data-target="#newUser">
-                                                        <i class="glyphicon glyphicon-zoom-in"></i> 邀请成员
-                                                    </button>
+                                                    <button id="searchUser" class="btn btn-success" data-toggle="modal" data-target="#newUser">
+                                                        <i class="glyphicon glyphicon-zoom-in"></i>邀请成员
+                                                    </button>&nbsp;
                                                 <button id="alterPM" class="btn btn-warning" data-toggle="modal" data-target="#switchPM">
-                                                    <i class="glyphicon"></i> 转移组长
+                                                    <i class="glyphicon"></i>转移组长
                                                 </button>
                                             </s:if>
                                         </s:if>
@@ -297,7 +297,7 @@
                                     <div id="toolbar2">
 <s:if test='#session.project.state==1'>
     <s:if test='#session.rank==3'>
-        <button id="createDoc" class="btn btn-success"><i class="fa fa-file"></i>新建文档</button>
+        <button id="createDoc" class="btn btn-success" style="display:none"><i class="fa fa-file"></i>新建文档</button>
     </s:if>
 </s:if>
                                     </div>
@@ -453,13 +453,15 @@
     }
     function operateFormatter(value,row,index) {
         <s:if test="#session.rank==3">
-        if (row.rank===5){
-            return ['<a class="mod btn-xs btn-info">设为副组长</a>',
-                '<a class="delete btn-xs btn-danger" >移除成员</a>'].join('');
+        if (row.rank==5){
+            return ['<a class="mod img-info"><img src="<%=basePath%>/img/deputyleader.png" height="20px" width="20px" title="设为副组长" alt="设为副组长"></a>',
+                '<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>',
+                '<a class="delete"><img src="<%=basePath%>/img/deletemember.png" height="20px" width="20px" title="移除成员" alt="移除成员"></a>'].join('');
         }
-        else if (row.rank===4){
-            return ['<a class="mod btn-xs btn-warning">撤销副组长</a>',
-                '<a class="delete btn-xs btn-danger" >移除成员</a>'].join('');
+        else if (row.rank==4){
+            return ['<a class="mod img-danger"><img src="<%=basePath%>/img/undeputyleader.png" height="20px" width="20px" title="撤销副组长" alt="撤销副组长"></a>',
+                '<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>',
+                '<a class="delete"><img src="<%=basePath%>/img/deletemember.png" height="20px" width="20px" title="移除成员" alt="移除成员"></a>'].join('');
         }</s:if>
     }
 
@@ -470,14 +472,14 @@
                 //修改操作
                 var id_user = parseInt(row.id_user);
                 var elem = $(this);
-                if (elem.hasClass("btn-info")) {
+                if (elem.hasClass("img-info")) {
                     swal(
                         {
-                            title: "您确定要将这名成员设为副组长吗",
+                            title: "您确定要将此成员设为副组长吗",
                             text: "请谨慎操作！",
-                            type: "warning",
+                            type: "",
                             showCancelButton: true,
-                            confirmButtonColor: "#DD6B55",
+                            confirmButtonColor: "#18a689",
                             confirmButtonText: "确认",
                             cancelButtonText: "取消",
                             closeOnConfirm: true
@@ -490,9 +492,9 @@
                                 success: function () {
                                     showtoast("success", "设置成功", "成功设为副组长");
                                     proMemberReload();
-                                    elem.text("撤销副组长");
-                                    elem.removeClass("btn-info");
-                                    elem.addClass("btn-warning");
+                                    /*elem.text("撤销副组长");*/
+                                    elem.removeClass("img-info");
+                                    elem.addClass("img-warning");
                                 },
                                 error: function () {
                                     swal({
@@ -522,9 +524,9 @@
                                 success: function () {
                                     showtoast("success", "撤销成功", "成功撤销该副组长");
                                     proMemberReload();
-                                    elem.text("设为副组长");
-                                    elem.removeClass("btn-warning");
-                                    elem.addClass("btn-info");
+                                    /*elem.text("设为副组长");*/
+                                    elem.removeClass("img-warning");
+                                    elem.addClass("img-info");
                                 },
                                 error: function () {
                                     swal({
@@ -612,11 +614,13 @@
                 //finishingTask为table的id
                 var addOrNot=json.addOrNot;
                 if(addOrNot=="0"){
+                    $("#createDoc").css("display","none")
                     $("#createDoc").attr("disabled","")
                     $("#createDoc").removeClass("btn-success")
                     $("#createDoc").addClass("btn-default")}
                     else
                 {
+                    $("#createDoc").css("display","")
                     $("#createDoc").removeClass("btn-default")
                     $("#createDoc").addClass("btn-success")
                 }
@@ -632,16 +636,21 @@
 <s:if test='#session.project.state==1'>
         <s:if test='#session.rank==3'>//项目组长
             if (row.state===0) {
-                return ["<a class='edit btn-xs btn-primary '>编辑</a>&nbsp",
-                              "<a class='deploy btn-xs btn-warning '>发布</a>&nbsp",
-                    "<a class='generateContract btn-xs btn-primary '>导出</a>&nbsp",
-                              "<a class='delete btn-xs btn-danger ' >删除</a>"
+                return ["<a class='edit img-success'><img src='<%=basePath%>/img/edit.png' height='20px' width='20px' title='编辑' alt='编辑'></a>",
+                        "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
+                        "<a class='deploy '><img src='<%=basePath%>/img/release.png' height='20px' width='20px' title='发布' alt='发布'></a>",
+                        "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
+                        "<a class='generateContract img-primary'><img src='<%=basePath%>/img/export.png' height='20px' width='20px' title='导出' alt='导出'></a>",
+                        "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
+                        "<a class='delete'><img src='<%=basePath%>/img/delete.png' height='20px' width='20px' title='删除' alt='删除'></a>"
                 ].join('');
             }
             else {
-                return ["<a class='view btn-xs btn-info '>查看</a>&nbsp",
-                    "<a class='generateContract btn-xs btn-primary '>导出</a>&nbsp",
-                    "<a class='delete btn-xs btn-danger ' >删除</a>"
+                return ["<a class='view'><img src='<%=basePath%>/img/view.png' height='20px' width='20px' title='查看' alt='查看'></a>",
+                    "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
+                    "<a class='generateContract'><img src='<%=basePath%>/img/export.png' height='20px' width='20px' title='导出' alt='导出'></a>",
+                    "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
+                    "<a class='delete'><img src='<%=basePath%>/img/delete.png' height='20px' width='20px' title='删除' alt='删除'></a>"
                 ].join('');
 //                return ["<a class='view btn-xs btn-info'>查看</a>",
 //                    "<a class='delete btn-xs btn-danger' >删除</a>"
@@ -651,21 +660,25 @@
 
         <s:if test='#session.rank==4'>//项目副组长
             if (row.state===0) {
-                return ["<a class='edit btn-xs btn-success'>编辑</a>&nbsp",
-                "<a class='generateContract btn-xs btn-primary '>导出</a>"].join('');
+                return ["<a class='edit'><img src='<%=basePath%>/img/edit.png' height='20px' width='20px' title='编辑' alt='编辑'></a>",
+                        "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
+                        "<a class='generateContract'><img src='<%=basePath%>/img/export.png' height='20px' width='20px' title='导出' alt='导出'></a>"
+                ].join('');
             }
             else {
-                return ['<a class="view btn-xs btn-info">查看</a>&nbsp',
-                "<a class='generateContract btn-xs btn-primary '>导出</a>&nbsp"].join('');
+                return ["<a class='view'><img src='<%=basePath%>/img/view.png' height='20px' width='20px' title='查看' alt='查看'></a>",
+                        "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
+                        "<a class='generateContract'><img src='<%=basePath%>/img/export.png' height='20px' width='20px' title='导出' alt='导出'></a>"
+                ].join('');
             }
         </s:if>
 
         <s:if test='#session.rank==5'>
-            return '<a class="view btn-xs btn-info">查看</a>';
+            return '<a class="view"><img src="<%=basePath%>/img/view.png" height="20px" width="20px" title="查看" alt="查看"></a>';
         </s:if>
     </s:if>
     <s:if test='#session.project.state==0'>
-        return '<a class="view btn-xs btn-info">查看</a>';
+        return '<a class="view"><img src="<%=basePath%>/img/view.png" height="20px" width="20px" title="查看" alt="查看"></a>';
         </s:if>
     }
 
@@ -703,9 +716,9 @@
                     {
                         title: "您确定要发布这份文档吗",
                         text: "请谨慎操作！",
-                        type: "warning",
+                        type: "",
                         showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
+                        confirmButtonColor: "#18a689",
                         confirmButtonText: "确认",
                         cancelButtonText: "取消",
                         closeOnConfirm: true
@@ -838,9 +851,9 @@
                 {
                     title: "您确认更改文档权限为开放吗",
                     text: "更改后机构管理员可以查看您机构的文档",
-                    type: "warning",
+                    type: "",
                     showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
+                    confirmButtonColor: "#18a689",
                     confirmButtonText: "确定",
                     cancelButtonText: "取消",
                     closeOnConfirm: true
@@ -961,22 +974,21 @@
                 for (var i=0;i<result.wrapperList.length;i++){
                     tempDis=result.wrapperList[i].proDiscussEntity;
                     if (tempDis.name === "<s:property value="#session.PM.name"/>"){
-                        title += "<span class=\"label label-warning\">组长</span>&nbsp;";
+                        title += "<span class=\"label label-danger\">组长</span>&nbsp;";
                     }
                     else if (tempDis.name === "<s:property value="#session.user.name"/>"){
-                        title += "<span class=\"label label-success\">我</span>&nbsp;";
+                        title += "<span class=\"label label-info\">我</span>&nbsp;";
                     }
                     state=result.wrapperList[i].state;
                     date=tempDis.time.toString().split("T");
                     content+="  <div class='row'> <div class='ibox float-e-margins ' style='margin-bottom: 10px'> <div class='ibox-title'> <h5>";
                     content+=tempDis.name+title+" "+date[0]+" "+date[1]+"</h5><input style='display: none' class='id_dis' value='"+tempDis.id_pro_discuss+"'>"
-                    content+="  <button  class='btn";
-                    if (state=="2")
-                        content+=" btn-danger ";
-                    else content+=" btn-default ";
 
-                    content+="btn-xs col-lg-push-1 m-l-sm deleteDis'  type='button'  style='margin-top: -3px'>删除</button> ";
+                    if (state=="2")
+                        content+="<button class='btn-link deleteDis' style='margin-top: -3px'><img src='<%=basePath%>/img/delete.png' height='20px' width='20px' title='删除' alt='删除'></button>";
+
                     if(tempDis.id_Document != 0){
+                        content+="<span>|&nbsp;</span>";
                         //forTitle(tempDis.id_pro_discuss);
                         content+="<h5>";
                         content+="-文档版本 ";
@@ -992,7 +1004,7 @@
                         content+="&state=";
                         content+=tempDis.state;
                         content+="\">";
-                        content+="<button  class='btn btn-danger btn-xs col-lg-push-1 m-l-sm shiftDis'  type='button'  style='margin-top: -3px'>跳转</button></a>";
+                        content+="<img style='margin-top:-7px' src='<%=basePath%>/img/jump.png' height='27px' width='27px' title='跳转到评论文档' alt='跳转'></a>";
                     }
                     content+="<div class='ibox-tools'>";
 
@@ -1087,7 +1099,7 @@
 
     //评论删除按钮
     $(document).on("click",".deleteDis",function () {
-        if ($(this).hasClass("btn-danger")){
+        if ($(this).hasClass("btn-link")){
             var id_pro_discuss=$(this).prev("input.id_dis").val();
             swal({
                 title: "删除评论？",

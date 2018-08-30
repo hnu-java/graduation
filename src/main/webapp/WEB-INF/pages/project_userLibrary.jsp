@@ -90,18 +90,18 @@
 <div id="wrapper" style="padding: 0px" class="wrapper wrapper-content animated fadeInDown gray-bg">
 
     <div id="next1" style="width: 100%;margin: 0 auto;font-weight: 400" class="gray-bg">
-        <div class=" row wrapper white-bg" >
-            <ol class="breadcrumb" style="margin-left: 50px">
+        <div class=" row wrapper white-bg" style="padding: 5px">
+            <ol class="breadcrumb" style="margin-left: 55px">
                 <li style="font-size: 15px">
                     <strong>
-                        <a href="user-jmpHomepage"><span class="lzf_b">首页</span></a> >><a href="library-get"><span class="lzf_b">构件库</span></a> >> <a href="library-jmpUserLibrary">用户构件库</a>
+                        <a href="user-jmpHomepage"><span class="lzf_b" style="color:#658387">首页</span></a> >> <a href="library-get"><span class="lzf_b" style="color:#658387">构件库</span></a> >> <a href="library-jmpUserLibrary">用户构件库</a>
                     </strong>
                 </li>
             </ol>
         </div>
         <div id="main" style="margin-top:10px">
             <div id="head" style="width:100%;height: 70px;font-size:x-small;margin: 0 auto">
-                <div style="float: left;height: 60px;padding: 20px 20px 0px 20px" class="col-md-4">
+                <div style="float: left;height: 60px;padding: 20px 20px 0px 20px" class="col-md-11">
                     <div style="float: left;margin: 0px 0px 0px 50px">
                         <div>
                             <a href="library-get"><div style="font-size: 18px;color: black">官方构件库</div></a>
@@ -119,10 +119,11 @@
                     <div style="float: left">
                         <div style="float: left;font-size:18px;text-align: left;color: black"><a href="library-Mycollect"><span class="lzf_a">我的收藏</span></a></div>
                     </div>
-                    <div>
-                        <button class="btn btn-xs btn-primary" style="margin-left: 20px" data-toggle="modal" data-target="#newLibrary">新建构件库</button>
+                    <div style="float:right">
+                        <button class="btn btn-success" style="margin:-3px 10px" data-toggle="modal" data-target="#newLibrary">新建构件库</button>
                     </div>
                 </div>
+
             </div>
 
             <div id="view" style="padding: 0px 70px 0px 70px;margin-top:30px;height: 450px">

@@ -41,11 +41,11 @@
 
 </head>
 <body onload="twiceShow()" class="gray-bg animated fadeInDown">
-<div class=" row wrapper white-bg">
+<div class=" row wrapper white-bg" style="padding:5px">
     <ol class="breadcrumb" style="margin-left: 40px">
         <li style="font-size: 15px">
             <strong>
-                <a href="user-jmpHomepage"><span class="lzf_b">首页</span></a> >><a href="user-jmpNewproject"><span class="lzf_b">新建项目</span></a>
+                <a href="user-jmpHomepage"><span class="lzf_b" style="color:#658387">首页</span></a> >> <a href="user-jmpNewproject"><span class="lzf_b">新建项目</span></a>
             </strong>
         </li>
     </ol>
@@ -54,9 +54,10 @@
 <div class="form-horizontal col-md-offset-3 "style="margin-top:50px">
     <div class="form-group has-feedback">
 
-        <label class="control-label col-sm-3"><button class="btn-circle btn-default"><img src="<%=basePath %>img/u11.png" style="height: 18px;width: 20px"></button>　项目名称：*</label>
+        <label class="control-label col-sm-3">
+            <button class="btn-circle btn-default"><img src="<%=basePath %>img/u11.png" style="height: 18px;width: 20px"></button>　项目名称 <span style="color: red">*</span></label>
         <div class="col-sm-4">
-            <input type="text"  id="proName" class="form-control text-center" maxlength="45" placeholder="请输入项目名称  (必填）" required="true"/>
+            <input type="text"  id="proName" class="form-control" maxlength="45" placeholder="请输入项目名称  (必填）" required="true"/>
             <i id="warning1"></i>
         </div>
 
@@ -67,9 +68,9 @@
     </div>
 
     <div class="form-group has-feedback">
-        <label class="control-label col-sm-3"><button class="btn-circle btn-default"><img src="<%=basePath %>img/u12.png" style="height: 18px;width: 20px"></button>　文档名称：*</label>
-        <div class="col-sm-4">
-            <input type="text"  id="docName" class="form-control text-center" maxlength="30" placeholder="请输入文档名称（必填）" required="true"/>
+        <label class="control-label col-sm-3"><button class="btn-circle btn-default"><img src="<%=basePath %>img/u12.png" style="height: 18px;width: 20px"></button>　文档名称 <span style="color: red">*</span></label>
+            <div class="col-sm-4">
+            <input type="text"  id="docName" class="form-control" maxlength="30" placeholder="请输入文档名称（必填）" required="true"/>
             <i id="warning2"></i>
         </div>
     </div>
@@ -79,10 +80,10 @@
     </div>
 
     <div class="form-group">
-        <label class="control-label col-sm-3"><button class="btn-circle btn-default"><img src="<%=basePath %>img/u13.png" style="height: 18px;width: 20px"></button>　机构名称：</label>
+        <label class="control-label col-sm-3"><button class="btn-circle btn-default"><img src="<%=basePath %>img/u13.png" style="height: 18px;width: 20px"></button>　机构名称  </label>
         <div class="col-sm-4">
             <div class="input-group">
-                <input type="text" id="orgName" class="form-control text-center" autocomplete="true" placeholder="选填，置空时为私人项目,不可更改" oninput="inputSuggest()">
+                <input type="text" id="orgName" class="form-control" autocomplete="true" placeholder="选填，置空时为私人项目，不可更改" oninput="inputSuggest()">
                 <div class="input-group-btn">
                     <button id="showButton" type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown" onclick="showOrg()">
                         <span class="caret"></span>
@@ -100,10 +101,10 @@
     </div>
 
     <div class="form-group has-feedback">
-        <label class="control-label col-sm-3"><button class="btn-circle btn-default"><img src="<%=basePath %>img/u14.png" style="height: 18px;width: 20px"></button>　项目简介：</label>
+        <label class="control-label col-sm-3"><button class="btn-circle btn-default"><img src="<%=basePath %>img/u14.png" style="height: 18px;width: 20px"></button>　项目简介 </label>
         <div class="col-sm-4">
-            <textarea type="text"  id="intro" class="form-control text-center"  maxlength="120" placeholder="输入项目的基本介绍（不超过120字符）" rows="6"></textarea>
-            <a class="glyphicon glyphicon-remove form-control-feedback"style="pointer-events: auto"></a>
+            <textarea type="text" id="intro" class="form-control"  maxlength="120" placeholder="输入项目的基本介绍" rows="6" style="resize: vertical"></textarea>
+            <a class="glyphicon glyphicon-remove form-control-feedback" style="pointer-events: auto;"></a>
         </div>
     </div>
 
@@ -111,8 +112,8 @@
         <br/>
     </div>
 
-    <div class="col-xs-10 col-xs-offset-2">
-        <h4 id="mylabel" style="font-size: 13px;margin-left: 75px">请确认项目的相关信息，组员后续可以邀请加入，若信息无误请点击确认创建按钮</h4>
+    <div class="col-xs-10" style="text-align: center">
+        <h4 style="font-size: 13px;">请确认项目的相关信息，组员后续可以邀请加入，若信息无误请点击确认创建按钮</h4>
     </div>
 
     <div class="col-md-12">
@@ -124,7 +125,7 @@
             <button type="button" class="btn-danger btn" onclick="create()">确认创建</button>
         </span>
         <span class="col-md-2 col-xs-offset-3">
-            <a href="user-jmpHomepage"><button type="button" class="btn-default btn">取消创建</button></a>
+            <a href="user-jmpHomepage"><button type="button" class="btn btn-default" style="color:black;background-color:white">取消创建</button></a>
         </span>
     </div>
 </div>

@@ -30,11 +30,11 @@
 
 <body class="gray-bg">
 <div id="page-wrapper" class="white-bg dashbard-1">
-    <div class=" row wrapper white-bg" id="content-main">
+    <div class=" row wrapper white-bg" style="padding: 5px" id="content-main">
         <ol class="breadcrumb" style="margin-left: 40px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage">首页</a> >><a href="Organization-jmpOrgManager">机构管理</a>>><a href="organizationManagement-jumpOrgManager1Page">${sessionScope.org_name}</a>
+                    <a href="user-jmpHomepage" style="color:#658387">首页</a> >> <a href="Organization-jmpOrgManager" style="color:#658387">机构管理</a> >> <a href="organizationManagement-jumpOrgManager1Page">${sessionScope.org_name}</a>
                 </strong>
             </li>
         </ol>
@@ -54,8 +54,8 @@
                         </li>
                     </ul>
                 </div>
-                <div style="float: left;margin-top: 10px" class="col-md-4">
-                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#invite">邀请用户</button>
+                <div style="float: left;margin-top: 5px" class="col-md-4">
+                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#invite">邀请用户</button>
                 </div>
                 <div style="float: right;width: 300px" class="col-md-4">
                 </div>
@@ -269,21 +269,25 @@
         <s:if test="#session.statu2==1">
         if (row.statu===0){
             return [
-                '<a class="vice" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >设为副机构管理员</button></a>',
-                '<a class="grant" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >机构转移</button></a>',
-                '<a class="delete" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >踢出机构</button></a>'
+                '<a class="vice" style="padding-left: 10px"><img src="<%=basePath%>/img/deputyleader.png" height="20px" width="20px" title="设为副机构管理员" alt="设为副机构管理员"></a>',
+                '<span>&nbsp;&nbsp;&nbsp;|</span>',
+                '<a class="grant" style="padding-left: 10px"><img src="<%=basePath%>/img/transfer.png" height="20px" width="20px" title="机构转移" alt="机构转移"></a>',
+                '<span>&nbsp;&nbsp;&nbsp;|</span>',
+                '<a class="delete" style="padding-left: 10px"><img src="<%=basePath%>/img/deletemember.png" height="20px" width="20px" title="踢出机构" alt="踢出机构"></a>'
             ].join('');
         }
         else if (row.statu===2){
             return [
-            '<a class="moveVice" style="padding-left: 10px"><button class="btn btn-warning text-center btn-xs " >撤销副机构管理员</button></a>',
-            '<a class="grant" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >机构转移</button></a>',
-            '<a class="delete" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >踢出机构</button></a>'
+            '<a class="moveVice" style="padding-left: 10px"><img src="<%=basePath%>/img/undeputyleader.png" height="20px" width="20px" title="撤销副机构管理员" alt="撤销副机构管理员"></a>',
+            '<span>&nbsp;&nbsp;&nbsp;|</span>',
+            '<a class="grant" style="padding-left: 10px"><img src="<%=basePath%>/img/transfer.png" height="20px" width="20px" title="机构转移" alt="机构转移"></a>',
+            '<span>&nbsp;&nbsp;&nbsp;|</span>',
+            '<a class="delete" style="padding-left: 10px"><img src="<%=basePath%>/img/deletemember.png" height="20px" width="20px" title="踢出机构" alt="踢出机构"></a>'
         ].join('');
         }</s:if>
         <s:elseif test="#session.statu2==2">
         if (row.statu===0){
-            return '<a class="delete" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >踢出机构</button></a>';
+            return '<a class="delete" style="padding-left: 10px"><img src="<%=basePath%>/img/deletemember.png" height="20px" width="20px" title="踢出机构" alt="踢出机构"></a>';
         }
         </s:elseif>
     }
@@ -296,7 +300,7 @@
             return '已同意';
         else if(state==-1)
             return ['已拒绝',
-                '<a class="reAgree" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >重新邀请</button></a>'].join('');
+                '<a class="reAgree" style="padding-left: 10px"><button class="btn btn-success text-center btn-xs " >重新邀请</button></a>'].join('');
     }
     function rename2(value,row,index) {
         var statu=parseInt(row.statu);
@@ -356,9 +360,9 @@
                 {
                     title: "您确定将此用户设为副机构管理员吗",
                     text: "请谨慎操作！",
-                    type: "warning",
+                    type: "",
                     showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
+                    confirmButtonColor: "18a689",
                     confirmButtonText: "设置",
                     cancelButtonText: "取消",
                     closeOnConfirm: false

@@ -43,66 +43,70 @@
 
 </head>
 
-<body onload="newMsg()" class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
+<body onload="newMsg()" class="fixed-sidebar full-height-layout gray-bg">
 <div class="animated fadeInDown">
-    <div class="col-md-9 form-group" style="margin-top: 20px">
-        <div class="col-md-2 col-md-offset-4">
-            <a href="user-jmpCurrentProjectList"><img src="<%=basePath %>/img/Home1.png" height="160px"><br/></a>
-            <span style="color:#365063 ">当前项目</span><br/>
+    <div class="col-md-12 form-group" style="margin-top:6%">
+        <div class="col-md-2 col-md-offset-2">
+            <a href="user-jmpCurrentProjectList">
+                <img src="<%=basePath %>/img/Home1_change.png" style="height:160px; width:160px;border-radius:10%"><br/>
+            </a>
+            <span style="display:block;margin:20px 0 0 0;color:#658387;font-size:18px;font-weight:bold">当前项目</span>
             <span style="color:black">目前有</span>
             <span style="color: #ff0000">
-                <s:if test='#session.countnow==null'>
-                    <s:property value="0"/>
-                </s:if>
-                <s:else>
-                    <s:property value="#session.countnow"/>
-                </s:else>
-            </span>
+            <s:if test='#session.countnow==null'>
+                <s:property value="0"/>
+            </s:if>
+            <s:else>
+                <s:property value="#session.countnow"/>
+            </s:else>
+        </span>
             <span style="color:black">个项目</span>
         </div>
         <div class="col-md-2">
-            <a href="user-jmpCompletedProjectList"><img src="<%=basePath %>/img/Home2.jpg" height="160px"><br/></a>
-            <span style="color:#365063 ">历史项目</span><br/>
+            <a href="user-jmpCompletedProjectList">
+                <img src="<%=basePath %>/img/Home2_change.jpg" style="height:160px; width:160px;border-radius:10%"><br/>
+            </a>
+            <span style="display:block;margin:20px 0 0 0;color:#658387;font-size:18px;font-weight:bold">历史项目</span>
             <span style="color:black">完成了</span>
             <span style="color: #ff0000">
-                <s:if test='#session.counthistory==null'>
-                    <s:property value="0"/>
-                </s:if>
-                <s:else>
-                   <s:property value="#session.counthistory"/>
-                </s:else>
-            </span>
+            <s:if test='#session.counthistory==null'>
+                <s:property value="0"/>
+            </s:if>
+            <s:else>
+                <s:property value="#session.counthistory"/>
+            </s:else>
+        </span>
             <span style="color:black">个项目</span>
         </div>
         <div class="col-md-2 ">
-            <a href="library-get"><img src="<%=basePath %>/img/Home3.jpg" height="160px"></a><br/>
-            <span style="color:#365063 ">文档构件</span><br/>
+            <a href="library-get">
+                <img src="<%=basePath %>/img/Home3_change.jpg" style="height:160px; width:160px;border-radius:10%"><br/>
+            </a>
+            <span style="display:block;margin:20px 0 0 0;color:#658387;font-size:18px;font-weight:bold">文档构件</span>
             <span style="color:black">收藏了</span>
             <a href="library-Mycollect"><span style="color: #ff0000" class="lzf_a">${sessionScope.Mycollectcount}</span></a>
             <span style="color:black">个构件库</span>
         </div>
         <div class="col-md-2 ">
-            <a href="user-jmpMessageCenter"><img src="<%=basePath %>/img/Home4.jpg" height="160px"><br/></a>
-            <span style="color:#365063 ">消息中心</span><br/>
+            <a href="user-jmpMessageCenter">
+                <img src="<%=basePath %>/img/Home4_change.jpg" style="height:160px; width:160px;border-radius:10%"><br/>
+            </a>
+            <span style="display:block;margin:20px 0 0 0;color:#658387;font-size:18px;font-weight:bold">消息中心</span>
             <span style="color:black">收到了</span>
             <span style="color: #ff0000">
-                <s:if test='#session.nowNews==null'>
-                    <s:property value="0"/>
-                </s:if>
-                <s:else>
-                    <s:property value="#session.nowNews"/>
-                </s:else>
-            </span>
+            <s:if test='#session.nowNews==null'>
+                <s:property value="0"/>
+            </s:if>
+            <s:else>
+                <s:property value="#session.nowNews"/>
+            </s:else>
+        </span>
             <span style="color:black">条邀请</span>
         </div>
     </div>
-    <div class="col-md-9 form-group">
-        <table>
-            <tr><td>&nbsp</td></tr>
-            <tr><td>&nbsp</td></tr>
-            <tr><td>&nbsp</td></tr>
-        </table>
-        <span class="col-md-6 col-md-offset-4">创建一个项目成为组长，或者接受别人的项目邀请成为组员就可以参与项目需求文档的编写啦！</span>
+
+    <div class="col-md-9 form-group" style="margin-top: 5%">
+        <span class="col-md-6 col-md-offset-4">创建一个项目成为组长，或者接受别人的项目邀请成为组员，就可以参与项目需求文档的编写啦！</span>
         <span class="col-md-6 col-md-offset-4" style="color: red">需要${sessionScope.Mpoint5}积分创建项目</span>
         <a href="user-jmpNewproject"><img class="col-md-offset-1" src="<%=basePath %>/img/u7.png"></a>
         <div class="row J_mainContent" id="content-main">
