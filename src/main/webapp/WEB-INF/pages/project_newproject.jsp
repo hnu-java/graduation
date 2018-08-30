@@ -40,7 +40,7 @@
     <link href="<%=basePath %>/css/plugins/bootstrap-fileinput/fileinput.min.css" rel="stylesheet">
 
 </head>
-<body onload="twiceShow()" class="gray-bg animated fadeInDown">
+<body onload="whenLoad()" class="gray-bg animated fadeInDown">
 <div class=" row wrapper white-bg" style="padding:5px">
     <ol class="breadcrumb" style="margin-left: 40px">
         <li style="font-size: 15px">
@@ -331,7 +331,7 @@
             }
         })
     }
-    function twiceShow() {
+    function whenLoad() {
         $('button#showButton').click();
         $('button#showButton').click();
     }
