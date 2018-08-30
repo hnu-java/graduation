@@ -159,7 +159,7 @@ function loadTemplateThree(entity) {
     var funRoleContent="";
     if(funRoleList!=null)
     for (var i=0;i<funRoleList.length;i++){
-        funRoleContent+=" <tr class='funTr'> <th  ><div class='hidenTh' style='display: none'> <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black'></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black ' ></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></div></th> <th> <select class='form-control  roleName dis' name='roleName'   disabled>";
+        funRoleContent+=" <tr class='funTr'> <th  ><div class='hidenTh' style='display: none'> <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black'></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black ' ></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></div> </th> <th> <select class='form-control  roleName dis' name='roleName'   disabled>";
         var undefined="true",roleListContent="";
         for (var j=0;j<roleList.length;j++){
             roleListContent+="<option";
