@@ -30,11 +30,11 @@
 
 <body class="gray-bg">
 <div id="page-wrapper" class="white-bg dashbard-1">
-    <div class=" row wrapper white-bg" id="content-main">
+    <div class=" row wrapper white-bg" style="padding: 5px" id="content-main">
         <ol class="breadcrumb" style="margin-left: 40px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage">首页</a> >><a href="Organization-jmpOrgManager">机构管理</a>>> <a href="organizationManagement-jumpOrgManager3Page">查看机构${sessionScope.org_name}的申请</a>
+                    <a href="user-jmpHomepage" style="color:#658387">首页</a> >> <a href="Organization-jmpOrgManager" style="color:#658387">机构管理</a> >> <a href="organizationManagement-jumpOrgManager3Page">查看机构${sessionScope.org_name}的申请</a>
                 </strong>
             </li>
         </ol>
@@ -233,8 +233,8 @@
     )
     function operateFormatter(value,row,index) {
         return[
-            '<a class="accept" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >同意</button></a>',
-            '<a class="refuse" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >拒绝</button></a>'
+            '<a class="accept" style="padding-left: 10px"><button class="btn btn-success text-center btn-xs " >同意</button></a>',
+            '<a class="refuse" style="padding-left: 10px"><button class="btn btn-danger text-center btn-xs " >拒绝</button></a>'
         ].join('');
     }
 
@@ -244,7 +244,7 @@
             return '已同意';
         else if(status == -1)
             return ['已拒绝',
-                '<a class="reAgree" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >重新同意</button></a>'].join('');
+                '<a class="reAgree" style="padding-left: 10px"><button class="btn btn-success text-center btn-xs " >重新同意</button></a>'].join('');
     }
     window.actionEvents = {
         'click .accept': function(e, value, row, index) {
@@ -258,9 +258,9 @@
                 {
                     title: "确认同意申请吗",
                     text: "请谨慎操作！",
-                    type: "warning",
+                    type: "",
                     showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
+                    confirmButtonColor: "#18a689",
                     confirmButtonText: "确认",
                     cancelButtonText: "取消",
                     closeOnConfirm: false
@@ -345,9 +345,9 @@
                 {
                     title: "确认重新同意申请吗",
                     text: "请谨慎操作！",
-                    type: "warning",
+                    type: "",
                     showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
+                    confirmButtonColor: "#18a689",
                     confirmButtonText: "确认",
                     cancelButtonText: "取消",
                     closeOnConfirm: false

@@ -50,11 +50,11 @@
 </head>
 
 <body class="gray-bg">
-<div class=" row wrapper white-bg">
+<div class=" row wrapper white-bg" style="padding: 5px;">
     <ol class="breadcrumb" style="margin-left: 40px">
         <li style="font-size: 15px">
             <strong>
-                <a href="user-jmpHomepage">首页</a> >><a href="Organization-jmpOrgManager1">机构管理</a> >>  <a href="Organization-jmpOrgManager2">查看项目</a> >> 项目文档
+                <a href="user-jmpHomepage" style="color:#658387">首页</a> >> <a href="Organization-jmpOrgManager1" style="color:#658387">机构管理</a> >> <a href="Organization-jmpOrgManager2" style="color:#658387">查看项目</a> >> 项目文档
             </strong>
         </li>
     </ol>
@@ -220,8 +220,8 @@
                             <s:if test="#request.rank!=5&&#request.state==0">
                             <div class="ibox-tools ">
                                 <i class="fa fa-commenting modal-icon discussButton" id="discussButton" style="color: #6D8389" onclick="disReload()"  data-toggle="modal" data-target="#myModal1" > </i>
-                                <button id="edit" class="btn btn-primary btn-xs m-l-sm" onclick="temp_edit()" type="button">编辑</button>
-                                <button id="save" class="btn btn-primary  btn-xs m-l-sm" onclick="temp_save()" type="button" style="display:none;">保存</button>
+                                <button id="edit" class="btn btn-success btn-xs m-l-sm" onclick="temp_edit()" type="button">编辑</button>
+                                <button id="save" class="btn btn-success  btn-xs m-l-sm" onclick="temp_save()" type="button" style="display:none;">保存</button>
                             </div>
                             </s:if>
                         </div>
@@ -272,7 +272,7 @@
                                     <div class="ibox-title">
                                         <h5></h5>
                                         <input style="display: none" class="id_dis">
-                                        <button  class="btn btn-danger  btn-xs col-lg-push-1 m-l-sm deleteDis"  type="button" style="margin-top: -3px">删除</button>
+                                        <a class="deleteDis" style="margin-top: -3px"><img src="<%=basePath%>/img/delete.png" height="20px" width="20px" title="删除" alt="删除"></a>
                                         <%--<div class="ibox-tools">--%>
                                             <%--<i class="fa fa-file-text-o " style="color: #26d7d9"  title="下载"> 附件：内容摘要.doc</i>--%>
                                         <%--</div>--%>

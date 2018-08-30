@@ -109,11 +109,11 @@
 </div>
 <div id="wrapper" style="padding: 0px" class="wrapper wrapper-content ">
     <div id="next1" style="width: 100%;margin: 0 auto;font-weight: 400" class="gray-bg">
-    <div class=" row wrapper white-bg">
+    <div class=" row wrapper white-bg" style="padding: 5px;">
         <ol class="breadcrumb" style="margin-left: 50px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage"><span class="lzf_b">首页</span></a> >><a href="library-get"><span class="lzf_b">构件库</span></a> >> 构件
+                    <a href="user-jmpHomepage"><span class="lzf_b" style="color:#658387">首页</span></a> >> <a href="library-get"><span class="lzf_b" style="color:#658387">构件库</span></a> >> 构件
                 </strong>
             </li>
         </ol>
@@ -135,13 +135,13 @@
                 <div style="float: left;height: 50px;width:100px;padding: 40px 0px 20px 0px;margin-top:5px;margin-left: 10px">
                     <s:if test="#request.library.id_user == #session.user.id_user">
                         <s:if test="#request.id_template==1">
-                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newCommon">创建通用构件</button>
+                            <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#newCommon">创建通用构件</button>
                         </s:if>
                         <s:elseif test="#request.id_template==2">
-                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newUser">创建用户构件</button>
+                            <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#newUser">创建用户构件</button>
                         </s:elseif>
                         <s:elseif test="#request.id_template==3">
-                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newCase">创建用例构件</button>
+                            <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#newCase">创建用例构件</button>
                         </s:elseif>
                     </s:if>
                 </div>

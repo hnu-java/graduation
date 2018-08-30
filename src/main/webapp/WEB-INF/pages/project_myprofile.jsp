@@ -31,11 +31,11 @@
 
 <body class="gray-bg">
 <div id="page-wrapper" class="white-bg dashbard-1">
-    <div class=" row wrapper white-bg" id="content-main">
+    <div class=" row wrapper white-bg" style="padding: 5px" id="content-main">
         <ol class="breadcrumb" style="margin-left: 40px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage">首页</a> >><a href="user-jmpMyprofile">个人中心</a>
+                    <a href="user-jmpHomepage" style="color:#658387">首页</a> >> <a href="user-jmpMyprofile">个人中心</a>
                 </strong>
             </li>
         </ol>
@@ -46,9 +46,9 @@
             <div>
                 <div class="ibox-title">
                     <div style="float: left;margin-left: 5px"><span><strong>基本资料</strong></span></div>
-                    <div id="test1" style="float: left;margin-left: 10px;width: 70px"><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">修改资料</button></div>
-                    <div id="test2" style="float: left;width: 70px"><a href="user-jmpPayment"><button type="button" class="btn btn-primary btn-xs" >积分充值</button></a></div>
-                    <div id="test3" style="float: left"><a href="user-jmpPointsRecord"><button type="button" class="btn btn-primary btn-xs" >积分记录</button></a></div>
+                    <div id="test1" style="float: left;margin-left: 10px;width: 70px"><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal">修改资料</button></div>
+                    <div id="test2" style="float: left;width: 70px"><a href="user-jmpPayment"><button type="button" class="btn btn-success btn-xs" >积分充值</button></a></div>
+                    <div id="test3" style="float: left"><a href="user-jmpPointsRecord"><button type="button" class="btn btn-success btn-xs" >积分记录</button></a></div>
                 </div>
                 <div style="padding-left: 80px" class="ibox-content">
                 <table class="table" style="width:400px;border-left: none;border-right: none">
@@ -146,8 +146,8 @@
         <div style="float: left" class="col-md-6">
             <div class="ibox-title">
                 <div style="float: left;margin-left: 5px"><span><strong>我加入的机构</strong></span></div>
-                <div style="float: left;margin-left: 10px"><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newOrg">申请创建机构</button></div>
-                <div style="float: left;margin-left: 10px"><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#joinOrg">申请加入机构</button></div>
+                <div style="float: left;margin-left: 10px"><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#newOrg">申请创建机构</button></div>
+                <div style="float: left;margin-left: 10px"><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#joinOrg">申请加入机构</button></div>
             </div>
             <div class="bootstrap-table  ibox-content">
                 <table id="finishingTask" data-toggle="table"

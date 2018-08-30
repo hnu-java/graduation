@@ -29,11 +29,11 @@
 
 <body class="gray-bg">
 <div id="page-wrapper" class="white-bg dashbard-1">
-    <div class=" row wrapper white-bg" id="content-main">
+    <div class=" row wrapper white-bg" style="padding: 5px" id="content-main">
         <ol class="breadcrumb" style="margin-left: 40px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage">首页</a> >><a href="Organization-jmpOrgManager">机构管理</a>>> <a href="organizationManagement-jumpOrgManager2Page">查看机构${sessionScope.org_name}的项目</a>
+                    <a href="user-jmpHomepage" style="color:#658387">首页</a> >> <a href="Organization-jmpOrgManager" style="color:#658387">机构管理</a> >> <a href="organizationManagement-jumpOrgManager2Page">查看机构${sessionScope.org_name}的项目</a>
                 </strong>
             </li>
         </ol>
@@ -224,9 +224,9 @@
     function rename(value,row,index) {
         var flag=parseInt(row.flag);
         if(flag===0)
-            return ['<a class="view"><button class="btn btn-info text-center btn-xs " >查看文档</button></a>'].join('');
+            return ['<a class="view"><button class="btn btn-success text-center btn-xs " >查看文档</button></a>'].join('');
         else if(flag===1)
-            return ['<a class="refuse"><button class="btn btn-danger text-center btn-xs " >不可查看</button></a>'].join('');
+            return ['<a class="refuse"><button class="btn btn-default text-center btn-xs " >不可查看</button></a>'].join('');
     }
 
     $.ajax(

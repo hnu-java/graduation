@@ -31,11 +31,11 @@
 
 <body class="gray-bg">
 <div id="page-wrapper" class="white-bg dashbard-1">
-    <div class=" row wrapper white-bg" id="content-main">
+    <div class=" row wrapper white-bg" style="padding: 5px;" id="content-main">
         <ol class="breadcrumb" style="margin-left: 40px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage">首页</a> >><a href="user-jmpMessageCenter">消息中心</a>
+                    <a href="user-jmpHomepage" style="color:#658387">首页</a> >> <a href="user-jmpMessageCenter">消息中心</a>
                 </strong>
             </li>
         </ol>
@@ -240,8 +240,8 @@
      */
     function operateFormatter(value,row,index) {
         return[
-            '<a class="agree" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >同意</button></a>',
-            '<a class="refuse" style="padding-left: 10px"><button class="btn btn-info text-center btn-xs " >拒绝</button></a>'
+            '<a class="agree" style="padding-left: 10px"><button class="btn btn-success text-center btn-xs " >同意</button></a>',
+            '<a class="refuse" style="padding-left: 10px"><button class="btn btn-danger text-center btn-xs " >拒绝</button></a>'
         ].join('');
     }
     window.NewActionEvents = {
@@ -250,7 +250,7 @@
             swal({
                 title: "您确定要接受这个邀请吗",
                 text: "点击确定将接受这个邀请！",
-                type: "warning",
+                type: "",
                 showCancelButton: true,
                 confirmButtonColor: "#18a689",
                 confirmButtonText: "确定",

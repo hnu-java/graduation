@@ -57,12 +57,12 @@
 <body class="fixed-sidebar  gray-bg" style="overflow:hidden">
 <div id="wrapper" style="padding: 0px" class="wrapper wrapper-content animated fadeInDown gray-bg">
 
-    <div id="next1" style="width: 100%;margin: 0 auto;font-weight: 400" class="gray-bg">
-        <div class=" row wrapper white-bg" >
-            <ol class="breadcrumb" style="margin-left: 50px">
+    <div id="next1" style="width: 100%;margin: 0 auto;font-weight: 400" class="gray-bg" >
+        <div class=" row wrapper white-bg" style="padding: 5px">
+            <ol class="breadcrumb" style="margin-left: 55px">
                 <li style="font-size: 15px">
                     <strong>
-                        <a href="user-jmpHomepage"><span class="lzf_b">首页</span></a> >><a href="library-get"><span class="lzf_b">构件库</span></a>
+                        <a href="user-jmpHomepage"><span class="lzf_b" style="color:#658387">首页</span></a> >> <a href="library-get"><span class="lzf_b">构件库</span></a>
                     </strong>
                 </li>
             </ol>
