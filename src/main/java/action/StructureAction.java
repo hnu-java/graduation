@@ -167,11 +167,16 @@ public class StructureAction extends ActionSupport implements RequestAware, Sess
             request.put("id_library",structure.getId_library());
             request.put("id_template",id_template);
             List funList=new LinkedList<>();
+            List fsieList = new LinkedList<>();
             for(int i=0;i<structureAll.size();i++)
             {   FunStructureEntity funs = gson.fromJson(structureAll.get(i).getContent(), FunStructureEntity.class);
                 funList.add(funs);
             }
-            ActionContext.getContext().getValueStack().set("list3",funList);
+            for(int i=0;i<structureAll.size();i++)
+            {   FunStructureIdEntity fsie = gson.fromJson((structureAll.get(i).getContent()).substring(0, structureAll.get(i).getContent().length() - 1) + ",id_structure:" + String.valueOf(structureAll.get(i).getId_structure()) + "}", FunStructureIdEntity.class);
+                fsieList.add(fsie);
+            }
+            ActionContext.getContext().getValueStack().set("list3",fsieList);
         }
         else if(id_template==4)
         {
@@ -209,6 +214,14 @@ public class StructureAction extends ActionSupport implements RequestAware, Sess
         dataMap = new HashMap<>();
         structureDao = new StructureDaoImp();
         boolean res = structureDao.create(structure.getId_library(),structure.getContent());
+        dataMap.put("res",res);
+        return "RES";
+    }
+
+    public String edit() {
+        dataMap = new HashMap<>();
+        structureDao = new StructureDaoImp();
+        boolean res = structureDao.edit(structure.getId_structure(),structure.getContent());
         dataMap.put("res",res);
         return "RES";
     }

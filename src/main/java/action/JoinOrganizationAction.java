@@ -23,7 +23,6 @@ import java.util.Map;
 public class JoinOrganizationAction extends ActionSupport implements RequestAware, SessionAware, ModelDriven<JoinOrganizationEntity>, Preparable {
     private JoinOrganizationDao joinorganizationdao;
     private JoinOrganizationEntity joinorganization;
-    private OrganizationEntity organization;
     private Map<String, Object> session;
     private Map<String, Object> request;
     private Map<String, Object> dataMap;

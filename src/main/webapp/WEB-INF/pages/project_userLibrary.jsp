@@ -113,7 +113,7 @@
                             <a href="library-jmpUserLibrary"><div style="float: left;font-size:18px;text-align: left;color: black">用户构件库</div></a>
                         </div>
                         <div style="border-top: red solid 1.7px;  position: absolute;width: 90px;height: 200px;z-index: 999;overflow: hidden;margin-top: 31px">
-                    </div>
+                        </div>
                     </div>
                     <div style="float: left;font-size:18px;width: 30px;text-align: center">|</div>
                     <div style="float: left">
@@ -130,51 +130,52 @@
                 <div class="row">
                     <s:iterator value="list">
                         <div class="col-sm-4">
-                        <div class="contact-box">
-                            <div>
-                                <div style="cursor:pointer" class="structure">
-                                    <input style="display:none" type="text" value="<s:property value="id_template"/>">
-                                <div style="margin: 10px 10px 10px 15px;float: left">
-                                    <s:if test="#request.id_template==1"><img src="<%=basePath %>/img/div11.png" height="80px" width="80px"/></s:if>
-                                    <s:if test="#request.id_template==2"><img src="<%=basePath %>/img/div2.png" height="80px" width="80px"/></s:if>
-                                    <s:if test="#request.id_template==3"><img src="<%=basePath %>/img/div3.png" height="80px" width="80px"/></s:if>
-                                    <s:if test="#request.id_template==4"><img src="<%=basePath %>/img/div4.png" height="80px" width="80px"/></s:if>
-                                </div>
-                                <div style="margin: 10px;float: left">
-                                    <h3><s:property value="name"/></h3>
-                                    <p>类型：<s:property value="title"/><br>发布时间：<s:property value="time"/></p>
-                                </div>
-                                <div style="height:60px;clear: both;margin: 0px 10px 0px 10px;overflow: hidden">
-                                    <p>
-                                        <s:if test='#request.mention==""'>
-                                            描述：未填写
-                                        </s:if>
-                                        <s:else>
-                                            <s:property value="mention"/>
-                                        </s:else>
-                                    </p>
-                                </div>
-                                </div>
-                                <input id="idLibrary" style="display:none" type="text" myvalue="<s:property value="id_library"/>">
-                                <div style="float: right;z-index:99999999;margin: -14px -19px 0px 0px">
-                                    <button id="delete" type="submit" class="btn btn-alert" myvalue="<s:property value="id_library"/>">删除</button>
-                                </div>
-                                <%--<div style="float: right;z-index:99999999;margin: -14px -19px 0px 0px">--%>
-                                    <%--<s:if test="#request.id_user==#session.user.id_user">--%>
+                            <div class="contact-box">
+                                <div>
+                                    <div style="cursor:pointer" class="structure">
+                                        <input style="display:none" type="text" value="<s:property value="id_template"/>">
+                                        <div style="margin: 10px 10px 10px 15px;float: left">
+                                            <s:if test="#request.id_template==1"><img src="<%=basePath %>/img/div11.png" height="80px" width="80px"/></s:if>
+                                            <s:if test="#request.id_template==2"><img src="<%=basePath %>/img/div2.png" height="80px" width="80px"/></s:if>
+                                            <s:if test="#request.id_template==3"><img src="<%=basePath %>/img/div3.png" height="80px" width="80px"/></s:if>
+                                            <s:if test="#request.id_template==4"><img src="<%=basePath %>/img/div4.png" height="80px" width="80px"/></s:if>
+                                        </div>
+                                        <div style="margin: 10px;float: left">
+                                            <h3><s:property value="name"/></h3>
+                                            <p>类型：<s:property value="title"/><br>发布时间：<s:property value="time"/></p>
+                                        </div>
+                                        <div style="height:60px;clear: both;margin: 0px 10px 0px 10px;overflow: hidden">
+                                            <p>
+                                                <s:if test='#request.mention==""'>
+                                                    描述：未填写
+                                                </s:if>
+                                                <s:else>
+                                                    <s:property value="mention"/>
+                                                </s:else>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <input id="idLibrary" style="display: none" type="text" value="<s:property value="id_library"/>">
+                                    <div style="float: right;z-index:99999999;margin: -14px -19px 0px 0px">
+                                        <button id="delete" type="submit" class="btn btn-warning btn-xs" myvalue="<s:property value="id_library"/>">删除</button>
+                                        <button id="publish" type="submit" class="btn btn-primary btn-xs" myvalue="<s:property value="id_library"/>">发布</button>
+                                    </div>
+                                        <%--<div style="float: right;z-index:99999999;margin: -14px -19px 0px 0px">--%>
+                                        <%--<s:if test="#request.id_user==#session.user.id_user">--%>
                                         <%--<a class="btn btn-white btn-bitbucket nocollect" style="border: none" >--%>
                                         <%--<i class="fa fa-star modal-icon " style="font-size: 20px"></i>--%>
                                         <%--</a>--%>
-                                    <%--</s:if>--%>
-                                    <%--<s:else>--%>
+                                        <%--</s:if>--%>
+                                        <%--<s:else>--%>
                                         <%--<a class="btn btn-white btn-bitbucket collect" style="border: none" >--%>
-                                            <%--<i class="fa fa-star-o modal-icon " style="font-size: 20px"></i>--%>
+                                        <%--<i class="fa fa-star-o modal-icon " style="font-size: 20px"></i>--%>
                                         <%--</a>--%>
-                                    <%--</s:else>--%>
-                                    <%--<input style="display:none" type="text" value="<s:property value="id_library"/>">--%>
-                                <%--</div>--%>
+                                        <%--</s:else>--%>
+                                        <%--<input style="display:none" type="text" value="<s:property value="id_library"/>">--%>
+                                        <%--</div>--%>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </s:iterator>
                 </div>
             </div>
@@ -182,12 +183,12 @@
         <div id="footer" style="clear: both;text-align: center; margin-top:45px">
             <div id="pages" style="height: 50px;margin:0px auto;" class="btn-group">
                 <s:if  test="#request.page==1">
-                <button type="button" class="btn btn-gray"><i class="fa fa-chevron-left"></i></button>
+                    <button type="button" class="btn btn-gray"><i class="fa fa-chevron-left"></i></button>
                 </s:if>
                 <s:else><button type="button" class="btn btn-white turnpage lastPage"><i class="fa fa-chevron-left"></i></button></s:else>
                 <s:iterator begin="1" end="#request.num" step="1" status="st">
                     <s:if test="#request.page==#st.index+1">
-                <button type="button" class="btn btn-white active pagenum nowpage"><s:property value='#st.index+1'/></button></s:if>
+                        <button type="button" class="btn btn-white active pagenum nowpage"><s:property value='#st.index+1'/></button></s:if>
                     <s:else ><button type="button" class="btn btn-white pagenum"><s:property value='#st.index+1'/></button></s:else>
                 </s:iterator>
                 <s:if test="#request.page==#request.num"><button type="button" class="btn btn-gray"><i class="fa fa-chevron-right"></i></button></s:if>
@@ -196,6 +197,26 @@
         </div>
     </div>
 </div>
+
+<div  class="modal inmodal" id="publishLibrary" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">发布用例库</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group"><label>留言</label> <input id="publish_content" type="text" placeholder="请输入留言(可不填，不超过60字符)"  maxlength="60" class="form-control" required="required"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-publish" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="publish-button" type="button" class="btn btn-primary" id_library = "<s:property value="id_library"/>">发布</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="<%=basePath%>/js/jquery.min.js?v=2.1.4"></script>
 <script src="<%=basePath%>/js/bootstrap.min.js?v=3.3.6"></script>
 <script src="<%=basePath%>/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
@@ -237,17 +258,86 @@
 <script>
     $(document).ready(function(){
         $("div.structure").click(function(){
-
             location.href="structure-get?id_library="+$(this).next().val()+'&id_template=' + $(this).children().val()+'&page='+1+'&pagedis='+1;
         });
     });
 </script>
 </body>
 <script>
-    
+
+    $("button#publish").click(function () {
+        var id_library = $(this).attr("myvalue");
+        alert(id_library);
+        swal(
+            {
+                title: "请输入构件库描述",
+                text: "可不填，最多60个字",
+                type: "input",
+                showCancelButton: true,
+                confirmButtonColor: "#18a689",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            }, function (inputValue) {
+                $.ajax({
+                    url: "publishLibrary-publishLibrary",
+                    data: {
+                        id_library : id_library,
+                        content : inputValue
+                    },
+                    dataType: "json",
+                    type: "Post",
+                    async: "false",
+                    success: function (result) {
+                        if(result.repeat) {
+                            swal({
+                                title: "申请失败，已经发送申请",
+                                type: "error",
+                                confirmButtonColor: "#18a689",
+                                confirmButtonText: "OK"
+                            })
+                        }
+                        else {
+                            if (result.official) {
+                                swal({
+                                    title: "申请失败，已经是官方构件库",
+                                    type: "error",
+                                    confirmButtonColor: "#18a689",
+                                    confirmButtonText: "OK"
+                                })
+                            }
+                            else {
+                                if (result.res) {
+                                    swal({
+                                        title: "申请成功，等待审核通过",
+                                        type: "success",
+                                        confirmButtonColor: "#18a689",
+                                        confirmButtonText: "OK"
+                                    }, function () {
+                                        location.href = "library-jmpUserLibrary";
+                                    })
+                                }else{
+                                    swal({
+                                        title: "新建失败,服务器异常",
+                                        type: "error",
+                                        confirmButtonColor: "#18a689",
+                                        confirmButtonText: "OK"
+                                    })
+                                }
+                            }
+                        }
+                    },
+                    error: function () {
+                        swal({
+                            icon: "error"
+                        });
+                    }
+                })
+            })
+    })
+
     $("button#delete").click(function () {
-        var view = $(this).attr("myvalue");
-        var id_library = view
+        var id_library = $(this).attr("myvalue");
         alert(id_library);
         swal(
             {
@@ -280,7 +370,7 @@
                             })
                         }else{
                             swal({
-                                title: "新建失败,服务器异常",
+                                title: "删除失败,服务器异常",
                                 type: "error",
                                 confirmButtonColor: "#18a689",
                                 confirmButtonText: "OK"
@@ -357,54 +447,54 @@
     })
 </script>
 <%--<script>--%>
-    <%--$(document).on("click","a.collect",function () {--%>
-        <%--$(this).addClass("nocollect");--%>
-        <%--$(this).removeClass("collect");--%>
-        <%--$(this).children().addClass("fa-star");--%>
-        <%--$(this).children().removeClass("fa-star-o");--%>
-        <%--$.ajax({--%>
-            <%--url: "librarycollect-collect",--%>
-            <%--data: {id_library: $(this).next().val()},--%>
-            <%--dataType: "json",--%>
-            <%--type: "Post",--%>
-            <%--async: "false",--%>
-            <%--success: function (result) {--%>
-                <%--if(result.res===true)  {--%>
-                    <%--showtoast("success", "收藏成功", "操作成功")--%>
+<%--$(document).on("click","a.collect",function () {--%>
+<%--$(this).addClass("nocollect");--%>
+<%--$(this).removeClass("collect");--%>
+<%--$(this).children().addClass("fa-star");--%>
+<%--$(this).children().removeClass("fa-star-o");--%>
+<%--$.ajax({--%>
+<%--url: "librarycollect-collect",--%>
+<%--data: {id_library: $(this).next().val()},--%>
+<%--dataType: "json",--%>
+<%--type: "Post",--%>
+<%--async: "false",--%>
+<%--success: function (result) {--%>
+<%--if(result.res===true)  {--%>
+<%--showtoast("success", "收藏成功", "操作成功")--%>
 
-                <%--}--%>
-                <%--else  showtoast("error", "收藏失败", "操作失败")--%>
-            <%--},--%>
-            <%--error: function (result) {--%>
-                <%--showtoast("error", "收藏失败", "操作失败")--%>
-            <%--}--%>
-        <%--})--%>
-    <%--})--%>
+<%--}--%>
+<%--else  showtoast("error", "收藏失败", "操作失败")--%>
+<%--},--%>
+<%--error: function (result) {--%>
+<%--showtoast("error", "收藏失败", "操作失败")--%>
+<%--}--%>
+<%--})--%>
+<%--})--%>
 <%--</script>--%>
 <%--<script>--%>
-    <%--$(document).on("click","a.nocollect",function () {--%>
-        <%--$(this).addClass("collect");--%>
-        <%--$(this).removeClass("nocollect");--%>
-        <%--$(this).children().addClass("fa-star-o");--%>
-        <%--$(this).children().removeClass("fa-star");--%>
-        <%--$.ajax({--%>
-            <%--url: "librarycollect-nocollect",--%>
-            <%--data: {id_library: $(this).next().val()},--%>
-            <%--dataType: "json",--%>
-            <%--type: "Post",--%>
-            <%--async: "false",--%>
-            <%--success: function (result) {--%>
-                <%--if(result.res===true)  {--%>
-                    <%--showtoast("success", "取消收藏成功", "操作成功")--%>
+<%--$(document).on("click","a.nocollect",function () {--%>
+<%--$(this).addClass("collect");--%>
+<%--$(this).removeClass("nocollect");--%>
+<%--$(this).children().addClass("fa-star-o");--%>
+<%--$(this).children().removeClass("fa-star");--%>
+<%--$.ajax({--%>
+<%--url: "librarycollect-nocollect",--%>
+<%--data: {id_library: $(this).next().val()},--%>
+<%--dataType: "json",--%>
+<%--type: "Post",--%>
+<%--async: "false",--%>
+<%--success: function (result) {--%>
+<%--if(result.res===true)  {--%>
+<%--showtoast("success", "取消收藏成功", "操作成功")--%>
 
-                <%--}--%>
-                <%--else  showtoast("error", "取消收藏失败", "操作失败")--%>
-            <%--},--%>
-            <%--error: function (result) {--%>
-                <%--showtoast("error", "取消收藏失败", "操作失败")--%>
-            <%--}--%>
-        <%--})--%>
-    <%--})--%>
+<%--}--%>
+<%--else  showtoast("error", "取消收藏失败", "操作失败")--%>
+<%--},--%>
+<%--error: function (result) {--%>
+<%--showtoast("error", "取消收藏失败", "操作失败")--%>
+<%--}--%>
+<%--})--%>
+<%--})--%>
 <%--</script>--%>
 <!-- Mirrored from www.zi-han.net/theme/hplus/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:17:11 GMT -->
 </html>

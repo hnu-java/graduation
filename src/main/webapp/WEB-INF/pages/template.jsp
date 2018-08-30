@@ -58,17 +58,22 @@
                 </button>
                 <h4 class="modal-title">封装构件</h4>
             </div>
-            <div class="modal-body col-md-12" style="height: 200px" >
+            <div class="modal-body col-md-12" style="height: 300px" >
                     <label style="padding-left: 15px" class="col-md-4">选择构建库</label>
                     <div style="width: 300px" class="col-md-8">
                         <div class="alert alert-info" id="noneOneLibrary" style="display: none;">
-                            暂无该类型的构件库
+                            暂无该类型的构件库，请在下方创建
                         </div>
                         <div class="oneLibraryDiv" style="display: none;">
                             <select class="form-control" name="libraryOneList" id="libraryOneList" >
                             </select>
                         </div>
                     </div>
+                <label id="new" style="padding-left: 15px" class="col-md-4">新建构建库</label>
+                <div style="width: 300px" class="col-md-8">
+                <div class="form-group" id="name1" style="display: none;"><label>构件库名</label> <input id="name" type="text" placeholder="请输入构件库名(必填，不超过30字符)" maxlength="40" class="form-control" required="required"></div>
+                <div class="form-group" id="mention1" style="display: none;"><label>构件库描述</label> <input id="mention" type="text" placeholder="请输入构件库描述(不超过100字符)"  maxlength="60" class="form-control" required="required"></div>
+                </div>
                 <br>
                 <br>
                 <br>
@@ -78,6 +83,7 @@
             </div>
             <div class="modal-footer">
                 <button id="cancel-button" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="new-button" type="button" class="btn btn-primary" onclick="lib_new()">新建构件库</button>
                 <button id="edit-button" type="button" class="btn btn-primary" onclick="lib_save()">封装</button>
             </div>
         </div>
@@ -490,11 +496,21 @@
                     $("#libraryOneList").append(content);
                     $(".oneLibraryDiv").show();
                     $("#noneOneLibrary").hide();
+                    $("#new").hide();
+                    $("#name1").hide();
+                    $("#mention1").hide();
+                    $("#new-button").hide();
+                    $("#edit-button").show();
                     $("#hint").show();
                 }
                 else {
                     $(".oneLibraryDiv").hide();
                     $("#noneOneLibrary").show();
+                    $("#new").show();
+                    $("#name1").show();
+                    $("#mention1").show();
+                    $("#new-button").show();
+                    $("#edit-button").hide();
                     $("#hint").hide();
                 }
 
@@ -617,7 +633,6 @@
                 loadTemplateThree(structureList[id])
             }
             })
-
     }
 
     function seeStructure(id_template,obj,index){
@@ -663,19 +678,45 @@
                     text:"<div><b>优先级:</b>"+priority+"</div>"
                     +"<div><b>功能点描述:</b>"+structureList[id].describe+"</div>"
                     +"<div><b>用例过程:</b>"+funRoleList
-                    // +"<div>角色："+structureList[id].funRoleList[0].roleName+"</div>"
-                    // +"<div>描述："+structureList[id].funRoleList[0].roleDescribe+"</div>"
-                    // +"<div>局部可用性："+structureList[id].funRoleList[0].usableName+"</div>"
-                    // +"<div>发生条件："+structureList[id].funRoleList[0].usablePara+"</div>"
                     +"<div><b>可用性:</b>"+funUsableList
-                    // +"<div>全局可用性："+structureList[id].funUsableList[0].usableName+"</div>"
-                    // +"<div>发生条件："+structureList[id].funUsableList[0].usablePara+"</div>"
                     +"<div><b>输入:</b>"+structureList[id].input+"</div>"
                     +"<div><b>输出:</b>"+structureList[id].output+"</div>"
                     +"<div><b>基本操作流程:</b>"+structureList[id].basic+"</div>"
                     +"<div><b>备选操作流程:</b>"+structureList[id].alternative+"</div>",
                     html:true
                 })
+        }
+    }
+
+    function  lib_new() {
+        var id_template = nowCatalog.id_template;
+        var name=$("input#name").val();
+        alert(name);
+        if(name === "" || name === null){
+            swal("新建构件库失败！", "请填写构件库名", "error");
+        }
+        else{
+            $.ajax({
+                url: "library-newLibrary",
+                data: {name: name,id_template: id_template ,mention: $("input#mention").val()},
+                dataType: "json",
+                type: "Post",
+                async: "false",
+                success: function (result) {
+                    if (result.res) {
+                        swal({
+                            title: "新建构件库成功",
+                            text:"可在“首页 >> 文档构件 >> 用户构件库”查看",
+                            type: "success",
+                            confirmButtonColor: "#18a689",
+                            confirmButtonText: "OK"
+                        })
+                        $('button#cancel-button').click();
+                    } else {
+                        showtoast("dangerous", "新建失败", "服务器异常")
+                    }
+                }
+            })
         }
     }
 
@@ -803,6 +844,5 @@
                 // $(".dis").attr("disabled","true");
             }
         }
-
     }
 </script>

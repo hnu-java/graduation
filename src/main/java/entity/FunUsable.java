@@ -8,6 +8,24 @@ package entity;
 public class FunUsable {
     private String usableName;
     private String usablePara;
+    private String securityName;
+    private String securityPara;
+
+    public String getSecurityName() {
+        return securityName;
+    }
+
+    public void setSecurityName(String securityName) {
+        this.securityName = securityName;
+    }
+
+    public String getSecurityPara() {
+        return securityPara;
+    }
+
+    public void setSecurityPara(String securityPara) {
+        this.securityPara = securityPara;
+    }
 
     public String getUsableName() {
         return usableName;
@@ -28,8 +46,10 @@ public class FunUsable {
     public FunUsable() {
     }
 
-    public FunUsable(String usableName, String usablePara) {
+    public FunUsable(String usableName, String usablePara, String securityName, String securityPara) {
         this.usableName = usableName;
         this.usablePara = usablePara;
+        this.securityName = securityName;
+        this.securityPara = securityPara;
     }
 }

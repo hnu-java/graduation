@@ -87,6 +87,7 @@
         </div>
     </div>
 </div>
+
 <div  class="modal inmodal" id="newUser" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content animated bounceInRight">
@@ -127,7 +128,7 @@
                         <p style="font-size: 16px;color: black">贡献人：${requestScope.library.user_name}</p>
                 </div>
                 <div style="float: left;height: 50px;width:200px;padding: 40px 0px 20px 0px;margin-top:5px;margin-left: 10px">
-                        <p style="font-size: 16px;color: black">发布时间：${requestScope.library.time}</p>
+                    <p style="font-size: 16px;color: black">发布时间：${requestScope.library.time}</p>
                 </div>
                 <div style="float: left;height: 50px;width:100px;padding: 40px 0px 20px 0px;margin-top:5px;margin-left: 10px">
                     <p style="font-size: 16px;color: black">类型：${requestScope.library.title}</p>
@@ -147,115 +148,155 @@
                 </div>
             </div>
             <s:if test="#request.id_template==1">
-            <div id="mid" style="clear: both;height:450px;width:1200px;margin-left:200px;padding: 20px 75px 20px 75px;overflow: hidden">
-                <s:iterator value="list2">
-                <div  style="background-color: white;height: 115px;width:300px;float:left;margin: 0px 37.5px 30px 0px;padding: 5px" class="col-md-4 contact-box">
-                    <div style="height:100px;margin: 10px 0px 0px 10px;overflow: hidden">
-                        <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';color: black;font-weight:700;" >内容：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:500;overflow: hidden" id="commonContent"><s:property value="content"/></span>
-                        <span style="display:none;font-family:'Arial Negreta', 'Arial Normal', 'Arial';color: black;font-weight:700;" id="idStructure"><s:property value="id_structure"/></span>
-                    </div>
-                    <s:if test="#request.library.id_user == #session.user.id_user">
-                        <div style="float: right;z-index:99999999;margin: -40px 10px 0px 0px">
-                            <button id="deleteCommon" type="submit" class="btn btn-alert" myvalue="<s:property value="id_structure"/>">删除</button>
+                <div id="mid" style="clear: both;height:450px;width:1200px;margin-left:200px;padding: 20px 75px 20px 75px;overflow: hidden">
+                    <s:iterator value="list2">
+                        <div  style="background-color: white;height: 115px;width:300px;float:left;margin: 0px 37.5px 30px 0px;padding: 5px" class="col-md-4 contact-box">
+                            <div style="height:100px;margin: 10px 0px 0px 10px;overflow: hidden">
+                                <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';color: black;font-weight:700;" >内容：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:500;overflow: hidden" id="commonContent"><s:property value="content"/></span>
+                                <span style="display:none;font-family:'Arial Negreta', 'Arial Normal', 'Arial';color: black;font-weight:700;" id="idStructure"><s:property value="id_structure"/></span>
+                            </div>
+                            <s:if test="#request.library.id_user == #session.user.id_user">
+                                <div style="float: right;z-index:99999999;margin: -40px 10px 0px 0px">
+                                    <button id="deleteCommon" type="button" class="btn btn-warning btn-xs" myvalue="<s:property value="id_structure"/>">删除</button>
+                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editCommon">编辑</button>
+                                    <div  class="modal inmodal" id="editCommon" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content animated bounceInRight">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                                                    </button>
+                                                    <h4 class="modal-title">编辑通用构件</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group"><label>内容</label> <textarea id="editCommonContent" style="height: 300px" type="text" maxlength="100000" class="form-control" required="required"><s:property value="content"/></textarea></div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                                                    <button id="editCommon-button" type="submit" class="btn btn-primary" myvalue="<s:property value="id_structure"/>">保存</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </s:if>
                         </div>
-                    </s:if>
+                    </s:iterator>
                 </div>
-                </s:iterator>
-            </div>
             </s:if>
             <s:if test="#request.id_template==2">
-            <div id="mid" style="clear: both;height:450px;width:1300px;margin-left:150px;padding: 20px 75px 20px 75px;overflow: hidden">
-                <s:iterator value="list2">
-                <div  style="background-color: white;height: 200px;width:520px;float:left;margin: 0px 37.5px 30px 0px;padding: 5px;" class="col-md-4 contact-box">
-                    <div style="height:40px;margin: 10px 0px 0px 10px;overflow: hidden">
-                        <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;color: black">用户名：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:500;overflow: hidden"><s:property value="roleName"/></span>
-                    </div>
-                    <div style="height:80px;margin: 0px 0px 0px 10px;float: left; overflow: hidden">
-                        <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;color: black">用户描述：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:500;overflow: hidden"><s:property value="describe"/></span>
-                    </div>
-                    <div style="height:80px;margin: 0px 0px 0px 10px;float: left">
-                        <div style="width: 60px;float: left"><span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;color: black">用户权限:</span></div>
-                        <div style="float: left">
-                                <span style="font-family:'Arial Normal', 'Arial';font-weight:500;overflow: hidden">
+                <div id="mid" style="clear: both;height:450px;width:1300px;margin-left:150px;padding: 20px 75px 20px 75px;overflow: hidden">
+                    <s:iterator value="list2">
+                        <div  style="background-color: white;height: 200px;width:520px;float:left;margin: 0px 37.5px 30px 0px;padding: 5px;" class="col-md-4 contact-box">
+                            <div style="height:20px;margin: 10px 0px 0px 10px;overflow: hidden">
+                                <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;color: black">用户名：</span><span style="word-break:break-all;font-family:'Arial Normal', 'Arial';font-weight:500;overflow: hidden"><s:property value="roleName"/></span>
+                            </div>
+                            <div style="height:50px;margin: 0px 0px 0px 10px;float: left; overflow: hidden">
+                                <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;color: black">用户描述：</span><span style="word-break:break-all;font-family:'Arial Normal', 'Arial';font-weight:500;overflow: hidden"><s:property value="describe"/></span>
+                            </div>
+                            <div style="height:50px;margin: 0px 0px 0px 10px;float: left;overflow: hidden">
+                                <div style="width: 60px;float: left"><span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;color: black">用户权限:</span></div>
+                                <div style="float: left">
+                                <span style="word-break:break-all;font-family:'Arial Normal', 'Arial';font-weight:500;overflow: hidden">
                                         <s:property value="permissions"/>
                                 </span>
+                                </div>
+                            </div>
+                            <s:if test="#request.library.id_user == #session.user.id_user">
+                                <div style="z-index:99999999;margin: 130px 10px 0px 420px">
+                                    <button id="deleteUser" type="submit" class="btn btn-warning btn-xs" myvalue="<s:property value="id_structure"/>">删除</button>
+                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editUser">编辑</button>
+                                    <div  class="modal inmodal" id="editUser" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content animated bounceInRight">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                                                    </button>
+                                                    <h4 class="modal-title">编辑用户构件</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group"><label>用户名</label> <input id="Usercontent2" type="text" maxlength="100" value="<s:property value="roleName"/>" class="form-control" required="required"></div>
+                                                    <div class="form-group"><label>用户描述</label> <textarea id="Usercontent3"  style="height: 60px" type="text"  maxlength="2000" class="form-control" required="required"><s:property value="describe"/></textarea></div>
+                                                    <div class="form-group"><label>用户权限</label> <textarea  id="Usercontent4"  style="height: 200px" type="text" maxlength="100000" class="form-control" required="required"><s:property value="permissions"/></textarea></div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                                                    <button id="editUser-button" type="submit" class="btn btn-primary" myvalue="<s:property value="id_structure"/>">保存</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </s:if>
                         </div>
-                    </div>
-                    <s:if test="#request.library.id_user == #session.user.id_user">
-                    <div style="float: right;z-index:99999999;margin: 90px 10px 0px 0px">
-                        <span style="display:none;font-family:'Arial Negreta', 'Arial Normal', 'Arial';color: black;font-weight:700;" id="idUserStructure"><s:property value="id_structure"/></span>
-                        <button id="deleteUser" type="submit" class="btn btn-alert" myvalue="<s:property value="id_structure"/>">删除</button>
-                    </div>
-                    </s:if>
-                </div>
-                </s:iterator>
+                    </s:iterator>
                 </div>
             </s:if>
             <s:if test="#request.id_template==3">
-            <div id="mid" style="clear: both;width:1500px;margin-left:90px;padding: 20px 75px 20px 75px;overflow: hidden">
-                <s:iterator value="list3">
-                <div id="div1" style="background-color: white;width:600px;float:left;margin: 0px 37.5px 30px 0px;padding: 5px" class="col-md-4 contact-box">
-                    <div style="margin: 10px 0px 0px 10px;overflow: hidden">
-                        <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;color: black">功能点名称 ：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:400;"><s:property value="funName"/></span>
-                    </div>
-                    <div style="margin: 5px 0px 0px 10px;overflow: hidden">
-                        <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';color: black;font-weight:700;">优先级 ：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:400;"><s:if test="#request.priority==1">高</s:if><s:if test="#request.priority==2">中</s:if><s:if test="#request.priority==3">低</s:if></span>
-                    </div>
-                    <div style="margin: 5px 0px 0px 10px;overflow: hidden">
-                        <span style="color: black;font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;">功能点描述 ：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:400;"><s:property value="describe"/></span>
-                    </div>
-                    <div style="margin: 5px 0px 0px 10px;overflow: hidden">
-                        <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;color: black">用例过程 ：</span><br/>
-                        <s:iterator value="funRoleList">
-                            <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:500;">角色：<s:property value="roleName"/>　描述：<s:property value="roleDescribe"/>　<s:property value="usableName"/>　<s:property value="usablePara"/><br/></span>
-                        </s:iterator>
-                    </div>
-                    <div style="margin: 5px 0px 0px 10px;overflow: hidden">
-                        <span style="color: black;font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;">可用性 ：</span><br/>
-                        <s:iterator value="funUsableList">
-                            <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:500;"><s:property value="usableName"/>　<s:property value="usablePara"/><br/></span>
-                        </s:iterator>
-                        <s:iterator value="funRoleList">
-                            <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:500;"><s:property value="usableName"/>  &nbsp; <s:property value="usablePara"/><br/></span>
-                        </s:iterator>
-                    </div>
-                    <div style="margin: 5px 0px 0px 10px;overflow: hidden">
-                        <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;color: black">输入：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:400;"><s:property escapeHtml="false" value="input"/></span>
-                    </div>
-                    <div style="margin: 5px 0px 0px 10px;overflow: hidden">
-                        <span style="color: black;font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;">输出：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:400;"><s:property escapeHtml="false" value="output"/></span>
-                    </div>
-                    <div style="margin: 5px 0px 0px 10px;overflow: hidden">
-                        <span style="color: black;font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;">基本操作流程 ：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:400;"><s:property escapeHtml="false" value="basic"/></span>
-                    </div>
-                    <div style="margin: 5px 0px 20px 10px;overflow: hidden">
-                        <span style="color: black;font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;">备选操作流程 ：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:400;"><s:property escapeHtml="false" value="alternative"/></span>
-                    </div>
-                    <s:if test="#request.library.id_user == #session.user.id_user">
-                        <div style="float: right;z-index:99999999;margin: 90px 10px 0px 0px">
-                            <button id="deleteUseCase" type="submit" class="btn btn-alert">删除</button>
+                <div id="mid" style="clear: both;width:1500px;margin-left:90px;padding: 20px 75px 20px 75px;overflow: hidden">
+                    <s:iterator value="list3">
+                        <div id="div1" style="background-color: white;width:600px;float:left;margin: 0px 37.5px 30px 0px;padding: 5px" class="col-md-4 contact-box">
+                            <div style="margin: 10px 0px 0px 10px;overflow: hidden">
+                                <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;color: black">功能点名称 ：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:400;"><s:property value="funName"/></span>
+                            </div>
+                            <div style="margin: 5px 0px 0px 10px;overflow: hidden">
+                                <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';color: black;font-weight:700;">优先级 ：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:400;"><s:if test="#request.priority==1">高</s:if><s:if test="#request.priority==2">中</s:if><s:if test="#request.priority==3">低</s:if></span>
+                            </div>
+                            <div style="margin: 5px 0px 0px 10px;overflow: hidden">
+                                <span style="color: black;font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;">功能点描述 ：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:400;"><s:property value="describe"/></span>
+                            </div>
+                            <div style="margin: 5px 0px 0px 10px;overflow: hidden">
+                                <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;color: black">用例过程 ：</span><br/>
+                                <s:iterator value="funRoleList">
+                                    <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:500;">角色：<s:property value="roleName"/>　描述：<s:property value="roleDescribe"/>　<s:property value="usableName"/>　<s:property value="usablePara"/><br/></span>
+                                </s:iterator>
+                            </div>
+                            <div style="margin: 5px 0px 0px 10px;overflow: hidden">
+                                <span style="color: black;font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;">可用性 ：</span><br/>
+                                <s:iterator value="funUsableList">
+                                    <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:500;"><s:property value="usableName"/>　<s:property value="usablePara"/><br/></span>
+                                </s:iterator>
+                                <s:iterator value="funRoleList">
+                                    <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:500;"><s:property value="usableName"/>  &nbsp; <s:property value="usablePara"/><br/></span>
+                                </s:iterator>
+                            </div>
+                            <div style="margin: 5px 0px 0px 10px;overflow: hidden">
+                                <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;color: black">输入：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:400;"><s:property escapeHtml="false" value="input"/></span>
+                            </div>
+                            <div style="margin: 5px 0px 0px 10px;overflow: hidden">
+                                <span style="color: black;font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;">输出：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:400;"><s:property escapeHtml="false" value="output"/></span>
+                            </div>
+                            <div style="margin: 5px 0px 0px 10px;overflow: hidden">
+                                <span style="color: black;font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;">基本操作流程 ：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:400;"><s:property escapeHtml="false" value="basic"/></span>
+                            </div>
+                            <div style="margin: 5px 0px 20px 10px;overflow: hidden">
+                                <span style="color: black;font-family:'Arial Negreta', 'Arial Normal', 'Arial';font-weight:700;">备选操作流程 ：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:400;"><s:property escapeHtml="false" value="alternative"/></span>
+                            </div>
+                            <s:if test="#request.library.id_user == #session.user.id_user">
+                                <div style="z-index:99999999;margin: 130px 10px 0px 500px">
+                                    <button id="deleteFun" type="submit" class="btn btn-warning btn-xs" myvalue="<s:property value="id_structure"/>">删除</button>
+                                    <button type="button" class="btn btn-primary btn-xs" >编辑</button>
+                                </div>
+                            </s:if>
                         </div>
-                    </s:if>
+                    </s:iterator>
                 </div>
-                </s:iterator>
-            </div>
             </s:if>
             <s:if test="#request.id_template==4">
-            <div id="mid" style="clear: both;height:450px;width:1300px;margin:0 auto;padding: 20px 75px 20px 75px;overflow: hidden">
-                <s:iterator value="list4">
-                    <div  style="background-color: white;height: 200px;width:480px;float:left;margin: 0px 37.5px 30px 48px;padding: 5px;" class="col-md-4 contact-box">
-                    <div style="margin: 10px 10px 10px 15px;float: left">
-                        <div style="float: left"><img src="<%=basePath %>/<s:property value="src"/>" height="170" width="160"/> </div>
-                    </div>
-                    <div style="margin-top: 10px;margin-left:20px;float: left">
-                        <div style="width: 260px;height:185px;word-wrap: break-word;font-size: 14px;overflow: hidden;">
-                            <p style="color: black;font-size: 20px">图片描述：</p>
-                            <p><s:property value="mention"/></p>
+                <div id="mid" style="clear: both;height:450px;width:1300px;margin:0 auto;padding: 20px 75px 20px 75px;overflow: hidden">
+                    <s:iterator value="list4">
+                        <div  style="background-color: white;height: 200px;width:480px;float:left;margin: 0px 37.5px 30px 48px;padding: 5px;" class="col-md-4 contact-box">
+                            <div style="margin: 10px 10px 10px 15px;float: left">
+                                <div style="float: left"><img src="<%=basePath %>/<s:property value="src"/>" height="170" width="160"/> </div>
+                            </div>
+                            <div style="margin-top: 10px;margin-left:20px;float: left">
+                                <div style="width: 260px;height:185px;word-wrap: break-word;font-size: 14px;overflow: hidden;">
+                                    <p style="color: black;font-size: 20px">图片描述：</p>
+                                    <p><s:property value="mention"/></p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </s:iterator>
                 </div>
-                </s:iterator>
-            </div>
             </s:if>
             <div id="footer" style="clear: both;text-align: center; margin-top:25px">
                 <div id="pages" style="height: 50px;margin:0px auto;" class="btn-group">
@@ -285,66 +326,66 @@
                     </p>
                 </div>
             </div>
-          <div class="modal-body">
-            <div class="row" style="width: 750px;margin-left: 370px">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>发表评论</h5>
-                        <div class="ibox-tools">
-                            <button  class="btn btn-primary col-lg-push-1" onclick="commitSend()" type="button" style="margin-right: 10px;margin-top: -7px;padding-left: 20px;padding-right: 20px">发布</button>
-                        </div>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="click2edit wrapper discuss">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="allDiscuss">
-                <!--一行留言-->
-                <s:iterator value="listdis">
+            <div class="modal-body">
                 <div class="row" style="width: 750px;margin-left: 370px">
-                    <div class="ibox float-e-margins " style="margin-bottom: 10px">
+                    <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5><s:property value="LibrarydiscussEntity.name"/></h5>
-                            <h5 style="margin-top:2px;margin-left: 30px"><s:date name="LibrarydiscussEntity.time" format="yyyy-MM-dd HH:mm:ss"/></h5>
-                            <input style="display: none" class="id_dis" value="<s:property value="LibrarydiscussEntity.id_lib_discuss" />">
-                            <s:if test="#request.LibrarydiscussEntity.id_user==#session.user.id_user&&#request.state<=7200000"><button  class="btn btn-danger  btn-xs col-lg-push-1 m-l-sm deleteDis"  type="button" style="margin-top: -3px">删除</button>
-                            </s:if>
-                            <s:else><button  class="btn btn-xs col-lg-push-1 m-l-sm deleteDis"  type="button" style="margin-top: -3px">删除</button>
-                            </s:else>
-                            <!--<div class="ibox-tools">
-                                <i class="fa fa-file-text-o " style="color: #26d7d9"  title="下载"> 附件：内容摘要.doc</i>
-                            </div>-->
+                            <h5>发表评论</h5>
+                            <div class="ibox-tools">
+                                <button  class="btn btn-primary col-lg-push-1" onclick="commitSend()" type="button" style="margin-right: 10px;margin-top: -7px;padding-left: 20px;padding-right: 20px">发布</button>
+                            </div>
                         </div>
                         <div class="ibox-content">
-                            <div class=" wrapper">
-                                <s:property escapeHtml="false" value="LibrarydiscussEntity.content"/>
+                            <div class="click2edit wrapper discuss">
                             </div>
                         </div>
                     </div>
                 </div>
-                </s:iterator>
-                <!--一行留言结束-->
+                <div class="allDiscuss">
+                    <!--一行留言-->
+                    <s:iterator value="listdis">
+                        <div class="row" style="width: 750px;margin-left: 370px">
+                            <div class="ibox float-e-margins " style="margin-bottom: 10px">
+                                <div class="ibox-title">
+                                    <h5><s:property value="LibrarydiscussEntity.name"/></h5>
+                                    <h5 style="margin-top:2px;margin-left: 30px"><s:date name="LibrarydiscussEntity.time" format="yyyy-MM-dd HH:mm:ss"/></h5>
+                                    <input style="display: none" class="id_dis" value="<s:property value="LibrarydiscussEntity.id_lib_discuss" />">
+                                    <s:if test="#request.LibrarydiscussEntity.id_user==#session.user.id_user&&#request.state<=7200000"><button  class="btn btn-danger  btn-xs col-lg-push-1 m-l-sm deleteDis"  type="button" style="margin-top: -3px">删除</button>
+                                    </s:if>
+                                    <s:else><button  class="btn btn-xs col-lg-push-1 m-l-sm deleteDis"  type="button" style="margin-top: -3px">删除</button>
+                                    </s:else>
+                                    <!--<div class="ibox-tools">
+                                        <i class="fa fa-file-text-o " style="color: #26d7d9"  title="下载"> 附件：内容摘要.doc</i>
+                                    </div>-->
+                                </div>
+                                <div class="ibox-content">
+                                    <div class=" wrapper">
+                                        <s:property escapeHtml="false" value="LibrarydiscussEntity.content"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </s:iterator>
+                    <!--一行留言结束-->
+                </div>
+                <div style="clear: both;text-align: center; margin-top:25px">
+                    <div  style="height: 50px;margin:0px auto;" class="btn-group">
+                        <s:if  test="#request.pagedis==1">
+                            <button type="button" class="btn btn-gray"><i class="fa fa-chevron-left"></i></button>
+                        </s:if>
+                        <s:else><button type="button" class="btn btn-white turnpagedis lastPagedis"><i class="fa fa-chevron-left"></i></button></s:else>
+                        <s:iterator begin="1" end="#request.numdis" step="1" status="st">
+                            <s:if test="#request.pagedis==#st.index+1">
+                                <button type="button" class="btn btn-white active pagenumdis nowpagedis"><s:property value='#st.index+1'/></button></s:if>
+                            <s:else ><button type="button" class="btn btn-white pagenumdis"><s:property value='#st.index+1'/></button></s:else>
+                        </s:iterator>
+                        <s:if test="#request.pagedis==#request.numdis"><button type="button" class="btn btn-gray"><i class="fa fa-chevron-right"></i></button></s:if>
+                        <s:else><button type="button" class="btn btn-white turnpagedis nextPagedis"><i class="fa fa-chevron-right"></i></button></s:else>
+                    </div>
+                    <input class="id_library" type="text" style="display: none" value="${requestScope.id_library}">
+                    <input class="id_template" type="text" style="display: none" value="${requestScope.id_template}">
+                </div>
             </div>
-              <div style="clear: both;text-align: center; margin-top:25px">
-                  <div  style="height: 50px;margin:0px auto;" class="btn-group">
-                      <s:if  test="#request.pagedis==1">
-                          <button type="button" class="btn btn-gray"><i class="fa fa-chevron-left"></i></button>
-                      </s:if>
-                      <s:else><button type="button" class="btn btn-white turnpagedis lastPagedis"><i class="fa fa-chevron-left"></i></button></s:else>
-                      <s:iterator begin="1" end="#request.numdis" step="1" status="st">
-                          <s:if test="#request.pagedis==#st.index+1">
-                              <button type="button" class="btn btn-white active pagenumdis nowpagedis"><s:property value='#st.index+1'/></button></s:if>
-                          <s:else ><button type="button" class="btn btn-white pagenumdis"><s:property value='#st.index+1'/></button></s:else>
-                      </s:iterator>
-                      <s:if test="#request.pagedis==#request.numdis"><button type="button" class="btn btn-gray"><i class="fa fa-chevron-right"></i></button></s:if>
-                      <s:else><button type="button" class="btn btn-white turnpagedis nextPagedis"><i class="fa fa-chevron-right"></i></button></s:else>
-                  </div>
-                  <input class="id_library" type="text" style="display: none" value="${requestScope.id_library}">
-                  <input class="id_template" type="text" style="display: none" value="${requestScope.id_template}">
-              </div>
-          </div>
         </div>
     </div>
 </div>
@@ -426,10 +467,126 @@
     }
 </script>
 <script>
+    $("button#editUser-button").click(function () {
+        var content1 = $("input#Usercontent2").val();
+        var content2 = $("textarea#Usercontent3").val();
+        var content3 = $("textarea#Usercontent4").val();
+        var id_structure = $(this).attr("myvalue");
+        alert(id_structure);
+        if(content1 === "" || content === null) {
+            swal("创建失败！", "请填写用户名", "error");
+        }
+        else if(content2 === "" || content === null) {
+            swal("创建失败！", "请填写用户描述", "error");
+        }
+        else if(content3 === "" || content === null) {
+            swal("创建失败！", "请填写用户权限", "error");
+        }
+        else {
+            content = "{\"roleName\":\"" + content1 + "\",\"describe\":\"" + content2 + "\",\"permissions\":\"" + content3 + "\"}";
+            swal(
+                {
+                    title: "您确认修改该构件吗？",
+                    text: "确认请点击确定",
+                    type: "",
+                    showCancelButton: true,
+                    confirmButtonColor: "#18a689",
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: false
+                }, function () {
+                    $.ajax({
+                        url: "structure-edit",
+                        data: {
+                            content: content,
+                            id_structure:id_structure
+                        },
+                        dataType: "json",
+                        type: "Post",
+                        async: "false",
+                        success: function (result) {
+                            if (result.res){
+                                swal({
+                                    title: "修改成功",
+                                    type:"success",
+                                    confirmButtonColor: "#18a689",
+                                    confirmButtonText: "OK"
+                                },function(){
+                                    location.href="structure-get?pagedis="+1+'&id_template=' + $("input.id_template").val()+'&id_library='+$("input.id_library").val()+'&page='+${requestScope.page};
+                                })
+                            }
+                            else {
+                                swal("修改失败", "输入的机构不存在", "error");
+                            }
+
+                        },
+                        error: function () {
+                            swal({
+                                icon: "error"
+                            });
+                        }
+                    })
+                })
+        }
+    })
+    $("button#editCommon-button").click(function () {
+        var content = $("textarea#editCommonContent").val();
+        var id_structure = $(this).attr("myvalue");
+        alert(content);
+        if(content === "" || content === null) {
+            swal("创建失败！", "请填写构件内容", "error");
+        }
+        else {
+            content = "{\"content\":\"" + content + "\"}";
+            swal(
+                {
+                    title: "您确认修改该构件吗？",
+                    text: "确认请点击确定",
+                    type: "",
+                    showCancelButton: true,
+                    confirmButtonColor: "#18a689",
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: false
+                }, function () {
+                    $.ajax({
+                        url: "structure-edit",
+                        data: {
+                            content: content,
+                            id_structure:id_structure
+                        },
+                        dataType: "json",
+                        type: "Post",
+                        async: "false",
+                        success: function (result) {
+                            if (result.res){
+                                swal({
+                                    title: "修改成功",
+                                    type:"success",
+                                    confirmButtonColor: "#18a689",
+                                    confirmButtonText: "OK"
+                                },function(){
+                                    location.href="structure-get?pagedis="+1+'&id_template=' + $("input.id_template").val()+'&id_library='+$("input.id_library").val()+'&page='+${requestScope.page};
+                                })
+                            }
+                            else {
+                                swal("修改失败", "服务器异常", "error");
+                            }
+
+                        },
+                        error: function () {
+                            swal({
+                                icon: "error"
+                            });
+                        }
+                    })
+                })
+        }
+    })
+
     $("button#deleteCommon").click(function() {
         //var id_structure = document.getElementById("idStructure").innerHTML;
         var id_structure = $(this).attr("myvalue");
-        alert(id_structure);
         swal(
             {
                 title: "您确认删除该构件吗？",
@@ -472,9 +629,9 @@
                 })
             })
     })
-    $("button#deleteUser").click(function () {
+    $("button#deleteUser").click(function() {
+        //var id_structure = document.getElementById("idStructure").innerHTML;
         var id_structure = $(this).attr("myvalue");
-        alert(id_structure);
         swal(
             {
                 title: "您确认删除该构件吗？",
@@ -517,6 +674,53 @@
                 })
             })
     })
+
+    $("button#deleteFun").click(function() {
+        //var id_structure = document.getElementById("idStructure").innerHTML;
+        var id_structure = $(this).attr("myvalue");
+        swal(
+            {
+                title: "您确认删除该构件吗？",
+                text: "确认请点击确定",
+                type: "",
+                showCancelButton: true,
+                confirmButtonColor: "#18a689",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            }, function () {
+                $.ajax({
+                    url: "funStructureId-delete",
+                    data: {
+                        id_structure:id_structure
+                    },
+                    dataType: "json",
+                    type: "Post",
+                    async: "false",
+                    success: function (result) {
+                        if (result.res){
+                            swal({
+                                title: "删除成功",
+                                type:"success",
+                                confirmButtonColor: "#18a689",
+                                confirmButtonText: "OK"
+                            },function(){
+                                location.href="structure-get?pagedis="+1+'&id_template=' + $("input.id_template").val()+'&id_library='+$("input.id_library").val()+'&page='+${requestScope.page};
+                            })
+                        }
+                        else {
+                            swal("删除失败", "服务器异常", "error");
+                        }
+                    },
+                    error: function () {
+                        swal({
+                            icon: "error"
+                        });
+                    }
+                })
+            })
+    })
+
     $("button#newCommon-button").click(function () {
         var content = $("textarea#content").val();
         var id_library = ${requestScope.library.id_library};
@@ -556,7 +760,7 @@
                                 },function(){
                                     location.href="structure-get?pagedis="+1+'&id_template=' + $("input.id_template").val()+'&id_library='+$("input.id_library").val()+'&page='+${requestScope.page};
                                 })
-                                }
+                            }
                             else {
                                 swal("创建失败", "服务器异常", "error");
                             }
@@ -691,48 +895,48 @@
     })
 </script>
 <script>
-        $(".click2edit").addClass("no-padding");
-        $(".click2edit").summernote({
-            height: 100,
-            minHeight: 50,
-            maxHeight: 200,
-            lang: "zh-CN",
-            focus: true,
-            toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['fontsize', ['fontsize']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['picture', ['picture']],
-                ['fullscreen', ['fullscreen']]
-            ],
-            callbacks: {
-                onImageUpload: function(files, editor, $editable) {
-                    that=$(this);
-                    sendFile(files,that);
-                }
+    $(".click2edit").addClass("no-padding");
+    $(".click2edit").summernote({
+        height: 100,
+        minHeight: 50,
+        maxHeight: 200,
+        lang: "zh-CN",
+        focus: true,
+        toolbar: [
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['picture', ['picture']],
+            ['fullscreen', ['fullscreen']]
+        ],
+        callbacks: {
+            onImageUpload: function(files, editor, $editable) {
+                that=$(this);
+                sendFile(files,that);
             }
-        })
-        function sendFile(files, that) {
-            var data = new FormData();
-            data.append("file", files[0]);
-            $.ajax({
-                data : data,
-                type : "POST",
-                url : "librarydiscuss-image", //图片上传出来的url，返回的是图片上传后的路径，http格式
-                cache : false,
-                contentType : false,
-                processData : false,
-                dataType : "json",
-                success: function(data) {//data是返回的hash,key之类的值，key是定义的文件名
-                    $(that).summernote('insertImage', data.path);
-                },
-                error:function(){
-                    alert("上传失败");
-                }
-            });
         }
+    })
+    function sendFile(files, that) {
+        var data = new FormData();
+        data.append("file", files[0]);
+        $.ajax({
+            data : data,
+            type : "POST",
+            url : "librarydiscuss-image", //图片上传出来的url，返回的是图片上传后的路径，http格式
+            cache : false,
+            contentType : false,
+            processData : false,
+            dataType : "json",
+            success: function(data) {//data是返回的hash,key之类的值，key是定义的文件名
+                $(that).summernote('insertImage', data.path);
+            },
+            error:function(){
+                alert("上传失败");
+            }
+        });
+    }
 
 </script>
 <!-- Mirrored from www.zi-han.net/theme/hplus/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:17:11 GMT -->

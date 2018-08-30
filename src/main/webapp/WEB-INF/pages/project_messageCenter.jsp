@@ -189,7 +189,7 @@
                 $('#finishingTask').bootstrapTable('load',proList);
             },
             error:function(){
-                alert("错误");
+                showtoast("error", "数据获取失败", "请等待页面加载或刷新");
             }
         }
     )
@@ -205,7 +205,7 @@
                 $('#info').bootstrapTable('load',infolist);
             },
             error:function(){
-                alert("错误");
+                showtoast("error", "数据获取失败", "请等待页面加载或刷新");
             }
         }
     )

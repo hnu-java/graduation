@@ -43,15 +43,15 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     private UserDao userDao;
     private UserEntity user;
 
-    public String create() throws ParseException {
+    public String create_test() throws ParseException {
         dataMap = new HashMap<String, Object>();
         projectDao = new ProjectDaoImp();
         userDao = new UserDaoImp();
         OrganizationDao organizationDao = new OrganizationDaoImp();
 //        System.out.println(project.getName()+" "+project.getDocument_Name());
         System.out.println(project.getOrgName());
-        UserEntity seesionUser=(UserEntity)session.get("user");
-        int points = seesionUser.getPoints();
+        UserEntity sessionUser=(UserEntity)session.get("user");
+        int points = sessionUser.getPoints();
         int Npoints = (Integer)session.get("Mpoint5");
         dataMap.put("points",points);
         if(points >= Npoints) {
@@ -61,24 +61,33 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
 //                    dataMap.put("days", days);
 //                } else {
 //                    dataMap.put("days", days);
-              boolean res = projectDao.save(project);
-              dataMap.put("res", res);
+//              boolean res = projectDao.save(project);
+//              dataMap.put("res", res);
               boolean exist = projectDao.exist(project.getOrgName());
-              boolean belong = projectDao.belong(project.getOrgName(),seesionUser.getId_user());
+              boolean belong = projectDao.belong(project.getOrgName(),sessionUser.getId_user());
               System.out.println(belong);
               dataMap.put("belong", belong);
               dataMap.put("exist", exist);
 //                }
            } else {
 //                dataMap.put("days", 0);
-              boolean res = projectDao.save(project);
-              dataMap.put("res", res);
+//              boolean res = projectDao.save(project);
+//              dataMap.put("res", res);
               dataMap.put("exist", true);
               dataMap.put("belong", true);
           }
         }
-        user = userDao.getOne(seesionUser.getName());
+        user = userDao.getOne(sessionUser.getName());
         session.put("user",user);
+        return SUCCESS;
+    }
+
+    public String create() {
+        dataMap = new HashMap<String, Object>();
+        projectDao = new ProjectDaoImp();
+        System.out.println(project.getName()+" wtf "+project.getDocument_Name()+" "+project.getOrgName()+" "+project.getIntro());
+        boolean res = projectDao.save(project);
+        dataMap.put("res", res);
         return SUCCESS;
     }
 
@@ -107,6 +116,19 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         int ID_User = user.getId_user();
         List<OrganizationEntity> list = organizationDao.getMatched(ID_User,project.getOrgName());
         Gson gson = new Gson();
+        String jsonString = gson.toJson(list);
+        dataMap.put("res",jsonString);
+        return SUCCESS;
+    }
+
+    public String showOrg() throws Exception {
+        dataMap = new HashMap<String, Object>();
+        OrganizationDao organizationDao = new OrganizationDaoImp();
+        UserEntity user = (UserEntity)ActionContext.getContext().getSession().get("user");
+        int ID_User = user.getId_user();
+        List<OrganizationEntity> list = organizationDao.getMyOrg(ID_User);
+        Gson gson = new Gson();
+        System.out.println(list.size());
         String jsonString = gson.toJson(list);
         dataMap.put("res",jsonString);
         return SUCCESS;
