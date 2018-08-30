@@ -159,7 +159,7 @@ function loadTemplateThree(entity) {
     var funRoleContent="";
     if(funRoleList!=null)
     for (var i=0;i<funRoleList.length;i++){
-        funRoleContent+=" <tr class='funTr'> <th  ><div class='hidenTh' style='display: none'> <span class='former_fun_down li_fa fa col-md-offset-1  fa-arrow-down black'></span> <span class='former_fun_up fa li_fa col-md-offset-1  fa-arrow-up black ' ></span> <span class='former_fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></div></th> <th> <select class='form-control  roleName dis' name='roleName'   disabled>";
+        funRoleContent+=" <tr class='funTr'> <th  ><div class='hidenTh' style='display: none'> <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black'></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black ' ></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></div></th> <th> <select class='form-control  roleName dis' name='roleName'   disabled>";
         var undefined="true",roleListContent="";
         for (var j=0;j<roleList.length;j++){
             roleListContent+="<option";
@@ -1036,7 +1036,12 @@ function addFunlLine() {
 }
 
 $(document).on("click",".fun_down",function () {
-    var thisLine=$(this).parent().parent();
+    if($(this).parent().parent().hasClass("funTr")){
+        var thisLine=$(this).parent().parent();
+    }
+    else{
+        var thisLine=$(this).parent().parent().parent();
+    }
     if(thisLine.next("tr").hasClass("usableTr")||thisLine.next("tr").hasClass("securityTr")){
         var nextLine=thisLine.next();
         if(nextLine.next("tr").hasClass("securityTr")){
@@ -1101,74 +1106,14 @@ $(document).on("click",".fun_down",function () {
 
 })
 
-$(document).on("click",".former_fun_down",function () {
-    var thisLine=$(this).parent().parent().parent();
-    if(thisLine.next("tr").hasClass("usableTr")||thisLine.next("tr").hasClass("securityTr")){
-        var nextLine=thisLine.next();
-        if(nextLine.next("tr").hasClass("securityTr")){
-            var securityLine = nextLine.next();
-            if(securityLine.next().hasClass("end"))
-                showtoast("warning","失败","已经到底部");
-            else {
-                var afterFunTr=securityLine.next("tr.funTr");
-                if (afterFunTr.next().hasClass("end")||afterFunTr.next().hasClass("funTr")){
-                    afterFunTr.after(securityLine)
-                    afterFunTr.after(nextLine)
-                    afterFunTr.after(thisLine)
-                }
-                else if(afterFunTr.next().next().hasClass("securityTr") && afterFunTr.next().hasClass("usableTr")){
-                    afterFunTr.next().next().after(securityLine)
-                    afterFunTr.next().next().after(nextLine)
-                    afterFunTr.next().next().after(thisLine)
-                }
-                else{
-                    afterFunTr.next().after(securityLine)
-                    afterFunTr.next().after(nextLine)
-                    afterFunTr.next().after(thisLine)
-                }
-            }
-        }
-        else{
-            if(nextLine.next().hasClass("end"))
-                showtoast("warning","失败","已经到底部");
-            else {
-                var afterFunTr=nextLine.next("tr.funTr");
-                if (afterFunTr.next().hasClass("end")||afterFunTr.next().hasClass("funTr")){
-                    afterFunTr.after(nextLine)
-                    afterFunTr.after(thisLine)
-                }
-                else if(afterFunTr.next().next().hasClass("securityTr") && afterFunTr.next().hasClass("usableTr")){
-                    afterFunTr.next().next().after(nextLine)
-                    afterFunTr.next().next().after(thisLine)
-                }
-                else{
-                    afterFunTr.next().after(nextLine)
-                    afterFunTr.next().after(thisLine)
-                }
-            }
-        }
-    }
-    else {
-        if(thisLine.next().hasClass("end"))
-            showtoast("warning","失败","已经到底部");
-        else {
-            var afterFunTr=thisLine.next("tr.funTr");
-            if (afterFunTr.next().hasClass("end")||afterFunTr.next().hasClass("funTr")){
-                afterFunTr.after(thisLine)
-            }
-            else if(afterFunTr.next().next().hasClass("securityTr") && afterFunTr.next().hasClass("usableTr")){
-                afterFunTr.next().next().after(thisLine)
-            }
-            else{
-                afterFunTr.next().after(thisLine)
-            }
-        }
-    }
-
-})
 
 $(document).on("click",".fun_up",function () {
-    var thisLine=$(this).parent().parent();
+    if($(this).parent().parent().hasClass("funTr")){
+        var thisLine=$(this).parent().parent();
+    }
+    else{
+        var thisLine=$(this).parent().parent().parent();
+    }
     if(thisLine.index()==0)
     {
         showtoast("warning","失败","已经到顶部");return;
@@ -1223,64 +1168,14 @@ $(document).on("click",".fun_up",function () {
     }
 })
 
-$(document).on("click",".former_fun_up",function () {
-    var thisLine=$(this).parent().parent().parent();
-    if(thisLine.index()==0)
-    {
-        showtoast("warning","失败","已经到顶部");return;
-    }
-    if(thisLine.next("tr").hasClass("usableTr") ||thisLine.next("tr").hasClass("securityTr")){
-        var nextLine=thisLine.next();
-        var beforeFunTr=thisLine.prev();
-        if(nextLine.next("tr").hasClass("securityTr")){
-            var securityLine=nextLine.next();
-            if (beforeFunTr.hasClass("funTr")){
-                beforeFunTr.before(thisLine)
-                beforeFunTr.before(nextLine)
-                beforeFunTr.before(securityLine)
-            }
-            else if(thisLine.prev().hasClass("securityTr") && thisLine.prev().prev().hasClass("usableTr")){
-                beforeFunTr.prev().prev().before(thisLine)
-                beforeFunTr.prev().prev().before(nextLine)
-                beforeFunTr.prev().prev().before(securityLine)
-            }
-            else{
-                beforeFunTr.prev().before(thisLine)
-                beforeFunTr.prev().before(nextLine)
-                beforeFunTr.prev().before(securityLine)
-            }
-        }
-        else{
-            if (beforeFunTr.hasClass("funTr")){
-                beforeFunTr.before(thisLine)
-                beforeFunTr.before(nextLine)
-            }
-            else if(thisLine.prev().hasClass("securityTr") && thisLine.prev().prev().hasClass("usableTr")){
-                beforeFunTr.prev().prev().before(thisLine)
-                beforeFunTr.prev().prev().before(nextLine)
-            }
-            else{
-                beforeFunTr.prev().before(thisLine)
-                beforeFunTr.prev().before(nextLine)
-            }
-        }
-    }
-    else {
-        var beforeFunTr=thisLine.prev();
-        if (beforeFunTr.hasClass("funTr")){
-            beforeFunTr.before(thisLine)
-        }
-        else if(thisLine.prev().hasClass("securityTr") && thisLine.prev().prev().hasClass("usableTr")){
-            beforeFunTr.prev().prev().before(thisLine)
-        }
-        else{
-            beforeFunTr.prev().before(thisLine)
-        }
-    }
-})
 
 $(document).on("click",".fun_delete",function () {
-    var thisLine=$(this).parent().parent();
+    if($(this).parent().parent().hasClass("funTr")){
+        var thisLine=$(this).parent().parent();
+    }
+    else{
+        var thisLine=$(this).parent().parent().parent();
+    }
     if(thisLine.next().hasClass("usableTr") && thisLine.next().next().hasClass("securityTr")){
         thisLine.next().next().remove();
         thisLine.next().remove();
@@ -1295,21 +1190,6 @@ $(document).on("click",".fun_delete",function () {
     }
 })
 
-$(document).on("click",".former_fun_delete",function () {
-    var thisLine=$(this).parent().parent().parent();
-    if(thisLine.next().hasClass("usableTr") && thisLine.next().next().hasClass("securityTr")){
-        thisLine.next().next().remove();
-        thisLine.next().remove();
-        thisLine.remove();
-    }
-    else if(thisLine.next().hasClass("funTr") || thisLine.next().hasClass("end")){
-        thisLine.remove();
-    }
-    else{
-        thisLine.next().remove();
-        thisLine.remove();
-    }
-})
 
 //构件JS开始了
 //点击构件类型事件
@@ -1465,4 +1345,4 @@ $('#fileupload').fileinput(
     }
 
 );
-//
+
