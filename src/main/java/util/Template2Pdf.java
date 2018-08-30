@@ -11,6 +11,8 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorker;
 import com.itextpdf.tool.xml.XMLWorkerFontProvider;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
+import com.lowagie.text.html.simpleparser.HTMLWorker;
+import com.lowagie.text.html.simpleparser.StyleSheet;
 import com.itextpdf.tool.xml.html.Tags;
 import com.itextpdf.tool.xml.parser.XMLParser;
 import com.itextpdf.tool.xml.pipeline.css.CSSResolver;
@@ -85,24 +87,18 @@ public class Template2Pdf {
         document.open();
 
 
-        // CSS
-        CSSResolver cssResolver =
-                XMLWorkerHelper.getInstance().getDefaultCssResolver(true);
-
-        // HTML
-        HtmlPipelineContext htmlContext = new HtmlPipelineContext(null);
-        htmlContext.setTagFactory(Tags.getHtmlTagProcessorFactory());
+//
 //        htmlContext.setImageProvider(new Base64ImageProvider());
 
-        // Pipelines
-        PdfWriterPipeline pdf = new PdfWriterPipeline(document, writer);
-        HtmlPipeline html = new HtmlPipeline(htmlContext, pdf);
-        CssResolverPipeline css = new CssResolverPipeline(cssResolver, html);
-
-        // XML Worker
-        XMLWorker worker = new XMLWorker(css, true);
-        XMLParser p2 = new XMLParser(worker);
-
+//        // Pipelines
+//        PdfWriterPipeline pdf = new PdfWriterPipeline(document, writer);
+//        HtmlPipeline html = new HtmlPipeline(htmlContext, pdf);
+//        CssResolverPipeline css = new CssResolverPipeline(cssResolver, html);
+//
+//        // XML Worker
+//        XMLWorker worker = new XMLWorker(css, true);
+//        XMLParser p2 = new XMLParser(worker);
+//
 
         //文章标题
 
@@ -112,7 +108,6 @@ public class Template2Pdf {
 
         //获取文档内容
         java.util.List<CatalogEntity> catalogEntityList = catalogDao.getAll(id_document);
-
         String line;
         Paragraph lineParagraph = new Paragraph();
         boolean isFirstIndex = false;
@@ -210,12 +205,12 @@ public class Template2Pdf {
 
         document.close();
 
-        ITextRenderer renderer = new ITextRenderer();
-        SharedContext sharedContext = renderer.getSharedContext();
-        // 解决base64图片支持问题
-        sharedContext.setReplacedElementFactory(new B64ImgReplacedElementFactory());
-        sharedContext.getTextRenderer().setSmoothingThreshold(0);
-        renderer.setDocumentFromString(buffer.toString());
+//        ITextRenderer renderer = new ITextRenderer();
+//        SharedContext sharedContext = renderer.getSharedContext();
+//        // 解决base64图片支持问题
+//        sharedContext.setReplacedElementFactory(new B64ImgReplacedElementFactory());
+//        sharedContext.getTextRenderer().setSmoothingThreshold(0);
+//        renderer.setDocumentFromString(buffer.toString());
 
         InputStream inputStream = new ByteArrayInputStream(buffer.toByteArray());
 

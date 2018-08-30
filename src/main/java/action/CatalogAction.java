@@ -13,6 +13,7 @@ import entity.*;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import util.Template2Pdf;
+import util.Template2rtf;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,7 +58,7 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
     private String funRoleList;
     private String funUsableList;
     private InputStream pdfStream;
-
+    private InputStream rtfStream;
     public String getIndex(){
         dataMap = new HashMap<String, Object>();
         CatalogDao catalogDao=new CatalogDaoImp();
@@ -310,14 +311,24 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
              Template2Pdf template2Pdf = new Template2Pdf();
              pdfStream= template2Pdf.createPdf(documentId);
              pdfStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (DocumentException e) {
+        } catch (IOException | DocumentException e) {
             e.printStackTrace();
         }
         return "pdf";
     }
 
+    public String generateContractRtf() {
+        try {
+            Template2rtf template2rtf = new Template2rtf();
+            rtfStream=template2rtf.createRtf(documentId);
+            rtfStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (com.lowagie.text.DocumentException e) {
+            e.printStackTrace();
+        }
+        return "rtf";
+    }
 //    public String getTitle(){
 //        CatalogDao catalogDao=new CatalogDaoImp();
 //        dataMap=new HashMap<>();
@@ -451,6 +462,14 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
 
     public void setPdfStream(InputStream pdfStream) {
         this.pdfStream = pdfStream;
+    }
+
+    public InputStream getRtfStream() {
+        return rtfStream;
+    }
+
+    public void setRtfStream(InputStream rtfStream) {
+        this.rtfStream = rtfStream;
     }
 
     public void setIndex(int index) {
