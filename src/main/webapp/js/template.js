@@ -172,7 +172,7 @@ function loadTemplateThree(entity) {
         if(undefined=="true"){
             funRoleContent+="<option disabled selected>未定义</option>";
         }funRoleContent+=roleListContent;
-        funRoleContent+="</select> </th> <th> <textarea   class='form-control roleDescribe dis'  name='roleDescribe'   style='max-width: 100%' disabled>";
+        funRoleContent+="</select> </th> <th> <textarea   class='form-control roleDescribe dis'  name='roleDescribe'   style='resize:vertical; max-width: 100%' disabled>";
         funRoleContent+=funRoleList[i].roleDescribe+"</textarea> </th>";
         if(funRoleList[i].usableName==null && funRoleList[i].securityName==null){//新增按钮
             funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='margin-right: 10px' disabled>安全</button> </th></tr>";
@@ -849,14 +849,14 @@ function temp_save() {
                  last="funTr";
              }
             else if ($(this).hasClass("usableTr")){//开头
-                 usableName=$(this).children("th:first-child").text();
-                 usablePara=$(this).children("th").eq(1).text();
+                 usableName=$(this).children("th").eq(1).text();
+                 usablePara=$(this).children("th").eq(2).text();
                  funRoleList+=",\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"";
                  last="usableTr";
              }
              else if ($(this).hasClass("securityTr")){//开头
-                 securityName=$(this).children("th:first-child").text();
-                 securityPara=$(this).children("th").eq(1).text();
+                 securityName=$(this).children("th").eq(1).text();
+                 securityPara=$(this).children("th").eq(2).text();
                  funRoleList+=",\"securityName\":\""+securityName+"\",\"securityPara\":\""+securityPara+"\"";
                  last="securityTr";
              }
