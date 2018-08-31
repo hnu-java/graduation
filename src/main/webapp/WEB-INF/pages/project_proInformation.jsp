@@ -196,13 +196,12 @@
                         <s:if test='#session.rank==3'>
                         <s:if test='#session.project.id_Organization!=""'>
                             <dt><h3>文档权限：</h3></dt>
-                            <dd><h3><s:if test='#session.project.flag==0'>
-                                        开放
-                                    </s:if>
-                                    <s:if test='#session.project.flag==1'>
-                                        封闭
-                                    </s:if>
-                                    <button id="modified" class="btn btn-success btn-xs">更改</button>
+                            <dd><h3><span id="open">
+                                        开放 <button id="modified1" class="btn btn-success btn-xs">更改</button>
+                                    </span>
+                                    <span id="close">
+                                        封闭 <button id="modified2" class="btn btn-success btn-xs">更改</button>
+                                    </span>
                             </h3></dd>
                         </s:if>
                         </s:if>
@@ -857,70 +856,72 @@
         })
     });
 
-    $("button#modified").click(function () {
-        var flag= parseInt(${sessionScope.project.flag});
-        if(flag === 1){
-            swal(
-                {
-                    title: "您确认更改文档权限为开放吗",
-                    text: "更改后机构管理员可以查看您机构的文档",
-                    type: "",
-                    showCancelButton: true,
-                    confirmButtonColor: "#18a689",
-                    confirmButtonText: "确定",
-                    cancelButtonText: "取消",
-                    closeOnConfirm: true
-                },function () {
-                    $.ajax({
-                        url: "project-modified",
-                        dataType: "json",
-                        data: {
-                            Id_Project: id_Project,
-                            flag: flag
-                        },
-                        type: "Post",
-                        async: "false",
-                        success: function (result){
-                            if(result.res) {
-                                showtoast("success", "更改成功", "操作成功");
-                                location.href="project-jmpProjectInfo";
-                            }
-                        }, error: function () {
-                            swal("更改失败！", "请检查你的网络", "failed");
-                        }
-                    })
-                })
-        }
-        else{
-            swal(
-                {
-                    title: "您确认更改文档权限为封闭吗",
-                    text: "更改后机构管理员无法查看您项目的文档",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "确定",
-                    cancelButtonText: "取消",
-                    closeOnConfirm: true
-                },function () {
-                    $.ajax({
-                        url: "project-modified",
-                        dataType: "json",
-                        data: {
-                            Id_Project: id_Project,
-                            flag: flag
-                        },
-                        type: "Post",
-                        async: "false",
-                        success: function (result) {
+    $("button#modified2").click(function () {
+        swal(
+            {
+                title: "您确认更改文档权限为开放吗",
+                text: "更改后机构管理员可以查看您机构的文档",
+                type: "",
+                showCancelButton: true,
+                confirmButtonColor: "#18a689",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            },function () {
+                $.ajax({
+                    url: "project-modified",
+                    dataType: "json",
+                    data: {
+                        Id_Project: id_Project,
+                        flag: 1
+                    },
+                    type: "Post",
+                    async: "false",
+                    success: function (result){
+                        if(result.res) {
                             showtoast("success", "更改成功", "操作成功");
-                            location.href="project-jmpProjectInfo";
-                        }, error: function () {
-                            swal("更改失败！", "请检查你的网络", "failed");
+                            $("#open").show();
+                            $("#close").hide();
                         }
-                    })
+                    }, error: function () {
+                        swal("更改失败！", "请检查你的网络", "failed");
+                    }
                 })
-        }
+            })
+    })
+
+    $("button#modified1").click(function () {
+        swal(
+            {
+                title: "您确认更改文档权限为封闭吗",
+                text: "更改后机构管理员无法查看您项目的文档",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            },function () {
+                $.ajax({
+                    url: "project-modified",
+                    dataType: "json",
+                    data: {
+                        Id_Project: id_Project,
+                        flag: 0
+                    },
+                    type: "Post",
+                    async: "false",
+                    success: function (result) {
+                        if(result.res) {
+                            showtoast("success", "更改成功", "操作成功");
+                            $("#open").hide();
+                            $("#close").show();
+                        }
+                    }, error: function () {
+                        swal("更改失败！", "请检查你的网络", "failed");
+                    }
+                })
+            })
     })
 </script>
 
@@ -1186,8 +1187,16 @@
     //页面初始化
     $(document).ready(function () {
         edit();
+        var flag= parseInt(${sessionScope.project.flag});
+        if(flag==1){
+            $("#open").hide();
+            $("#close").show();
+        }
+        else{
+            $("#open").show();
+            $("#close").hide();
+        }
     })
-
 
 </script>
 
