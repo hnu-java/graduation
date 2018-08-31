@@ -240,7 +240,7 @@
                     //     swal("您选择的机构已封停！", "请重新选择机构或联系机构管理员续费", "error")
                     // }
                 }else{
-                    swal("您剩余的积分不足！","请充值（需要${sessionScope.Mpoint5}积分）","error")
+                    swal("您剩余的积分不足！","创建一个项目需要${sessionScope.Mpoint5}个积分，您当前剩余的积分不足，请到个人中心进行积分充值。","error")
                 }
             },
             error: function (result) {
