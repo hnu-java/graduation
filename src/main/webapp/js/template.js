@@ -1170,24 +1170,36 @@ $(document).on("click",".fun_up",function () {
 
 
 $(document).on("click",".fun_delete",function () {
-    if($(this).parent().parent().hasClass("funTr")){
-        var thisLine=$(this).parent().parent();
+    if ($(this).parent().parent().hasClass("funTr")) {
+        var thisLine = $(this).parent().parent();
     }
-    else{
-        var thisLine=$(this).parent().parent().parent();
+    else {
+        var thisLine = $(this).parent().parent().parent();
     }
-    if(thisLine.next().hasClass("usableTr") && thisLine.next().next().hasClass("securityTr")){
-        thisLine.next().next().remove();
-        thisLine.next().remove();
-        thisLine.remove();
-    }
-    else if(thisLine.next().hasClass("funTr") || thisLine.next().hasClass("end")){
-        thisLine.remove();
-    }
-    else{
-        thisLine.next().remove();
-        thisLine.remove();
-    }
+    swal(
+        {
+            title: "您确认删除该用例过程吗",
+            text: "删除后对应局部安全性和局部可用性也将一并删除",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            closeOnConfirm: true
+        },function () {
+            if (thisLine.next().hasClass("usableTr") && thisLine.next().next().hasClass("securityTr")) {
+                thisLine.next().next().remove();
+                thisLine.next().remove();
+                thisLine.remove();
+            }
+            else if (thisLine.next().hasClass("funTr") || thisLine.next().hasClass("end")) {
+                thisLine.remove();
+            }
+            else {
+                thisLine.next().remove();
+                thisLine.remove();
+            }
+        })
 })
 
 
