@@ -62,7 +62,7 @@
                 </ul>
             </nav>
         </div>
-        <div style="height: 1000px;overflow:hidden" class="row J_mainContent" id="content-main">
+        <div style="height: 800px;overflow:hidden" class="row J_mainContent" id="content-main">
             <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="user-jmpHomePage" frameborder="0" data-id=""></iframe>
         </div>
 
