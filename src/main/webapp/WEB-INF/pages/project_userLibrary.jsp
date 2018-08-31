@@ -27,6 +27,7 @@
     <link href="<%=basePath %>/css/lzf.css" rel="stylesheet">
     <link href="<%=basePath%>/css/plugins/toastr/toastr.min.css" rel="stylesheet">
     <link href="<%=basePath%>/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="<%=basePath %>/css/button.css" rel="stylesheet">
 
     <style>
         a   {color: black}
@@ -119,8 +120,8 @@
                     <div style="float: left">
                         <div style="float: left;font-size:18px;text-align: left;color: black"><a href="library-Mycollect"><span class="lzf_a">我的收藏</span></a></div>
                     </div>
-                    <div style="float:right">
-                        <button class="btn btn-success" style="margin:-3px 10px" data-toggle="modal" data-target="#newLibrary">新建构件库</button>
+                    <div style="float:left">
+                        <button class="btn btn-custom" style="margin:-3px 30px" data-toggle="modal" data-target="#newLibrary">新建构件库</button>
                     </div>
                 </div>
 
@@ -157,8 +158,8 @@
                                     </div>
                                     <input id="idLibrary" style="display: none" type="text" value="<s:property value="id_library"/>">
                                     <div style="float:right;z-index:99999999;margin: -14px -10px 0px 0px">
-                                        <button id="delete" type="submit" class="btn btn-danger btn-xs" myvalue="<s:property value="id_library"/>">删除</button>
-                                        <button id="publish" type="submit" class="btn btn-success btn-xs" myvalue="<s:property value="id_library"/>">发布</button>
+                                        <button id="delete" type="submit" class="btn btn-outline btn-danger btn-xs" myvalue="<s:property value="id_library"/>">删除</button>
+                                        <button id="publish" type="submit" class="btn btn-custom btn-xs" myvalue="<s:property value="id_library"/>">发布</button>
                                     </div>
                                         <%--<div style="float: right;z-index:99999999;margin: -14px -19px 0px 0px">--%>
                                         <%--<s:if test="#request.id_user==#session.user.id_user">--%>
@@ -267,7 +268,6 @@
 
     $("button#publish").click(function () {
         var id_library = $(this).attr("myvalue");
-        alert(id_library);
         swal(
             {
                 title: "请输入构件库描述",
