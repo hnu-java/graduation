@@ -28,6 +28,7 @@
     <link href="<%=basePath %>/css/z_style.css" rel="stylesheet">
     <!-- Sweet Alert -->
     <link href="<%=basePath %>/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="<%=basePath %>/css/button.css" rel="stylesheet">
 </head>
 
 <body class="gray-bg animated fadeInDown">
@@ -134,7 +135,7 @@
             return row.name;
     }
     function operateFormatter(value,row,index) {
-        return '<a class="mod fa fa-folder btn btn-success">查看项目</a>'
+        return '<a class="mod fa fa-folder btn btn-custom"> 查看项目</a>'
     }
 
     //表格  - 操作 - 事件

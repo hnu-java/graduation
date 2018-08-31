@@ -639,21 +639,21 @@
                         "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
                         "<a class='deploy '><img src='<%=basePath%>/img/release.png' height='20px' width='20px' title='发布' alt='发布'></a>",
                         "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                        "<a class='generateContract img-primary'><img src='<%=basePath%>/img/export.png' height='20px' width='20px' title='导出pdf' alt='导出pdf'></a>",
+                        "<a class='generateContract img-primary'><img src='<%=basePath%>/img/export_pdf.png' height='20px' width='20px' title='导出pdf' alt='导出pdf'></a>",
                         "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                        "<a class='delete'><img src='<%=basePath%>/img/delete.png' height='20px' width='20px' title='删除' alt='删除'></a>",
+                        "<a class='generateContractRtf img-primary'><img src='<%=basePath%>/img/export_word.png' height='20px' width='20px' title='导出word' alt='导出word'></a>",
                         "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                        "<a class='generateContractRtf img-primary'><img src='<%=basePath%>/img/export.png' height='20px' width='20px' title='导出word' alt='导出word'></a>"
+                        "<a class='delete'><img src='<%=basePath%>/img/delete.png' height='20px' width='20px' title='删除' alt='删除'></a>"
                 ].join('');
             }
             else {
                 return ["<a class='view'><img src='<%=basePath%>/img/view.png' height='20px' width='20px' title='查看' alt='查看'></a>",
                     "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                    "<a class='generateContract'><img src='<%=basePath%>/img/export.png' height='20px' width='20px' title='导出pdf' alt='导出pdf'></a>",
+                    "<a class='generateContract img-primary'><img src='<%=basePath%>/img/export_pdf.png' height='20px' width='20px' title='导出pdf' alt='导出pdf'></a>",
                     "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                    "<a class='delete'><img src='<%=basePath%>/img/delete.png' height='20px' width='20px' title='删除' alt='删除'></a>",
+                    "<a class='generateContractRtf img-primary'><img src='<%=basePath%>/img/export_word.png' height='20px' width='20px' title='导出word' alt='导出word'></a>",
                     "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                    "<a class='generateContractRtf img-primary'><img src='<%=basePath%>/img/export.png' height='20px' width='20px' title='导出word' alt='导出word'></a>"
+                    "<a class='delete'><img src='<%=basePath%>/img/delete.png' height='20px' width='20px' title='删除' alt='删除'></a>"
                 ].join('');
 //                return ["<a class='view btn-xs btn-info'>查看</a>",
 //                    "<a class='delete btn-xs btn-danger' >删除</a>"
@@ -665,17 +665,17 @@
             if (row.state===0) {
                 return ["<a class='edit'><img src='<%=basePath%>/img/edit.png' height='20px' width='20px' title='编辑' alt='编辑'></a>",
                         "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                        "<a class='generateContract'><img src='<%=basePath%>/img/export.png' height='20px' width='20px' title='导出pdf' alt='导出pdf'></a>",
-                        "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                        "<a class='generateContractRtf img-primary'><img src='<%=basePath%>/img/export.png' height='20px' width='20px' title='导出word' alt='导出word'></a>"
+                    "<a class='generateContract img-primary'><img src='<%=basePath%>/img/export_pdf.png' height='20px' width='20px' title='导出pdf' alt='导出pdf'></a>",
+                    "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
+                    "<a class='generateContractRtf img-primary'><img src='<%=basePath%>/img/export_word.png' height='20px' width='20px' title='导出word' alt='导出word'></a>",
                 ].join('');
             }
             else {
                 return ["<a class='view'><img src='<%=basePath%>/img/view.png' height='20px' width='20px' title='查看' alt='查看'></a>",
                         "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                        "<a class='generateContract'><img src='<%=basePath%>/img/export.png' height='20px' width='20px' title='导出pdf' alt='导出pdf'></a>",
-                        "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                        "<a class='generateContractRtf img-primary'><img src='<%=basePath%>/img/export.png' height='20px' width='20px' title='导出word' alt='导出word'></a>"
+                    "<a class='generateContract img-primary'><img src='<%=basePath%>/img/export_pdf.png' height='20px' width='20px' title='导出pdf' alt='导出pdf'></a>",
+                    "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
+                    "<a class='generateContractRtf img-primary'><img src='<%=basePath%>/img/export_word.png' height='20px' width='20px' title='导出word' alt='导出word'></a>",
                 ].join('');
             }
         </s:if>

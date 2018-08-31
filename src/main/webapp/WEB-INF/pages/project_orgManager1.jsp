@@ -25,7 +25,7 @@
     <link href="<%=basePath%>/css/z_style.css" rel="stylesheet">
     <link href="<%=basePath%>/css/plugins/toastr/toastr.min.css" rel="stylesheet">
     <link href="<%=basePath%>/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
-
+    <link href="<%=basePath %>/css/button.css" rel="stylesheet">
 </head>
 
 <body class="gray-bg">
@@ -55,7 +55,7 @@
                     </ul>
                 </div>
                 <div style="float: left;margin-top: 5px" class="col-md-4">
-                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#invite">邀请用户</button>
+                    <button type="button" class="btn btn-custom btn-sm" data-toggle="modal" data-target="#invite">邀请用户</button>
                 </div>
                 <div style="float: right;width: 300px" class="col-md-4">
                 </div>
@@ -300,7 +300,7 @@
             return '已同意';
         else if(state==-1)
             return ['已拒绝',
-                '<a class="reAgree" style="padding-left: 10px"><button class="btn btn-success text-center btn-xs " >重新邀请</button></a>'].join('');
+                '<a class="reAgree" style="padding-left: 10px"><button class="btn btn-custom text-center btn-xs " >重新邀请</button></a>'].join('');
     }
     function rename2(value,row,index) {
         var statu=parseInt(row.statu);
