@@ -150,13 +150,13 @@
             <s:if test="#request.id_template==1">
                 <div id="mid" style="clear: both;height:450px;width:1200px;margin-left:200px;padding: 20px 75px 20px 75px;overflow: hidden">
                     <s:iterator value="list2">
-                        <div  style="background-color: white;height: 115px;width:300px;float:left;margin: 0px 37.5px 30px 0px;padding: 5px" class="col-md-4 contact-box">
-                            <div style="height:100px;margin: 10px 0px 0px 10px;overflow: hidden">
+                        <div  style="background-color: white;height: 120px;width:300px;float:left;margin: 0px 37.5px 30px 0px;padding: 5px" class="col-md-4 contact-box">
+                            <div style="height:70px;margin: 10px 0px 0px 10px;overflow: hidden">
                                 <span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial';color: black;font-weight:700;" >内容：</span><span style="font-family:'Arial Normal', 'Arial';font-weight:500;overflow: hidden" id="commonContent"><s:property value="content"/></span>
                                 <span style="display:none;font-family:'Arial Negreta', 'Arial Normal', 'Arial';color: black;font-weight:700;" id="idStructure"><s:property value="id_structure"/></span>
                             </div>
                             <s:if test="#request.library.id_user == #session.user.id_user">
-                                <div style="float: right;z-index:99999999;margin: -40px 10px 0px 0px">
+                                <div style="z-index:99999999;margin: 10px 10px 0px 202px">
                                     <button id="deleteCommon" type="button" class="btn btn-warning btn-xs" myvalue="<s:property value="id_structure"/>">删除</button>
                                     <button id="editCommon" type="button" class="btn btn-primary btn-xs" myvalue="<s:property value="id_structure"/>" mycontent = "<s:property value="content"/>">编辑</button>
                                 </div>
