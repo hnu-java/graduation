@@ -158,7 +158,7 @@
                             </div>
                             <s:if test="#request.library.id_user == #session.user.id_user">
                                 <div style="z-index:99999999;margin: 10px 10px 0px 202px">
-                                    <button id="deleteCommon" type="button" class="btn btn-warning btn-xs" myvalue="<s:property value="id_structure"/>">删除</button>
+                                    <button id="deleteCommon" type="button" class="btn btn-danger btn-outline btn-xs" myvalue="<s:property value="id_structure"/>">删除</button>
                                     <button id="editCommon" type="button" class="btn btn-custom btn-xs" myvalue="<s:property value="id_structure"/>" mycontent = "<s:property value="content"/>">编辑</button>
                                 </div>
                             </s:if>
@@ -186,8 +186,8 @@
                             </div>
                             <s:if test="#request.library.id_user == #session.user.id_user">
                                 <div style="z-index:99999999;margin: 130px 10px 0px 420px">
-                                    <button id="deleteUser" type="submit" class="btn btn-warning btn-xs" myvalue="<s:property value="id_structure"/>" mycontent = "<s:property value="content"/>">删除</button>
-                                    <button type="button" class="btn btn-primary btn-xs" id="editUser" myvalue="<s:property value="id_structure"/>" myRoleName = "<s:property value="roleName"/>" myDescribe = "<s:property value="describe"/>" myPermissions = "<s:property value="permissions"/>">编辑</button>
+                                    <button id="deleteUser" type="submit" class="btn btn-danger btn-outline btn-xs" myvalue="<s:property value="id_structure"/>" mycontent = "<s:property value="content"/>">删除</button>
+                                    <button type="button" class="btn btn-custom btn-xs" id="editUser" myvalue="<s:property value="id_structure"/>" myRoleName = "<s:property value="roleName"/>" myDescribe = "<s:property value="describe"/>" myPermissions = "<s:property value="permissions"/>">编辑</button>
                                 </div>
                             </s:if>
                         </div>
@@ -236,8 +236,8 @@
                             </div>
                             <s:if test="#request.library.id_user == #session.user.id_user">
                                 <div style="z-index:99999999;margin: 130px 10px 0px 500px">
-                                    <button id="deleteFun" type="submit" class="btn btn-warning btn-xs" myvalue="<s:property value="id_structure"/>">删除</button>
-                                    <button id="editFun" type="button" class="btn btn-primary btn-xs" >编辑</button>
+                                    <button id="deleteFun" type="submit" class="btn btn-danger btn-outline btn-xs" myvalue="<s:property value="id_structure"/>">删除</button>
+                                    <button id="editFun" type="button" class="btn btn-custom btn-xs" >编辑</button>
                                 </div>
                             </s:if>
                         </div>
@@ -295,7 +295,7 @@
                         <div class="ibox-title">
                             <h5>发表评论</h5>
                             <div class="ibox-tools">
-                                <button  class="btn btn-primary col-lg-push-1" onclick="commitSend()" type="button" style="margin-right: 10px;margin-top: -7px;padding-left: 20px;padding-right: 20px">发布</button>
+                                <button  class="btn btn-custom  col-lg-push-1" onclick="commitSend()" type="button" style="margin-right: 10px;margin-top: -7px;padding-left: 20px;padding-right: 20px">发布</button>
                             </div>
                         </div>
                         <div class="ibox-content">
