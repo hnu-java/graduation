@@ -181,7 +181,7 @@
                         <dd><h3><s:property value="#session.project.date"/></h3></dd>
 
                         <dt><h3>项目简介：</h3></dt>
-                        <dd><h3><s:property value="#session.project.intro"/></h3></dd>
+                        <dd><p style="font-size: 14px;font-family: Arial"><s:property value="#session.project.intro"/></p></dd>
                     </dl>
                 </div>
                 <div class="col-sm-7">

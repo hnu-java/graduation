@@ -1,33 +1,24 @@
 package util;
 
 import java.awt.Color;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-
 import com.google.gson.Gson;
 import com.itextpdf.text.Element;
-import com.itextpdf.tool.xml.XMLWorkerFontProvider;
-import com.lowagie.text.Cell;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Font;
-import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
-import com.lowagie.text.Table;
 import com.lowagie.text.rtf.RtfWriter2;
 import com.lowagie.text.html.simpleparser.HTMLWorker;
 import com.lowagie.text.html.simpleparser.StyleSheet;
 import dao.CatalogDao;
 import daoImp.CatalogDaoImp;
 import entity.*;
-import com.itextpdf.tool.xml.XMLWorkerHelper;
 import java.io.*;
-import java.nio.charset.Charset;
 import java.util.List;
 import com.lowagie.text.pdf.BaseFont;
-import com.lowagie.text.pdf.fonts.*;
+
 public class Template2rtf{
 
     private static final com.lowagie.text.Paragraph BLANK = new com.lowagie.text.Paragraph(" ");
@@ -42,7 +33,8 @@ public class Template2rtf{
         StyleSheet ss = new StyleSheet();
         Paragraph context = new Paragraph();
         Paragraph tmpLineParagraph = new Paragraph();
-        tmpline = tmpline.replaceAll("<img style=\"width: 434px;\" src=\"data:image/png;base64*\">"," ");
+        tmpline = tmpline.replaceAll("<img style=\"width: .*px;\" src=\"data:image/png;base64.*\">","");
+        System.out.println(tmpline);
         List htmlList = HTMLWorker.parseToList(new StringReader(tmpline), ss);
         for (int i = 0; i < htmlList.size(); i++) {
             com.lowagie.text.Element tmpE = (com.lowagie.text.Element) htmlList.get(i);
@@ -114,13 +106,13 @@ public class Template2rtf{
                     StyleSheet ss = new StyleSheet();
                     Paragraph context = new Paragraph();
                     Paragraph tmpLineParagraph = new Paragraph();
-                    tmpline = tmpline.replaceAll("<img style=\"width: 434px;\" src=\"data:image/png;base64*\">"," ");
+                    tmpline = tmpline.replaceAll("<img style=\"width: .*px;\" src=\"data:image/png;base64.*\">","");
+                    System.out.println("test@"+tmpline);
                     List htmlList = HTMLWorker.parseToList(new StringReader(tmpline), ss);
                     for (int i = 0; i < htmlList.size(); i++) {
                         com.lowagie.text.Element tmpE = (com.lowagie.text.Element) htmlList.get(i);
                         String temStr = tmpE.toString();
                         temStr = temStr.substring(1,temStr.length() - 1);
-                        temStr = temStr.replaceAll(",","   ");
                         tmpLineParagraph = new Paragraph("    "+temStr,black);
                         context.add(tmpLineParagraph);
                     }
@@ -139,7 +131,7 @@ public class Template2rtf{
                     //用户权限
                     lineParagraph = new Paragraph("    "+"用户权限:",sTitle);
                     doc.add(lineParagraph);
-                    tmpline = entity.getDescribe();
+                    tmpline = entity.getPermissions();
                     doc.add(html2rtf(tmpline));
                 }
 
@@ -183,10 +175,10 @@ public class Template2rtf{
                             doc.add(html2rtf(tmpline));
                         }
                         if(funRole.getUsableName() != null) {
-                            lineParagraph = new Paragraph("    "+"    "+funRole.getUsableName(),black);
+                            lineParagraph = new Paragraph("    "+"    "+"    "+funRole.getUsableName(),black);
                             doc.add(lineParagraph);
                             doc.add(BLANK);
-                            lineParagraph = new Paragraph("    "+"    "+funRole.getUsablePara(),black);
+                            lineParagraph = new Paragraph("    "+"    "+"    "+funRole.getUsablePara(),black);
                             doc.add(lineParagraph);
                         }
                         if(funRole.getSecurityName() != null) {
@@ -207,9 +199,9 @@ public class Template2rtf{
                             FunUsable funUsable = funUsableList.get(j);
                             lineParagraph = new Paragraph("    "+"    "+"全局可用性:" + (j + 1),minTitle);
                             doc.add(lineParagraph);
-                            tmpline = "    "+"    "+"全局可用性名称:  " + funUsable.getUsableName();
+                            tmpline = "    "+"全局可用性名称:  " + funUsable.getUsableName();
                             doc.add(html2rtf(tmpline));
-                            tmpline = "    "+"    " + funUsable.getUsablePara();
+                            tmpline = "    "+funUsable.getUsablePara();
                             doc.add(html2rtf(tmpline));
                             doc.add(BLANK);
                         }
