@@ -267,7 +267,6 @@
 
     $("button#publish").click(function () {
         var id_library = $(this).attr("myvalue");
-        alert(id_library);
         swal(
             {
                 title: "请输入构件库描述",
