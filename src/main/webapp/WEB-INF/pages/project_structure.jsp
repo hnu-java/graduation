@@ -143,7 +143,7 @@
                             <button type="button" class="btn btn-custom btn-xs" data-toggle="modal" data-target="#newUser">创建用户构件</button>
                         </s:elseif>
                         <s:elseif test="#request.id_template==3">
-                            <button type="button" class="btn btn-custom btn-xs" data-toggle="modal" data-target="#newCase">创建用例构件</button>
+                            <button type="button" class="btn btn-custom btn-xs" id="newFun">创建用例构件</button>
                         </s:elseif>
                     </s:if>
                 </div>
@@ -158,27 +158,8 @@
                             </div>
                             <s:if test="#request.library.id_user == #session.user.id_user">
                                 <div style="float: right;z-index:99999999;margin: -40px 10px 0px 0px">
-                                    <button id="deleteCommon" type="button" class="btn btn-outline btn-danger btn-xs" myvalue="<s:property value="id_structure"/>">删除</button>
-                                    <button type="button" class="btn btn-custom btn-xs" data-toggle="
-                                    modal" data-target="#editCommon">编辑</button>
-                                    <div  class="modal inmodal" id="editCommon" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content animated bounceInRight">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
-                                                    </button>
-                                                    <h4 class="modal-title">编辑通用构件</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="form-group"><label>内容</label> <textarea id="editCommonContent" style="height: 300px" type="text" maxlength="100000" class="form-control" required="required"><s:property value="content"/></textarea></div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
-                                                    <button id="editCommon-button" type="submit" class="btn btn-primary" myvalue="<s:property value="id_structure"/>">保存</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <button id="deleteCommon" type="button" class="btn btn-warning btn-xs" myvalue="<s:property value="id_structure"/>">删除</button>
+                                    <button id="editCommon" type="button" class="btn btn-custom btn-xs" myvalue="<s:property value="id_structure"/>" mycontent = "<s:property value="content"/>">编辑</button>
                                 </div>
                             </s:if>
                         </div>
@@ -205,28 +186,8 @@
                             </div>
                             <s:if test="#request.library.id_user == #session.user.id_user">
                                 <div style="z-index:99999999;margin: 130px 10px 0px 420px">
-                                    <button id="deleteUser" type="submit" class="btn btn-warning btn-xs" myvalue="<s:property value="id_structure"/>">删除</button>
-                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editUser">编辑</button>
-                                    <div  class="modal inmodal" id="editUser" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content animated bounceInRight">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
-                                                    </button>
-                                                    <h4 class="modal-title">编辑用户构件</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="form-group"><label>用户名</label> <input id="Usercontent2" type="text" maxlength="100" value="<s:property value="roleName"/>" class="form-control" required="required"></div>
-                                                    <div class="form-group"><label>用户描述</label> <textarea id="Usercontent3"  style="height: 60px" type="text"  maxlength="2000" class="form-control" required="required"><s:property value="describe"/></textarea></div>
-                                                    <div class="form-group"><label>用户权限</label> <textarea  id="Usercontent4"  style="height: 200px" type="text" maxlength="100000" class="form-control" required="required"><s:property value="permissions"/></textarea></div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
-                                                    <button id="editUser-button" type="submit" class="btn btn-primary" myvalue="<s:property value="id_structure"/>">保存</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <button id="deleteUser" type="submit" class="btn btn-warning btn-xs" myvalue="<s:property value="id_structure"/>" mycontent = "<s:property value="content"/>">删除</button>
+                                    <button type="button" class="btn btn-primary btn-xs" id="editUser" myvalue="<s:property value="id_structure"/>" myRoleName = "<s:property value="roleName"/>" myDescribe = "<s:property value="describe"/>" myPermissions = "<s:property value="permissions"/>">编辑</button>
                                 </div>
                             </s:if>
                         </div>
@@ -276,7 +237,7 @@
                             <s:if test="#request.library.id_user == #session.user.id_user">
                                 <div style="z-index:99999999;margin: 130px 10px 0px 500px">
                                     <button id="deleteFun" type="submit" class="btn btn-warning btn-xs" myvalue="<s:property value="id_structure"/>">删除</button>
-                                    <button type="button" class="btn btn-primary btn-xs" >编辑</button>
+                                    <button id="editFun" type="button" class="btn btn-primary btn-xs" >编辑</button>
                                 </div>
                             </s:if>
                         </div>
@@ -411,6 +372,7 @@
 <script src="<%=basePath %>js/plugins/summernote/summernote-bs4.js"></script>
 <script src="<%=basePath %>js/plugins/summernote/summernote-bs4.min.js"></script>
 <script src="<%=basePath %>js/plugins/summernote/summernote-lite.js"></script>
+<script src="<%=basePath%>/js/plugins/sweetalert/sweetalert.min5.js"></script>
 <script>
     $(document).ready(function(){$(".contact-box").each(function(){animationHover(this,"pulse")})});
 </script>
@@ -469,34 +431,39 @@
     }
 </script>
 <script>
-    $("button#editUser-button").click(function () {
-        var content1 = $("input#Usercontent2").val();
-        var content2 = $("textarea#Usercontent3").val();
-        var content3 = $("textarea#Usercontent4").val();
+    $("button#editUser").click(function () {
         var id_structure = $(this).attr("myvalue");
-        alert(id_structure);
-        if(content1 === "" || content === null) {
-            swal("创建失败！", "请填写用户名", "error");
-        }
-        else if(content2 === "" || content === null) {
-            swal("创建失败！", "请填写用户描述", "error");
-        }
-        else if(content3 === "" || content === null) {
-            swal("创建失败！", "请填写用户权限", "error");
-        }
-        else {
-            content = "{\"roleName\":\"" + content1 + "\",\"describe\":\"" + content2 + "\",\"permissions\":\"" + content3 + "\"}";
+        var roleName = $(this).attr("myRoleName");
+        var describe = $(this).attr("myDescribe");
+        var permissions = $(this).attr("myPermissions");
             swal(
                 {
-                    title: "您确认修改该构件吗？",
-                    text: "确认请点击确定",
-                    type: "",
+                    title: "编辑图文构件",
+                    text: "用户名 必填<input type='text' name='myinput' id='roleName1' value = '"+roleName+"'>"
+                        +"用户描述 必填<input type='text' name='myinput' id='describe1' value = '"+describe+"'>"
+                        +"用户权限 必填<input type='text' name='myinput' id='permissions1' value = '"+permissions+"'>",
+                    html: true,
+                    type: "input",
                     showCancelButton: true,
                     confirmButtonColor: "#18a689",
                     confirmButtonText: "确定",
                     cancelButtonText: "取消",
-                    closeOnConfirm: false
+                    closeOnConfirm: false,
+                    inputValue:roleName
                 }, function () {
+                    if ($("input#roleName1").val() === "") {
+                        swal("请输入修改的用户名");
+                        return false
+                    }
+                    if ($("input#describe1").val() === "") {
+                        swal("请输入修改的用户描述");
+                        return false
+                    }
+                    if ($("input#permissions1").val() === "") {
+                        swal("请输入修改的用户权限");
+                        return false
+                    }
+                    var content = "{\"roleName\":\"" + $("input#roleName1").val() + "\",\"describe\":\"" + $("input#describe1").val() + "\",\"permissions\":\"" + $("input#permissions1").val() + "\"}";
                     $.ajax({
                         url: "structure-edit",
                         data: {
@@ -529,28 +496,29 @@
                         }
                     })
                 })
-        }
     })
-    $("button#editCommon-button").click(function () {
-        var content = $("textarea#editCommonContent").val();
+    $("button#editCommon").click(function () {
         var id_structure = $(this).attr("myvalue");
-        alert(content);
-        if(content === "" || content === null) {
-            swal("创建失败！", "请填写构件内容", "error");
-        }
-        else {
-            content = "{\"content\":\"" + content + "\"}";
+        var content = $(this).attr("mycontent");
+        //content = "{\"content\":\"" + content + "\"}";
             swal(
                 {
-                    title: "您确认修改该构件吗？",
-                    text: "确认请点击确定",
-                    type: "",
+                    title: "编辑图文构件",
+                    text: "内容 必填<input type='text' name='myinput' id='name1'>",
+                    html: true,
+                    type: "input",
                     showCancelButton: true,
                     confirmButtonColor: "#18a689",
                     confirmButtonText: "确定",
                     cancelButtonText: "取消",
-                    closeOnConfirm: false
+                    closeOnConfirm: false,
+                    inputValue:content
                 }, function () {
+                    if ($("input#name1").val() === "") {
+                        swal("请输入修改的图文构件内容");
+                        return false
+                    }
+                    content = "{\"content\":\"" + $("input#name1").val() + "\"}";
                     $.ajax({
                         url: "structure-edit",
                         data: {
@@ -583,7 +551,28 @@
                         }
                     })
                 })
-        }
+    })
+
+    $("button#editFun").click(function() {
+        swal(
+            {
+                title: "请到文档编辑界面进行修改",
+                type: "",
+                confirmButtonColor: "#18a689",
+                confirmButtonText: "OK"
+            }
+        )
+    })
+
+    $("button#newFun").click(function() {
+        swal(
+            {
+                title: "请到文档编辑界面进行封装",
+                type: "",
+                confirmButtonColor: "#18a689",
+                confirmButtonText: "OK"
+            }
+        )
     })
 
     $("button#deleteCommon").click(function() {

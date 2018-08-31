@@ -83,7 +83,7 @@
         <label class="control-label col-sm-3"><button class="btn-circle btn-default"><img src="<%=basePath %>img/u13.png" style="height: 18px;width: 20px"></button>　机构名称  </label>
         <div class="col-sm-4">
             <div class="input-group">
-                <input type="text" id="orgName" class="form-control" autocomplete="true" placeholder="选填，置空时为私人项目，不可更改" oninput="inputSuggest()">
+                <input type="text" id="orgName" class="form-control" autocomplete="true" placeholder="选填，置空时为私人项目，不可更改" oninput="inputSuggest()" readonly="readonly">
                 <div class="input-group-btn">
                     <button id="showButton" type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown" onclick="showOrg()">
                         <span class="caret"></span>
@@ -240,7 +240,7 @@
                     //     swal("您选择的机构已封停！", "请重新选择机构或联系机构管理员续费", "error")
                     // }
                 }else{
-                    swal("您剩余的积分不足！","请充值（需要${sessionScope.Mpoint5}积分）","error")
+                    swal("您剩余的积分不足！","创建一个项目需要${sessionScope.Mpoint5}个积分，请到个人中心进行积分充值。","error")
                 }
             },
             error: function (result) {
