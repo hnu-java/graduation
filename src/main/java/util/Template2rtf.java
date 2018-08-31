@@ -32,17 +32,17 @@ public class Template2rtf{
     public Paragraph html2rtf(String tmpline) throws IOException {
         StyleSheet ss = new StyleSheet();
         Paragraph context = new Paragraph();
-        Paragraph tmpLineParagraph = new Paragraph();
         tmpline = tmpline.replaceAll("<img style=\"width: .*px;\" src=\"data:image/png;base64.*\">","");
-        System.out.println(tmpline);
+        tmpline = tmpline.replaceAll(",","1!~o#do=u-ha`o:");
         List htmlList = HTMLWorker.parseToList(new StringReader(tmpline), ss);
         for (int i = 0; i < htmlList.size(); i++) {
             com.lowagie.text.Element tmpE = (com.lowagie.text.Element) htmlList.get(i);
             String temStr = tmpE.toString();
+            temStr = temStr.replaceAll(", ","");
             temStr = temStr.substring(1,temStr.length() - 1);
-            tmpLineParagraph = new Paragraph("    "+"    "+temStr,black);
+            temStr = temStr.replaceAll("1!~o#do=u-ha`o:",",");
+            Paragraph tmpLineParagraph = new Paragraph("    "+"    "+temStr,black);
             context.add(tmpLineParagraph);
-
         }
         return context;
     }
@@ -107,12 +107,14 @@ public class Template2rtf{
                     Paragraph context = new Paragraph();
                     Paragraph tmpLineParagraph = new Paragraph();
                     tmpline = tmpline.replaceAll("<img style=\"width: .*px;\" src=\"data:image/png;base64.*\">","");
-                    System.out.println("test@"+tmpline);
+                    tmpline = tmpline.replaceAll(",","1!~o#do=u-ha`o:");
                     List htmlList = HTMLWorker.parseToList(new StringReader(tmpline), ss);
                     for (int i = 0; i < htmlList.size(); i++) {
                         com.lowagie.text.Element tmpE = (com.lowagie.text.Element) htmlList.get(i);
                         String temStr = tmpE.toString();
+                        temStr = temStr.replaceAll(", ","");
                         temStr = temStr.substring(1,temStr.length() - 1);
+                        temStr = temStr.replaceAll("1!~o#do=u-ha`o:",",");
                         tmpLineParagraph = new Paragraph("    "+temStr,black);
                         context.add(tmpLineParagraph);
                     }
@@ -166,29 +168,25 @@ public class Template2rtf{
                         lineParagraph = new Paragraph("    "+"    "+"用例过程" + (i + 1),minTitle);
                         doc.add(lineParagraph);
                         if (funRole.getRoleName() != null){
-                            tmpline = "    "+"参与角色:  " + funRole.getRoleName();
-                            doc.add(html2rtf(tmpline));
+                            lineParagraph = new Paragraph("    "+"    "+"    "+"参与角色:" + funRole.getRoleName(),black);
+                            doc.add(lineParagraph);
                         }
-
                         if (funRole.getRoleDescribe() != null){
-                            tmpline = "    "+"用例描述:  " + funRole.getRoleDescribe();
-                            doc.add(html2rtf(tmpline));
+                            lineParagraph = new Paragraph("    "+"    "+"    "+"用例描述:" + funRole.getRoleDescribe(),black);
+                            doc.add(lineParagraph);
                         }
                         if(funRole.getUsableName() != null) {
                             lineParagraph = new Paragraph("    "+"    "+"    "+funRole.getUsableName(),black);
                             doc.add(lineParagraph);
-                            doc.add(BLANK);
                             lineParagraph = new Paragraph("    "+"    "+"    "+funRole.getUsablePara(),black);
                             doc.add(lineParagraph);
                         }
                         if(funRole.getSecurityName() != null) {
                             lineParagraph = new Paragraph("    "+"    "+"    "+funRole.getSecurityName(),black);
                             doc.add(lineParagraph);
-                            doc.add(BLANK);
                             lineParagraph = new Paragraph("    "+"    "+"    "+funRole.getSecurityPara(),black);
                             doc.add(lineParagraph);
                         }
-                        doc.add(BLANK);
                         doc.add(BLANK);
                     }
                     List<FunUsable> funUsableList = entity.getFunUsableList();
@@ -197,19 +195,30 @@ public class Template2rtf{
                         doc.add(lineParagraph);
                         for (int j = 0; j < funUsableList.size(); j++) {
                             FunUsable funUsable = funUsableList.get(j);
-                            lineParagraph = new Paragraph("    "+"    "+"全局可用性:" + (j + 1),minTitle);
-                            doc.add(lineParagraph);
-                            tmpline = "    "+"全局可用性名称:  " + funUsable.getUsableName();
-                            doc.add(html2rtf(tmpline));
-                            tmpline = "    "+funUsable.getUsablePara();
-                            doc.add(html2rtf(tmpline));
+                            if(funUsable.getUsableName() != null){
+                                lineParagraph = new Paragraph("    "+"    "+"全局可用性:" + (j + 1),minTitle);
+                                doc.add(lineParagraph);
+                                lineParagraph = new Paragraph("    "+"    "+"    "+"全局可用性名称:" + funUsable.getUsableName(),black);
+                                doc.add(lineParagraph);
+                                lineParagraph = new Paragraph("    "+"    "+"    " + funUsable.getUsablePara(),black);
+                                doc.add(lineParagraph);
+                            }
+                            else{
+                                lineParagraph = new Paragraph("    "+"    "+"全局安全性:" + (j + 1),minTitle);
+                                doc.add(lineParagraph);
+                                lineParagraph = new Paragraph("    "+"    "+"    "+"全局安全性名称:" + funUsable.getSecurityName(),black);
+                                doc.add(lineParagraph);
+                                lineParagraph = new Paragraph("    "+"    "+"    " + funUsable.getSecurityPara(),black);
+                                doc.add(lineParagraph);
+                            }
                             doc.add(BLANK);
                         }
+
                     }
                     lineParagraph = new Paragraph("    "+"输入:",sTitle);
                     doc.add(lineParagraph);
-                    tmpline = entity.getInput();
-                    doc.add(html2rtf(tmpline));
+                    String inputStr = entity.getInput();
+                    doc.add(html2rtf(inputStr));
 
                     lineParagraph = new Paragraph("    "+"输出:",sTitle);
                     doc.add(lineParagraph);
