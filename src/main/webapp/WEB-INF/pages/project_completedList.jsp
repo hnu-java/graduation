@@ -25,7 +25,7 @@
     <link href="<%=basePath %>/css/animate.min.css" rel="stylesheet">
     <link href="<%=basePath %>/css/style.min862f.css?v=4.1.0" rel="stylesheet">
     <link href="<%=basePath %>/css/z_style.css" rel="stylesheet">
-
+    <link href="<%=basePath %>/css/button.css" rel="stylesheet">
 </head>
 
 <body class="gray-bg animated fadeInDown">
@@ -106,7 +106,7 @@
         }
     );
     function operateFormatter(value,row,index) {
-        return '<a class="mod btn btn-success">查看项目</a>';
+        return '<a class="mod fa fa-folder btn btn-custom"> 查看项目</a>';
     }
     //表格  - 操作 - 事件
     window.actionEvents = {

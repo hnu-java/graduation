@@ -25,7 +25,7 @@
     <link href="<%=basePath%>/css/z_style.css" rel="stylesheet">
     <link href="<%=basePath%>/css/plugins/toastr/toastr.min.css" rel="stylesheet">
     <link href="<%=basePath%>/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
-
+    <link href="<%=basePath %>/css/button.css" rel="stylesheet">
 </head>
 
 <body class="gray-bg">
@@ -151,9 +151,9 @@
     )
     function operateFormatter(value,row,index) {
         return[,
-            '<a class="MemberManagement" style="padding-left: 10px"><button class="btn btn-success text-center btn-xs " >成员管理</button></a>',
-            '<a class="CheckProgram" style="padding-left: 10px"><button class="btn btn-success text-center btn-xs " >查看项目</button></a>',
-            '<a class="CheckApplication" style="padding-left: 10px"><button class="btn btn-success text-center btn-xs " >查看申请</button></a>'
+            '<a class="MemberManagement" style="padding-left: 10px"><button class="btn btn-custom text-center btn-xs " >成员管理</button></a>',
+            '<a class="CheckProgram" style="padding-left: 10px"><button class="btn btn-custom text-center btn-xs " >查看项目</button></a>',
+            '<a class="CheckApplication" style="padding-left: 10px"><button class="btn btn-custom text-center btn-xs " >查看申请</button></a>'
         ].join('');
     }
     window.actionEvents = {
