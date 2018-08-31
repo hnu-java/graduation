@@ -11,7 +11,6 @@
           <element id="library" level="project" name="Maven: org.freemarker:freemarker:2.3.26-incubating" />
           <element id="library" level="project" name="Maven: ognl:ognl:3.1.15" />
           <element id="library" level="project" name="Maven: org.javassist:javassist:3.20.0-GA" />
-          <element id="library" level="project" name="Maven: commons-fileupload:commons-fileupload:1.3.3" />
           <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.6" />
           <element id="library" level="project" name="Maven: org.apache.struts:struts2-convention-plugin:2.5.10.1" />
           <element id="library" level="project" name="Maven: org.ow2.asm:asm:5.1" />
@@ -36,10 +35,13 @@
           <element id="library" level="project" name="Maven: com.itextpdf:itextpdf:5.5.13" />
           <element id="library" level="project" name="Maven: com.itextpdf:itext-asian:5.2.0" />
           <element id="library" level="project" name="Maven: com.itextpdf.tool:xmlworker:5.5.9" />
-          <element id="file-copy" path="D:/qqBrowser/qqBrowserDownLoad/flying-saucer-core-9.0.6.jar" />
-          <element id="file-copy" path="E:/快易系统2018-7/iText转word/iText导出word含jar/iText-2.1.5.jar" />
-          <element id="file-copy" path="D:/qqBrowser/qqBrowserDownLoad/flying-saucer-pdf-9.0.4.jar" />
-          <element id="file-copy" path="E:/快易系统2018-7/iText转word/iText导出word含jar/iText-rtf-2.1.4.jar" />
+          <element id="library" level="project" name="Maven: commons-fileupload:commons-fileupload:1.3.3" />
+          <element id="library" level="project" name="Maven: com.lowagie:itext:2.1.4" />
+          <element id="library" level="project" name="Maven: bouncycastle:bcmail-jdk14:138" />
+          <element id="library" level="project" name="Maven: bouncycastle:bcprov-jdk14:138" />
+          <element id="library" level="project" name="Maven: com.lowagie:itext-rtf:2.1.4" />
+          <element id="library" level="project" name="Maven: org.xhtmlrenderer:flying-saucer-core:9.0.6" />
+          <element id="library" level="project" name="Maven: org.xhtmlrenderer:flying-saucer-pdf:9.0.4" />
         </element>
       </element>
       <element id="directory" name="META-INF">
