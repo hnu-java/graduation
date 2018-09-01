@@ -85,7 +85,6 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     public String create() {
         dataMap = new HashMap<String, Object>();
         projectDao = new ProjectDaoImp();
-        System.out.println(project.getName()+" wtf "+project.getDocument_Name()+" "+project.getOrgName()+" "+project.getIntro());
         boolean res = projectDao.save(project);
         dataMap.put("res", res);
         return SUCCESS;

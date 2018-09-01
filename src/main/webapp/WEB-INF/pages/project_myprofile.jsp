@@ -377,7 +377,7 @@
                                     swal("申请失败！", "机构名被占用。", "error");
                                 }
                             }
-                            else swal("申请失败！", "您的积分少于${sessionScope.Mpoint1}，请充值。", "error");
+                            else swal("您剩余的积分不足！", "创建一个机构需要${sessionScope.Mpoint1}个积分，请到个人中心进行积分充值。", "error");
                         },
                         error: function () {
                             swal({

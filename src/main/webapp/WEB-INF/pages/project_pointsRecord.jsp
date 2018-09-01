@@ -32,7 +32,7 @@
         <ol class="breadcrumb" style="margin-left: 40px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage" style="color:#658387">首页</a> >> <a href="user-jmpMyprofile" style="color:#658387">个人中心</a> >> ${sessionScope.user.name}的积分记录
+                    <a href="user-jmpHomepage" style="color:#658387">首页</a> >> <a href="user-jmpMyProfile" style="color:#658387">个人中心</a> >> ${sessionScope.user.name}的积分记录
                 </strong>
             </li>
         </ol>
