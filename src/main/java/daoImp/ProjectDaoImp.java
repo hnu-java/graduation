@@ -28,28 +28,28 @@ public class ProjectDaoImp extends DAO<ProjectEntity> implements ProjectDao {
 
         Timestamp time = new Timestamp(new java.util.Date().getTime());
 
-        int ID_Org = 0;
+        int ID_Org = p.getId_Organization();
 
 
-//      project Name and Document Name cannot be null
-        if (p.getName().length()==0||p.getDocument_Name().length()==0){
-            return false;
-        }
-
-        String orgName = p.getOrgName();
-        int len = orgName.length();
-//      if org is not provided
-        if (len==0){
-            ID_Org = 0;
-        }
-
-        else  {
-            try {
-                ID_Org = getForValueThrowsExp(sql2, p.getOrgName());
-            } catch (Exception e) {
-                return false;
-            }
-        }
+////      project Name and Document Name cannot be null
+//        if (p.getName().length()==0||p.getDocument_Name().length()==0){
+//            return false;
+//        }
+//
+//        String orgName = p.getOrgName();
+//        int len = orgName.length();
+////      if org is not provided
+//        if (len==0){
+//            ID_Org = 0;
+//        }
+//
+//        else  {
+//            try {
+//                ID_Org = getForValueThrowsExp(sql2, p.getOrgName());
+//            } catch (Exception e) {
+//                return false;
+//            }
+//        }
 
         UserEntity user = (UserEntity)ActionContext.getContext().getSession().get("user");
         int ID_User = user.getId_user();

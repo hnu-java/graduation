@@ -82,16 +82,19 @@
     <div class="form-group">
         <label class="control-label col-sm-3"><button class="btn-circle btn-default"><img src="<%=basePath %>img/u13.png" style="height: 18px;width: 20px"></button>　机构名称  </label>
         <div class="col-sm-4">
-            <div class="input-group">
-                <input type="text" id="orgName" class="form-control" autocomplete="true" placeholder="选填，置空时为私人项目，不可更改" oninput="inputSuggest()" readonly="readonly">
-                <div class="input-group-btn">
-                    <button id="showButton" type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown" onclick="showOrg()">
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right" role="menu" style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.5s; min-width: 400px; left: -367px; right: auto;">
-                    </ul>
-                </div>
-            </div>
+            <select class="form-control" name="orgList" id="orgList" >
+                <option>选填，置空时为私人项目，不可更改</option>
+            </select>
+            <%--<div class="input-group">--%>
+                <%--<input type="text" id="orgName" class="form-control" autocomplete="true" placeholder="选填，置空时为私人项目，不可更改" oninput="inputSuggest()" readonly="readonly">--%>
+                <%--<div class="input-group-btn">--%>
+                    <%--<button id="showButton" type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown" onclick="showOrg()">--%>
+                        <%--<span class="caret"></span>--%>
+                    <%--</button>--%>
+                    <%--<ul class="dropdown-menu dropdown-menu-right" role="menu" style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.5s; min-width: 400px; left: -367px; right: auto;">--%>
+                    <%--</ul>--%>
+                <%--</div>--%>
+            <%--</div>--%>
             <!-- /btn-group -->
         </div>
     </div>
@@ -168,11 +171,12 @@
         else {
             $("#warning2").html("<i class='glyphicon glyphicon-ok-sign pull-right' style='color: green'></i>");
         }
+        var r = document.getElementById("orgList").value;
         $.ajax({
             url: "project-create_test",
             data: {
                 name: $("input#proName").val(), document_Name: $("input#docName").val(),
-                orgName: $("input#orgName").val(), intro: $("textarea#intro").val()
+                id_Organization: r, intro: $("textarea#intro").val()
             },
             dataType: "json",
             type: "Post",
@@ -198,7 +202,7 @@
                                         url: "project-create",
                                         data: {
                                             name: $("input#proName").val(), document_Name: $("input#docName").val(),
-                                            orgName: $("input#orgName").val(), intro: $("textarea#intro").val()
+                                            id_Organization: r, intro: $("textarea#intro").val()
                                         },
                                         dataType: "json",
                                         type: "Post",
@@ -331,9 +335,26 @@
             }
         })
     }
+
     function whenLoad() {
-        $('button#showButton').click();
-        $('button#showButton').click();
+        $("#libraryUserList").html("");
+        $.ajax({
+            url: "project-showOrg",
+            dataType: "json",
+            type: "get",
+            async: "false",
+            success: function (result) {
+                var list=result.orgList,content="";
+                if(list.length!=0) {
+                    content += " <option value='0' >选填，置空时为私人项目，不可更改</option>"
+                    for (var i = 0; i < list.length; i++) {
+                        content += " <option value='" + list[i].ID_ORGANIZATION + "'>" + list[i].NAME + "</option>"
+                    }
+                }
+                $("#orgList").empty();
+                $("#orgList").append(content);
+            }
+        })
     }
 </script>
 
