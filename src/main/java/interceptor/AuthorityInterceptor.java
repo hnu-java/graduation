@@ -41,6 +41,6 @@ import javax.servlet.http.HttpSession;
             ((ActionSupport)invocation.getAction()).addActionError("sorry,not login");
             //直接返回login逻辑视图
             System.out.println(user+"after_interceptor");
-            return Action.LOGIN;
+            return invocation.invoke();
         }
 }

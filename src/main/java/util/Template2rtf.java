@@ -73,7 +73,7 @@ public class Template2rtf{
         java.util.List<CatalogEntity> catalogEntityList = catalogDao.getAll(id_document);
         String line;
         Paragraph lineParagraph = new Paragraph();
-
+        lineParagraph.setLeading(24f);
         //
         boolean isFirstIndex = false;
 
@@ -97,9 +97,13 @@ public class Template2rtf{
                 lineParagraph.setAlignment(Element.ALIGN_CENTER);
             else
                 lineParagraph.setAlignment(Element.ALIGN_LEFT);
-            isFirstIndex=false;
+
             doc.add(lineParagraph);
-            doc.add(BLANK);
+            if(isFirstIndex)
+            {
+                doc.add(BLANK);
+            }
+            isFirstIndex=false;
             String tmpline;
             if (e.getContent() != null) {//生成不同类型的文本内容
                 if (e.getId_template() == 1) {//模板类型1
@@ -126,18 +130,15 @@ public class Template2rtf{
                 if (e.getId_template() == 2) {//模板类型2
                     UserStructureEntity entity = gson.fromJson(e.getContent(), UserStructureEntity.class);
                     lineParagraph = new Paragraph("    "+"用户名:" + entity.getRoleName(),sTitle);
-                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     doc.add(BLANK);
                     //用户描述
                     lineParagraph = new Paragraph("    "+"用户描述:",sTitle);
-                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     tmpline = entity.getDescribe();
                     doc.add(html2rtf(tmpline));
                     //用户权限
                     lineParagraph = new Paragraph("    "+"用户权限:",sTitle);
-                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     tmpline = entity.getPermissions();
                     doc.add(html2rtf(tmpline));
@@ -147,7 +148,6 @@ public class Template2rtf{
                     FunStructureEntity entity = gson.fromJson(e.getContent(), FunStructureEntity.class);
                     String priorityName;
                     lineParagraph = new Paragraph("    "+"功能点名称:" + entity.getFunName(),sTitle);
-                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     doc.add(BLANK);
                     if (entity.getPriority() == 1)
@@ -158,50 +158,40 @@ public class Template2rtf{
                         priorityName = "低";
 
                     lineParagraph = new Paragraph("    "+"优先级:" + priorityName,sTitle);
-                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     doc.add(BLANK);
 
                     lineParagraph = new Paragraph("    "+"功能点描述:",sTitle);
-                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     tmpline = entity.getDescribe();
                     doc.add(html2rtf(tmpline));
                     doc.add(BLANK);
 
                     lineParagraph = new Paragraph("    "+"用例过程:",sTitle);
-                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     List<FunRole> funRoleList = entity.getFunRoleList();
                     for (int i = 0; i < funRoleList.size(); i++) {
                         FunRole funRole = funRoleList.get(i);
                         lineParagraph = new Paragraph("    "+"    "+"用例过程" + (i + 1),minTitle);
-                        lineParagraph.setLeading(24f);
                         doc.add(lineParagraph);
                         if (funRole.getRoleName() != null){
                             lineParagraph = new Paragraph("    "+"    "+"    "+"参与角色:" + funRole.getRoleName(),black);
-                            lineParagraph.setLeading(24f);
                             doc.add(lineParagraph);
                         }
                         if (funRole.getRoleDescribe() != null){
                             lineParagraph = new Paragraph("    "+"    "+"    "+"用例描述:" + funRole.getRoleDescribe(),black);
-                            lineParagraph.setLeading(24f);
                             doc.add(lineParagraph);
                         }
                         if(funRole.getUsableName() != null) {
                             lineParagraph = new Paragraph("    "+"    "+"    "+funRole.getUsableName(),black);
-                            lineParagraph.setLeading(24f);
                             doc.add(lineParagraph);
                             lineParagraph = new Paragraph("    "+"    "+"    "+funRole.getUsablePara(),black);
-                            lineParagraph.setLeading(24f);
                             doc.add(lineParagraph);
                         }
                         if(funRole.getSecurityName() != null) {
                             lineParagraph = new Paragraph("    "+"    "+"    "+funRole.getSecurityName(),black);
-                            lineParagraph.setLeading(24f);
                             doc.add(lineParagraph);
                             lineParagraph = new Paragraph("    "+"    "+"    "+funRole.getSecurityPara(),black);
-                            lineParagraph.setLeading(24f);
                             doc.add(lineParagraph);
                         }
                         doc.add(BLANK);
@@ -214,24 +204,18 @@ public class Template2rtf{
                             FunUsable funUsable = funUsableList.get(j);
                             if(funUsable.getUsableName() != null){
                                 lineParagraph = new Paragraph("    "+"    "+"全局可用性:" + (j + 1),minTitle);
-                                lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
                                 lineParagraph = new Paragraph("    "+"    "+"    "+"全局可用性名称:" + funUsable.getUsableName(),black);
-                                lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
                                 lineParagraph = new Paragraph("    "+"    "+"    " + funUsable.getUsablePara(),black);
-                                lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
                             }
                             else{
                                 lineParagraph = new Paragraph("    "+"    "+"全局安全性:" + (j + 1),minTitle);
-                                lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
                                 lineParagraph = new Paragraph("    "+"    "+"    "+"全局安全性名称:" + funUsable.getSecurityName(),black);
-                                lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
                                 lineParagraph = new Paragraph("    "+"    "+"    " + funUsable.getSecurityPara(),black);
-                                lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
                             }
                             doc.add(BLANK);
@@ -239,29 +223,21 @@ public class Template2rtf{
 
                     }
                     lineParagraph = new Paragraph("    "+"输入:",sTitle);
-                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     String inputStr = entity.getInput();
                     doc.add(html2rtf(inputStr));
-
                     lineParagraph = new Paragraph("    "+"输出:",sTitle);
-                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     tmpline = entity.getOutput();
                     doc.add(html2rtf(tmpline));
-
                     lineParagraph = new Paragraph("    "+"基本操作流程:",sTitle);
-                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     tmpline = entity.getBasic();
                     doc.add(html2rtf(tmpline));
-
                     lineParagraph = new Paragraph("    "+"备选操作流程:",sTitle);
-                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     tmpline = entity.getAlternative();
                     doc.add(html2rtf(tmpline));
-
                 }
             }
         }

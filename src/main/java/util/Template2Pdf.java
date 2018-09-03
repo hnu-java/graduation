@@ -110,6 +110,7 @@ public class Template2Pdf {
         java.util.List<CatalogEntity> catalogEntityList = catalogDao.getAll(id_document);
         String line;
         Paragraph lineParagraph = new Paragraph();
+        lineParagraph.setLeading(24f);
         boolean isFirstIndex = false;
         //逐级生成内容
         for (CatalogEntity e : catalogEntityList) {
