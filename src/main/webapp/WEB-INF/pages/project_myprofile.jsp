@@ -369,12 +369,17 @@
                             var points = "${session.user.points}";
                             var Npoints = "${session.Mpoint1}";
                             if(parseInt(points) >= parseInt(Npoints)){
-                                if (result.res === true) {
-                                    swal("申请成功发出!", "机构申请已受理,管理员同意后则扣除${session.Mpoint1}积分", "success");
-                                    $('button#cancel-apply').click();
+                                if(result.res2 === false){
+                                    if (result.res === true) {
+                                        swal({title:"申请成功发出!", text:"机构申请已受理,管理员同意后则扣除${session.Mpoint1}积分", type:"success"});
+                                        $('button#cancel-apply').click();
+                                    }
+                                    else if(result.res === false) {
+                                        swal("申请失败！", "机构名被占用。", "error");
+                                    }
                                 }
-                                else if(result.res == false) {
-                                    swal("申请失败！", "机构名被占用。", "error");
+                                else if(result.res2 === true) {
+                                    swal("申请失败！", "您已申请该机构，请等待管理员处理。", "error");
                                 }
                             }
                             else swal("您剩余的积分不足！", "创建一个机构需要${sessionScope.Mpoint1}个积分，请到个人中心进行积分充值。", "error");
