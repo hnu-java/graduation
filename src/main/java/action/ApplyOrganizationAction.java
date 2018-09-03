@@ -31,8 +31,12 @@ public class ApplyOrganizationAction extends ActionSupport implements RequestAwa
         UserEntity seesionUser=(UserEntity)session.get("user");
         int Npoint = Integer.valueOf(session.get("Mpoint1").toString());
         if(seesionUser.getPoints() >= Npoint){
-        boolean res=applyorganizationdao.applyOrg(seesionUser.getId_user(),applyorganization);
-        dataMap.put("res",res);
+            boolean res2=applyorganizationdao.alreadyApp(seesionUser.getId_user(),applyorganization);
+            dataMap.put("res2",res2);
+            if(!res2){
+                boolean res=applyorganizationdao.applyOrg(seesionUser.getId_user(),applyorganization);
+                dataMap.put("res",res);
+            }
         }
         return SUCCESS;
     }
