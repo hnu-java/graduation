@@ -772,6 +772,8 @@
                 else{
                     if(result.One === 1){
                         swal("邀请失败！", "该用户已在项目中。", "error");
+                    }else if(result.isIn === false){
+                        swal("邀请失败！", "该用户不在“"+result.orgName+"”机构中。", "error");
                     }else {
                         swal("邀请失败！", "用户名不存在。", "error");
                     }

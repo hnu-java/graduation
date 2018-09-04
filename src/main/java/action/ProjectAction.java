@@ -35,6 +35,7 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
 
     private ProjectDao projectDao;
     private ProDiscussDao proDiscussDao;
+    private OrganizationDao organizationDao;
     private ProjectEntity project;
     private Map<String,Object> request;
     private Map<String,Object> session;
@@ -349,13 +350,29 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         }
         else {
             projectDao = new ProjectDaoImp();
+            organizationDao = new OrganizationDaoImp();
             project = projectDao.getOne(id_Project);
-            UserEntity pm = projectDao.getPM(project);
-            String content = pm.getName() + "邀请你加入" + project.getName();
-            boolean res = projectDao.inviteMember(user.getId_user(), id_Project, content);
-            int One = userDao.JudgmentOne(username);
-            dataMap.put("One",One);
-            dataMap.put("res",res);
+            System.out.println(project.getId_Organization());
+            boolean isIn = false;
+            OrganizationEntity organizationEntity = new OrganizationEntity();
+            if(project.getId_Organization()!=0){
+                isIn = organizationDao.isIn(user.getId_user(),project.getId_Organization());
+                organizationEntity = organizationDao.getOne(project.getId_Organization());
+            }
+            if(isIn || project.getId_Organization() == 0){
+                UserEntity pm = projectDao.getPM(project);
+                String content = pm.getName() + "邀请你加入" + project.getName();
+                boolean res = projectDao.inviteMember(user.getId_user(), id_Project, content);
+                int One = userDao.JudgmentOne(username);
+                dataMap.put("One",One);
+                dataMap.put("res",res);
+            }
+            else{
+                dataMap.put("res",false);
+                dataMap.put("One",0);
+                dataMap.put("isIn",isIn);
+                dataMap.put("orgName",organizationEntity.getNAME());
+            }
         }
         return SUCCESS;
     }

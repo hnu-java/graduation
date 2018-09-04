@@ -52,6 +52,11 @@ public class OrganizationDaoImp extends DAO<OrganizationEntity> implements Organ
         return get(sql,name);
     }
 
+    public OrganizationEntity getOne(int id_organization) {
+        String sql = "select * from ORGANIZATION where ID_ORGANIZATION = ? ";
+        return get(sql,id_organization);
+    }
+
     @Override
     public List<OrganizationEntity> getAll() {
         String sql = "select * from ORGANIZATION";

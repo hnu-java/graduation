@@ -13,6 +13,7 @@ import java.util.List;
 
 public interface OrganizationDao {
     OrganizationEntity getOne(String name);
+    OrganizationEntity getOne(int ID_ORGANIZATION);
     List<OrganizationEntity> getAll();
     void quit(String NAME);
     boolean isIn(int id_user,int id_org);
