@@ -13,7 +13,7 @@ public interface UserDao {
 	boolean onLine(String name);
 	boolean payment(int id_user,int day);
 	boolean proPayment(int id_user,int day);
-
+	boolean checkMail(String mail);
 	boolean registration(String name,String password1,String password2, String mail);
 	boolean postmail(postmailEntity info, String title);
 	boolean replacepassword(String name,String password2,String password3);

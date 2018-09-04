@@ -168,30 +168,38 @@ public class Template2rtf{
                     doc.add(BLANK);
 
                     lineParagraph = new Paragraph("    "+"用例过程:",sTitle);
+                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     List<FunRole> funRoleList = entity.getFunRoleList();
                     for (int i = 0; i < funRoleList.size(); i++) {
                         FunRole funRole = funRoleList.get(i);
                         lineParagraph = new Paragraph("    "+"    "+"用例过程" + (i + 1),minTitle);
+                        lineParagraph.setLeading(24f);
                         doc.add(lineParagraph);
                         if (funRole.getRoleName() != null){
                             lineParagraph = new Paragraph("    "+"    "+"    "+"参与角色:" + funRole.getRoleName(),black);
+                            lineParagraph.setLeading(24f);
                             doc.add(lineParagraph);
                         }
                         if (funRole.getRoleDescribe() != null){
                             lineParagraph = new Paragraph("    "+"    "+"    "+"用例描述:" + funRole.getRoleDescribe(),black);
+                            lineParagraph.setLeading(24f);
                             doc.add(lineParagraph);
                         }
                         if(funRole.getUsableName() != null) {
                             lineParagraph = new Paragraph("    "+"    "+"    "+funRole.getUsableName(),black);
+                            lineParagraph.setLeading(24f);
                             doc.add(lineParagraph);
                             lineParagraph = new Paragraph("    "+"    "+"    "+funRole.getUsablePara(),black);
+                            lineParagraph.setLeading(24f);
                             doc.add(lineParagraph);
                         }
                         if(funRole.getSecurityName() != null) {
                             lineParagraph = new Paragraph("    "+"    "+"    "+funRole.getSecurityName(),black);
+                            lineParagraph.setLeading(24f);
                             doc.add(lineParagraph);
                             lineParagraph = new Paragraph("    "+"    "+"    "+funRole.getSecurityPara(),black);
+                            lineParagraph.setLeading(24f);
                             doc.add(lineParagraph);
                         }
                         doc.add(BLANK);
@@ -199,23 +207,30 @@ public class Template2rtf{
                     List<FunUsable> funUsableList = entity.getFunUsableList();
                     if (funUsableList.size() != 0) {
                         lineParagraph = new Paragraph("    "+"全局可用性:",sTitle);
+                        lineParagraph.setLeading(24f);
                         doc.add(lineParagraph);
                         for (int j = 0; j < funUsableList.size(); j++) {
                             FunUsable funUsable = funUsableList.get(j);
                             if(funUsable.getUsableName() != null){
                                 lineParagraph = new Paragraph("    "+"    "+"全局可用性:" + (j + 1),minTitle);
+                                lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
                                 lineParagraph = new Paragraph("    "+"    "+"    "+"全局可用性名称:" + funUsable.getUsableName(),black);
+                                lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
                                 lineParagraph = new Paragraph("    "+"    "+"    " + funUsable.getUsablePara(),black);
+                                lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
                             }
                             else{
                                 lineParagraph = new Paragraph("    "+"    "+"全局安全性:" + (j + 1),minTitle);
+                                lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
                                 lineParagraph = new Paragraph("    "+"    "+"    "+"全局安全性名称:" + funUsable.getSecurityName(),black);
+                                lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
                                 lineParagraph = new Paragraph("    "+"    "+"    " + funUsable.getSecurityPara(),black);
+                                lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
                             }
                             doc.add(BLANK);

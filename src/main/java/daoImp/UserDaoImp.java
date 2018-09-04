@@ -84,6 +84,15 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
         else return false;
     }
 
+    public boolean checkMail(String  mail){
+        String sql = "select count(*) from user where MAIL = ?";
+        int count = Integer.valueOf(getForValue(sql,mail).toString());
+        if(count >= 1){
+            return false;
+        }
+        return true;
+    }
+
     public int Mpoint(int id_rule){
         String sql = "select points from points_rule where id_rule = ?";
         int points = getForValue(sql,id_rule);

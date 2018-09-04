@@ -179,19 +179,19 @@
                             swal("验证码错误！", "请检查您的验证码输入是否正确", "error");
                         }
                         else if (result.res === true) {
-                            var content = "获得" + "${sessionScope.Mpoint3}" + "积分";
-                            swal({
-                                title: "注册成功!",
-                                text: content,
-                                type:"success",
-                                confirmButtonColor: "#18a689",
-                                confirmButtonText: "OK"
-                            },function(){
-                                location.href="login-jmpLogin"
-                            })
-                        }
-                        else if(result.res === false)
-                            swal("注册失败！", "用户名被占用。", "error");
+                                var content = "获得" + "${sessionScope.Mpoint3}" + "积分";
+                                swal({
+                                    title: "注册成功!",
+                                    text: content,
+                                    type:"success",
+                                    confirmButtonColor: "#18a689",
+                                    confirmButtonText: "OK"
+                                },function(){
+                                    location.href="login-jmpLogin"
+                                })
+                            }
+                            else if(result.res === false)
+                                swal("注册失败！", "用户名被占用。", "error");
                     },
                     error: function () {
                         swal("注册失败！", "请求未发出，请先获取验证码并保证网络通畅。", "error");
@@ -236,10 +236,14 @@
                 type: "Post",
                 async: "false",
                 success: function (result) {
-                    if (result.res === true) {
-                        showtoast("success", "发送成功", "操作成功")
+                    if(result.checkmail === true) {
+                        if (result.res === true) {
+                            showtoast("success", "发送成功", "操作成功")
+                        }
+                        else showtoast("error", "发送失败", "请检查输入的邮箱是否有效")
                     }
-                    else showtoast("error", "发送失败", "请检查输入的邮箱是否有效")
+                    else if(result.checkmail === false)
+                        swal("发送失败！", "邮箱被占用。", "error");
                 },
                 error: function (result) {
                     showtoast("error", "发送失败", "请检查网络")

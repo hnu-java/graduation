@@ -61,14 +61,14 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         dataMap.put("res", res);
         if(res){
             System.out.println("1212e12e12e");
-            user = userDao.getOne(user.getName());
-            session.put("user",user);
-            dataMap.put("flag",user.getFlag());
+            UserEntity theUser = userDao.getOne(user.getName());
+            session.put("user",theUser);
+            dataMap.put("flag",theUser.getFlag());
 //            dataMap.put("days",user.getDays());
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
                 public void run() {
-                    userDao.exit(user.getName());
+                    userDao.exit(theUser.getName());
                 }
             }, 5*60*1000);// 设定指定的时间time,此处单位为毫秒
         }
@@ -177,19 +177,23 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         userDao = new UserDaoImp();
         dataMap = new HashMap<String, Object>();
         System.out.println("helloverficication");
-        int temp = (int) ((Math.random()*9+1)*100000);
-        String email = user.getMail();
-        session.put("verification",temp);
-        System.out.println("email:"+email+"  verification:"+session.get("verification"));
-        String mail = user.getMail(); //发送对象的邮箱
-        String title = "快易需求助手注册验证码";
-        String content = String.valueOf(temp);
-        postmailEntity info = new postmailEntity();
-        info.setToAddress(mail);
-        info.setSubject(title);
-        info.setContent(content);
-        boolean res= userDao.postmail(info,title);
-        dataMap.put("res",res);
+        boolean checkmail = userDao.checkMail(user.getMail());
+        dataMap.put("checkmail", checkmail);
+        if(checkmail) {
+            int temp = (int) ((Math.random() * 9 + 1) * 100000);
+            String email = user.getMail();
+            session.put("verification", temp);
+            System.out.println("email:" + email + "  verification:" + session.get("verification"));
+            String mail = user.getMail(); //发送对象的邮箱
+            String title = "快易需求助手注册验证码";
+            String content = String.valueOf(temp);
+            postmailEntity info = new postmailEntity();
+            info.setToAddress(mail);
+            info.setSubject(title);
+            info.setContent(content);
+            boolean res = userDao.postmail(info, title);
+            dataMap.put("res", res);
+        }
         return "RES";
     }
 
