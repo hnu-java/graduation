@@ -31,6 +31,19 @@ public class OrgInviteDaoImp extends DAO<OrgInviteEntity> implements OrgInviteDa
         return false;
     }
 
+    public  boolean AlreadyInvite(OrgInviteEntity a){
+        String sql1 = "select ID_ORGANIZATION from ORGANIZATION where NAME=?";
+        String sql2 = "select ID_USER from user where NAME=?";
+        int id_org = getForValue(sql1,a.getORG_NAME());
+        int id_user = getForValue(sql2,a.getUSER_NAME());
+        String sql3 = "select count(*) from ORG_USER_APPLY where ID_USER = ? and ID_ORGANIZATION = ? and STATE = 0";
+        int count = Integer.valueOf(getForValue(sql3,id_user,id_org).toString());
+        if(count >= 1){
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public boolean reInviteUser(OrgInviteEntity a) {
         String sql1 = "select ID_USER from USER where NAME = ?";

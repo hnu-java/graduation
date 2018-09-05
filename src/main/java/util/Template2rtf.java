@@ -4,11 +4,7 @@ import java.awt.Color;
 import java.io.IOException;
 import com.google.gson.Gson;
 import com.itextpdf.text.Element;
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Font;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Paragraph;
+import com.lowagie.text.*;
 import com.lowagie.text.rtf.RtfWriter2;
 import com.lowagie.text.html.simpleparser.HTMLWorker;
 import com.lowagie.text.html.simpleparser.StyleSheet;
@@ -69,6 +65,16 @@ public class Template2rtf{
         Paragraph p = new Paragraph(name,new Font(Font.NORMAL,24,Font.HELVETICA,new Color(0,0,0)));
         p.setAlignment(Element.ALIGN_CENTER);
         doc.add(p);
+        //设置页眉
+        Paragraph headerPara = new Paragraph(name,new Font(Font.NORMAL,9,Font.HELVETICA,new Color(0,0,0)));
+        HeaderFooter header = new HeaderFooter(headerPara,false);
+        header.setAlignment(HeaderFooter.ALIGN_RIGHT);
+        doc.setHeader(header);
+        //设置页脚
+        Paragraph footerPara = new Paragraph("www.easysrs.cn",new Font(Font.NORMAL,9,Font.HELVETICA,new Color(0,0,0)));
+        HeaderFooter footer = new HeaderFooter(footerPara,false);
+        footer.setAlignment(HeaderFooter.ALIGN_LEFT);
+        doc.setFooter(footer);
         //
         java.util.List<CatalogEntity> catalogEntityList = catalogDao.getAll(id_document);
         String line;
@@ -256,7 +262,9 @@ public class Template2rtf{
                 }
             }
         }
-
+//        com.lowagie.text.Image img = com.lowagie.text.Image.getInstance("D:/SAO.jpg");
+//        img.scalePercent(30);
+//        doc.add(img);
         doc.close();
 
         InputStream inputStream = new ByteArrayInputStream(buffer.toByteArray());

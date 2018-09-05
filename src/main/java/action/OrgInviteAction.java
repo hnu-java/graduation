@@ -35,17 +35,24 @@ public class OrgInviteAction extends ActionSupport implements RequestAware, Sess
         orgInviteDao = new OrgInviteDaoImp();
         UserEntity sessionUser = (UserEntity)session.get("user");
         String org_name = (String)session.get("org_name");
-        System.out.println(org_name);
-        String content = sessionUser.getName()+"邀请你加入机构 "+org_name;
-        boolean res=orgInviteDao.inviteUser(content,orgInvite,sessionUser);
-        UserDao userDao = new UserDaoImp();
-        int One = userDao.JudgmentOne(orgInvite.getUSER_NAME());
-        List<OrgInviteEntity> list=orgInviteDao.getlist(org_name);
-        Gson gson = new Gson();
-        String showOperate = gson.toJson(list);
-        dataMap.put("res",res);
-        dataMap.put("showOperate",showOperate);
-        dataMap.put("One",One);
+        boolean flag = orgInviteDao.AlreadyInvite(orgInvite);
+        dataMap.put("flag",flag);
+        if(!flag){
+            String content = sessionUser.getName()+"邀请你加入机构 "+org_name;
+            boolean res=orgInviteDao.inviteUser(content,orgInvite,sessionUser);
+            UserDao userDao = new UserDaoImp();
+            int One = userDao.JudgmentOne(orgInvite.getUSER_NAME());
+            List<OrgInviteEntity> list=orgInviteDao.getlist(org_name);
+            Gson gson = new Gson();
+            String showOperate = gson.toJson(list);
+            dataMap.put("res",res);
+            dataMap.put("showOperate",showOperate);
+            dataMap.put("One",One);
+        }
+        else{
+            dataMap.put("res",false);
+            dataMap.put("One",0);
+        }
         return SUCCESS;
     }
 

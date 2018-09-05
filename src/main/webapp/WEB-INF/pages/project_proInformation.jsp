@@ -66,7 +66,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" id="button_cancel" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button type="button" id="button_cancel" class="btn btn-white" data-dismiss="modal" onclick="javascript:document.getElementById('UserName').value=''">取消</button>
                 <button id="button_invite" type="button" class="btn btn-primary">邀请</button>
             </div>
         </div>

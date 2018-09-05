@@ -6,6 +6,7 @@ import entity.UserEntity;
 import java.util.List;
 
 public interface OrgInviteDao {
+    boolean AlreadyInvite(OrgInviteEntity a);
     boolean inviteUser(String content, OrgInviteEntity a, UserEntity b);
     boolean reInviteUser(OrgInviteEntity a);
     List<OrgInviteEntity> getlist(String name);

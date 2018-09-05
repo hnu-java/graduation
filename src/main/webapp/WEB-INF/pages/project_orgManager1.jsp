@@ -137,7 +137,7 @@
                 <div class="form-group"><label>用户名</label> <input id="user_name" type="text" placeholder="请输入用户名" maxlength="20" class="form-control" required="required"></div>
             </div>
             <div class="modal-footer">
-                <button id="cancel-invite" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="cancel-invite" type="button" class="btn btn-white" data-dismiss="modal" onclick="javascript:document.getElementById('user_name').value=''">取消</button>
                 <button id="invite-button" type="button" class="btn btn-primary">邀请</button>
             </div>
         </div>
@@ -540,6 +540,10 @@
                                 else{
                                     if(result.One === 1){
                                         swal("邀请失败！", "该用户已在机构中。", "error");
+                                        $('button#cancel-invite').click();
+                                    }else if(result.flag === true){
+                                        swal("请勿重复邀请！", "您已邀请该用户，请耐心等待对方确认。", "error");
+                                        $('button#cancel-invite').click();
                                     }else {
                                         swal("邀请失败！", "用户名不存在。", "error");
                                     }
@@ -547,6 +551,7 @@
                             },
                             error: function () {
                                 swal("邀请失败！", "服务器异常。", "error");
+                                $('button#cancel-invite').click();
                             }
                         }
                     )
