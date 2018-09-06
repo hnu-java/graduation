@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.io.IOException;
 import com.google.gson.Gson;
 import com.itextpdf.text.Element;
+import com.itextpdf.tool.xml.html.head.Title;
 import com.lowagie.text.*;
+import com.lowagie.text.pdf.draw.LineSeparator;
 import com.lowagie.text.rtf.RtfWriter2;
 import com.lowagie.text.html.simpleparser.HTMLWorker;
 import com.lowagie.text.html.simpleparser.StyleSheet;
@@ -19,7 +21,7 @@ public class Template2rtf{
 
     private static final com.lowagie.text.Paragraph BLANK = new com.lowagie.text.Paragraph(" ");
     private BaseFont bfChinese;
-    Font title = new Font(bfChinese, 24, Font.NORMAL, new Color(0,0,0));
+    Font title = new Font(bfChinese, 5, Font.NORMAL, new Color(0,0,0));
     Font catalog = new Font(bfChinese, 16, Font.BOLD,new Color(0,0,0));
     Font black = new Font(bfChinese, 12, Font.COURIER,new Color(0,0,0));
     Font sTitle = new Font(bfChinese, 14, Font.BOLD,new Color(0,0,0));
@@ -48,7 +50,7 @@ public class Template2rtf{
         //创建文档，并设置纸张大小
         Gson gson = new Gson();
         CatalogDao catalogDao = new CatalogDaoImp();
-        Document doc = new Document(PageSize.A4);
+        Document doc = new Document(PageSize.A4, 62, 62, 72,72);
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         RtfWriter2 writer = RtfWriter2.getInstance(doc,buffer);
         doc.open();
@@ -66,15 +68,18 @@ public class Template2rtf{
         p.setAlignment(Element.ALIGN_CENTER);
         doc.add(p);
         //设置页眉
-        Paragraph headerPara = new Paragraph(name,new Font(Font.NORMAL,9,Font.HELVETICA,new Color(0,0,0)));
-        HeaderFooter header = new HeaderFooter(headerPara,false);
-        header.setAlignment(HeaderFooter.ALIGN_RIGHT);
+        Phrase phrase = new Phrase(name,new Font(Font.NORMAL,9,Font.HELVETICA,new Color(0,0,0)));
+        Phrase phrase1 = new Phrase("\n——————————————————————————————————————",new Font(Font.NORMAL,5,Font.HELVETICA,new Color(0,0,0)));
+        phrase.add(phrase1);
+        phrase.setLeading(10f);
+        HeaderFooter header = new HeaderFooter(phrase,false);
+        header.setAlignment(HeaderFooter.ALIGN_CENTER);
         doc.setHeader(header);
         //设置页脚
-        Paragraph footerPara = new Paragraph("www.easysrs.cn",new Font(Font.NORMAL,9,Font.HELVETICA,new Color(0,0,0)));
-        HeaderFooter footer = new HeaderFooter(footerPara,false);
+        HeaderFooter footer = new HeaderFooter(new Phrase("www.easysrs.cn                                    ",new Font(Font.NORMAL,9,Font.ITALIC,new Color(0,0,0))),true);
         footer.setAlignment(HeaderFooter.ALIGN_LEFT);
         doc.setFooter(footer);
+
         //
         java.util.List<CatalogEntity> catalogEntityList = catalogDao.getAll(id_document);
         String line;
@@ -98,7 +103,7 @@ public class Template2rtf{
                 //一级标题居中
                 isFirstIndex = true;
             }
-            lineParagraph = new Paragraph(line,new Font(Font.NORMAL,16,Font.BOLD,new Color(0,0,0)));
+            lineParagraph = new Paragraph(line,new Font(Font.NORMAL,18,Font.BOLD,new Color(0,0,0)));
             if (isFirstIndex)//2 3 4级目录靠左
                 lineParagraph.setAlignment(Element.ALIGN_CENTER);
             else
