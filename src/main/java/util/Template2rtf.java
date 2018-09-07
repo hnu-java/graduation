@@ -14,6 +14,9 @@ import dao.CatalogDao;
 import daoImp.CatalogDaoImp;
 import entity.*;
 import java.io.*;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import com.lowagie.text.pdf.BaseFont;
 
@@ -21,8 +24,8 @@ public class Template2rtf{
 
     private static final com.lowagie.text.Paragraph BLANK = new com.lowagie.text.Paragraph(" ");
     private BaseFont bfChinese;
-    Font title = new Font(bfChinese, 5, Font.NORMAL, new Color(0,0,0));
-    Font catalog = new Font(bfChinese, 16, Font.BOLD,new Color(0,0,0));
+    Font First_title = new Font(bfChinese, 18, Font.NORMAL, new Color(0,0,0));
+    Font Second_title = new Font(bfChinese, 7, Font.BOLD,new Color(0,0,0));
     Font black = new Font(bfChinese, 12, Font.COURIER,new Color(0,0,0));
     Font sTitle = new Font(bfChinese, 14, Font.BOLD,new Color(0,0,0));
     Font minTitle = new Font(bfChinese, 12, Font.BOLD,new Color(0,0,0));
@@ -62,11 +65,24 @@ public class Template2rtf{
         ////        HtmlPipelineContext htmlContext = new HtmlPipelineContext(null);
         ////        htmlContext.setTagFactory(Tags.getHtmlTagProcessorFactory());
         Paragraph paragraph = new Paragraph();
-        //创建字体格式
+
+        com.lowagie.text.Image img = com.lowagie.text.Image.getInstance("D:/logo.png");
+        img.setAlignment(Element.ALIGN_CENTER);
+        img.scalePercent(180);
+        doc.add(img);
+        //文档名称
         String name = catalogDao.getCatalogName(id_document);
         Paragraph p = new Paragraph(name,new Font(Font.NORMAL,24,Font.HELVETICA,new Color(0,0,0)));
         p.setAlignment(Element.ALIGN_CENTER);
         doc.add(p);
+        doc.add(BLANK);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(new java.util.Date().getTime());
+        String tmp = formatter.format(date);
+        paragraph = new Paragraph(tmp,new Font(Font.NORMAL,14,Font.HELVETICA,new Color(0,0,0)));
+        paragraph.setAlignment(Element.ALIGN_CENTER);
+        doc.add(paragraph);
+        doc.newPage();
         //设置页眉
         Phrase phrase = new Phrase(20);
         Phrase phrase1 = new Phrase(name,new Font(Font.NORMAL,9,Font.HELVETICA,new Color(0,0,0)));
@@ -90,22 +106,25 @@ public class Template2rtf{
         boolean isFirstIndex = false;
 
         for (CatalogEntity e : catalogEntityList) {
-            doc.add(BLANK);
             line = e.getTitle() + "  ";
             if (e.getFourth_index() != 0) {//第四级目录
+                doc.add(new Paragraph(" ",Second_title));
                 line = e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "." + e.getFourth_index() + "  " + line;
                 lineParagraph = new Paragraph(line,new Font(Font.NORMAL,14,Font.BOLD,new Color(0,0,0)));
             }
             else if (e.getThird_index() != 0) {//第三级目录
+                doc.add(new Paragraph(" ",Second_title));
                 line = e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "  " + line;
                 lineParagraph = new Paragraph(line,new Font(Font.NORMAL,14,Font.BOLD,new Color(0,0,0)));
             }
             else if (e.getSecond_index() != 0) {//第二级目录
+                doc.add(new Paragraph(" ",Second_title));
                 line = e.getFirst_index() + "." + e.getSecond_index() + "  " + line;
                 lineParagraph = new Paragraph(line, new Font(Font.NORMAL, 15, Font.BOLD, new Color(0, 0, 0)));
             }
             else //第一级目录
             {
+                doc.add(new Paragraph(" ",First_title));
                 line = "第"+e.getFirst_index() + "章  " + line;
                 //一级标题居中
                 isFirstIndex = true;
@@ -120,8 +139,9 @@ public class Template2rtf{
             doc.add(lineParagraph);
             if(isFirstIndex)
             {
-                doc.add(BLANK);
+                doc.add(new Paragraph(" ",First_title));
             }
+            else doc.add(new Paragraph(" ",Second_title));
             isFirstIndex=false;
             String tmpline;
             if (e.getContent() != null) {//生成不同类型的文本内容
