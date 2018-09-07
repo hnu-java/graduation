@@ -68,10 +68,11 @@ public class Template2rtf{
         p.setAlignment(Element.ALIGN_CENTER);
         doc.add(p);
         //设置页眉
-        Phrase phrase = new Phrase(name,new Font(Font.NORMAL,9,Font.HELVETICA,new Color(0,0,0)));
-        Phrase phrase1 = new Phrase("\n——————————————————————————————————————",new Font(Font.NORMAL,5,Font.HELVETICA,new Color(0,0,0)));
+        Phrase phrase = new Phrase(20);
+        Phrase phrase1 = new Phrase(name,new Font(Font.NORMAL,9,Font.HELVETICA,new Color(0,0,0)));
+        Phrase phrase2 = new Phrase("\n————————————————————————————————————————————————————————————————————————————————",new Font(Font.NORMAL,9,Font.HELVETICA,new Color(0,0,0)));
         phrase.add(phrase1);
-        phrase.setLeading(10f);
+        phrase.add(phrase2);
         HeaderFooter header = new HeaderFooter(phrase,false);
         header.setAlignment(HeaderFooter.ALIGN_CENTER);
         doc.setHeader(header);
@@ -91,19 +92,26 @@ public class Template2rtf{
         for (CatalogEntity e : catalogEntityList) {
             doc.add(BLANK);
             line = e.getTitle() + "  ";
-            if (e.getFourth_index() != 0)//第四级目录
+            if (e.getFourth_index() != 0) {//第四级目录
                 line = e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "." + e.getFourth_index() + "  " + line;
-            else if (e.getThird_index() != 0)//第三级目录
+                lineParagraph = new Paragraph(line,new Font(Font.NORMAL,14,Font.BOLD,new Color(0,0,0)));
+            }
+            else if (e.getThird_index() != 0) {//第三级目录
                 line = e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "  " + line;
-            else if (e.getSecond_index() != 0)//第二级目录
+                lineParagraph = new Paragraph(line,new Font(Font.NORMAL,14,Font.BOLD,new Color(0,0,0)));
+            }
+            else if (e.getSecond_index() != 0) {//第二级目录
                 line = e.getFirst_index() + "." + e.getSecond_index() + "  " + line;
+                lineParagraph = new Paragraph(line, new Font(Font.NORMAL, 15, Font.BOLD, new Color(0, 0, 0)));
+            }
             else //第一级目录
             {
                 line = "第"+e.getFirst_index() + "章  " + line;
                 //一级标题居中
                 isFirstIndex = true;
+                lineParagraph = new Paragraph(line,new Font(Font.NORMAL,18,Font.BOLD,new Color(0,0,0)));
             }
-            lineParagraph = new Paragraph(line,new Font(Font.NORMAL,18,Font.BOLD,new Color(0,0,0)));
+
             if (isFirstIndex)//2 3 4级目录靠左
                 lineParagraph.setAlignment(Element.ALIGN_CENTER);
             else
