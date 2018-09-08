@@ -11,7 +11,9 @@ import com.lowagie.text.rtf.RtfWriter2;
 import com.lowagie.text.html.simpleparser.HTMLWorker;
 import com.lowagie.text.html.simpleparser.StyleSheet;
 import dao.CatalogDao;
+import dao.ShowOrgProjectDao;
 import daoImp.CatalogDaoImp;
+import daoImp.ShowOrgProjectDaoImp;
 import entity.*;
 import java.io.*;
 import java.sql.Timestamp;
@@ -53,6 +55,7 @@ public class Template2rtf{
         //创建文档，并设置纸张大小
         Gson gson = new Gson();
         CatalogDao catalogDao = new CatalogDaoImp();
+        ShowOrgProjectDao showOrgProjectDao = new ShowOrgProjectDaoImp();
         Document doc = new Document(PageSize.A4, 62, 62, 72,72);
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         RtfWriter2 writer = RtfWriter2.getInstance(doc,buffer);
@@ -66,29 +69,37 @@ public class Template2rtf{
         ////        htmlContext.setTagFactory(Tags.getHtmlTagProcessorFactory());
         Paragraph paragraph = new Paragraph();
 
-        com.lowagie.text.Image img = com.lowagie.text.Image.getInstance("D:/logo.png");
-        img.setAlignment(Element.ALIGN_CENTER);
-        img.scalePercent(180);
-        doc.add(img);
         //文档名称
         String name = catalogDao.getCatalogName(id_document);
         Paragraph p = new Paragraph(name,new Font(Font.NORMAL,24,Font.HELVETICA,new Color(0,0,0)));
+        p.setSpacingBefore(200);
         p.setAlignment(Element.ALIGN_CENTER);
+        p.setSpacingAfter(400);
         doc.add(p);
-        doc.add(BLANK);
+        //文档机构（如果有）
+        String org_name = showOrgProjectDao.getOrgName(id_document);
+        System.out.println(org_name+" "+id_document);
+        if (org_name != null && org_name != "") {
+            paragraph = new Paragraph(org_name,new Font(Font.NORMAL,14,Font.HELVETICA,new Color(0,0,0)));
+            paragraph.setSpacingBefore(12);
+            paragraph.setAlignment(Element.ALIGN_CENTER);
+            paragraph.setSpacingAfter(12);
+            doc.add(paragraph);
+        }
+        //导出时间
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(new java.util.Date().getTime());
         String tmp = formatter.format(date);
         paragraph = new Paragraph(tmp,new Font(Font.NORMAL,14,Font.HELVETICA,new Color(0,0,0)));
+        paragraph.setSpacingBefore(12);
         paragraph.setAlignment(Element.ALIGN_CENTER);
+        paragraph.setSpacingAfter(12);
         doc.add(paragraph);
         doc.newPage();
         //设置页眉
-        Phrase phrase = new Phrase(20);
-        Phrase phrase1 = new Phrase(name,new Font(Font.NORMAL,9,Font.HELVETICA,new Color(0,0,0)));
-        Phrase phrase2 = new Phrase("\n————————————————————————————————————————————————————————————————————————————————",new Font(Font.NORMAL,9,Font.HELVETICA,new Color(0,0,0)));
+        Phrase phrase = new Phrase(name,new Font(Font.NORMAL,9,Font.HELVETICA,new Color(0,0,0)));
+        Phrase phrase1 = new Phrase("\n————————————————————————————————————————————————————————————————————————————————",new Font(Font.NORMAL,9,Font.HELVETICA,new Color(0,0,0)));
         phrase.add(phrase1);
-        phrase.add(phrase2);
         HeaderFooter header = new HeaderFooter(phrase,false);
         header.setAlignment(HeaderFooter.ALIGN_CENTER);
         doc.setHeader(header);
@@ -108,27 +119,32 @@ public class Template2rtf{
         for (CatalogEntity e : catalogEntityList) {
             line = e.getTitle() + "  ";
             if (e.getFourth_index() != 0) {//第四级目录
-                doc.add(new Paragraph(" ",Second_title));
                 line = e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "." + e.getFourth_index() + "  " + line;
                 lineParagraph = new Paragraph(line,new Font(Font.NORMAL,14,Font.BOLD,new Color(0,0,0)));
+                lineParagraph.setSpacingBefore(6);
+                lineParagraph.setSpacingAfter(6);
+
             }
             else if (e.getThird_index() != 0) {//第三级目录
-                doc.add(new Paragraph(" ",Second_title));
                 line = e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "  " + line;
                 lineParagraph = new Paragraph(line,new Font(Font.NORMAL,14,Font.BOLD,new Color(0,0,0)));
+                lineParagraph.setSpacingBefore(6);
+                lineParagraph.setSpacingAfter(6);
             }
             else if (e.getSecond_index() != 0) {//第二级目录
-                doc.add(new Paragraph(" ",Second_title));
                 line = e.getFirst_index() + "." + e.getSecond_index() + "  " + line;
                 lineParagraph = new Paragraph(line, new Font(Font.NORMAL, 15, Font.BOLD, new Color(0, 0, 0)));
+                lineParagraph.setSpacingBefore(6);
+                lineParagraph.setSpacingAfter(6);
             }
             else //第一级目录
             {
-                doc.add(new Paragraph(" ",First_title));
                 line = "第"+e.getFirst_index() + "章  " + line;
                 //一级标题居中
                 isFirstIndex = true;
                 lineParagraph = new Paragraph(line,new Font(Font.NORMAL,18,Font.BOLD,new Color(0,0,0)));
+                lineParagraph.setSpacingBefore(12);
+                lineParagraph.setSpacingAfter(12);
             }
 
             if (isFirstIndex)//2 3 4级目录靠左
@@ -137,11 +153,11 @@ public class Template2rtf{
                 lineParagraph.setAlignment(Element.ALIGN_LEFT);
 
             doc.add(lineParagraph);
-            if(isFirstIndex)
-            {
-                doc.add(new Paragraph(" ",First_title));
-            }
-            else doc.add(new Paragraph(" ",Second_title));
+//            if(isFirstIndex)
+//            {
+//                doc.add(new Paragraph(" ",First_title));
+//            }
+//            else doc.add(new Paragraph(" ",Second_title));
             isFirstIndex=false;
             String tmpline;
             if (e.getContent() != null) {//生成不同类型的文本内容

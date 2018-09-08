@@ -26,4 +26,10 @@ public class ShowOrgProjectDaoImp extends DAO<ShowOrgProjectEntity> implements S
         List<ShowOrgProjectEntity> list=getForList(sql2,id_org);
         return list;
     }
+
+    public String getOrgName(int id_doc){
+        String sql = "select ORG_NAME from view_org_project where ID_DOCUMENT = ?";
+        String org_name = getForValue(sql,id_doc);
+        return org_name;
+    }
 }

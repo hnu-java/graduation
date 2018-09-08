@@ -7,4 +7,5 @@ import java.util.List;
 public interface ShowOrgProjectDao {
     List<ShowOrgProjectEntity> getOrgPro(String name);
     List<ShowOrgProjectEntity> getOrgHisPro(String name);
+    String getOrgName(int id_doc);
 }
