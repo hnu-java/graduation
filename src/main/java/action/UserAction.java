@@ -53,15 +53,14 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         }
         session.put("count",count);
         if(Integer.valueOf(session.get("count").toString())==1){
-            boolean onLine = userDao.onLine(user.getName());
+            boolean onLine = userDao.onLine(user.getName().trim());
             session.put("onLine",onLine);
             System.out.println(onLine);
         }
-        boolean res = userDao.login(user.getName(), user.getPassword());
+        boolean res = userDao.login(user.getName().trim(), user.getPassword());
         dataMap.put("res", res);
         if(res){
-            System.out.println("1212e12e12e");
-            UserEntity theUser = userDao.getOne(user.getName());
+            UserEntity theUser = userDao.getOne(user.getName().trim());
             session.put("user",theUser);
             dataMap.put("flag",theUser.getFlag());
 //            dataMap.put("days",user.getDays());

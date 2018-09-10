@@ -158,27 +158,29 @@
 
             }
             else {
+                var name = $("input#name").val();
                 var md5PWD1 = $("input#password1").val();
                 var tempPassword1 = hex_md5(md5PWD1);
                 var md5PWD2 = $("input#password2").val();
                 var tempPassword2 = hex_md5(md5PWD2);
-                $.ajax({
-                    url: "login-registration",
-                    data: {
-                        name: $("input#name").val(),
-                        password: tempPassword1,
-                        tempPassword: tempPassword2,
-                        mail: $("input#email").val(),
-                        verification: $("input#verification").val()
-                    },
-                    dataType: "json",
-                    type: "Post",
-                    async: "false",
-                    success: function (result) {
-                        if(result.consequence === "error"){
-                            swal("验证码错误！", "请检查您的验证码输入是否正确", "error");
-                        }
-                        else if (result.res === true) {
+                if(name.indexOf(" ") == -1){
+                    $.ajax({
+                        url: "login-registration",
+                        data: {
+                            name: name,
+                            password: tempPassword1,
+                            tempPassword: tempPassword2,
+                            mail: $("input#email").val(),
+                            verification: $("input#verification").val()
+                        },
+                        dataType: "json",
+                        type: "Post",
+                        async: "false",
+                        success: function (result) {
+                            if(result.consequence === "error"){
+                                swal("验证码错误！", "请检查您的验证码输入是否正确", "error");
+                            }
+                            else if (result.res === true) {
                                 var content = "获得" + "${sessionScope.Mpoint3}" + "积分";
                                 swal({
                                     title: "注册成功!",
@@ -192,11 +194,15 @@
                             }
                             else if(result.res === false)
                                 swal("注册失败！", "用户名被占用。", "error");
-                    },
-                    error: function () {
-                        swal("注册失败！", "请求未发出，请先获取验证码并保证网络通畅。", "error");
-                    }
-                })
+                        },
+                        error: function () {
+                            swal("注册失败！", "请求未发出，请先获取验证码并保证网络通畅。", "error");
+                        }
+                    })
+                }
+                else{
+                    swal("注册失败！", "用户名中含有空格。", "error");
+                }
             }
         }else{
             swal("未同意用户协议！", "请先阅读并勾选“阅读并接受用户协议”", "error");

@@ -115,6 +115,43 @@ public class Template2rtf{
         lineParagraph.setLeading(24f);
         //
         boolean isFirstIndex = false;
+        line = "目录";
+        lineParagraph = new Paragraph(line,new Font(Font.NORMAL,18,Font.BOLD,new Color(0,0,0)));
+        lineParagraph.setAlignment(Element.ALIGN_LEFT);
+        doc.add(lineParagraph);
+        for (CatalogEntity e : catalogEntityList) {
+            line = e.getTitle() + "  ";
+            if (e.getFourth_index() != 0) {//第四级目录
+                line = "     " + e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "." + e.getFourth_index() + "  " + line;
+                lineParagraph = new Paragraph(line,new Font(Font.NORMAL,14,Font.BOLD,new Color(0,0,0)));
+                lineParagraph.setSpacingBefore(6);
+                lineParagraph.setSpacingAfter(6);
+
+            }
+            else if (e.getThird_index() != 0) {//第三级目录
+                line = "    " + e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "  " + line;
+                lineParagraph = new Paragraph(line,new Font(Font.NORMAL,14,Font.BOLD,new Color(0,0,0)));
+                lineParagraph.setSpacingBefore(6);
+                lineParagraph.setSpacingAfter(6);
+            }
+            else if (e.getSecond_index() != 0) {//第二级目录
+                line = "  " + e.getFirst_index() + "." + e.getSecond_index() + "  " + line;
+                lineParagraph = new Paragraph(line, new Font(Font.NORMAL, 15, Font.BOLD, new Color(0, 0, 0)));
+                lineParagraph.setSpacingBefore(6);
+                lineParagraph.setSpacingAfter(6);
+            }
+            else //第一级目录
+            {
+                line = e.getFirst_index() + "  " + line;
+                isFirstIndex = true;
+                lineParagraph = new Paragraph(line,new Font(Font.NORMAL,18,Font.BOLD,new Color(0,0,0)));
+                lineParagraph.setSpacingBefore(12);
+                lineParagraph.setSpacingAfter(12);
+            }
+            lineParagraph.setAlignment(Element.ALIGN_LEFT);
+            doc.add(lineParagraph);
+        }
+        doc.newPage();
 
         for (CatalogEntity e : catalogEntityList) {
             line = e.getTitle() + "  ";
@@ -140,16 +177,15 @@ public class Template2rtf{
             else //第一级目录
             {
                 line = "第"+e.getFirst_index() + "章  " + line;
-                //一级标题居中
                 isFirstIndex = true;
                 lineParagraph = new Paragraph(line,new Font(Font.NORMAL,18,Font.BOLD,new Color(0,0,0)));
                 lineParagraph.setSpacingBefore(12);
                 lineParagraph.setSpacingAfter(12);
             }
 
-            if (isFirstIndex)//2 3 4级目录靠左
+            if (isFirstIndex)//一级标题居中
                 lineParagraph.setAlignment(Element.ALIGN_CENTER);
-            else
+            else//2 3 4级目录靠左
                 lineParagraph.setAlignment(Element.ALIGN_LEFT);
 
             doc.add(lineParagraph);
