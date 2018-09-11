@@ -6,11 +6,13 @@ package util;
 
 import com.google.gson.Gson;
 import com.itextpdf.text.*;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorker;
 import com.itextpdf.tool.xml.XMLWorkerFontProvider;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
+import com.lowagie.text.HeaderFooter;
 import com.lowagie.text.html.simpleparser.HTMLWorker;
 import com.lowagie.text.html.simpleparser.StyleSheet;
 import com.itextpdf.tool.xml.html.Tags;
@@ -23,11 +25,16 @@ import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
 //import org.xhtmlrenderer.pdf.*;
 //import org.xhtmlrenderer.layout.SharedContext;
 import dao.CatalogDao;
+import dao.ShowOrgProjectDao;
 import daoImp.CatalogDaoImp;
+import daoImp.ShowOrgProjectDaoImp;
 import entity.*;
 
+import java.awt.*;
 import java.io.*;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class Template2Pdf {
@@ -38,6 +45,10 @@ public class Template2Pdf {
     private static final Paragraph BLANK = new Paragraph(" ");
     BaseFont bfChinese = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.NOT_EMBEDDED);
     Font title = new Font(bfChinese, 24, Font.NORMAL, BaseColor.BLACK);
+    Font stitle = new Font(bfChinese, 14, Font.NORMAL, BaseColor.BLACK);
+    Font first_index = new Font(bfChinese, 18, Font.NORMAL, BaseColor.BLACK);
+    Font second_index = new Font(bfChinese, 15, Font.NORMAL, BaseColor.BLACK);
+    Font other_index = new Font(bfChinese, 14, Font.NORMAL, BaseColor.BLACK);
     Font catalog = new Font(bfChinese, 16, Font.BOLD, BaseColor.BLACK);
     Font black = new Font(bfChinese, 12, Font.BOLD, BaseColor.BLACK);
 
@@ -78,11 +89,12 @@ public class Template2Pdf {
 
     public InputStream createPdf(int id_document) throws IOException, DocumentException {
         Gson gson = new Gson();
-        Document document = new Document(PageSize.A4);
+        Document document = new Document(PageSize.A4, 62, 62, 72,72);
         BaseFont bfChinese = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.NOT_EMBEDDED);
         Font cfont = new Font(bfChinese);
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         CatalogDao catalogDao = new CatalogDaoImp();
+        ShowOrgProjectDao showOrgProjectDao = new ShowOrgProjectDaoImp();
         PdfWriter writer = PdfWriter.getInstance(document, buffer);
         document.open();
 
@@ -100,35 +112,112 @@ public class Template2Pdf {
 //        XMLParser p2 = new XMLParser(worker);
 //
 
+        Paragraph paragraph = new Paragraph();
         //文章标题
 
         Paragraph headline = new Paragraph(catalogDao.getCatalogName(id_document), title);
         headline.setAlignment(Element.ALIGN_CENTER);
+        headline.setSpacingBefore(200);
+        headline.setSpacingAfter(350);
         document.add(headline);
-
+        //文档机构（如果有）
+        String org_name = showOrgProjectDao.getOrgName(id_document);
+        System.out.println(org_name+" "+id_document);
+        if (org_name != null && org_name != "") {
+            paragraph = new Paragraph(org_name,stitle);
+            paragraph.setSpacingBefore(12);
+            paragraph.setAlignment(Element.ALIGN_CENTER);
+            paragraph.setSpacingAfter(12);
+            document.add(paragraph);
+        }
+        //导出时间
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(new java.util.Date().getTime());
+        String tmp = formatter.format(date);
+        paragraph = new Paragraph(tmp,stitle);
+        paragraph.setSpacingBefore(12);
+        paragraph.setAlignment(Element.ALIGN_CENTER);
+        paragraph.setSpacingAfter(12);
+        document.add(paragraph);
+        document.newPage();
         //获取文档内容
         java.util.List<CatalogEntity> catalogEntityList = catalogDao.getAll(id_document);
         String line;
         Paragraph lineParagraph = new Paragraph();
         lineParagraph.setLeading(24f);
         boolean isFirstIndex = false;
-        //逐级生成内容
+        //目录
+        line = "目录";
+        lineParagraph = new Paragraph(line,first_index);
+        lineParagraph.setAlignment(Element.ALIGN_LEFT);
+        document.add(lineParagraph);
         for (CatalogEntity e : catalogEntityList) {
-            document.add(BLANK);
             line = e.getTitle() + "  ";
-            if (e.getFourth_index() != 0)//第四级目录
-                line = e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "." + e.getFourth_index() + "  " + line;
-            else if (e.getThird_index() != 0)//第三级目录
-                line = e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "  " + line;
-            else if (e.getSecond_index() != 0)//第二级目录
-                line = e.getFirst_index() + "." + e.getSecond_index() + "  " + line;
+            if (e.getFourth_index() != 0) {//第四级目录
+                line = "     " + e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "." + e.getFourth_index() + "  " + line;
+                lineParagraph = new Paragraph(line,other_index);
+                lineParagraph.setSpacingBefore(6);
+                lineParagraph.setSpacingAfter(6);
+
+            }
+            else if (e.getThird_index() != 0) {//第三级目录
+                line = "    " + e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "  " + line;
+                lineParagraph = new Paragraph(line,other_index);
+                lineParagraph.setSpacingBefore(6);
+                lineParagraph.setSpacingAfter(6);
+            }
+            else if (e.getSecond_index() != 0) {//第二级目录
+                line = "  " + e.getFirst_index() + "." + e.getSecond_index() + "  " + line;
+                lineParagraph = new Paragraph(line, second_index);
+                lineParagraph.setSpacingBefore(6);
+                lineParagraph.setSpacingAfter(6);
+            }
             else //第一级目录
             {
-                line = "第"+e.getFirst_index() + "章  " + line;
-                //一级标题居中
+                line = e.getFirst_index() + "  " + line;
                 isFirstIndex = true;
+                lineParagraph = new Paragraph(line,first_index);
+                lineParagraph.setSpacingBefore(12);
+                lineParagraph.setSpacingAfter(12);
             }
-            lineParagraph = new Paragraph(line, catalog);
+            lineParagraph.setAlignment(Element.ALIGN_LEFT);
+            document.add(lineParagraph);
+        }
+        document.newPage();
+
+
+
+
+        //逐级生成内容
+        for (CatalogEntity e : catalogEntityList) {
+            line = e.getTitle() + "  ";
+            if (e.getFourth_index() != 0) {//第四级目录
+                line = "     " + e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "." + e.getFourth_index() + "  " + line;
+                lineParagraph = new Paragraph(line,other_index);
+                lineParagraph.setSpacingBefore(6);
+                lineParagraph.setSpacingAfter(6);
+
+            }
+            else if (e.getThird_index() != 0) {//第三级目录
+                line = "    " + e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "  " + line;
+                lineParagraph = new Paragraph(line,other_index);
+                lineParagraph.setSpacingBefore(6);
+                lineParagraph.setSpacingAfter(6);
+            }
+            else if (e.getSecond_index() != 0) {//第二级目录
+                line = "  " + e.getFirst_index() + "." + e.getSecond_index() + "  " + line;
+                lineParagraph = new Paragraph(line, second_index);
+                lineParagraph.setSpacingBefore(6);
+                lineParagraph.setSpacingAfter(6);
+            }
+            else //第一级目录
+            {
+                line = e.getFirst_index() + "  " + line;
+                isFirstIndex = true;
+                lineParagraph = new Paragraph(line,first_index);
+                lineParagraph.setSpacingBefore(12);
+                lineParagraph.setSpacingAfter(12);
+            }
             if (isFirstIndex == false)//2 3 4级目录靠左
                 lineParagraph.setAlignment(Element.ALIGN_LEFT);
             else   lineParagraph.setAlignment(Element.ALIGN_CENTER);

@@ -189,7 +189,7 @@
                                     confirmButtonColor: "#18a689",
                                     confirmButtonText: "OK"
                                 },function(){
-                                    location.href="login-jmpLogin"
+                                    location.href="login-jmpLogin";
                                 })
                             }
                             else if(result.res === false)
@@ -201,7 +201,7 @@
                     })
                 }
                 else{
-                    swal("注册失败！", "用户名中含有空格。", "error");
+                    swal("注册失败！", "用户名中不能含有空格。", "error");
                 }
             }
         }else{

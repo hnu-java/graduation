@@ -74,7 +74,7 @@ public class Template2rtf{
         Paragraph p = new Paragraph(name,new Font(Font.NORMAL,24,Font.HELVETICA,new Color(0,0,0)));
         p.setSpacingBefore(200);
         p.setAlignment(Element.ALIGN_CENTER);
-        p.setSpacingAfter(400);
+        p.setSpacingAfter(350);
         doc.add(p);
         //文档机构（如果有）
         String org_name = showOrgProjectDao.getOrgName(id_document);
