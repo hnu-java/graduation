@@ -123,20 +123,20 @@ public class Template2rtf{
             line = e.getTitle() + "  ";
             if (e.getFourth_index() != 0) {//第四级目录
                 line = "     " + e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "." + e.getFourth_index() + "  " + line;
-                lineParagraph = new Paragraph(line,new Font(Font.NORMAL,14,Font.BOLD,new Color(0,0,0)));
+                lineParagraph = new Paragraph(line,new Font(Font.NORMAL,12,Font.BOLD,new Color(0,0,0)));
                 lineParagraph.setSpacingBefore(6);
                 lineParagraph.setSpacingAfter(6);
 
             }
             else if (e.getThird_index() != 0) {//第三级目录
                 line = "    " + e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "  " + line;
-                lineParagraph = new Paragraph(line,new Font(Font.NORMAL,14,Font.BOLD,new Color(0,0,0)));
+                lineParagraph = new Paragraph(line,new Font(Font.NORMAL,12,Font.BOLD,new Color(0,0,0)));
                 lineParagraph.setSpacingBefore(6);
                 lineParagraph.setSpacingAfter(6);
             }
             else if (e.getSecond_index() != 0) {//第二级目录
                 line = "  " + e.getFirst_index() + "." + e.getSecond_index() + "  " + line;
-                lineParagraph = new Paragraph(line, new Font(Font.NORMAL, 15, Font.BOLD, new Color(0, 0, 0)));
+                lineParagraph = new Paragraph(line, new Font(Font.NORMAL, 12, Font.BOLD, new Color(0, 0, 0)));
                 lineParagraph.setSpacingBefore(6);
                 lineParagraph.setSpacingAfter(6);
             }
@@ -144,7 +144,7 @@ public class Template2rtf{
             {
                 line = e.getFirst_index() + "  " + line;
                 isFirstIndex = true;
-                lineParagraph = new Paragraph(line,new Font(Font.NORMAL,18,Font.BOLD,new Color(0,0,0)));
+                lineParagraph = new Paragraph(line,new Font(Font.NORMAL,14,Font.BOLD,new Color(0,0,0)));
                 lineParagraph.setSpacingBefore(12);
                 lineParagraph.setSpacingAfter(12);
             }

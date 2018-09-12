@@ -314,6 +314,9 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         } catch (IOException | DocumentException e) {
             e.printStackTrace();
         }
+        catch (com.lowagie.text.DocumentException e){
+            e.printStackTrace();
+        }
         return "pdf";
     }
 
