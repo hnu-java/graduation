@@ -5,9 +5,9 @@ package util;
  */
 
 import com.google.gson.Gson;
-import com.itextpdf.text.*;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.pdf.BaseFont;
+import com.lowagie.text.*;
+import com.lowagie.text.Font;
+import com.lowagie.text.pdf.BaseFont;
 //import com.itextpdf.text.pdf.PdfWriter;
 import com.lowagie.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorker;
@@ -30,6 +30,11 @@ import dao.ShowOrgProjectDao;
 import daoImp.CatalogDaoImp;
 import daoImp.ShowOrgProjectDaoImp;
 import entity.*;
+
+import java.awt.Color;
+import java.io.IOException;
+import com.lowagie.text.DocumentException;
+
 
 import java.awt.*;
 import java.io.*;
@@ -316,20 +321,17 @@ public class Template2Pdf {
 
     private static final com.lowagie.text.Paragraph BLANK = new com.lowagie.text.Paragraph(" ");
 
-//    BaseFont bfChinese = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.NOT_EMBEDDED);
-//    Font title = new Font(bfChinese, 24, Font.NORMAL, BaseColor.BLACK);
-//    Font stitle = new Font(bfChinese, 14, Font.NORMAL, BaseColor.BLACK);
-//    Font first_index = new Font(bfChinese, 18, Font.NORMAL, BaseColor.BLACK);
-//    Font second_index = new Font(bfChinese, 15, Font.NORMAL, BaseColor.BLACK);
-//    Font other_index = new Font(bfChinese, 14, Font.NORMAL, BaseColor.BLACK);
-//    Font catalog = new Font(bfChinese, 16, Font.BOLD, BaseColor.BLACK);
-//    Font black1 = new Font(bfChinese, 12, Font.BOLD, BaseColor.BLACK);
-    private com.lowagie.text.pdf.BaseFont bfChinese1 = com.lowagie.text.pdf.BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.NOT_EMBEDDED);
-    com.lowagie.text.Font First_title = new com.lowagie.text.Font(bfChinese1, 18, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));
-    com.lowagie.text.Font Second_title = new com.lowagie.text.Font(bfChinese1, 7, com.lowagie.text.Font.BOLD, new Color(0, 0, 0));
-    com.lowagie.text.Font black = new com.lowagie.text.Font(bfChinese1, 12, com.lowagie.text.Font.COURIER, new Color(0, 0, 0));
-    com.lowagie.text.Font sTitle = new com.lowagie.text.Font(bfChinese1, 14, com.lowagie.text.Font.BOLD, new Color(0, 0, 0));
-    com.lowagie.text.Font minTitle = new com.lowagie.text.Font(bfChinese1, 12, com.lowagie.text.Font.BOLD, new Color(0, 0, 0));
+    BaseFont bfChinese =
+            BaseFont.createFont("C:/Windows/Fonts/simhei.ttf",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+    com.lowagie.text.Font First_title = new com.lowagie.text.Font(bfChinese, 18, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));
+    com.lowagie.text.Font Second_title = new com.lowagie.text.Font(bfChinese, 15, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));
+    com.lowagie.text.Font Other_title = new com.lowagie.text.Font(bfChinese, 14, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));
+    com.lowagie.text.Font head_title = new com.lowagie.text.Font(bfChinese, 9, Font.NORMAL, new Color(0, 0, 0));
+    com.lowagie.text.Font foot_title = new com.lowagie.text.Font(bfChinese, 9, Font.ITALIC, new Color(0, 0, 0));
+    com.lowagie.text.Font black = new com.lowagie.text.Font(bfChinese, 12, com.lowagie.text.Font.COURIER, new Color(0, 0, 0));
+    com.lowagie.text.Font sTitle = new com.lowagie.text.Font(bfChinese, 14, com.lowagie.text.Font.BOLD, new Color(0, 0, 0));
+    com.lowagie.text.Font minTitle = new com.lowagie.text.Font(bfChinese, 12, com.lowagie.text.Font.BOLD, new Color(0, 0, 0));
+    com.lowagie.text.Font Title = new com.lowagie.text.Font(bfChinese, 24, com.lowagie.text.Font.BOLD, new Color(0, 0, 0));
 
 
     public com.lowagie.text.Paragraph html2pdf(String tmpline) throws IOException {
@@ -371,16 +373,17 @@ public class Template2Pdf {
 
         //文档名称
         String name = catalogDao.getCatalogName(id_document);
-        com.lowagie.text.Paragraph p = new com.lowagie.text.Paragraph(name, new com.lowagie.text.Font(com.lowagie.text.Font.NORMAL, 24, com.lowagie.text.Font.HELVETICA, new Color(0, 0, 0)));
+        com.lowagie.text.Paragraph p = new com.lowagie.text.Paragraph(name, Title);
+        //com.lowagie.text.Paragraph p = new com.lowagie.text.Paragraph(name, title);
         p.setSpacingBefore(200);
         p.setAlignment(Element.ALIGN_CENTER);
-        p.setSpacingAfter(200);
+        p.setSpacingAfter(300);
         doc.add(p);
         //文档机构（如果有）
         String org_name = showOrgProjectDao.getOrgName(id_document);
         System.out.println(org_name + " " + id_document);
         if (org_name != null && org_name != "") {
-            paragraph = new com.lowagie.text.Paragraph(org_name, new com.lowagie.text.Font(com.lowagie.text.Font.NORMAL, 14, com.lowagie.text.Font.HELVETICA, new Color(0, 0, 0)));
+            paragraph = new com.lowagie.text.Paragraph(org_name, sTitle);
             paragraph.setSpacingBefore(12);
             paragraph.setAlignment(Element.ALIGN_CENTER);
             paragraph.setSpacingAfter(12);
@@ -390,21 +393,19 @@ public class Template2Pdf {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(new java.util.Date().getTime());
         String tmp = formatter.format(date);
-        paragraph = new com.lowagie.text.Paragraph(tmp, new com.lowagie.text.Font(com.lowagie.text.Font.NORMAL, 14, com.lowagie.text.Font.HELVETICA, new Color(0, 0, 0)));
+        paragraph = new com.lowagie.text.Paragraph(tmp, sTitle);
         paragraph.setSpacingBefore(12);
         paragraph.setAlignment(Element.ALIGN_CENTER);
         paragraph.setSpacingAfter(12);
         doc.add(paragraph);
         doc.newPage();
         //设置页眉
-        com.lowagie.text.Phrase phrase = new com.lowagie.text.Phrase(name, new com.lowagie.text.Font(com.lowagie.text.Font.NORMAL, 9, com.lowagie.text.Font.HELVETICA, new Color(0, 0, 0)));
-        com.lowagie.text.Phrase phrase1 = new com.lowagie.text.Phrase("\n————————————————————————————————————————————————————————————————————————————————", new com.lowagie.text.Font(com.lowagie.text.Font.NORMAL, 9, com.lowagie.text.Font.HELVETICA, new Color(0, 0, 0)));
-        phrase.add(phrase1);
+        com.lowagie.text.Phrase phrase = new com.lowagie.text.Phrase(name, head_title);
         HeaderFooter header = new HeaderFooter(phrase, false);
         header.setAlignment(HeaderFooter.ALIGN_CENTER);
         doc.setHeader(header);
         //设置页脚
-        HeaderFooter footer = new HeaderFooter(new com.lowagie.text.Phrase("www.easysrs.cn                                    ", new com.lowagie.text.Font(com.lowagie.text.Font.NORMAL, 9, com.lowagie.text.Font.ITALIC, new Color(0, 0, 0))), true);
+        HeaderFooter footer = new HeaderFooter(new com.lowagie.text.Phrase("www.easysrs.cn                                   ", foot_title), true);
         footer.setAlignment(HeaderFooter.ALIGN_LEFT);
         doc.setFooter(footer);
 
@@ -416,32 +417,32 @@ public class Template2Pdf {
         //
         boolean isFirstIndex = false;
         line = "目录";
-        lineParagraph = new com.lowagie.text.Paragraph(line, new com.lowagie.text.Font(com.lowagie.text.Font.NORMAL, 18, com.lowagie.text.Font.BOLD, new Color(0, 0, 0)));
+        lineParagraph = new com.lowagie.text.Paragraph(line, First_title);
         lineParagraph.setAlignment(Element.ALIGN_LEFT);
         doc.add(lineParagraph);
         for (CatalogEntity e : catalogEntityList) {
             line = e.getTitle() + "  ";
             if (e.getFourth_index() != 0) {//第四级目录
                 line = "     " + e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "." + e.getFourth_index() + "  " + line;
-                lineParagraph = new com.lowagie.text.Paragraph(line, new com.lowagie.text.Font(com.lowagie.text.Font.NORMAL, 14, com.lowagie.text.Font.BOLD, new Color(0, 0, 0)));
+                lineParagraph = new com.lowagie.text.Paragraph(line, black);
                 lineParagraph.setSpacingBefore(6);
                 lineParagraph.setSpacingAfter(6);
 
             } else if (e.getThird_index() != 0) {//第三级目录
                 line = "    " + e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "  " + line;
-                lineParagraph = new com.lowagie.text.Paragraph(line, new com.lowagie.text.Font(com.lowagie.text.Font.NORMAL, 14, com.lowagie.text.Font.BOLD, new Color(0, 0, 0)));
+                lineParagraph = new com.lowagie.text.Paragraph(line, black);
                 lineParagraph.setSpacingBefore(6);
                 lineParagraph.setSpacingAfter(6);
             } else if (e.getSecond_index() != 0) {//第二级目录
                 line = "  " + e.getFirst_index() + "." + e.getSecond_index() + "  " + line;
-                lineParagraph = new com.lowagie.text.Paragraph(line, new com.lowagie.text.Font(com.lowagie.text.Font.NORMAL, 15, com.lowagie.text.Font.BOLD, new Color(0, 0, 0)));
+                lineParagraph = new com.lowagie.text.Paragraph(line, black);
                 lineParagraph.setSpacingBefore(6);
                 lineParagraph.setSpacingAfter(6);
             } else //第一级目录
             {
                 line = e.getFirst_index() + "  " + line;
                 isFirstIndex = true;
-                lineParagraph = new com.lowagie.text.Paragraph(line, new com.lowagie.text.Font(com.lowagie.text.Font.NORMAL, 18, com.lowagie.text.Font.BOLD, new Color(0, 0, 0)));
+                lineParagraph = new com.lowagie.text.Paragraph(line, Other_title);
                 lineParagraph.setSpacingBefore(12);
                 lineParagraph.setSpacingAfter(12);
             }
@@ -453,26 +454,26 @@ public class Template2Pdf {
         for (CatalogEntity e : catalogEntityList) {
             line = e.getTitle() + "  ";
             if (e.getFourth_index() != 0) {//第四级目录
-                line = e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "." + e.getFourth_index() + "  " + line;
-                lineParagraph = new com.lowagie.text.Paragraph(line, new com.lowagie.text.Font(com.lowagie.text.Font.NORMAL, 14, com.lowagie.text.Font.BOLD, new Color(0, 0, 0)));
+                line = "     " + e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "." + e.getFourth_index() + "  " + line;
+                lineParagraph = new com.lowagie.text.Paragraph(line, Other_title);
                 lineParagraph.setSpacingBefore(6);
                 lineParagraph.setSpacingAfter(6);
 
             } else if (e.getThird_index() != 0) {//第三级目录
-                line = e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "  " + line;
-                lineParagraph = new com.lowagie.text.Paragraph(line, new com.lowagie.text.Font(com.lowagie.text.Font.NORMAL, 14, com.lowagie.text.Font.BOLD, new Color(0, 0, 0)));
+                line = "    " + e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "  " + line;
+                lineParagraph = new com.lowagie.text.Paragraph(line, Other_title);
                 lineParagraph.setSpacingBefore(6);
                 lineParagraph.setSpacingAfter(6);
             } else if (e.getSecond_index() != 0) {//第二级目录
-                line = e.getFirst_index() + "." + e.getSecond_index() + "  " + line;
-                lineParagraph = new com.lowagie.text.Paragraph(line, new com.lowagie.text.Font(com.lowagie.text.Font.NORMAL, 15, com.lowagie.text.Font.BOLD, new Color(0, 0, 0)));
+                line = "  " + e.getFirst_index() + "." + e.getSecond_index() + "  " + line;
+                lineParagraph = new com.lowagie.text.Paragraph(line, Second_title);
                 lineParagraph.setSpacingBefore(6);
                 lineParagraph.setSpacingAfter(6);
             } else //第一级目录
             {
-                line = "第" + e.getFirst_index() + "章  " + line;
+                line = e.getFirst_index() + "  " + line;
                 isFirstIndex = true;
-                lineParagraph = new com.lowagie.text.Paragraph(line, new com.lowagie.text.Font(com.lowagie.text.Font.NORMAL, 18, com.lowagie.text.Font.BOLD, new Color(0, 0, 0)));
+                lineParagraph = new com.lowagie.text.Paragraph(line, First_title);
                 lineParagraph.setSpacingBefore(12);
                 lineParagraph.setSpacingAfter(12);
             }
@@ -653,10 +654,10 @@ public class Template2Pdf {
     }
 
     public com.lowagie.text.pdf.BaseFont getBfChinese() {
-        return bfChinese1;
+        return bfChinese;
     }
 
     public void setBfChinese(com.lowagie.text.pdf.BaseFont bfChinese1) {
-        this.bfChinese1 = bfChinese1;
+        this.bfChinese = bfChinese;
     }
 }
