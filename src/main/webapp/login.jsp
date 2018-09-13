@@ -40,7 +40,7 @@
         <div class="text-center loginLogo m-t" >
         </div>
             <div class="form-group col-sm-8 col-md-offset-2 loginLine">
-                <input name="name" id="name" type="username" class="form-control loginLine " style="font-size:13px" placeholder="请输入账号（邮箱/手机/用户名）" maxlength="15" required="">
+                <input name="name" id="name" type="username" class="form-control loginLine " style="font-size:13px" placeholder="请输入账号（用户名）" maxlength="15" required="">
             </div>
             <div class="form-group col-sm-8 col-md-offset-2 loginLine">
                 <input name="password" id="password"  type="password" class="form-control loginLine " style="font-size:13px" placeholder="请输入密码" maxlength="22" required="">

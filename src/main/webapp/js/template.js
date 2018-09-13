@@ -741,7 +741,13 @@ function temp_edit() {
         ['picture', ['picture']],
         ['fullscreen', ['fullscreen']]
     ],
-        placeholder: '暂无内容'
+        placeholder: '暂无内容',
+        callbacks: {
+            onImageUpload: function(files, editor, $editable) {
+                var that=$(this);
+                sendFile(files,that);
+            }
+        }
         // ,
         // callbacks: {
         //     onPaste: function (ne) {
