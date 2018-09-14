@@ -355,7 +355,6 @@
             var id_user = parseInt(row.id_user);
             var name = row.name;
             var org_name="${sessionScope.org_name}";
-            alert(name);
             swal(
                 {
                     title: "您确定将此用户设为副机构管理员吗",

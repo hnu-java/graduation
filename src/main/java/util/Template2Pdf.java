@@ -34,8 +34,10 @@ import entity.*;
 import java.awt.Color;
 import java.io.IOException;
 import com.lowagie.text.DocumentException;
+import org.apache.struts2.ServletActionContext;
 
 
+import javax.servlet.http.HttpServletRequest;
 import java.awt.*;
 import java.io.*;
 import java.nio.charset.Charset;
@@ -320,9 +322,11 @@ public class Template2Pdf {
 
 
     private static final com.lowagie.text.Paragraph BLANK = new com.lowagie.text.Paragraph(" ");
-
+    HttpServletRequest request = ServletActionContext.getRequest();
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
     BaseFont bfChinese =
-            BaseFont.createFont("C:/Windows/Fonts/simhei.ttf",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            BaseFont.createFont(basePath+"fonts/STSONG.TTF",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
     com.lowagie.text.Font First_title = new com.lowagie.text.Font(bfChinese, 18, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));
     com.lowagie.text.Font Second_title = new com.lowagie.text.Font(bfChinese, 15, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));
     com.lowagie.text.Font Other_title = new com.lowagie.text.Font(bfChinese, 14, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));
