@@ -338,10 +338,14 @@ public class Template2Pdf {
     com.lowagie.text.Font Title = new com.lowagie.text.Font(bfChinese, 24, com.lowagie.text.Font.BOLD, new Color(0, 0, 0));
 
 
-    public com.lowagie.text.Paragraph html2pdf(String tmpline) throws IOException {
+    public com.lowagie.text.Paragraph html2pdf(String tmpline) throws DocumentException, IOException {
         StyleSheet ss = new StyleSheet();
         com.lowagie.text.Paragraph context = new com.lowagie.text.Paragraph();
-        tmpline = tmpline.replaceAll("<img style=\"width: .*px;\" src=\"data:image/png;base64.*\">", "");
+        Phrase tmpPhrase = new Phrase();
+        Paragraph temParagraph = new Paragraph();
+        tmpline = tmpline.replaceAll("<img src=\"","");
+        //tmpline = tmpline.replaceAll("\" style=\"width: .*px;\">","");
+        tmpline = tmpline.replaceAll("/disImage",basePath+"/disImage");
         tmpline = tmpline.replaceAll(",", "1!~o#do=u-ha`o:");
         List htmlList = HTMLWorker.parseToList(new StringReader(tmpline), ss);
         for (int i = 0; i < htmlList.size(); i++) {
@@ -350,11 +354,45 @@ public class Template2Pdf {
             temStr = temStr.replaceAll(", ", "");
             temStr = temStr.substring(1, temStr.length() - 1);
             temStr = temStr.replaceAll("1!~o#do=u-ha`o:", ",");
+            for(;temStr.length()!=0;){
+                int num = img_location(temStr);
+                if(num==0){//图片在开头
+                    String src = temStr;
+                    src = src.substring(src.indexOf("http"),src.indexOf("style")-2);
+                    com.lowagie.text.Image img = com.lowagie.text.Image.getInstance(src);
+                    img.scaleAbsolute(300,200);
+                    context.add(img);
+                    temStr = temStr.substring(temStr.indexOf("px;\">")+5,temStr.length());
+                }
+                else if(num==1){//文字在开头
+                    String tem1 = temStr;
+                    String tem2 = temStr;
+                    tem1 = tem1.substring(0,temStr.indexOf("http:"));
+                    temParagraph = new Paragraph("    "+tem1,black);
+                    context.add(temParagraph);
+                    temStr = temStr.substring(temStr.indexOf("http:"),temStr.length());
+                }
+                else {//只有文字
+                    temParagraph = new Paragraph("    "+temStr,black);
+                    context.add(temParagraph);
+                    temStr="";
+                }
+            }
             com.lowagie.text.Paragraph tmpLineParagraph = new com.lowagie.text.Paragraph("    " + "    " + temStr, black);
             context.add(tmpLineParagraph);
         }
         context.setLeading(24f);
         return context;
+    }
+
+    public int img_location(String temStr){
+        if(temStr.indexOf("http:")==0) {//图片在开头
+            return 0;
+        }
+        else if(temStr.indexOf("http:")!=-1){//文字在开头
+            return 1;
+        }
+        return 2;//只有文字
     }
 
     public InputStream createPdf(int id_document) throws com.lowagie.text.DocumentException, IOException {
@@ -499,23 +537,7 @@ public class Template2Pdf {
                 if (e.getId_template() == 1) {//模板类型1
                     CommonStructureEntity entity = gson.fromJson(e.getContent(), CommonStructureEntity.class);
                     tmpline = entity.getContent();
-                    StyleSheet ss = new StyleSheet();
-                    com.lowagie.text.Paragraph context = new com.lowagie.text.Paragraph();
-                    com.lowagie.text.Paragraph tmpLineParagraph = new com.lowagie.text.Paragraph();
-                    tmpline = tmpline.replaceAll("<img style=\"width: .*px;\" src=\"data:image/png;base64.*\">", "");
-                    tmpline = tmpline.replaceAll(",", "1!~o#do=u-ha`o:");
-                    List htmlList = HTMLWorker.parseToList(new StringReader(tmpline), ss);
-                    for (int i = 0; i < htmlList.size(); i++) {
-                        com.lowagie.text.Element tmpE = (com.lowagie.text.Element) htmlList.get(i);
-                        String temStr = tmpE.toString();
-                        temStr = temStr.replaceAll(", ", "");
-                        temStr = temStr.substring(1, temStr.length() - 1);
-                        temStr = temStr.replaceAll("1!~o#do=u-ha`o:", ",");
-                        tmpLineParagraph = new com.lowagie.text.Paragraph("    " + temStr, black);
-                        context.add(tmpLineParagraph);
-                    }
-                    context.setLeading(24f);
-                    doc.add(context);
+                    doc.add(html2pdf(tmpline));
                 }
                 if (e.getId_template() == 2) {//模板类型2
                     UserStructureEntity entity = gson.fromJson(e.getContent(), UserStructureEntity.class);
