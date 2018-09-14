@@ -20,10 +20,15 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
 import com.lowagie.text.pdf.BaseFont;
+import org.apache.struts2.ServletActionContext;
 
-public class Template2rtf{
+import javax.servlet.http.HttpServletRequest;
 
+public class Template2rtf {
+    HttpServletRequest request = ServletActionContext.getRequest();
     private static final com.lowagie.text.Paragraph BLANK = new com.lowagie.text.Paragraph(" ");
     private BaseFont bfChinese;
     Font First_title = new Font(bfChinese, 18, Font.NORMAL, new Color(0,0,0));
@@ -31,11 +36,14 @@ public class Template2rtf{
     Font black = new Font(bfChinese, 12, Font.COURIER,new Color(0,0,0));
     Font sTitle = new Font(bfChinese, 14, Font.BOLD,new Color(0,0,0));
     Font minTitle = new Font(bfChinese, 12, Font.BOLD,new Color(0,0,0));
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+
+            request.getServerPort();
 
     public Paragraph html2rtf(String tmpline) throws IOException {
         StyleSheet ss = new StyleSheet();
         Paragraph context = new Paragraph();
-        tmpline = tmpline.replaceAll("<img style=\"width: .*px;\" src=\"data:image/png;base64.*\">","");
+        //tmpline = tmpline.replaceAll("<img style=\"width: .*px;\" src=\"data:image/png;base64.*\">","");
+        tmpline = tmpline.replaceAll("/disImage",basePath+"/disImage");
         tmpline = tmpline.replaceAll(",","1!~o#do=u-ha`o:");
         List htmlList = HTMLWorker.parseToList(new StringReader(tmpline), ss);
         for (int i = 0; i < htmlList.size(); i++) {
@@ -203,7 +211,8 @@ public class Template2rtf{
                     StyleSheet ss = new StyleSheet();
                     Paragraph context = new Paragraph();
                     Paragraph tmpLineParagraph = new Paragraph();
-                    tmpline = tmpline.replaceAll("<img style=\"width: .*px;\" src=\"data:image/png;base64.*\">","");
+                    //tmpline = tmpline.replaceAll("<img style=\"width: .*px;\" src=\"data:image/png;base64.*\">","");
+                    tmpline = tmpline.replaceAll("/disImage",basePath+"/disImage");
                     tmpline = tmpline.replaceAll(",","1!~o#do=u-ha`o:");
                     List htmlList = HTMLWorker.parseToList(new StringReader(tmpline), ss);
                     for (int i = 0; i < htmlList.size(); i++) {
@@ -212,8 +221,16 @@ public class Template2rtf{
                         temStr = temStr.replaceAll(", ","");
                         temStr = temStr.substring(1,temStr.length() - 1);
                         temStr = temStr.replaceAll("1!~o#do=u-ha`o:",",");
+                        System.out.println(temStr);
                         tmpLineParagraph = new Paragraph("    "+temStr,black);
                         context.add(tmpLineParagraph);
+                        if(e.getContent().indexOf("disImage")!=-1){
+                            String src = e.getContent();
+                            src = src.substring(src.indexOf("disImage"),src.indexOf("_")+8);
+                            //temStr = temStr.replaceAll(", ","");
+                            com.lowagie.text.Image img = com.lowagie.text.Image.getInstance(basePath+"/"+src);
+                            context.add(img);
+                        }
                     }
                     context.setLeading(24f);
                     doc.add(context);
@@ -347,8 +364,7 @@ public class Template2rtf{
                 }
             }
         }
-//        com.lowagie.text.Image img = com.lowagie.text.Image.getInstance("D:/SAO.jpg");
-//        img.scalePercent(30);
+//        com.lowagie.text.Image img = com.lowagie.text.Image.getInstance(basePath+"/disImage/20180913/20180913171005_965.png");
 //        doc.add(img);
         doc.close();
 
