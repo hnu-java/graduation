@@ -324,7 +324,7 @@ public class Template2Pdf {
     private static final com.lowagie.text.Paragraph BLANK = new com.lowagie.text.Paragraph(" ");
     HttpServletRequest request = ServletActionContext.getRequest();
     String path = request.getContextPath();
-    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String basePath = request.getScheme()+"://"+"www.easysrs.cn";
     BaseFont bfChinese =
             BaseFont.createFont(basePath+"fonts/STSONG.TTF",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
     com.lowagie.text.Font First_title = new com.lowagie.text.Font(bfChinese, 18, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));
@@ -361,7 +361,7 @@ public class Template2Pdf {
                 if(num==0){//图片在开头
                     //System.out.println(temStr);
                     String src = temStr;
-                    src = src.substring(src.indexOf("http"),src.indexOf(".")+4);
+                    src = src.substring(src.indexOf("http://www.easysrs.cn"),src.indexOf(".")+4);
                     com.lowagie.text.Image img = com.lowagie.text.Image.getInstance(src);
                     float height = img.getHeight();
                     float width = img.getWidth();

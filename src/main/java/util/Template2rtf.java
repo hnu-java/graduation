@@ -36,8 +36,7 @@ public class Template2rtf {
     Font black = new Font(bfChinese, 12, Font.COURIER,new Color(0,0,0));
     Font sTitle = new Font(bfChinese, 14, Font.BOLD,new Color(0,0,0));
     Font minTitle = new Font(bfChinese, 12, Font.BOLD,new Color(0,0,0));
-    String basePath = request.getScheme()+"://"+request.getServerName()+":"+
-            request.getServerPort();
+    String basePath = request.getScheme()+"://"+"www.easysrs.cn";
 
     public Paragraph html2rtf(String tmpline,Document doc) throws DocumentException, IOException {
         StyleSheet ss = new StyleSheet();
@@ -49,7 +48,7 @@ public class Template2rtf {
         //tmpline = tmpline.replaceAll("\" style=\"width: .*px;\">","");
         tmpline = tmpline.replaceAll("/disImage",basePath+"/disImage");
         tmpline = tmpline.replaceAll(",", "1!~o#do=u-ha`o:");
-        //System.out.println(tmpline);
+        System.out.println(tmpline);
         List htmlList = HTMLWorker.parseToList(new StringReader(tmpline), ss);
         for (int i = 0; i < htmlList.size(); i++) {
             com.lowagie.text.Element tmpE = (com.lowagie.text.Element) htmlList.get(i);
@@ -62,7 +61,7 @@ public class Template2rtf {
                 if(num==0){//图片在开头
                     //System.out.println(temStr);
                     String src = temStr;
-                    src = src.substring(src.indexOf("http"),src.indexOf(".")+4);
+                    src = src.substring(src.indexOf("http://www.easysrs.cn"),src.indexOf(".")+4);
                     com.lowagie.text.Image img = com.lowagie.text.Image.getInstance(src);
                     float height = img.getHeight();
                     float width = img.getWidth();

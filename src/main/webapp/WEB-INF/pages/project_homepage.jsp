@@ -147,7 +147,7 @@
     function setCookie(name, value) {
         var exp = new Date();
         exp.setTime(exp.getTime() + 24 * 60 * 60 * 1000);
-        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=/";
+        document.cookie = URLEncoder.encode(name, "UTF-8"); + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=/";
     }
     //读取cookies
     function getCookie(name) {
