@@ -39,16 +39,17 @@ public class Template2rtf {
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+
             request.getServerPort();
 
-    public Paragraph html2rtf(String tmpline) throws DocumentException, IOException {
+    public Paragraph html2rtf(String tmpline,Document doc) throws DocumentException, IOException {
         StyleSheet ss = new StyleSheet();
         Paragraph context = new Paragraph();
         Phrase tmpPhrase = new Phrase();
         Paragraph temParagraph = new Paragraph();
         tmpline = tmpline.replaceAll("<img ","");
+        tmpline = tmpline.replaceAll("src=\"","");
         //tmpline = tmpline.replaceAll("\" style=\"width: .*px;\">","");
         tmpline = tmpline.replaceAll("/disImage",basePath+"/disImage");
         tmpline = tmpline.replaceAll(",", "1!~o#do=u-ha`o:");
-        System.out.println(tmpline);
+        //System.out.println(tmpline);
         List htmlList = HTMLWorker.parseToList(new StringReader(tmpline), ss);
         for (int i = 0; i < htmlList.size(); i++) {
             com.lowagie.text.Element tmpE = (com.lowagie.text.Element) htmlList.get(i);
@@ -59,25 +60,25 @@ public class Template2rtf {
             for(;temStr.length()!=0;){
                 int num = img_location(temStr);
                 if(num==0){//图片在开头
-                    System.out.println(temStr);
+                    //System.out.println(temStr);
                     String src = temStr;
-                    src = src.substring(src.indexOf("http"),src.indexOf("\""));
+                    src = src.substring(src.indexOf("http"),src.indexOf(".")+4);
                     com.lowagie.text.Image img = com.lowagie.text.Image.getInstance(src);
                     float height = img.getHeight();
                     float width = img.getWidth();
-                    if(width>450){
-                        float scale = 450/width;
-                        width = 450;
+                    if(width>400){
+                        float scale = 400/width;
+                        width = 400;
                         height = height*scale;
                     }
                     else{
-                        float scale = 450/width;
-                        width = 450;
+                        float scale = 400/width;
+                        width = 400;
                         height = height*scale;
                     }
                     img.scaleAbsolute(width,height);
                     img.setAlignment(Element.ALIGN_CENTER);
-                    context.add(img);
+                    doc.add(img);
                     temStr = temStr.substring(temStr.indexOf("\">")+2,temStr.length());
                 }
                 else if(num==1){//文字在开头
@@ -85,12 +86,12 @@ public class Template2rtf {
                     String tem2 = temStr;
                     tem1 = tem1.substring(0,temStr.indexOf("http:"));
                     temParagraph = new Paragraph("    "+tem1,black);
-                    context.add(tmpPhrase);
+                    doc.add(temParagraph);
                     temStr = temStr.substring(temStr.indexOf("http:"),temStr.length());
                 }
                 else {//只有文字
                     temParagraph = new Paragraph("    "+temStr,black);
-                    context.add(temParagraph);
+                    doc.add(temParagraph);
                     temStr="";
                 }
             }
@@ -102,7 +103,7 @@ public class Template2rtf {
     }
 
     public int img_location(String temStr){
-        if(temStr.indexOf("http:")==0) {//图片在开头
+        if(temStr.indexOf("http:")==0 || temStr.indexOf("style=")==0) {//图片在开头
             return 0;
         }
         else if(temStr.indexOf("http:")!=-1){//文字在开头
@@ -138,7 +139,7 @@ public class Template2rtf {
         doc.add(p);
         //文档机构（如果有）
         String org_name = showOrgProjectDao.getOrgName(id_document);
-        System.out.println(org_name+" "+id_document);
+        //System.out.println(org_name+" "+id_document);
         if (org_name != null && org_name != "") {
             paragraph = new Paragraph(org_name,new Font(Font.NORMAL,14,Font.HELVETICA,new Color(0,0,0)));
             paragraph.setSpacingBefore(12);
@@ -256,7 +257,8 @@ public class Template2rtf {
                 if (e.getId_template() == 1) {//模板类型1
                     CommonStructureEntity entity = gson.fromJson(e.getContent(), CommonStructureEntity.class);
                     tmpline = entity.getContent();
-                    doc.add(html2rtf(tmpline));
+                    //doc.add(html2rtf(tmpline));
+                    html2rtf(tmpline,doc);
                 }
                 if (e.getId_template() == 2) {//模板类型2
                     UserStructureEntity entity = gson.fromJson(e.getContent(), UserStructureEntity.class);
@@ -267,12 +269,14 @@ public class Template2rtf {
                     lineParagraph = new Paragraph("    "+"用户描述:",sTitle);
                     doc.add(lineParagraph);
                     tmpline = entity.getDescribe();
-                    doc.add(html2rtf(tmpline));
+                    //doc.add(html2rtf(tmpline));
+                    html2rtf(tmpline,doc);
                     //用户权限
                     lineParagraph = new Paragraph("    "+"用户权限:",sTitle);
                     doc.add(lineParagraph);
                     tmpline = entity.getPermissions();
-                    doc.add(html2rtf(tmpline));
+                    //doc.add(html2rtf(tmpline));
+                    html2rtf(tmpline,doc);
                 }
 
                 if (e.getId_template() == 3) {//模板类型3
@@ -295,7 +299,8 @@ public class Template2rtf {
                     lineParagraph = new Paragraph("    "+"功能点描述:",sTitle);
                     doc.add(lineParagraph);
                     tmpline = entity.getDescribe();
-                    doc.add(html2rtf(tmpline));
+                    //doc.add(html2rtf(tmpline));
+                    html2rtf(tmpline,doc);
                     doc.add(BLANK);
 
                     lineParagraph = new Paragraph("    "+"用例过程:",sTitle);
@@ -371,19 +376,23 @@ public class Template2rtf {
                     lineParagraph = new Paragraph("    "+"输入:",sTitle);
                     doc.add(lineParagraph);
                     String inputStr = entity.getInput();
-                    doc.add(html2rtf(inputStr));
+                    //doc.add(html2rtf(inputStr));
+                    html2rtf(inputStr,doc);
                     lineParagraph = new Paragraph("    "+"输出:",sTitle);
                     doc.add(lineParagraph);
                     tmpline = entity.getOutput();
-                    doc.add(html2rtf(tmpline));
+                    //doc.add(html2rtf(tmpline));
+                    html2rtf(tmpline,doc);
                     lineParagraph = new Paragraph("    "+"基本操作流程:",sTitle);
                     doc.add(lineParagraph);
                     tmpline = entity.getBasic();
-                    doc.add(html2rtf(tmpline));
+                    //doc.add(html2rtf(tmpline));
+                    html2rtf(tmpline,doc);
                     lineParagraph = new Paragraph("    "+"备选操作流程:",sTitle);
                     doc.add(lineParagraph);
                     tmpline = entity.getAlternative();
-                    doc.add(html2rtf(tmpline));
+                    //doc.add(html2rtf(tmpline));
+                    html2rtf(tmpline,doc);
                 }
             }
         }
