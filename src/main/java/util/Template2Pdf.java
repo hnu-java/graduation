@@ -447,7 +447,7 @@ public class Template2Pdf {
         header.setAlignment(HeaderFooter.ALIGN_CENTER);
         doc.setHeader(header);
         //设置页脚
-        HeaderFooter footer = new HeaderFooter(new com.lowagie.text.Phrase("www.easysrs.cn                                   ", foot_title), true);
+        HeaderFooter footer = new HeaderFooter(new com.lowagie.text.Phrase("www.easysrs.cn                                      ", foot_title), true);
         footer.setAlignment(HeaderFooter.ALIGN_LEFT);
         doc.setFooter(footer);
 

@@ -338,7 +338,6 @@
 
     $("button#delete").click(function () {
         var id_library = $(this).attr("myvalue");
-        alert(id_library);
         swal(
             {
                 title: "您确认删除该构件库吗？",

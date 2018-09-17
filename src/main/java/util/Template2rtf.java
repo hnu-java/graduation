@@ -43,10 +43,12 @@ public class Template2rtf {
         StyleSheet ss = new StyleSheet();
         Paragraph context = new Paragraph();
         Phrase tmpPhrase = new Phrase();
-        tmpline = tmpline.replaceAll("<img src=\"","");
+        Paragraph temParagraph = new Paragraph();
+        tmpline = tmpline.replaceAll("<img ","");
         //tmpline = tmpline.replaceAll("\" style=\"width: .*px;\">","");
         tmpline = tmpline.replaceAll("/disImage",basePath+"/disImage");
         tmpline = tmpline.replaceAll(",", "1!~o#do=u-ha`o:");
+        System.out.println(tmpline);
         List htmlList = HTMLWorker.parseToList(new StringReader(tmpline), ss);
         for (int i = 0; i < htmlList.size(); i++) {
             com.lowagie.text.Element tmpE = (com.lowagie.text.Element) htmlList.get(i);
@@ -57,24 +59,38 @@ public class Template2rtf {
             for(;temStr.length()!=0;){
                 int num = img_location(temStr);
                 if(num==0){//图片在开头
+                    System.out.println(temStr);
                     String src = temStr;
-                    src = src.substring(src.indexOf("http"),src.indexOf("style")-2);
+                    src = src.substring(src.indexOf("http"),src.indexOf("\""));
                     com.lowagie.text.Image img = com.lowagie.text.Image.getInstance(src);
-                    img.scaleAbsolute(300,200);
+                    float height = img.getHeight();
+                    float width = img.getWidth();
+                    if(width>450){
+                        float scale = 450/width;
+                        width = 450;
+                        height = height*scale;
+                    }
+                    else{
+                        float scale = 450/width;
+                        width = 450;
+                        height = height*scale;
+                    }
+                    img.scaleAbsolute(width,height);
+                    img.setAlignment(Element.ALIGN_CENTER);
                     context.add(img);
-                    temStr = temStr.substring(temStr.indexOf("px;\">")+5,temStr.length());
+                    temStr = temStr.substring(temStr.indexOf("\">")+2,temStr.length());
                 }
                 else if(num==1){//文字在开头
                     String tem1 = temStr;
                     String tem2 = temStr;
                     tem1 = tem1.substring(0,temStr.indexOf("http:"));
-                    tmpPhrase = new Phrase("    "+tem1,black);
+                    temParagraph = new Paragraph("    "+tem1,black);
                     context.add(tmpPhrase);
                     temStr = temStr.substring(temStr.indexOf("http:"),temStr.length());
                 }
                 else {//只有文字
-                    tmpPhrase = new Phrase("    "+temStr,black);
-                    context.add(tmpPhrase);
+                    temParagraph = new Paragraph("    "+temStr,black);
+                    context.add(temParagraph);
                     temStr="";
                 }
             }

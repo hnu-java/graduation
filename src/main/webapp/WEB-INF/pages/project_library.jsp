@@ -100,7 +100,7 @@
                     </div>
                     <div style="float: left;font-size:18px;width: 30px;text-align: center">|</div>
                     <div style="float: left">
-                        <a href="library-jmpUserLibrary"><div style="float: left;font-size:18px;text-align: left;color: black">用户构件库</div></a>
+                        <a href="library-jmpUserLibrary"><div style="float: left;font-size:18px;text-align: left;color: black">个人构件库</div></a>
                     </div>
                     <div style="float: left;font-size:18px;width: 30px;text-align: center">|</div>
                     <div style="float: left">
