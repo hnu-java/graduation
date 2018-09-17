@@ -61,7 +61,7 @@ public class Template2rtf {
                 if(num==0){//图片在开头
                     //System.out.println(temStr);
                     String src = temStr;
-                    src = src.substring(src.indexOf("http://www.easysrs.cn"),src.indexOf(".")+4);
+                    src = src.substring(src.indexOf("http://www.easysrs.cn"),src.indexOf("style")-2);
                     com.lowagie.text.Image img = com.lowagie.text.Image.getInstance(src);
                     float height = img.getHeight();
                     float width = img.getWidth();
