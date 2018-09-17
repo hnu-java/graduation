@@ -148,6 +148,10 @@
         var exp = new Date();
         exp.setTime(exp.getTime() + 24 * 60 * 60 * 1000);
         document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=/";
+        // var d = new Date();
+        // d.setTime(d.getTime()+(24*60*60*1000));
+        // var expires = "expires="+d.toGMTString();
+        // document.cookie = encodeURI(cname) + "=" + encodeURI(cvalue) + ";" + expires+"; path=/";
     }
     //读取cookies
     function getCookie(name) {
@@ -158,6 +162,14 @@
             return unescape(arr[2]);
         else
             return null;
+        // var name = encodeURI(cname) + "=";
+        // var ca = document.cookie.split(';');
+        // for(var i=0; i<ca.length; i++)
+        // {
+        //     var c = ca[i].trim();
+        //     if (c.indexOf(name)==0) return decodeURI(c.substring(name.length,c.length));
+        // }
+        // return "";
     }
 
     function delCookie(name) {
