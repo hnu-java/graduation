@@ -324,7 +324,8 @@ public class Template2Pdf {
     private static final com.lowagie.text.Paragraph BLANK = new com.lowagie.text.Paragraph(" ");
     HttpServletRequest request = ServletActionContext.getRequest();
     String path = request.getContextPath();
-    String basePath = request.getScheme()+"://"+"www.easysrs.cn";
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String basePath1 = request.getScheme()+"://"+"www.easysrs.cn";
     BaseFont bfChinese =
             BaseFont.createFont(basePath+"fonts/STSONG.TTF",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
     com.lowagie.text.Font First_title = new com.lowagie.text.Font(bfChinese, 18, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));
@@ -346,7 +347,7 @@ public class Template2Pdf {
         tmpline = tmpline.replaceAll("<img ","");
         tmpline = tmpline.replaceAll("src=\"","");
         //tmpline = tmpline.replaceAll("\" style=\"width: .*px;\">","");
-        tmpline = tmpline.replaceAll("/disImage",basePath+"/disImage");
+        tmpline = tmpline.replaceAll("/disImage",basePath1+"/disImage");
         tmpline = tmpline.replaceAll(",", "1!~o#do=u-ha`o:");
         //System.out.println(tmpline);
         List htmlList = HTMLWorker.parseToList(new StringReader(tmpline), ss);

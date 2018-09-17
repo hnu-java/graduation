@@ -48,7 +48,7 @@ public class Template2rtf {
         //tmpline = tmpline.replaceAll("\" style=\"width: .*px;\">","");
         tmpline = tmpline.replaceAll("/disImage",basePath+"/disImage");
         tmpline = tmpline.replaceAll(",", "1!~o#do=u-ha`o:");
-        System.out.println(tmpline);
+        //System.out.println(tmpline);
         List htmlList = HTMLWorker.parseToList(new StringReader(tmpline), ss);
         for (int i = 0; i < htmlList.size(); i++) {
             com.lowagie.text.Element tmpE = (com.lowagie.text.Element) htmlList.get(i);
