@@ -114,19 +114,31 @@
         }
     //写cookies，24个小时过期
     function setCookie(name, value) {
-        var exp = new Date();
-        exp.setTime(exp.getTime() + 24 * 60 * 60 * 1000);
-        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=/";
+        // var exp = new Date();
+        // exp.setTime(exp.getTime() + 24 * 60 * 60 * 1000);
+        // document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=/";
+        var d = new Date();
+        d.setTime(d.getTime()+(24*60*60*1000));
+        var expires = "expires="+d.toGMTString();
+        document.cookie = encodeURI(name) + "=" + encodeURI(value) + ";" + expires+"; path=/";
     }
     //读取cookies
     function getCookie(name) {
-        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-
-        if (arr = document.cookie.match(reg))
-
-            return unescape(arr[2]);
-        else
-            return null;
+        // var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        //
+        // if (arr = document.cookie.match(reg))
+        //
+        //     return unescape(arr[2]);
+        // else
+        //     return null;
+        var cname = encodeURI(name) + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0; i<ca.length; i++)
+        {
+            var c = ca[i].trim();
+            if (c.indexOf(cname)==0) return decodeURI(c.substring(cname.length,c.length));
+        }
+        return "";
     }
     function delCookie(name) {
         var exp = new Date();

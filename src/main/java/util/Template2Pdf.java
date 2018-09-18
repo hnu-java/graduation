@@ -324,10 +324,10 @@ public class Template2Pdf {
     private static final com.lowagie.text.Paragraph BLANK = new com.lowagie.text.Paragraph(" ");
     HttpServletRequest request = ServletActionContext.getRequest();
     String path = request.getContextPath();
-    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
     String basePath1 = request.getScheme()+"://"+"www.easysrs.cn";
     BaseFont bfChinese =
-            BaseFont.createFont(basePath+"fonts/STSONG.TTF",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            BaseFont.createFont(basePath+"/fonts/STSONG.TTF",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
     com.lowagie.text.Font First_title = new com.lowagie.text.Font(bfChinese, 18, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));
     com.lowagie.text.Font Second_title = new com.lowagie.text.Font(bfChinese, 15, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));
     com.lowagie.text.Font Other_title = new com.lowagie.text.Font(bfChinese, 14, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));
@@ -360,9 +360,10 @@ public class Template2Pdf {
             for(;temStr.length()!=0;){
                 int num = img_location(temStr);
                 if(num==0){//图片在开头
-                    //System.out.println(temStr);
+                    System.out.println(temStr);
                     String src = temStr;
-                    src = src.substring(src.indexOf("http:"),src.indexOf("style")-2);
+                    src = src.substring(src.indexOf("http://www.easysrs.cn"),src.indexOf("style")-2);
+                    //src = src.substring(src.indexOf("http://"),src.indexOf("style")-2);
                     com.lowagie.text.Image img = com.lowagie.text.Image.getInstance(src);
                     float height = img.getHeight();
                     float width = img.getWidth();
@@ -380,6 +381,7 @@ public class Template2Pdf {
                     img.setAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
                     doc.add(img);
                     temStr = temStr.substring(temStr.indexOf("\">")+2,temStr.length());
+                    System.out.println(temStr);
                 }
                 else if(num==1){//文字在开头
                     String tem1 = temStr;
@@ -403,7 +405,7 @@ public class Template2Pdf {
     }
 
     public int img_location(String temStr){
-        if(temStr.indexOf("http:")==0) {//图片在开头
+        if(temStr.indexOf("http:")==0 || temStr.indexOf("style=")==0) {//图片在开头
             return 0;
         }
         else if(temStr.indexOf("http:")!=-1){//文字在开头
