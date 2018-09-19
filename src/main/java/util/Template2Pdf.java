@@ -7,6 +7,7 @@ package util;
 import com.google.gson.Gson;
 import com.lowagie.text.*;
 import com.lowagie.text.Font;
+import com.lowagie.text.Image;
 import com.lowagie.text.pdf.BaseFont;
 //import com.itextpdf.text.pdf.PdfWriter;
 import com.lowagie.text.pdf.PdfWriter;
@@ -357,14 +358,15 @@ public class Template2Pdf {
             temStr = temStr.replaceAll(", ","");
             temStr = temStr.substring(1,temStr.length() - 1);
             temStr = temStr.replaceAll("1!~o#do=u-ha`o:",",");
+            String src;
+            com.lowagie.text.Image img;
             for(;temStr.length()!=0;){
                 int num = img_location(temStr);
                 if(num==0){//图片在开头
-                    System.out.println(temStr);
-                    String src = temStr;
+                    src = temStr;
                     src = src.substring(src.indexOf("http://www.easysrs.cn"),src.indexOf("style")-2);
                     //src = src.substring(src.indexOf("http://"),src.indexOf("style")-2);
-                    com.lowagie.text.Image img = com.lowagie.text.Image.getInstance(src);
+                    img = com.lowagie.text.Image.getInstance(src);
                     float height = img.getHeight();
                     float width = img.getWidth();
                     if(width>350){
@@ -385,7 +387,6 @@ public class Template2Pdf {
                 }
                 else if(num==1){//文字在开头
                     String tem1 = temStr;
-                    String tem2 = temStr;
                     tem1 = tem1.substring(0,temStr.indexOf("http:"));
                     temParagraph = new Paragraph("    "+tem1,black);
                     doc.add(temParagraph);
