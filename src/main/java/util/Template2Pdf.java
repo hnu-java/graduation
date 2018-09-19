@@ -360,46 +360,46 @@ public class Template2Pdf {
             temStr = temStr.replaceAll("1!~o#do=u-ha`o:",",");
             String src;
             com.lowagie.text.Image img;
-            for(;temStr.length()!=0;){
-                int num = img_location(temStr);
-                if(num==0){//图片在开头
-                    src = temStr;
-                    src = src.substring(src.indexOf("http://www.easysrs.cn"),src.indexOf("style")-2);
-                    //src = src.substring(src.indexOf("http://"),src.indexOf("style")-2);
-                    img = com.lowagie.text.Image.getInstance(src);
-                    float height = img.getHeight();
-                    float width = img.getWidth();
-                    if(width>350){
-                        float scale = 350/width;
-                        width = 350;
-                        height = height*scale;
-                    }
-                    else{
-                        float scale = 350/width;
-                        width = 350;
-                        height = height*scale;
-                    }
-                    img.scaleAbsolute(width,height);
-                    img.setAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
-                    doc.add(img);
-                    temStr = temStr.substring(temStr.indexOf("\">")+2,temStr.length());
-                    System.out.println(temStr);
-                }
-                else if(num==1){//文字在开头
-                    String tem1 = temStr;
-                    tem1 = tem1.substring(0,temStr.indexOf("http:"));
-                    temParagraph = new Paragraph("    "+tem1,black);
-                    doc.add(temParagraph);
-                    temStr = temStr.substring(temStr.indexOf("http:"),temStr.length());
-                }
-                else {//只有文字
-                    temParagraph = new Paragraph("    "+temStr,black);
-                    doc.add(temParagraph);
-                    temStr="";
-                }
-            }
+//            for(;temStr.length()!=0;){
+//                int num = img_location(temStr);
+//                if(num==0){//图片在开头
+//                    src = temStr;
+//                    src = src.substring(src.indexOf("http://www.easysrs.cn"),src.indexOf("style")-2);
+//                    //src = src.substring(src.indexOf("http://"),src.indexOf("style")-2);
+//                    img = com.lowagie.text.Image.getInstance(src);
+//                    float height = img.getHeight();
+//                    float width = img.getWidth();
+//                    if(width>350){
+//                        float scale = 350/width;
+//                        width = 350;
+//                        height = height*scale;
+//                    }
+//                    else{
+//                        float scale = 350/width;
+//                        width = 350;
+//                        height = height*scale;
+//                    }
+//                    img.scaleAbsolute(width,height);
+//                    img.setAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+//                    doc.add(img);
+//                    temStr = temStr.substring(temStr.indexOf("\">")+2,temStr.length());
+//                    System.out.println(temStr);
+//                }
+//                else if(num==1){//文字在开头
+//                    String tem1 = temStr;
+//                    tem1 = tem1.substring(0,temStr.indexOf("http:"));
+//                    temParagraph = new Paragraph("    "+tem1,black);
+//                    doc.add(temParagraph);
+//                    temStr = temStr.substring(temStr.indexOf("http:"),temStr.length());
+//                }
+//                else {//只有文字
+//                    temParagraph = new Paragraph("    "+temStr,black);
+//                    doc.add(temParagraph);
+//                    temStr="";
+//                }
+//            }
             Paragraph tmpLineParagraph = new Paragraph("    "+"    "+temStr,black);
-            context.add(tmpLineParagraph);
+            doc.add(tmpLineParagraph);
         }
         context.setLeading(24f);
         return context;
@@ -703,7 +703,7 @@ public class Template2Pdf {
         return bfChinese;
     }
 
-    public void setBfChinese(com.lowagie.text.pdf.BaseFont bfChinese1) {
+    public void setBfChinese(com.lowagie.text.pdf.BaseFont bfChinese) {
         this.bfChinese = bfChinese;
     }
 }
