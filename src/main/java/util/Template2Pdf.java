@@ -328,7 +328,7 @@ public class Template2Pdf {
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
     String basePath1 = request.getScheme()+"://"+"www.easysrs.cn";
     BaseFont bfChinese =
-            BaseFont.createFont(basePath+"/fonts/STSONG.TTF",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            BaseFont.createFont(basePath1+"/fonts/STSONG.TTF",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
     com.lowagie.text.Font First_title = new com.lowagie.text.Font(bfChinese, 18, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));
     com.lowagie.text.Font Second_title = new com.lowagie.text.Font(bfChinese, 15, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));
     com.lowagie.text.Font Other_title = new com.lowagie.text.Font(bfChinese, 14, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));
@@ -350,7 +350,6 @@ public class Template2Pdf {
         //tmpline = tmpline.replaceAll("\" style=\"width: .*px;\">","");
         tmpline = tmpline.replaceAll("/disImage",basePath1+"/disImage");
         tmpline = tmpline.replaceAll(",", "1!~o#do=u-ha`o:");
-        System.out.println(tmpline);
         List htmlList = HTMLWorker.parseToList(new StringReader(tmpline), ss);
         for (int i = 0; i < htmlList.size(); i++) {
             com.lowagie.text.Element tmpE = (com.lowagie.text.Element) htmlList.get(i);
@@ -360,44 +359,44 @@ public class Template2Pdf {
             temStr = temStr.replaceAll("1!~o#do=u-ha`o:",",");
             String src;
             com.lowagie.text.Image img;
-//            for(;temStr.length()!=0;){
-//                int num = img_location(temStr);
-//                if(num==0){//图片在开头
-//                    src = temStr;
-//                    src = src.substring(src.indexOf("http://www.easysrs.cn"),src.indexOf("style")-2);
-//                    //src = src.substring(src.indexOf("http://"),src.indexOf("style")-2);
-//                    img = com.lowagie.text.Image.getInstance(src);
-//                    float height = img.getHeight();
-//                    float width = img.getWidth();
-//                    if(width>350){
-//                        float scale = 350/width;
-//                        width = 350;
-//                        height = height*scale;
-//                    }
-//                    else{
-//                        float scale = 350/width;
-//                        width = 350;
-//                        height = height*scale;
-//                    }
-//                    img.scaleAbsolute(width,height);
-//                    img.setAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
-//                    doc.add(img);
-//                    temStr = temStr.substring(temStr.indexOf("\">")+2,temStr.length());
-//                    System.out.println(temStr);
-//                }
-//                else if(num==1){//文字在开头
-//                    String tem1 = temStr;
-//                    tem1 = tem1.substring(0,temStr.indexOf("http:"));
-//                    temParagraph = new Paragraph("    "+tem1,black);
-//                    doc.add(temParagraph);
-//                    temStr = temStr.substring(temStr.indexOf("http:"),temStr.length());
-//                }
-//                else {//只有文字
-//                    temParagraph = new Paragraph("    "+temStr,black);
-//                    doc.add(temParagraph);
-//                    temStr="";
-//                }
-//            }
+            for(;temStr.length()!=0;){
+                int num = img_location(temStr);
+                if(num==0){//图片在开头
+                    src = temStr;
+                    src = src.substring(src.indexOf("http://www.easysrs.cn"),src.indexOf("style")-2);
+                    //src = src.substring(src.indexOf("http://"),src.indexOf("style")-2);
+                    img = com.lowagie.text.Image.getInstance(src);
+                    float height = img.getHeight();
+                    float width = img.getWidth();
+                    if(width>350){
+                        float scale = 350/width;
+                        width = 350;
+                        height = height*scale;
+                    }
+                    else{
+                        float scale = 350/width;
+                        width = 350;
+                        height = height*scale;
+                    }
+                    img.scaleAbsolute(width,height);
+                    img.setAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+                    doc.add(img);
+                    temStr = temStr.substring(temStr.indexOf("\">")+2,temStr.length());
+                    System.out.println(temStr);
+                }
+                else if(num==1){//文字在开头
+                    String tem1 = temStr;
+                    tem1 = tem1.substring(0,temStr.indexOf("http:"));
+                    temParagraph = new Paragraph("    "+tem1,black);
+                    doc.add(temParagraph);
+                    temStr = temStr.substring(temStr.indexOf("http:"),temStr.length());
+                }
+                else {//只有文字
+                    temParagraph = new Paragraph("    "+temStr,black);
+                    doc.add(temParagraph);
+                    temStr="";
+                }
+            }
             Paragraph tmpLineParagraph = new Paragraph("    "+"    "+temStr,black);
             doc.add(tmpLineParagraph);
         }
