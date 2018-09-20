@@ -328,7 +328,7 @@ public class Template2Pdf {
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
     String basePath1 = request.getScheme()+"://"+"www.easysrs.cn";
     BaseFont bfChinese =
-            BaseFont.createFont(basePath1+"/fonts/STSONG.TTF",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            BaseFont.createFont(basePath+"/fonts/STSONG.TTF",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
     com.lowagie.text.Font First_title = new com.lowagie.text.Font(bfChinese, 18, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));
     com.lowagie.text.Font Second_title = new com.lowagie.text.Font(bfChinese, 15, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));
     com.lowagie.text.Font Other_title = new com.lowagie.text.Font(bfChinese, 14, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));

@@ -29,13 +29,20 @@ import javax.servlet.http.HttpServletRequest;
 
 public class Template2rtf {
     HttpServletRequest request = ServletActionContext.getRequest();
+    String path = request.getContextPath();
+    String basePath1 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
     private static final com.lowagie.text.Paragraph BLANK = new com.lowagie.text.Paragraph(" ");
-    private BaseFont bfChinese;
-    Font First_title = new Font(bfChinese, 18, Font.NORMAL, new Color(0,0,0));
-    Font Second_title = new Font(bfChinese, 7, Font.BOLD,new Color(0,0,0));
-    Font black = new Font(bfChinese, 12, Font.COURIER,new Color(0,0,0));
-    Font sTitle = new Font(bfChinese, 14, Font.BOLD,new Color(0,0,0));
-    Font minTitle = new Font(bfChinese, 12, Font.BOLD,new Color(0,0,0));
+    BaseFont htChinese =
+            BaseFont.createFont(basePath1+"/fonts/simhei.ttf",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+    BaseFont ktChinese =
+            BaseFont.createFont(basePath1+"/fonts/STKAITI.TTF",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+    BaseFont stChinese =
+            BaseFont.createFont(basePath1+"/fonts/simsun.ttc,0",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+    Font First_title = new Font(stChinese, 18, Font.NORMAL, new Color(0,0,0));
+    Font Second_title = new Font(stChinese, 7, Font.BOLD,new Color(0,0,0));
+    Font black = new Font(stChinese, 12, Font.COURIER,new Color(0,0,0));
+    Font sTitle = new Font(stChinese, 14, Font.BOLD,new Color(0,0,0));
+    Font minTitle = new Font(stChinese, 12, Font.BOLD,new Color(0,0,0));
     String basePath = request.getScheme()+"://"+"www.easysrs.cn";
 
     public Paragraph html2rtf(String tmpline,Document doc) throws DocumentException, IOException {
@@ -82,14 +89,15 @@ public class Template2rtf {
                 }
                 else if(num==1){//文字在开头
                     String tem1 = temStr;
-                    String tem2 = temStr;
                     tem1 = tem1.substring(0,temStr.indexOf("http:"));
                     temParagraph = new Paragraph("    "+tem1,black);
+                    temParagraph.setLeading(24f);
                     doc.add(temParagraph);
                     temStr = temStr.substring(temStr.indexOf("http:"),temStr.length());
                 }
                 else {//只有文字
                     temParagraph = new Paragraph("    "+temStr,black);
+                    temParagraph.setLeading(24f);
                     doc.add(temParagraph);
                     temStr="";
                 }
@@ -128,32 +136,48 @@ public class Template2rtf {
         ////        HtmlPipelineContext htmlContext = new HtmlPipelineContext(null);
         ////        htmlContext.setTagFactory(Tags.getHtmlTagProcessorFactory());
         Paragraph paragraph = new Paragraph();
-
+        Paragraph linefeed1 = new Paragraph("",new Font(stChinese,12,Font.NORMAL,new Color(0,0,0)));
+        for(int i=0;i<8;i++){
+            doc.add(linefeed1);
+        }
         //文档名称
         String name = catalogDao.getCatalogName(id_document);
-        Paragraph p = new Paragraph(name,new Font(Font.NORMAL,24,Font.HELVETICA,new Color(0,0,0)));
-        p.setSpacingBefore(200);
-        p.setAlignment(Element.ALIGN_CENTER);
-        p.setSpacingAfter(350);
+        Paragraph p = new Paragraph(name,new Font(htChinese,26,Font.NORMAL,new Color(0,0,0)));//黑体一号
+        p.setSpacingBefore(6);
+        p.setAlignment(Element.ALIGN_RIGHT);
+        p.setSpacingAfter(6);
         doc.add(p);
+        Paragraph p1 = new Paragraph("需求规格说明书",new Font(ktChinese,24,Font.NORMAL,new Color(0,0,0)));//楷体小一
+        p1.setSpacingBefore(6);
+        p1.setAlignment(Element.ALIGN_RIGHT);
+        p1.setSpacingAfter(6);
+        Paragraph linefeed = new Paragraph("",new Font(ktChinese,24,Font.NORMAL,new Color(0,0,0)));
+        p1.add(linefeed);
+        doc.add(p1);
+        //版本号
+
+        //换行
+        for(int i=0;i<17;i++){
+            doc.add(linefeed1);
+        }
         //文档机构（如果有）
         String org_name = showOrgProjectDao.getOrgName(id_document);
         //System.out.println(org_name+" "+id_document);
         if (org_name != null && org_name != "") {
-            paragraph = new Paragraph(org_name,new Font(Font.NORMAL,14,Font.HELVETICA,new Color(0,0,0)));
-            paragraph.setSpacingBefore(12);
-            paragraph.setAlignment(Element.ALIGN_CENTER);
-            paragraph.setSpacingAfter(12);
+            paragraph = new Paragraph(org_name,new Font(htChinese,14,Font.NORMAL,new Color(0,0,0)));
+            paragraph.setSpacingBefore(6);
+            paragraph.setAlignment(Element.ALIGN_RIGHT);
+            paragraph.setSpacingAfter(6);
             doc.add(paragraph);
         }
         //导出时间
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(new java.util.Date().getTime());
         String tmp = formatter.format(date);
-        paragraph = new Paragraph(tmp,new Font(Font.NORMAL,14,Font.HELVETICA,new Color(0,0,0)));
-        paragraph.setSpacingBefore(12);
-        paragraph.setAlignment(Element.ALIGN_CENTER);
-        paragraph.setSpacingAfter(12);
+        paragraph = new Paragraph(tmp,new Font(htChinese,14,Font.NORMAL,new Color(0,0,0)));
+        paragraph.setSpacingBefore(6);
+        paragraph.setAlignment(Element.ALIGN_RIGHT);
+        paragraph.setSpacingAfter(6);
         doc.add(paragraph);
         doc.newPage();
         //设置页眉
@@ -175,28 +199,30 @@ public class Template2rtf {
         lineParagraph.setLeading(24f);
         //
         boolean isFirstIndex = false;
-        line = "目录";
+        line = "目  录";
         lineParagraph = new Paragraph(line,new Font(Font.NORMAL,18,Font.BOLD,new Color(0,0,0)));
-        lineParagraph.setAlignment(Element.ALIGN_LEFT);
+        lineParagraph.setAlignment(Element.ALIGN_CENTER);
+        lineParagraph.setSpacingBefore(12);
+        lineParagraph.setSpacingAfter(12);
         doc.add(lineParagraph);
         for (CatalogEntity e : catalogEntityList) {
             line = e.getTitle() + "  ";
             if (e.getFourth_index() != 0) {//第四级目录
                 line = "     " + e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "." + e.getFourth_index() + "  " + line;
-                lineParagraph = new Paragraph(line,new Font(Font.NORMAL,12,Font.BOLD,new Color(0,0,0)));
+                lineParagraph = new Paragraph(line,new Font(Font.NORMAL,12,Font.NORMAL,new Color(0,0,0)));
                 lineParagraph.setSpacingBefore(6);
                 lineParagraph.setSpacingAfter(6);
 
             }
             else if (e.getThird_index() != 0) {//第三级目录
                 line = "    " + e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "  " + line;
-                lineParagraph = new Paragraph(line,new Font(Font.NORMAL,12,Font.BOLD,new Color(0,0,0)));
+                lineParagraph = new Paragraph(line,new Font(Font.NORMAL,12,Font.NORMAL,new Color(0,0,0)));
                 lineParagraph.setSpacingBefore(6);
                 lineParagraph.setSpacingAfter(6);
             }
             else if (e.getSecond_index() != 0) {//第二级目录
                 line = "  " + e.getFirst_index() + "." + e.getSecond_index() + "  " + line;
-                lineParagraph = new Paragraph(line, new Font(Font.NORMAL, 12, Font.BOLD, new Color(0, 0, 0)));
+                lineParagraph = new Paragraph(line, new Font(Font.NORMAL, 12, Font.NORMAL, new Color(0, 0, 0)));
                 lineParagraph.setSpacingBefore(6);
                 lineParagraph.setSpacingAfter(6);
             }
@@ -406,11 +432,11 @@ public class Template2rtf {
     public Template2rtf() throws IOException, DocumentException {
     }
 
-    public BaseFont getBfChinese() {
-        return bfChinese;
+    public BaseFont getstChinese() {
+        return stChinese;
     }
 
-    public void setBfChinese(BaseFont bfChinese) {
-        this.bfChinese = bfChinese;
+    public void setstChinese(BaseFont stChinese) {
+        this.stChinese = stChinese;
     }
 }
