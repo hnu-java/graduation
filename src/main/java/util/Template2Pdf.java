@@ -27,8 +27,10 @@ import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
 //import org.xhtmlrenderer.pdf.*;
 //import org.xhtmlrenderer.layout.SharedContext;
 import dao.CatalogDao;
+import dao.DocumentDao;
 import dao.ShowOrgProjectDao;
 import daoImp.CatalogDaoImp;
+import daoImp.DocumentDaoImp;
 import daoImp.ShowOrgProjectDaoImp;
 import entity.*;
 
@@ -53,14 +55,14 @@ import java.util.List;
 //
 //
 //    private static final Paragraph BLANK = new Paragraph(" ");
-//    BaseFont bfChinese = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.NOT_EMBEDDED);
-//    Font title = new Font(bfChinese, 24, Font.NORMAL, BaseColor.BLACK);
-//    Font stitle = new Font(bfChinese, 14, Font.NORMAL, BaseColor.BLACK);
-//    Font first_index = new Font(bfChinese, 18, Font.NORMAL, BaseColor.BLACK);
-//    Font second_index = new Font(bfChinese, 15, Font.NORMAL, BaseColor.BLACK);
-//    Font other_index = new Font(bfChinese, 14, Font.NORMAL, BaseColor.BLACK);
-//    Font catalog = new Font(bfChinese, 16, Font.BOLD, BaseColor.BLACK);
-//    Font black = new Font(bfChinese, 12, Font.BOLD, BaseColor.BLACK);
+//    BaseFont stChinese = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.NOT_EMBEDDED);
+//    Font title = new Font(stChinese, 24, Font.NORMAL, BaseColor.BLACK);
+//    Font stitle = new Font(stChinese, 14, Font.NORMAL, BaseColor.BLACK);
+//    Font first_index = new Font(stChinese, 18, Font.NORMAL, BaseColor.BLACK);
+//    Font second_index = new Font(stChinese, 15, Font.NORMAL, BaseColor.BLACK);
+//    Font other_index = new Font(stChinese, 14, Font.NORMAL, BaseColor.BLACK);
+//    Font catalog = new Font(stChinese, 16, Font.BOLD, BaseColor.BLACK);
+//    Font black = new Font(stChinese, 12, Font.BOLD, BaseColor.BLACK);
 //
 //    public Template2Pdf() throws IOException, DocumentException {
 //    }
@@ -74,7 +76,7 @@ import java.util.List;
 //        @Override
 //        public Font getFont(String fontname, String encoding, float size, int style) {
 //            Font FontChinese = null;
-//            FontChinese = new Font(bfChinese, 12, Font.NORMAL);
+//            FontChinese = new Font(stChinese, 12, Font.NORMAL);
 //            if (FontChinese == null) {
 //                FontChinese = super.getFont(fontname, encoding, size, style);
 //            }
@@ -83,7 +85,7 @@ import java.util.List;
 //    }
 //
 //    private void add2Document(Document document, String line, PdfWriter writer) throws DocumentException, IOException {
-//        Font cfont = new Font(bfChinese);
+//        Font cfont = new Font(stChinese);
 //        line = line.replaceAll("png\">", "png\" />");
 //        line = line.replaceAll("<br>", "<br />");
 //        line = line.replaceAll("<hr>", "<hr />");
@@ -100,8 +102,8 @@ import java.util.List;
 //    public InputStream createPdf(int id_document) throws IOException, DocumentException {
 //        Gson gson = new Gson();
 //        Document document = new Document(PageSize.A4, 62, 62, 72,72);
-//        BaseFont bfChinese = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.NOT_EMBEDDED);
-//        Font cfont = new Font(bfChinese);
+//        BaseFont stChinese = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.NOT_EMBEDDED);
+//        Font cfont = new Font(stChinese);
 //        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 //        CatalogDao catalogDao = new CatalogDaoImp();
 //        ShowOrgProjectDao showOrgProjectDao = new ShowOrgProjectDaoImp();
@@ -327,17 +329,23 @@ public class Template2Pdf {
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
     String basePath1 = request.getScheme()+"://"+"www.easysrs.cn";
-    BaseFont bfChinese =
-            BaseFont.createFont(basePath+"/fonts/STSONG.TTF",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-    com.lowagie.text.Font First_title = new com.lowagie.text.Font(bfChinese, 18, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));
-    com.lowagie.text.Font Second_title = new com.lowagie.text.Font(bfChinese, 15, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));
-    com.lowagie.text.Font Other_title = new com.lowagie.text.Font(bfChinese, 14, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));
-    com.lowagie.text.Font head_title = new com.lowagie.text.Font(bfChinese, 9, Font.NORMAL, new Color(0, 0, 0));
-    com.lowagie.text.Font foot_title = new com.lowagie.text.Font(bfChinese, 9, Font.ITALIC, new Color(0, 0, 0));
-    com.lowagie.text.Font black = new com.lowagie.text.Font(bfChinese, 12, com.lowagie.text.Font.COURIER, new Color(0, 0, 0));
-    com.lowagie.text.Font sTitle = new com.lowagie.text.Font(bfChinese, 14, com.lowagie.text.Font.BOLD, new Color(0, 0, 0));
-    com.lowagie.text.Font minTitle = new com.lowagie.text.Font(bfChinese, 12, com.lowagie.text.Font.BOLD, new Color(0, 0, 0));
-    com.lowagie.text.Font Title = new com.lowagie.text.Font(bfChinese, 24, com.lowagie.text.Font.BOLD, new Color(0, 0, 0));
+    BaseFont English =
+            BaseFont.createFont(basePath+"/fonts/ARIALUNI.TTF",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+    BaseFont htChinese =
+            BaseFont.createFont(basePath+"/fonts/simhei.ttf",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+    BaseFont ktChinese =
+            BaseFont.createFont(basePath+"/fonts/STKAITI.TTF",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+    BaseFont stChinese =
+            BaseFont.createFont(basePath+"/fonts/simsun.ttc,0",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+    com.lowagie.text.Font First_title = new com.lowagie.text.Font(stChinese, 18, Font.BOLD, new Color(0, 0, 0));//宋体三号
+    com.lowagie.text.Font Second_title = new com.lowagie.text.Font(stChinese, 15, Font.BOLD, new Color(0, 0, 0));//宋体小三
+    com.lowagie.text.Font Other_title = new com.lowagie.text.Font(stChinese, 14, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));//宋体四号
+    com.lowagie.text.Font head_title = new com.lowagie.text.Font(stChinese, 9, Font.NORMAL, new Color(0, 0, 0));
+    com.lowagie.text.Font foot_title = new com.lowagie.text.Font(stChinese, 9, Font.ITALIC, new Color(0, 0, 0));
+    com.lowagie.text.Font black = new com.lowagie.text.Font(stChinese, 12, Font.NORMAL, new Color(0, 0, 0));//宋体小四
+    com.lowagie.text.Font sTitle = new com.lowagie.text.Font(stChinese, 14, com.lowagie.text.Font.BOLD, new Color(0, 0, 0));//宋体四号加粗
+    com.lowagie.text.Font minTitle = new com.lowagie.text.Font(stChinese, 12, com.lowagie.text.Font.BOLD, new Color(0, 0, 0));//宋体小四加粗
+    com.lowagie.text.Font Title = new com.lowagie.text.Font(ktChinese, 24, Font.NORMAL, new Color(0, 0, 0));//楷体小一
 
 
     public com.lowagie.text.Paragraph html2pdf(String tmpline,Document doc) throws DocumentException, IOException {
@@ -388,17 +396,17 @@ public class Template2Pdf {
                     String tem1 = temStr;
                     tem1 = tem1.substring(0,temStr.indexOf("http:"));
                     temParagraph = new Paragraph("    "+tem1,black);
+                    temParagraph.setLeading(24f);
                     doc.add(temParagraph);
                     temStr = temStr.substring(temStr.indexOf("http:"),temStr.length());
                 }
                 else {//只有文字
                     temParagraph = new Paragraph("    "+temStr,black);
+                    temParagraph.setLeading(24f);
                     doc.add(temParagraph);
                     temStr="";
                 }
             }
-            Paragraph tmpLineParagraph = new Paragraph("    "+"    "+temStr,black);
-            doc.add(tmpLineParagraph);
         }
         context.setLeading(24f);
         return context;
@@ -419,6 +427,7 @@ public class Template2Pdf {
         Gson gson = new Gson();
         CatalogDao catalogDao = new CatalogDaoImp();
         ShowOrgProjectDao showOrgProjectDao = new ShowOrgProjectDaoImp();
+        DocumentDao documentDao = new DocumentDaoImp();
         com.lowagie.text.Document doc = new com.lowagie.text.Document(com.lowagie.text.PageSize.A4, 62, 62, 72, 72);
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         PdfWriter writer = PdfWriter.getInstance(doc, buffer);
@@ -431,44 +440,65 @@ public class Template2Pdf {
         ////        HtmlPipelineContext htmlContext = new HtmlPipelineContext(null);
         ////        htmlContext.setTagFactory(Tags.getHtmlTagProcessorFactory());
         com.lowagie.text.Paragraph paragraph = new com.lowagie.text.Paragraph();
-
+        Paragraph linefeed1 = new Paragraph(" ",new Font(stChinese,12,Font.NORMAL,new Color(0,0,0)));
+        for(int i=0;i<6;i++){
+            doc.add(linefeed1);
+        }
         //文档名称
         String name = catalogDao.getCatalogName(id_document);
-        com.lowagie.text.Paragraph p = new com.lowagie.text.Paragraph(name, Title);
-        //com.lowagie.text.Paragraph p = new com.lowagie.text.Paragraph(name, title);
-        p.setSpacingBefore(200);
-        p.setAlignment(Element.ALIGN_CENTER);
-        p.setSpacingAfter(300);
+        Paragraph p = new Paragraph(name,new Font(htChinese,26,Font.NORMAL,new Color(0,0,0)));//黑体一号
+        p.setSpacingBefore(6);
+        p.setAlignment(com.itextpdf.text.Element.ALIGN_RIGHT);
+        p.setSpacingAfter(6);
         doc.add(p);
+        Paragraph p1 = new Paragraph("需求规格说明书", Title);//楷体小一
+        p1.setSpacingBefore(6);
+        p1.setAlignment(com.itextpdf.text.Element.ALIGN_RIGHT);
+        p1.setSpacingAfter(6);
+        Paragraph linefeed = new Paragraph(" ",Title);
+        doc.add(p1);
+        doc.add(linefeed);
+        //版本号
+        DocumentEntity documentEntity = documentDao.getOne(id_document);
+        double version = documentEntity.getVersion();
+        Paragraph v = new Paragraph(String.valueOf("Version "+ version),new Font(English,14,Font.NORMAL,new Color(0,0,0)));
+        v.setSpacingBefore(6);
+        v.setAlignment(com.itextpdf.text.Element.ALIGN_RIGHT);
+        v.setSpacingAfter(6);
+        doc.add(v);
+        //换行
+        for(int i=0;i<15;i++){
+            doc.add(linefeed1);
+        }
         //文档机构（如果有）
         String org_name = showOrgProjectDao.getOrgName(id_document);
         System.out.println(org_name + " " + id_document);
         if (org_name != null && org_name != "") {
-            paragraph = new com.lowagie.text.Paragraph(org_name, sTitle);
-            paragraph.setSpacingBefore(12);
-            paragraph.setAlignment(Element.ALIGN_CENTER);
-            paragraph.setSpacingAfter(12);
+            paragraph = new Paragraph(org_name,new Font(htChinese,14,Font.NORMAL,new Color(0,0,0)));//黑体四号
+            paragraph.setSpacingBefore(6);
+            paragraph.setAlignment(com.itextpdf.text.Element.ALIGN_RIGHT);
+            paragraph.setSpacingAfter(6);
             doc.add(paragraph);
         }
         //导出时间
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(new java.util.Date().getTime());
         String tmp = formatter.format(date);
-        paragraph = new com.lowagie.text.Paragraph(tmp, sTitle);
-        paragraph.setSpacingBefore(12);
-        paragraph.setAlignment(Element.ALIGN_CENTER);
-        paragraph.setSpacingAfter(12);
+        paragraph = new Paragraph(tmp,new Font(htChinese,14,Font.NORMAL,new Color(0,0,0)));//黑体四号
+        paragraph.setSpacingBefore(6);
+        paragraph.setAlignment(com.itextpdf.text.Element.ALIGN_RIGHT);
+        paragraph.setSpacingAfter(6);
         doc.add(paragraph);
         doc.newPage();
-        //设置页眉
-        com.lowagie.text.Phrase phrase = new com.lowagie.text.Phrase(name, head_title);
-        HeaderFooter header = new HeaderFooter(phrase, false);
-        header.setAlignment(HeaderFooter.ALIGN_CENTER);
-        doc.setHeader(header);
-        //设置页脚
-        HeaderFooter footer = new HeaderFooter(new com.lowagie.text.Phrase("www.easysrs.cn                                                                                ", foot_title), true);
-        footer.setAlignment(HeaderFooter.ALIGN_LEFT);
-        doc.setFooter(footer);
+//        //设置页眉
+//        com.lowagie.text.Phrase phrase = new com.lowagie.text.Phrase(name, head_title);
+//        HeaderFooter header = new HeaderFooter(phrase, false);
+//        header.setAlignment(HeaderFooter.ALIGN_CENTER);
+//        doc.setHeader(header);
+//        //设置页脚
+//        HeaderFooter footer = new HeaderFooter(new com.lowagie.text.Phrase("www.easysrs.cn                                                                                ", foot_title), true);
+//        footer.setAlignment(HeaderFooter.ALIGN_LEFT);
+//        doc.setFooter(footer);
 
         //
         java.util.List<CatalogEntity> catalogEntityList = catalogDao.getAll(id_document);
@@ -477,9 +507,11 @@ public class Template2Pdf {
         lineParagraph.setLeading(24f);
         //
         boolean isFirstIndex = false;
-        line = "目录";
-        lineParagraph = new com.lowagie.text.Paragraph(line, First_title);
-        lineParagraph.setAlignment(Element.ALIGN_LEFT);
+        line = "目  录";
+        lineParagraph = new Paragraph(line,new Font(stChinese,18,Font.BOLD,new Color(0,0,0)));
+        lineParagraph.setAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+        lineParagraph.setSpacingBefore(12);
+        lineParagraph.setSpacingAfter(12);
         doc.add(lineParagraph);
         for (CatalogEntity e : catalogEntityList) {
             line = e.getTitle() + "  ";
@@ -503,7 +535,7 @@ public class Template2Pdf {
             {
                 line = e.getFirst_index() + "  " + line;
                 isFirstIndex = true;
-                lineParagraph = new com.lowagie.text.Paragraph(line, Other_title);
+                lineParagraph = new com.lowagie.text.Paragraph(line, sTitle);
                 lineParagraph.setSpacingBefore(12);
                 lineParagraph.setSpacingAfter(12);
             }
@@ -516,13 +548,13 @@ public class Template2Pdf {
             line = e.getTitle() + "  ";
             if (e.getFourth_index() != 0) {//第四级目录
                 line = "     " + e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "." + e.getFourth_index() + "  " + line;
-                lineParagraph = new com.lowagie.text.Paragraph(line, Other_title);
+                lineParagraph = new com.lowagie.text.Paragraph(line, sTitle);
                 lineParagraph.setSpacingBefore(6);
                 lineParagraph.setSpacingAfter(6);
 
             } else if (e.getThird_index() != 0) {//第三级目录
                 line = "    " + e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "  " + line;
-                lineParagraph = new com.lowagie.text.Paragraph(line, Other_title);
+                lineParagraph = new com.lowagie.text.Paragraph(line, sTitle);
                 lineParagraph.setSpacingBefore(6);
                 lineParagraph.setSpacingAfter(6);
             } else if (e.getSecond_index() != 0) {//第二级目录
@@ -532,7 +564,7 @@ public class Template2Pdf {
                 lineParagraph.setSpacingAfter(6);
             } else //第一级目录
             {
-                line = e.getFirst_index() + "  " + line;
+                line = "第"+e.getFirst_index() + "章  " + line;
                 isFirstIndex = true;
                 lineParagraph = new com.lowagie.text.Paragraph(line, First_title);
                 lineParagraph.setSpacingBefore(12);
@@ -560,16 +592,22 @@ public class Template2Pdf {
                 }
                 if (e.getId_template() == 2) {//模板类型2
                     UserStructureEntity entity = gson.fromJson(e.getContent(), UserStructureEntity.class);
-                    lineParagraph = new com.lowagie.text.Paragraph("    " + "用户名:" + entity.getRoleName(), sTitle);
+                    lineParagraph = new Paragraph();
+                    Phrase temp = new Phrase("    "+"用 户 名：",new Font(stChinese,12,Font.BOLD));
+                    Phrase temp1 = new Phrase(entity.getRoleName(),new Font(stChinese,12,Font.NORMAL));
+                    lineParagraph.add(temp);
+                    lineParagraph.add(temp1);
+                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
-                    doc.add(BLANK);
                     //用户描述
-                    lineParagraph = new com.lowagie.text.Paragraph("    " + "用户描述:", sTitle);
+                    lineParagraph = new com.lowagie.text.Paragraph("    " + "用户描述：", minTitle);
+                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     tmpline = entity.getDescribe();
                     html2pdf(tmpline,doc);
                     //用户权限
-                    lineParagraph = new com.lowagie.text.Paragraph("    " + "用户权限:", sTitle);
+                    lineParagraph = new com.lowagie.text.Paragraph("    " + "用户权限：", minTitle);
+                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     tmpline = entity.getPermissions();
                     html2pdf(tmpline,doc);
@@ -578,9 +616,9 @@ public class Template2Pdf {
                 if (e.getId_template() == 3) {//模板类型3
                     FunStructureEntity entity = gson.fromJson(e.getContent(), FunStructureEntity.class);
                     String priorityName;
-                    lineParagraph = new com.lowagie.text.Paragraph("    " + "功能点名称:" + entity.getFunName(), sTitle);
+                    lineParagraph = new com.lowagie.text.Paragraph("    " + "功能点名称：" + entity.getFunName(), minTitle);
+                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
-                    doc.add(BLANK);
                     if (entity.getPriority() == 1)
                         priorityName = "高";
                     else if (entity.getPriority() == 2)
@@ -588,17 +626,17 @@ public class Template2Pdf {
                     else
                         priorityName = "低";
 
-                    lineParagraph = new com.lowagie.text.Paragraph("    " + "优先级:" + priorityName, sTitle);
+                    lineParagraph = new com.lowagie.text.Paragraph("    " + "优先级：" + priorityName, minTitle);
+                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
-                    doc.add(BLANK);
 
-                    lineParagraph = new com.lowagie.text.Paragraph("    " + "功能点描述:", sTitle);
+                    lineParagraph = new com.lowagie.text.Paragraph("    " + "功能点描述：", minTitle);
+                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     tmpline = entity.getDescribe();
                     html2pdf(tmpline,doc);
-                    doc.add(BLANK);
 
-                    lineParagraph = new com.lowagie.text.Paragraph("    " + "用例过程:", sTitle);
+                    lineParagraph = new com.lowagie.text.Paragraph("    " + "用例过程：", minTitle);
                     lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     List<FunRole> funRoleList = entity.getFunRoleList();
@@ -608,12 +646,12 @@ public class Template2Pdf {
                         lineParagraph.setLeading(24f);
                         doc.add(lineParagraph);
                         if (funRole.getRoleName() != null) {
-                            lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "参与角色:" + funRole.getRoleName(), black);
+                            lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "参与角色：" + funRole.getRoleName(), black);
                             lineParagraph.setLeading(24f);
                             doc.add(lineParagraph);
                         }
                         if (funRole.getRoleDescribe() != null) {
-                            lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "用例描述:" + funRole.getRoleDescribe(), black);
+                            lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "用例描述：" + funRole.getRoleDescribe(), black);
                             lineParagraph.setLeading(24f);
                             doc.add(lineParagraph);
                         }
@@ -633,53 +671,55 @@ public class Template2Pdf {
                             lineParagraph.setLeading(24f);
                             doc.add(lineParagraph);
                         }
-                        doc.add(BLANK);
                     }
                     List<FunUsable> funUsableList = entity.getFunUsableList();
                     if (funUsableList.size() != 0) {
-                        lineParagraph = new com.lowagie.text.Paragraph("    " + "全局可用性:", sTitle);
+                        lineParagraph = new com.lowagie.text.Paragraph("    " + "全局可用性：", minTitle);
                         lineParagraph.setLeading(24f);
                         doc.add(lineParagraph);
                         for (int j = 0; j < funUsableList.size(); j++) {
                             FunUsable funUsable = funUsableList.get(j);
                             if (funUsable.getUsableName() != null) {
-                                lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "全局可用性:" + (j + 1), minTitle);
+                                lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "全局可用性：" + (j + 1), minTitle);
                                 lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
-                                lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "全局可用性名称:" + funUsable.getUsableName(), black);
+                                lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "全局可用性名称：" + funUsable.getUsableName(), black);
                                 lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
                                 lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + funUsable.getUsablePara(), black);
                                 lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
                             } else {
-                                lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "全局安全性:" + (j + 1), minTitle);
+                                lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "全局安全性：" + (j + 1), minTitle);
                                 lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
-                                lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "全局安全性名称:" + funUsable.getSecurityName(), black);
+                                lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "全局安全性名称：" + funUsable.getSecurityName(), black);
                                 lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
                                 lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + funUsable.getSecurityPara(), black);
                                 lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
                             }
-                            doc.add(BLANK);
                         }
 
                     }
-                    lineParagraph = new com.lowagie.text.Paragraph("    " + "输入:", sTitle);
+                    lineParagraph = new com.lowagie.text.Paragraph("    " + "输入：", minTitle);
+                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     String inputStr = entity.getInput();
                     html2pdf(inputStr,doc);
-                    lineParagraph = new com.lowagie.text.Paragraph("    " + "输出:", sTitle);
+                    lineParagraph = new com.lowagie.text.Paragraph("    " + "输出：", minTitle);
+                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     tmpline = entity.getOutput();
                     html2pdf(tmpline,doc);
-                    lineParagraph = new com.lowagie.text.Paragraph("    " + "基本操作流程:", sTitle);
+                    lineParagraph = new com.lowagie.text.Paragraph("    " + "基本操作流程：", minTitle);
+                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     tmpline = entity.getBasic();
                     html2pdf(tmpline,doc);
-                    lineParagraph = new com.lowagie.text.Paragraph("    " + "备选操作流程:", sTitle);
+                    lineParagraph = new com.lowagie.text.Paragraph("    " + "备选操作流程：", minTitle);
+                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     tmpline = entity.getAlternative();
                     html2pdf(tmpline,doc);
@@ -695,14 +735,14 @@ public class Template2Pdf {
         return inputStream;
     }
 
-    public Template2Pdf() throws IOException, com.lowagie.text.DocumentException, DocumentException {
+    public Template2Pdf() throws IOException, DocumentException {
     }
 
-    public com.lowagie.text.pdf.BaseFont getBfChinese() {
-        return bfChinese;
+    public com.lowagie.text.pdf.BaseFont getstChinese() {
+        return stChinese;
     }
 
-    public void setBfChinese(com.lowagie.text.pdf.BaseFont bfChinese) {
-        this.bfChinese = bfChinese;
+    public void setstChinese(com.lowagie.text.pdf.BaseFont stChinese) {
+        this.stChinese = stChinese;
     }
 }
