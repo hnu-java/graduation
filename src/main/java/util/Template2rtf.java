@@ -11,8 +11,10 @@ import com.lowagie.text.rtf.RtfWriter2;
 import com.lowagie.text.html.simpleparser.HTMLWorker;
 import com.lowagie.text.html.simpleparser.StyleSheet;
 import dao.CatalogDao;
+import dao.DocumentDao;
 import dao.ShowOrgProjectDao;
 import daoImp.CatalogDaoImp;
+import daoImp.DocumentDaoImp;
 import daoImp.ShowOrgProjectDaoImp;
 import entity.*;
 import java.io.*;
@@ -32,6 +34,8 @@ public class Template2rtf {
     String path = request.getContextPath();
     String basePath1 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
     private static final com.lowagie.text.Paragraph BLANK = new com.lowagie.text.Paragraph(" ");
+    BaseFont English =
+            BaseFont.createFont(basePath1+"/fonts/ARIALUNI.TTF",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
     BaseFont htChinese =
             BaseFont.createFont(basePath1+"/fonts/simhei.ttf",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
     BaseFont ktChinese =
@@ -40,8 +44,8 @@ public class Template2rtf {
             BaseFont.createFont(basePath1+"/fonts/simsun.ttc,0",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
     Font First_title = new Font(stChinese, 18, Font.NORMAL, new Color(0,0,0));
     Font Second_title = new Font(stChinese, 7, Font.BOLD,new Color(0,0,0));
-    Font black = new Font(stChinese, 12, Font.COURIER,new Color(0,0,0));
-    Font sTitle = new Font(stChinese, 14, Font.BOLD,new Color(0,0,0));
+    Font black = new Font(stChinese, 12, Font.NORMAL,new Color(0,0,0));//小四
+    Font sTitle = new Font(stChinese, 14, Font.BOLD,new Color(0,0,0));//四号
     Font minTitle = new Font(stChinese, 12, Font.BOLD,new Color(0,0,0));
     String basePath = request.getScheme()+"://"+"www.easysrs.cn";
 
@@ -124,6 +128,7 @@ public class Template2rtf {
         Gson gson = new Gson();
         CatalogDao catalogDao = new CatalogDaoImp();
         ShowOrgProjectDao showOrgProjectDao = new ShowOrgProjectDaoImp();
+        DocumentDao documentDao = new DocumentDaoImp();
         Document doc = new Document(PageSize.A4, 62, 62, 72,72);
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         RtfWriter2 writer = RtfWriter2.getInstance(doc,buffer);
@@ -155,7 +160,13 @@ public class Template2rtf {
         p1.add(linefeed);
         doc.add(p1);
         //版本号
-
+        DocumentEntity documentEntity = documentDao.getOne(id_document);
+        double version = documentEntity.getVersion();
+        Paragraph v = new Paragraph(String.valueOf("Version "+ version),new Font(English,14,Font.NORMAL,new Color(0,0,0)));
+        v.setSpacingBefore(6);
+        v.setAlignment(Element.ALIGN_RIGHT);
+        v.setSpacingAfter(6);
+        doc.add(v);
         //换行
         for(int i=0;i<17;i++){
             doc.add(linefeed1);
@@ -200,7 +211,7 @@ public class Template2rtf {
         //
         boolean isFirstIndex = false;
         line = "目  录";
-        lineParagraph = new Paragraph(line,new Font(Font.NORMAL,18,Font.BOLD,new Color(0,0,0)));
+        lineParagraph = new Paragraph(line,new Font(stChinese,18,Font.BOLD,new Color(0,0,0)));
         lineParagraph.setAlignment(Element.ALIGN_CENTER);
         lineParagraph.setSpacingBefore(12);
         lineParagraph.setSpacingAfter(12);
@@ -209,20 +220,20 @@ public class Template2rtf {
             line = e.getTitle() + "  ";
             if (e.getFourth_index() != 0) {//第四级目录
                 line = "     " + e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "." + e.getFourth_index() + "  " + line;
-                lineParagraph = new Paragraph(line,new Font(Font.NORMAL,12,Font.NORMAL,new Color(0,0,0)));
+                lineParagraph = new Paragraph(line,new Font(stChinese,12,Font.NORMAL,new Color(0,0,0)));
                 lineParagraph.setSpacingBefore(6);
                 lineParagraph.setSpacingAfter(6);
 
             }
             else if (e.getThird_index() != 0) {//第三级目录
                 line = "    " + e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "  " + line;
-                lineParagraph = new Paragraph(line,new Font(Font.NORMAL,12,Font.NORMAL,new Color(0,0,0)));
+                lineParagraph = new Paragraph(line,new Font(stChinese,12,Font.NORMAL,new Color(0,0,0)));
                 lineParagraph.setSpacingBefore(6);
                 lineParagraph.setSpacingAfter(6);
             }
             else if (e.getSecond_index() != 0) {//第二级目录
                 line = "  " + e.getFirst_index() + "." + e.getSecond_index() + "  " + line;
-                lineParagraph = new Paragraph(line, new Font(Font.NORMAL, 12, Font.NORMAL, new Color(0, 0, 0)));
+                lineParagraph = new Paragraph(line, new Font(stChinese, 12, Font.NORMAL, new Color(0, 0, 0)));
                 lineParagraph.setSpacingBefore(6);
                 lineParagraph.setSpacingAfter(6);
             }
@@ -230,7 +241,7 @@ public class Template2rtf {
             {
                 line = e.getFirst_index() + "  " + line;
                 isFirstIndex = true;
-                lineParagraph = new Paragraph(line,new Font(Font.NORMAL,14,Font.BOLD,new Color(0,0,0)));
+                lineParagraph = new Paragraph(line,new Font(stChinese,14,Font.BOLD,new Color(0,0,0)));
                 lineParagraph.setSpacingBefore(12);
                 lineParagraph.setSpacingAfter(12);
             }
@@ -243,20 +254,20 @@ public class Template2rtf {
             line = e.getTitle() + "  ";
             if (e.getFourth_index() != 0) {//第四级目录
                 line = e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "." + e.getFourth_index() + "  " + line;
-                lineParagraph = new Paragraph(line,new Font(Font.NORMAL,14,Font.BOLD,new Color(0,0,0)));
+                lineParagraph = new Paragraph(line,new Font(stChinese,14,Font.BOLD,new Color(0,0,0)));
                 lineParagraph.setSpacingBefore(6);
                 lineParagraph.setSpacingAfter(6);
 
             }
             else if (e.getThird_index() != 0) {//第三级目录
                 line = e.getFirst_index() + "." + e.getSecond_index() + "." + e.getThird_index() + "  " + line;
-                lineParagraph = new Paragraph(line,new Font(Font.NORMAL,14,Font.BOLD,new Color(0,0,0)));
+                lineParagraph = new Paragraph(line,new Font(stChinese,14,Font.BOLD,new Color(0,0,0)));
                 lineParagraph.setSpacingBefore(6);
                 lineParagraph.setSpacingAfter(6);
             }
             else if (e.getSecond_index() != 0) {//第二级目录
                 line = e.getFirst_index() + "." + e.getSecond_index() + "  " + line;
-                lineParagraph = new Paragraph(line, new Font(Font.NORMAL, 15, Font.BOLD, new Color(0, 0, 0)));
+                lineParagraph = new Paragraph(line, new Font(stChinese, 15, Font.BOLD, new Color(0, 0, 0)));
                 lineParagraph.setSpacingBefore(6);
                 lineParagraph.setSpacingAfter(6);
             }
@@ -264,7 +275,7 @@ public class Template2rtf {
             {
                 line = "第"+e.getFirst_index() + "章  " + line;
                 isFirstIndex = true;
-                lineParagraph = new Paragraph(line,new Font(Font.NORMAL,18,Font.BOLD,new Color(0,0,0)));
+                lineParagraph = new Paragraph(line,new Font(stChinese,18,Font.BOLD,new Color(0,0,0)));
                 lineParagraph.setSpacingBefore(12);
                 lineParagraph.setSpacingAfter(12);
             }
@@ -287,17 +298,23 @@ public class Template2rtf {
                 }
                 if (e.getId_template() == 2) {//模板类型2
                     UserStructureEntity entity = gson.fromJson(e.getContent(), UserStructureEntity.class);
-                    lineParagraph = new Paragraph("    "+"用户名:" + entity.getRoleName(),sTitle);
+                    lineParagraph = new Paragraph();
+                    Phrase temp = new Phrase("    "+"用 户 名：",new Font(stChinese,12,Font.BOLD));
+                    Phrase temp1 = new Phrase(entity.getRoleName(),new Font(stChinese,12,Font.NORMAL));
+                    lineParagraph.add(temp);
+                    lineParagraph.add(temp1);
+                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
-                    doc.add(BLANK);
                     //用户描述
-                    lineParagraph = new Paragraph("    "+"用户描述:",sTitle);
+                    lineParagraph = new Paragraph("    "+"用户描述：",minTitle);
+                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     tmpline = entity.getDescribe();
                     //doc.add(html2rtf(tmpline));
                     html2rtf(tmpline,doc);
                     //用户权限
-                    lineParagraph = new Paragraph("    "+"用户权限:",sTitle);
+                    lineParagraph = new Paragraph("    "+"用户权限：",minTitle);
+                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     tmpline = entity.getPermissions();
                     //doc.add(html2rtf(tmpline));
@@ -307,9 +324,9 @@ public class Template2rtf {
                 if (e.getId_template() == 3) {//模板类型3
                     FunStructureEntity entity = gson.fromJson(e.getContent(), FunStructureEntity.class);
                     String priorityName;
-                    lineParagraph = new Paragraph("    "+"功能点名称:" + entity.getFunName(),sTitle);
+                    lineParagraph = new Paragraph("    "+"功能点名称：" + entity.getFunName(),minTitle);
+                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
-                    doc.add(BLANK);
                     if (entity.getPriority() == 1)
                         priorityName = "高";
                     else if (entity.getPriority() == 2)
@@ -317,18 +334,18 @@ public class Template2rtf {
                     else
                         priorityName = "低";
 
-                    lineParagraph = new Paragraph("    "+"优先级:" + priorityName,sTitle);
+                    lineParagraph = new Paragraph("    "+"优先级：" + priorityName,minTitle);
+                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
-                    doc.add(BLANK);
 
-                    lineParagraph = new Paragraph("    "+"功能点描述:",sTitle);
+                    lineParagraph = new Paragraph("    "+"功能点描述：",minTitle);
+                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     tmpline = entity.getDescribe();
                     //doc.add(html2rtf(tmpline));
                     html2rtf(tmpline,doc);
-                    doc.add(BLANK);
 
-                    lineParagraph = new Paragraph("    "+"用例过程:",sTitle);
+                    lineParagraph = new Paragraph("    "+"用例过程：",minTitle);
                     lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     List<FunRole> funRoleList = entity.getFunRoleList();
@@ -338,12 +355,12 @@ public class Template2rtf {
                         lineParagraph.setLeading(24f);
                         doc.add(lineParagraph);
                         if (funRole.getRoleName() != null){
-                            lineParagraph = new Paragraph("    "+"    "+"    "+"参与角色:" + funRole.getRoleName(),black);
+                            lineParagraph = new Paragraph("    "+"    "+"    "+"参与角色：" + funRole.getRoleName(),black);
                             lineParagraph.setLeading(24f);
                             doc.add(lineParagraph);
                         }
                         if (funRole.getRoleDescribe() != null){
-                            lineParagraph = new Paragraph("    "+"    "+"    "+"用例描述:" + funRole.getRoleDescribe(),black);
+                            lineParagraph = new Paragraph("    "+"    "+"    "+"用例描述：" + funRole.getRoleDescribe(),black);
                             lineParagraph.setLeading(24f);
                             doc.add(lineParagraph);
                         }
@@ -363,20 +380,19 @@ public class Template2rtf {
                             lineParagraph.setLeading(24f);
                             doc.add(lineParagraph);
                         }
-                        doc.add(BLANK);
                     }
                     List<FunUsable> funUsableList = entity.getFunUsableList();
                     if (funUsableList.size() != 0) {
-                        lineParagraph = new Paragraph("    "+"全局可用性:",sTitle);
+                        lineParagraph = new Paragraph("    "+"全局可用性：",minTitle);
                         lineParagraph.setLeading(24f);
                         doc.add(lineParagraph);
                         for (int j = 0; j < funUsableList.size(); j++) {
                             FunUsable funUsable = funUsableList.get(j);
                             if(funUsable.getUsableName() != null){
-                                lineParagraph = new Paragraph("    "+"    "+"全局可用性:" + (j + 1),minTitle);
+                                lineParagraph = new Paragraph("    "+"    "+"全局可用性：" + (j + 1),minTitle);
                                 lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
-                                lineParagraph = new Paragraph("    "+"    "+"    "+"全局可用性名称:" + funUsable.getUsableName(),black);
+                                lineParagraph = new Paragraph("    "+"    "+"    "+"全局可用性名称：" + funUsable.getUsableName(),black);
                                 lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
                                 lineParagraph = new Paragraph("    "+"    "+"    " + funUsable.getUsablePara(),black);
@@ -384,36 +400,39 @@ public class Template2rtf {
                                 doc.add(lineParagraph);
                             }
                             else{
-                                lineParagraph = new Paragraph("    "+"    "+"全局安全性:" + (j + 1),minTitle);
+                                lineParagraph = new Paragraph("    "+"    "+"全局安全性：" + (j + 1),minTitle);
                                 lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
-                                lineParagraph = new Paragraph("    "+"    "+"    "+"全局安全性名称:" + funUsable.getSecurityName(),black);
+                                lineParagraph = new Paragraph("    "+"    "+"    "+"全局安全性名称：" + funUsable.getSecurityName(),black);
                                 lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
                                 lineParagraph = new Paragraph("    "+"    "+"    " + funUsable.getSecurityPara(),black);
                                 lineParagraph.setLeading(24f);
                                 doc.add(lineParagraph);
                             }
-                            doc.add(BLANK);
                         }
 
                     }
-                    lineParagraph = new Paragraph("    "+"输入:",sTitle);
+                    lineParagraph = new Paragraph("    "+"输入：",minTitle);
+                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     String inputStr = entity.getInput();
                     //doc.add(html2rtf(inputStr));
                     html2rtf(inputStr,doc);
-                    lineParagraph = new Paragraph("    "+"输出:",sTitle);
+                    lineParagraph = new Paragraph("    "+"输出：",minTitle);
+                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     tmpline = entity.getOutput();
                     //doc.add(html2rtf(tmpline));
                     html2rtf(tmpline,doc);
-                    lineParagraph = new Paragraph("    "+"基本操作流程:",sTitle);
+                    lineParagraph = new Paragraph("    "+"基本操作流程：",minTitle);
+                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     tmpline = entity.getBasic();
                     //doc.add(html2rtf(tmpline));
                     html2rtf(tmpline,doc);
-                    lineParagraph = new Paragraph("    "+"备选操作流程:",sTitle);
+                    lineParagraph = new Paragraph("    "+"备选操作流程：",minTitle);
+                    lineParagraph.setLeading(24f);
                     doc.add(lineParagraph);
                     tmpline = entity.getAlternative();
                     //doc.add(html2rtf(tmpline));
