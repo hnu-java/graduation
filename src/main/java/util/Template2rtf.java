@@ -34,14 +34,9 @@ public class Template2rtf {
     String path = request.getContextPath();
     String basePath1 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
     private static final com.lowagie.text.Paragraph BLANK = new com.lowagie.text.Paragraph(" ");
-    BaseFont English =
-            BaseFont.createFont(basePath1+"/fonts/ARIALUNI.TTF",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-    BaseFont htChinese =
-            BaseFont.createFont(basePath1+"/fonts/simhei.ttf",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-    BaseFont ktChinese =
-            BaseFont.createFont(basePath1+"/fonts/STKAITI.TTF",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-    BaseFont stChinese =
-            BaseFont.createFont(basePath1+"/fonts/simsun.ttc,0",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+    BaseFont stChinese;
+//    BaseFont stChinese =
+//            BaseFont.createFont(basePath1+"/fonts/simsun.ttc,0",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
     Font First_title = new Font(stChinese, 18, Font.NORMAL, new Color(0,0,0));
     Font Second_title = new Font(stChinese, 7, Font.BOLD,new Color(0,0,0));
     Font black = new Font(stChinese, 12, Font.NORMAL,new Color(0,0,0));//小四
@@ -67,7 +62,7 @@ public class Template2rtf {
             temStr = temStr.replaceAll(", ","");
             temStr = temStr.substring(1,temStr.length() - 1);
             temStr = temStr.replaceAll("1!~o#do=u-ha`o:",",");
-            for(;temStr.length()!=0;){
+            for(;temStr.length()>0;){
                 int num = img_location(temStr);
                 if(num==0){//图片在开头
                     //System.out.println(temStr);
@@ -147,22 +142,22 @@ public class Template2rtf {
         }
         //文档名称
         String name = catalogDao.getCatalogName(id_document);
-        Paragraph p = new Paragraph(name,new Font(htChinese,26,Font.NORMAL,new Color(0,0,0)));//黑体一号
+        Paragraph p = new Paragraph(name,new Font(stChinese,26,Font.NORMAL,new Color(0,0,0)));//黑体一号
         p.setSpacingBefore(6);
         p.setAlignment(Element.ALIGN_RIGHT);
         p.setSpacingAfter(6);
         doc.add(p);
-        Paragraph p1 = new Paragraph("需求规格说明书",new Font(ktChinese,24,Font.NORMAL,new Color(0,0,0)));//楷体小一
+        Paragraph p1 = new Paragraph("需求规格说明书",new Font(stChinese,24,Font.NORMAL,new Color(0,0,0)));//楷体小一
         p1.setSpacingBefore(6);
         p1.setAlignment(Element.ALIGN_RIGHT);
         p1.setSpacingAfter(6);
-        Paragraph linefeed = new Paragraph("",new Font(ktChinese,24,Font.NORMAL,new Color(0,0,0)));
+        Paragraph linefeed = new Paragraph("",new Font(stChinese,24,Font.NORMAL,new Color(0,0,0)));
         p1.add(linefeed);
         doc.add(p1);
         //版本号
         DocumentEntity documentEntity = documentDao.getOne(id_document);
         double version = documentEntity.getVersion();
-        Paragraph v = new Paragraph(String.valueOf("Version "+ version),new Font(English,14,Font.NORMAL,new Color(0,0,0)));
+        Paragraph v = new Paragraph(String.valueOf("Version "+ version),new Font(stChinese,14,Font.NORMAL,new Color(0,0,0)));
         v.setSpacingBefore(6);
         v.setAlignment(Element.ALIGN_RIGHT);
         v.setSpacingAfter(6);
@@ -175,7 +170,7 @@ public class Template2rtf {
         String org_name = showOrgProjectDao.getOrgName(id_document);
         //System.out.println(org_name+" "+id_document);
         if (org_name != null && org_name != "") {
-            paragraph = new Paragraph(org_name,new Font(htChinese,14,Font.NORMAL,new Color(0,0,0)));
+            paragraph = new Paragraph(org_name,new Font(stChinese,14,Font.NORMAL,new Color(0,0,0)));
             paragraph.setSpacingBefore(6);
             paragraph.setAlignment(Element.ALIGN_RIGHT);
             paragraph.setSpacingAfter(6);
@@ -185,7 +180,7 @@ public class Template2rtf {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(new java.util.Date().getTime());
         String tmp = formatter.format(date);
-        paragraph = new Paragraph(tmp,new Font(htChinese,14,Font.NORMAL,new Color(0,0,0)));
+        paragraph = new Paragraph(tmp,new Font(stChinese,14,Font.NORMAL,new Color(0,0,0)));
         paragraph.setSpacingBefore(6);
         paragraph.setAlignment(Element.ALIGN_RIGHT);
         paragraph.setSpacingAfter(6);

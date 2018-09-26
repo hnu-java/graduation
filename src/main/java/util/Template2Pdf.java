@@ -329,14 +329,8 @@ public class Template2Pdf {
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
     String basePath1 = request.getScheme()+"://"+"www.easysrs.cn";
-    BaseFont English =
-            BaseFont.createFont(basePath+"/fonts/ARIALUNI.TTF",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-    BaseFont htChinese =
-            BaseFont.createFont(basePath+"/fonts/simhei.ttf",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-    BaseFont ktChinese =
-            BaseFont.createFont(basePath+"/fonts/STKAITI.TTF",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
     BaseFont stChinese =
-            BaseFont.createFont(basePath+"/fonts/simsun.ttc,0",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            BaseFont.createFont(basePath+"/fonts/STSONG.TTF",BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
     com.lowagie.text.Font First_title = new com.lowagie.text.Font(stChinese, 18, Font.BOLD, new Color(0, 0, 0));//宋体三号
     com.lowagie.text.Font Second_title = new com.lowagie.text.Font(stChinese, 15, Font.BOLD, new Color(0, 0, 0));//宋体小三
     com.lowagie.text.Font Other_title = new com.lowagie.text.Font(stChinese, 14, com.lowagie.text.Font.NORMAL, new Color(0, 0, 0));//宋体四号
@@ -345,7 +339,7 @@ public class Template2Pdf {
     com.lowagie.text.Font black = new com.lowagie.text.Font(stChinese, 12, Font.NORMAL, new Color(0, 0, 0));//宋体小四
     com.lowagie.text.Font sTitle = new com.lowagie.text.Font(stChinese, 14, com.lowagie.text.Font.BOLD, new Color(0, 0, 0));//宋体四号加粗
     com.lowagie.text.Font minTitle = new com.lowagie.text.Font(stChinese, 12, com.lowagie.text.Font.BOLD, new Color(0, 0, 0));//宋体小四加粗
-    com.lowagie.text.Font Title = new com.lowagie.text.Font(ktChinese, 24, Font.NORMAL, new Color(0, 0, 0));//楷体小一
+    com.lowagie.text.Font Title = new com.lowagie.text.Font(stChinese, 24, Font.NORMAL, new Color(0, 0, 0));//楷体小一
 
 
     public com.lowagie.text.Paragraph html2pdf(String tmpline,Document doc) throws DocumentException, IOException {
@@ -367,7 +361,7 @@ public class Template2Pdf {
             temStr = temStr.replaceAll("1!~o#do=u-ha`o:",",");
             String src;
             com.lowagie.text.Image img;
-            for(;temStr.length()!=0;){
+            for(;temStr.length()>0;){
                 int num = img_location(temStr);
                 if(num==0){//图片在开头
                     src = temStr;
@@ -446,7 +440,7 @@ public class Template2Pdf {
         }
         //文档名称
         String name = catalogDao.getCatalogName(id_document);
-        Paragraph p = new Paragraph(name,new Font(htChinese,26,Font.NORMAL,new Color(0,0,0)));//黑体一号
+        Paragraph p = new Paragraph(name,new Font(stChinese,26,Font.NORMAL,new Color(0,0,0)));//黑体一号
         p.setSpacingBefore(6);
         p.setAlignment(com.itextpdf.text.Element.ALIGN_RIGHT);
         p.setSpacingAfter(6);
@@ -461,7 +455,7 @@ public class Template2Pdf {
         //版本号
         DocumentEntity documentEntity = documentDao.getOne(id_document);
         double version = documentEntity.getVersion();
-        Paragraph v = new Paragraph(String.valueOf("Version "+ version),new Font(English,14,Font.NORMAL,new Color(0,0,0)));
+        Paragraph v = new Paragraph(String.valueOf("Version "+ version),new Font(stChinese,14,Font.NORMAL,new Color(0,0,0)));
         v.setSpacingBefore(6);
         v.setAlignment(com.itextpdf.text.Element.ALIGN_RIGHT);
         v.setSpacingAfter(6);
@@ -474,7 +468,7 @@ public class Template2Pdf {
         String org_name = showOrgProjectDao.getOrgName(id_document);
         System.out.println(org_name + " " + id_document);
         if (org_name != null && org_name != "") {
-            paragraph = new Paragraph(org_name,new Font(htChinese,14,Font.NORMAL,new Color(0,0,0)));//黑体四号
+            paragraph = new Paragraph(org_name,new Font(stChinese,14,Font.NORMAL,new Color(0,0,0)));//黑体四号
             paragraph.setSpacingBefore(6);
             paragraph.setAlignment(com.itextpdf.text.Element.ALIGN_RIGHT);
             paragraph.setSpacingAfter(6);
@@ -484,7 +478,7 @@ public class Template2Pdf {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(new java.util.Date().getTime());
         String tmp = formatter.format(date);
-        paragraph = new Paragraph(tmp,new Font(htChinese,14,Font.NORMAL,new Color(0,0,0)));//黑体四号
+        paragraph = new Paragraph(tmp,new Font(stChinese,14,Font.NORMAL,new Color(0,0,0)));//黑体四号
         paragraph.setSpacingBefore(6);
         paragraph.setAlignment(com.itextpdf.text.Element.ALIGN_RIGHT);
         paragraph.setSpacingAfter(6);
