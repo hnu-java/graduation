@@ -48,7 +48,7 @@
     <div class="col-md-12 form-group" style="margin-top:6%">
         <div class="col-md-2 col-md-offset-2">
             <a href="user-jmpCurrentProjectList">
-                <img src="<%=basePath %>/img/Home1_change.png" style="height:160px; width:160px;border-radius:10%"><br/>
+                <img src="<%=basePath %>/img/Home2_change.jpg" style="height:160px; width:160px;border-radius:10%"><br/>
             </a>
             <span style="display:block;margin:20px 0 0 0;color:#658387;font-size:18px;font-weight:bold">当前项目</span>
             <span style="color:black">目前有</span>
@@ -64,7 +64,7 @@
         </div>
         <div class="col-md-2">
             <a href="user-jmpCompletedProjectList">
-                <img src="<%=basePath %>/img/Home2_change.jpg" style="height:160px; width:160px;border-radius:10%"><br/>
+                <img src="<%=basePath %>/img/Home1_change.png" style="height:160px; width:160px;border-radius:10%"><br/>
             </a>
             <span style="display:block;margin:20px 0 0 0;color:#658387;font-size:18px;font-weight:bold">历史项目</span>
             <span style="color:black">完成了</span>
