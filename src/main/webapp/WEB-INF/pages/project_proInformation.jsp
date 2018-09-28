@@ -178,7 +178,7 @@
                         <dd><h3><s:property value="#session.PM.name"/></h3></dd>
 
                         <dt><h3>创建时间：</h3></dt>
-                        <dd><h3><s:property value="#session.project.date"/></h3></dd>
+                        <dd><h3><s:property value="#session.project_date"/></h3></dd>
 
                         <dt><h3>项目简介：</h3></dt>
                         <dd><p style="font-size: 14px;font-family: Arial"><s:property value="#session.project.intro"/></p></dd>

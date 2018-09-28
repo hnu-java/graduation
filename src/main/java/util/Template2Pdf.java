@@ -320,7 +320,7 @@ import java.util.List;
 //    }
 //}
 
-//有页眉页脚无中文
+//有页眉页脚有中文 服务器上超时
 public class Template2Pdf {
 
 
@@ -536,7 +536,6 @@ public class Template2Pdf {
             lineParagraph.setAlignment(Element.ALIGN_LEFT);
             doc.add(lineParagraph);
         }
-        doc.newPage();
 
         for (CatalogEntity e : catalogEntityList) {
             line = e.getTitle() + "  ";
@@ -558,6 +557,7 @@ public class Template2Pdf {
                 lineParagraph.setSpacingAfter(6);
             } else //第一级目录
             {
+                doc.newPage();
                 line = "第"+e.getFirst_index() + "章  " + line;
                 isFirstIndex = true;
                 lineParagraph = new com.lowagie.text.Paragraph(line, First_title);

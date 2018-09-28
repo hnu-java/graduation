@@ -198,11 +198,12 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
 
         int rank = projectDao.getRank(id_Project,user.getId_user());
         DocumentDao documentDao = new DocumentDaoImp();
-        int version = documentDao.getVersion(id_Project);
-        session.put("version",version);
+        double version = documentDao.getVersion(id_Project);
+        session.put("version",String.valueOf(version));
         session.put("rank",rank);
         session.put("PM",pm);
         session.put("project",project);
+        session.put("project_date",String.valueOf(project.getDate()));
 //        OrganizationDao organizationDao = new OrganizationDaoImp();
 //        if (project.getOrgName() != null){
 //            int days = organizationDao.days(project.getOrgName());

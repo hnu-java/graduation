@@ -243,7 +243,6 @@ public class Template2rtf {
             lineParagraph.setAlignment(Element.ALIGN_LEFT);
             doc.add(lineParagraph);
         }
-        doc.newPage();
 
         for (CatalogEntity e : catalogEntityList) {
             line = e.getTitle() + "  ";
@@ -268,6 +267,7 @@ public class Template2rtf {
             }
             else //第一级目录
             {
+                doc.newPage();
                 line = "第"+e.getFirst_index() + "章  " + line;
                 isFirstIndex = true;
                 lineParagraph = new Paragraph(line,new Font(stChinese,18,Font.BOLD,new Color(0,0,0)));
