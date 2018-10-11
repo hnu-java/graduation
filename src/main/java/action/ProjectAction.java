@@ -122,7 +122,6 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     }
 
     public String showOrg(){
-        System.out.println("start");
         dataMap = new HashMap<>();
         OrganizationDao organizationDao = new OrganizationDaoImp();
         UserEntity sessionUser=(UserEntity)session.get("user");
