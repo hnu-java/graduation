@@ -438,7 +438,7 @@
         var permissions = $(this).attr("myPermissions");
             swal(
                 {
-                    title: "编辑图文构件",
+                    title: "编辑用户构件",
                     text: "用户名 必填<input type='text' name='myinput' id='roleName1' value = '"+roleName+"'>"
                         +"用户描述 必填<input type='text' name='myinput' id='describe1' value = '"+describe+"'>"
                         +"用户权限 必填<input type='text' name='myinput' id='permissions1' value = '"+permissions+"'>",
