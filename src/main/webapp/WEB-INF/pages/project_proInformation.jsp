@@ -364,6 +364,12 @@
                     title: '用户名',
                     sortable: true,
                     align: 'center'
+                },
+                {
+                    field: 'realname',
+                    title: '真实姓名',
+                    sortable: true,
+                    align: 'center'
                 },{
                     field: 'rank',
                     title: '职务',

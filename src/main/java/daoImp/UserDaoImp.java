@@ -141,11 +141,11 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
         else return false;
     }
 
-    public boolean registration(String name, String password1, String password2, String mail) {
+    public boolean registration(String name, String password1, String password2, String mail,Date registrationtime) {
         String sql8="select points from points_rule where id_rule = ?";
         int points = getForValue(sql8,3);
         int days = getForValue(sql8,4);
-        String sql = "insert into USER(NAME,PASSWORD,MAIL,POINTS,deadline) values(?,?,?,?,?)";
+        String sql = "insert into USER(NAME,PASSWORD,MAIL,POINTS,deadline,registrationtime) values(?,?,?,?,?,?)";
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = new Date();
@@ -156,7 +156,7 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
                 c.setTime(date);
                 c.add(Calendar.DATE,days);
                 date = c.getTime();
-                updateThrowException(sql, name, password1,mail,points,date);
+                updateThrowException(sql, name, password1,mail,points,date,registrationtime);
             }catch (SQLException e) {
                 e.printStackTrace();
                 return false;
@@ -198,10 +198,10 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
             return false;
     }
 
-    public boolean edit(String username, String qq, String address, String tel, String introduce, String gender) {
-        String sql = "update USER set qq=?,address=?,tel=?,introduce=?,gender=? where name=?";
-        System.out.println(username + qq + address  + tel + introduce + gender);
-        update(sql, qq, address, tel, introduce, gender, username);
+    public boolean edit(String username, String qq, String realname, String address, String tel, String introduce, String gender) {
+        String sql = "update USER set qq=?,realname=?,address=?,tel=?,introduce=?,gender=? where name=?";
+        System.out.println(username + qq + realname + address  + tel + introduce + gender);
+        update(sql, qq, realname , address, tel, introduce, gender, username);
         return true;
     }
 
@@ -240,6 +240,22 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
         String sql="select count(*) from ORGANIZATION where ID_USER=?";
         int count = Integer.valueOf(getForValue(sql,id).toString());
         return count;
+    }
+
+    /*
+       个人中心处修改密码
+     */
+    public boolean changepwd(String oldpwd, String newpwd, String username) {
+        String sql = "select password from User where name=?";
+        System.out.println("DaoImp");
+        System.out.println("输入密码为"+oldpwd+"   正确的为"+getForValue(sql,username).toString());
+        if (oldpwd.equals(getForValue(sql,username).toString())) {
+            String sql1 = "update USER set password=? where name=?";
+            update(sql1, newpwd, username);
+            return true;
+        }
+        else
+            return false;
     }
 
     @Override

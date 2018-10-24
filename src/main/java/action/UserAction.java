@@ -41,6 +41,9 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     private String newPassword;
     private Map<String, Object> dataMap;
     private String verification;
+    private String oldpassword;
+    private String firstpassword;
+    private String secondpassword;
 
     public String login() throws ParseException {
         dataMap = new HashMap<String, Object>();
@@ -131,7 +134,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         String sessionVerification=Integer.toString(temp);
         verification = Integer.toString(user.getVerification()) ;
         if(sessionVerification.equals(verification) && verification!="") {
-            boolean res = userDao.registration(user.getName(), user.getPassword(), tempPassword, user.getMail());
+            boolean res = userDao.registration(user.getName(), user.getPassword(), tempPassword, user.getMail(),new Date());
             dataMap.put("res", res);
         }
         else{
@@ -163,7 +166,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         dataMap = new HashMap<String, Object>();
         userDao = new UserDaoImp();
         UserEntity seesionUser=(UserEntity)session.get("user");
-        boolean res=userDao.edit(seesionUser.getName(),user.getQq(),user.getAddress(),user.getTel(),user.getIntroduce(),user.getGender());
+        boolean res=userDao.edit(seesionUser.getName(),user.getQq(),user.getRealname(),user.getAddress(),user.getTel(),user.getIntroduce(),user.getGender());
         dataMap.put("res", res);
         if(res==true) {
             user = userDao.getOne(seesionUser.getName());
@@ -172,6 +175,26 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         }
         return "success";
     }
+
+    public String changePassword() throws ParseException {
+        System.out.println("start changepassword");
+        dataMap = new HashMap<String, Object>();
+        userDao = new UserDaoImp();
+        UserEntity seesionUser=(UserEntity)session.get("user");
+        if(firstpassword.equals(secondpassword) && firstpassword!="") {
+            System.out.println("用户"+seesionUser.getName()+"将密码"+oldpassword+"改为"+firstpassword);
+            boolean res = userDao.changepwd(oldpassword,firstpassword,seesionUser.getName());
+            dataMap.put("res", res);
+        }
+        else{
+            String res="error";
+            dataMap.put("consequence",res);
+        }
+        return SUCCESS;
+    }
+
+
+
     public String postVerification(){
         userDao = new UserDaoImp();
         dataMap = new HashMap<String, Object>();
@@ -385,6 +408,15 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
     }
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
+    }
+    public void setOldpassword(String oldpassword) {
+        this.oldpassword = oldpassword;
+    }
+    public void setFirstpassword(String firstpassword) {
+        this.firstpassword = firstpassword;
+    }
+    public void setSecondpassword(String secondpassword) {
+        this.secondpassword = secondpassword;
     }
     public void setVerification(String verification) {
         this.verification = verification;

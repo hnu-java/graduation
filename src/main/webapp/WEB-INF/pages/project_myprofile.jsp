@@ -46,9 +46,10 @@
             <div>
                 <div class="ibox-title">
                     <div style="float: left;margin-left: 5px"><span><strong>基本资料</strong></span></div>
-                    <div id="test1" style="float: left;margin-left: 10px;width: 70px"><button type="button" class="btn btn-custom btn-xs" data-toggle="modal" data-target="#myModal">修改资料</button></div>
+                    <div id="test1" style="float: left;margin-left: 10px"><button type="button" class="btn btn-custom btn-xs" data-toggle="modal" data-target="#myModal">修改资料</button></div>
                     <%--<div id="test2" style="float: left;width: 70px"><a href="user-jmpPayment"><button type="button" class="btn btn-custom btn-xs" >积分充值</button></a></div>--%>
-                    <div id="test3" style="float: left"><a href="user-jmpPointsRecord"><button type="button" class="btn btn-custom btn-xs" >积分记录</button></a></div>
+                    <div id="test3" style="float: left;margin-left: 10px"><a href="user-jmpPointsRecord"><button type="button" class="btn btn-custom btn-xs" >积分记录</button></a></div>
+                    <div id="test4" style="float: left;margin-left: 10px"><button type="button" class="btn btn-custom btn-xs" data-toggle="modal" data-target="#changepassword">修改密码</button></div>
                 </div>
                 <div style="padding-left: 80px" class="ibox-content">
                 <table class="table" style="width:400px;border-left: none;border-right: none">
@@ -66,6 +67,17 @@
                                 <s:else>
                                     <img style="height: 30px;width: 30px" src="<%=basePath%>/img/doublesex.png">
                                 </s:else>
+                        </th>
+                    </tr>
+                    <tr >
+                        <th style="width: 150px;text-align: center">真实姓名:</th>
+                        <th>
+                            <s:if test='#session.user.realname==""'>
+                                <s:property value="" default="-" />
+                            </s:if>
+                            <s:else>
+                                <s:property value="#session.user.realname"/>
+                            </s:else>
                         </th>
                     </tr>
                     <tr >
@@ -131,6 +143,17 @@
                             </s:if>
                             <s:else>
                                 <s:property value="#session.user.points"/>
+                            </s:else>
+                        </th>
+                    </tr>
+                    <tr >
+                        <th style="width: 150px;text-align: center">注册时间:</th>
+                        <th>
+                            <s:if test='#session.user.registrationtime==""'>
+                                <s:property value="" default="-" />
+                            </s:if>
+                            <s:else>
+                                <s:property value="#session.user.registrationtime"/>
                             </s:else>
                         </th>
                     </tr>
@@ -230,6 +253,16 @@
                         </s:else>
                                class="form-control" required="">
                     </div>
+                    <div class="form-group"><label>真实姓名</label>
+                        <input id="realname" type="text" maxlength="20"
+                        <s:if test='#session.user.realname==""'>
+                               placeholder="请输入真实姓名(不超过20个字符)"
+                        </s:if>
+                        <s:else>
+                               value="<s:property value="#session.user.realname"/>"
+                        </s:else>
+                               class="form-control" required="">
+                    </div>
                     <div class="form-group"><label>所在地</label>
                         <input id="address" type="text" maxlength="40"
                         <s:if test='#session.user.address==""'>
@@ -278,6 +311,43 @@
             </div>
         </div>
     </div>
+
+
+    <div  class="modal inmodal" id="changepassword" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                    </button>
+                    <h4 class="modal-title">修改密码</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group"><label>原密码</label>
+                        <input id="oldpwd" type="password" maxlength="22"
+                               placeholder="请输入原密码"
+                               class="form-control" required="">
+                    </div>
+                    <div class="form-group"><label>新密码</label>
+                        <input id="newpwd1" type="password" maxlength="22"
+                               placeholder="请设置新密码（长度为6-22个字符）"
+                               class="form-control" required="">
+                    </div>
+                    <div class="form-group"><label>确认密码</label>
+                        <input id="newpwd2" type="password" maxlength="22"
+                               placeholder="请再次输入新密码"
+                               class="form-control" required="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                    <button id="change-button" type="button" class="btn btn-primary">更改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 </div>
 <script src="<%=basePath%>/js/jquery.min.js?v=2.1.4"></script>
 <script src="<%=basePath%>/js/bootstrap.min.js?v=3.3.6"></script>
@@ -291,6 +361,7 @@
 <script src="<%=basePath%>/js/plugins/sweetalert/sweetalert.min.js"></script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 <script src="<%=basePath%>/js/mjy.js"></script>
+<script src="<%=basePath%>/js/md5.js"></script>
 <script src="<%=basePath%>/js/plugins/suggest/bootstrap-suggest.min.js"></script>
 <script src="<%=basePath%>/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 </body>
@@ -311,6 +382,7 @@
                     url: "user-editProfile",
                     data: {
                         qq: $("input#qq").val(),
+                        realname: $("input#realname").val(),
                         address: $("input#address").val(),
                         tel: $("input#mytel").val(),
                         introduce: $("input#introduce").val(),
@@ -329,15 +401,82 @@
                             },function(){
                                 location.href = "user-jmpMyProfile";
                             })
-                    }
-                        else swal("修改失败！", "操作失败", "success");
+                        }
+                        else swal("修改失败！", "服务器错误", "error");
                     },
                     error: function () {
-                            swal("修改失败！", "请检查你的网络", "success");
+                        swal("修改失败！", "请检查你的网络", "error");
                     }
                 })
             })
-    })
+    });
+
+    $("button#change-button").click(function (){
+
+        var md5PWD1 = $("input#oldpwd").val();
+        var temp1 = hex_md5(md5PWD1);
+
+        var md5PWD2 = $("input#newpwd1").val();
+        if (md5PWD2.length < 6 || md5PWD2.length > 22) {
+            swal("修改失败！", "密码长度不符合要求", "error");
+            return false
+        }
+        var temp2 = hex_md5(md5PWD2);
+
+        var md5PWD3 = $("input#newpwd2").val();
+        if (md5PWD3.length < 6 || md5PWD3.length > 22) {
+            swal("修改失败！", "密码长度不符合要求", "error");
+            return false
+        }
+        var temp3 = hex_md5(md5PWD3);
+
+        swal(
+            {
+                title: "您确认保存本次修改吗？",
+                text: "确认请点击保存",
+                type: "",
+                showCancelButton: true,
+                confirmButtonColor: "#18a689",
+                confirmButtonText: "更改",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            },function () {
+                $.ajax({
+                    url: "user-changePassword",
+                    data: {
+                        oldpassword: temp1,
+                        firstpassword: temp2,
+                        secondpassword: temp3
+                    },
+                    dataType: "json",
+                    type: "Post",
+                    async: "false",
+                    success: function (result) {
+                        if (result.consequence === "error") {
+                            swal("修改失败！", "两次输入新密码不同", "error")
+                        }
+                        else if(result.res === true) {
+                            swal({
+                                title: "修改成功",
+                                type:"success",
+                                confirmButtonColor: "#18a689",
+                                confirmButtonText: "OK"
+                            },function(){
+                                location.href = "user-jmpMyProfile";
+                            })
+                        }
+                        else if(result.res === false)
+                            swal("修改失败！", "原密码错误", "error");
+                    },
+                    error: function () {
+                        swal("修改失败！", "请检查你的网络", "error");
+                    }
+                })
+            })
+    });
+
+
+
     $("button#newOrg-button").click(function (){
         var org_name=$("input#org_name").val();
         console.log(org_name);
@@ -392,7 +531,7 @@
                     })
                 })
         }
-    })
+    });
 
     $("button#joinOrg-button").click(function () {
         var join_org_name = $("input#join_org_name");
@@ -555,4 +694,5 @@
     };
 
 </script>
+
 </html>

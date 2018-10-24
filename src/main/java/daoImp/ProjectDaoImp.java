@@ -87,7 +87,7 @@ public class ProjectDaoImp extends DAO<ProjectEntity> implements ProjectDao {
 
     @Override
     public List<UserEntity> getMember(ProjectEntity p) {
-        String sql="select USER.ID_USER, USER.NAME, MAIL, TEL, RANK from USER, VIEW_projectMember where USER.ID_USER=VIEW_projectMember.ID_USER and ID_PROJECT=? order by rank";
+        String sql="select USER.ID_USER, USER.NAME, USER.REALNAME, MAIL, TEL, RANK from USER, VIEW_projectMember where USER.ID_USER=VIEW_projectMember.ID_USER and ID_PROJECT=? order by rank";
         UserDaoImp userDao = new UserDaoImp();
         List<UserEntity> members = userDao.getForList(sql,p.getId_Project());
         return members;

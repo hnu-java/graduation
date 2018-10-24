@@ -12,6 +12,7 @@ public class UserEntity {
     private int verification;
     private String password;
     private String name;
+    private String realname;
     private String gender;
     private String address;
     private String introduce;
@@ -19,6 +20,7 @@ public class UserEntity {
     private String mail;
     private String qq;
     private String tel;
+    private Date registrationtime;
     private int status;
     private int rank;
     private int flag;
@@ -66,6 +68,14 @@ public class UserEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
     }
 
     public String getGender() {
@@ -118,6 +128,14 @@ public class UserEntity {
 
     public String getTel() {
         return tel;
+    }
+
+    public Date getRegistrationtime() {
+        return registrationtime;
+    }
+
+    public void setRegistrationtime(Date registrationtime) {
+        this.registrationtime = registrationtime;
     }
 
     public void setTel(String tel) {
@@ -180,11 +198,12 @@ public class UserEntity {
         this.photo = photo;
     }
 
-    public UserEntity(int id_user, int verification, String password, String name, String gender, String address, String introduce, java.sql.Date dob, String mail, String qq, String tel, int status, int rank, int flag, int points, Date deadline, int days, String photo, int id_session) {
+    public UserEntity(int id_user, int verification, String password, String name, String realname, String gender, String address, String introduce, java.sql.Date dob, String mail, String qq, String tel, Date registrationtime, int status, int rank, int flag, int points, Date deadline, int days, String photo, int id_session) {
         this.id_user = id_user;
         this.verification = verification;
         this.password = password;
         this.name = name;
+        this.realname = realname;
         this.gender = gender;
         this.address = address;
         this.introduce = introduce;
@@ -192,6 +211,7 @@ public class UserEntity {
         this.mail = mail;
         this.qq = qq;
         this.tel = tel;
+        this.registrationtime = registrationtime;
         this.status = status;
         this.rank = rank;
         this.flag = flag;
