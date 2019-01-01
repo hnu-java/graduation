@@ -303,9 +303,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         session.put("countnow",userDao.projectNumberNow(user.getId_user()));
         session.put("counthistory",userDao.projectNumberHistory(user.getId_user()));
         session.put("nowNews",userDao.nowNews(user.getId_user()));
-        int Mycollectcount = userDao.Mycollectcount((((UserEntity)session.get("user")).getId_user()));
-        session.put("Mycollectcount",Mycollectcount);
-        return "homePage";
+              return "homePage";
     }
 
     public String jmpHomepage(){
@@ -315,8 +313,6 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         session.put("counthistory",userDao.projectNumberHistory(user.getId_user()));
         session.put("nowNews",userDao.nowNews(user.getId_user()));
         dataMap = new HashMap<String, Object>();
-        int Mycollectcount = userDao.Mycollectcount((((UserEntity)session.get("user")).getId_user()));
-        session.put("Mycollectcount",Mycollectcount);
         return "homePage";
     }
 

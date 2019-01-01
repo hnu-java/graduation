@@ -1,19 +1,17 @@
 package action;
 
 import com.google.gson.Gson;
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
-import dao.LibraryDao;
 import dao.StructureDao;
+import dao.UserDao;
 import daoImp.LibraryDaoImp;
 import daoImp.StructureDaoImp;
+import daoImp.sha_StructureDaoImp;
 import entity.*;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,81 +21,117 @@ import java.util.Map;
  *
  * @author MJY
  */
-public class TemplateLibAction extends ActionSupport implements RequestAware, SessionAware, ModelDriven<LibraryEntity>, Preparable {
+public class TemplateLibAction extends ActionSupport implements RequestAware, SessionAware, ModelDriven<entity.StructureEntity>, Preparable {
     private Map<String,Object> request;
     private Map<String,Object> session;
-    LibraryDao libraryDao;
+    private StructureDao StructureDao;
     StructureDao structureDao;
-    LibraryEntity libraryEntity;
+    //  LibraryEntity libraryEntity;
+    entity.StructureEntity StructureEntity;
     private Map<String, Object> dataMap;
-
-    public String getTypeOfLib(){
-        libraryDao=new LibraryDaoImp();
-        dataMap=new HashMap<>();
-        UserEntity seesionUser=(UserEntity)session.get("user");
-        List<LibraryEntity> list=libraryDao.getTypeOfLib(seesionUser.getId_user(),libraryEntity.getId_template());
-        dataMap.put("libraryList",list);
-        return "Re";
-    }
-
-    public String getTypeOfUserLib(){
-        libraryDao=new LibraryDaoImp();
-        dataMap=new HashMap<>();
-        UserEntity seesionUser=(UserEntity)session.get("user");
-        int id_project = (int)session.get("projectId");
-        List<LibraryEntity> list=libraryDao.getTypeOfUserLib(seesionUser.getId_user(),libraryEntity.getId_template(),id_project);
-        dataMap.put("libraryList",list);
-        return "Re";
-    }
-
-    public String getTypeOfOneLib(){
-        libraryDao=new LibraryDaoImp();
-        dataMap=new HashMap<>();
-        UserEntity seesionUser=(UserEntity)session.get("user");
-        int id_project = (int)session.get("projectId");
-        List<LibraryEntity> list = libraryDao.getTypeOfOneLib(seesionUser.getId_user(),libraryEntity.getId_template());
-        dataMap.put("libraryList",list);
-        return "Re";
-    }
-    public  String getStructure(){
+    //int ID_User = user.getId_user();
+    public  String getStructure2(){
         structureDao=new StructureDaoImp();
         dataMap=new HashMap<>();
-        List<StructureEntity> list=structureDao.getAll(libraryEntity.getId_library());
-        int id_template=libraryEntity.getId_template();
+        List<entity.StructureEntity> list2=structureDao.getAll2(StructureEntity.getId_template());
+        int id_template=StructureEntity.getId_template();
         Gson gson=new Gson();
-       if(id_template==1){
+        String json = gson.toJson(list2);
+        System.out.println(json);
+        dataMap.put("res",json);
+     /*   if(id_template==1){
+            List<CommonStructureEntity> structureList2=new ArrayList<>();
+            for (int i=0;i<list2.size();i++){
+                structureList2.add(gson.fromJson(list2.get(i).getContent(), CommonStructureEntity.class));
+                System.out.println(structureList2);
+                dataMap.put("structureList2",structureList2);
+            }
+            System.out.println("1234343");
+            System.out.println(structureList2.size());
+            System.out.println("1234343");
+           System.out.println(list2.size());
+
+            System.out.println("1234343");
+
+        }
+        else if(id_template==2){
+            List<UserStructureEntity> structureList2=new ArrayList<>();
+            for (int i=0;i<list2.size();i++){
+                structureList2.add(gson.fromJson(list2.get(i).getContent(), UserStructureEntity.class));
+                dataMap.put("structureList2",structureList2);
+            }
+            System.out.println(list2.size());
+        }
+        else if(id_template==3){
+            List<FunStructureEntity> structureList2=new ArrayList<>();
+            for (int i=0;i<list2.size();i++){
+                structureList2.add(gson.fromJson(list2.get(i).getContent(), FunStructureEntity.class));
+                dataMap.put("structureList2",structureList2);
+            }
+            System.out.println(list2.size());
+        }
+           */
+        return "Re";
+    }
+  /*   public String getStructure1(){
+         structureDao=new StructureDaoImp();
+         dataMap=new HashMap<>();
+         List<entity.StructureEntity> list3=structureDao.getAll(StructureEntity.getId_template());
+        // int id_template=StructureEntity.getId_template();
+         Gson gson=new Gson();
+         String json = gson.toJson(list3);
+         dataMap.put("res",json);
+         return "Re";
+     }  */
+
+    public  String getStructure(){
+        // int ID_User = user.getId_user();
+        structureDao=new StructureDaoImp();
+        dataMap=new HashMap<>();
+        List<entity.StructureEntity> list=structureDao.getAll(StructureEntity.getId_template());
+        int id_template=StructureEntity.getId_template();
+        Gson gson=new Gson();
+        String json = gson.toJson(list);
+        System.out.println("2222222");
+        System.out.println(json);
+        System.out.println("111111111");
+        dataMap.put("res",json);
+
+  /*     if(id_template==1){
            List<CommonStructureEntity> structureList=new ArrayList<>();
            for (int i=0;i<list.size();i++){
                structureList.add(gson.fromJson(list.get(i).getContent(),CommonStructureEntity.class));
                dataMap.put("structureList",structureList);
            }
+           System.out.println(structureList.size());
        }
        else if(id_template==2){
            List<UserStructureEntity> structureList=new ArrayList<>();
            for (int i=0;i<list.size();i++){
-               structureList.add(gson.fromJson(list.get(i).getContent(),UserStructureEntity.class));
+               structureList.add(gson.fromJson(list.get(i).getContent(), UserStructureEntity.class));
                dataMap.put("structureList",structureList);
            }
        }
        else if(id_template==3){
            List<FunStructureEntity> structureList=new ArrayList<>();
            for (int i=0;i<list.size();i++){
-               structureList.add(gson.fromJson(list.get(i).getContent(),FunStructureEntity.class));
+               structureList.add(gson.fromJson(list.get(i).getContent(), FunStructureEntity.class));
                dataMap.put("structureList",structureList);
            }
-       }
+       }  */
 
         return "Re";
     }
 
+
     @Override
-    public LibraryEntity getModel() {
-        return libraryEntity;
+    public entity.StructureEntity getModel() {
+        return StructureEntity;
     }
 
     @Override
     public void prepare() throws Exception {
-        libraryEntity=new LibraryEntity();
+        StructureEntity=new StructureEntity();
     }
 
     public Map<String, Object> getDataMap() {

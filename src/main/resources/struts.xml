@@ -196,17 +196,12 @@
             <result name="success" type="json">
                 <param name="root">dataMap</param>
             </result>
-            <result name="getall">/WEB-INF/pages/project_library.jsp</result>
-            <result name="getcommon">/WEB-INF/pages/project_common_library.jsp</result>
-            <result name="getuser">/WEB-INF/pages/project_user_library.jsp</result>
-            <result name="getcase">/WEB-INF/pages/project_case_library.jsp</result>
-            <result name="getpicture">/WEB-INF/pages/project_picture_library.jsp</result>
             <result name="libraryPage">/WEB-INF/pages/project_library.jsp</result>
-            <result name="getMycollect">/WEB-INF/pages/project_mycollect.jsp</result>
             <result name="userLibraryPage">/WEB-INF/pages/project_userLibrary.jsp</result>
-        <interceptor-ref name="myStack"/>
-            <allowed-methods>deleteLibrary,newLibrary,getUserAllAgain,jmpUserLibrary,get,getagain,getcommon,getcommonagain,getuser,getuseragain,getcase,getcaseagain,getpicture,getpictureagain,Mycollect,Mycollectagain</allowed-methods>
+            <interceptor-ref name="myStack"/>
+            <allowed-methods>deleteLibrary,newLibrary,getUserAllAgain,jmpUserLibrary,get,getagain,getuser,getuseragain,getcase,getcaseagain,getpicture,getpictureagain,Mycollect,Mycollectagain</allowed-methods>
         </action>
+
 
         <action name="librarycollect-*" class="action.LibrarycollectAction" method="{1}">
             <result name="RES" type="json"><param name="root">dataMap</param></result>
@@ -223,10 +218,22 @@
         </action>
 
         <action name="structure-*" class="action.StructureAction" method="{1}">
+            <result name="success" type="json"><param name="root">dataMap</param></result>
             <result name="RES" type="json"><param name="root">dataMap</param></result>
-            <result name="get">/WEB-INF/pages/project_structure.jsp</result>
-        <interceptor-ref name="myStack"/>
-            <allowed-methods>get,create,edit</allowed-methods>
+            <result name="SelectAll" type="json"><param name="root">dataMap</param></result>
+            <result name="getcommon">/WEB-INF/pages/project_common_library.jsp</result>
+            <result name="getpersonalStructure">/WEB-INF/pages/project_user_library.jsp</result>
+            <result name="getMyrelease">/WEB-INF/pages/project_myrelease.jsp</result>
+            <result name="getMycollect">/WEB-INF/pages/project_mycollect.jsp</result>
+            <interceptor-ref name="myStack"/>
+            <allowed-methods>create,edit,Mydelete,SelectAll,Search,getcommon,getcommonagain,getpersonal,getpersonalagain,Myrelease,Myreleaseagain,Mycollect,Mycollectagain,Deploy,DeploySure</allowed-methods>
+        </action>
+
+        <action name="sha_structure-*" class="action.sha_StructureAction" method="{1}">
+            <result name="success" type="json"><param name="root">dataMap</param></result>
+            <result name="RES" type="json"><param name="root">dataMap</param></result>
+            <result name="getMyrelease">/WEB-INF/pages/project_myrelease.jsp</result>
+            <allowed-methods>SearchRelease,Mycollect,Search,SearchCollect,evaluate,Delete_collect,getpri,getthis,collect,SelectMysha,ReleaseDelete,getPages,getView</allowed-methods>
         </action>
 
         <action name="personalcenter-*" class="action.PersonalCenterAction" method="{1}">
@@ -259,8 +266,8 @@
         <action name="templateLib-*" class="action.TemplateLibAction" method="{1}">
             <result name="Re" type="json"><param name="root">dataMap</param>
             </result>
-         <interceptor-ref name="myStack"/>
-            <allowed-methods>getTypeOfOneLib,getTypeOfUserLib,getTypeOfLib,getStructure</allowed-methods>
+            <interceptor-ref name="myStack"/>
+            <allowed-methods>getStructure,getStructure2</allowed-methods>
         </action>
 
         <action name="history-*" class="action.HistoryAction" method="{1}">

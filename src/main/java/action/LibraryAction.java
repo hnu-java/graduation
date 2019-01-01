@@ -6,9 +6,7 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
 import dao.LibraryDao;
 import daoImp.LibraryDaoImp;
-import entity.LibraryEntity;
-import entity.UserEntity;
-import org.apache.struts2.components.If;
+import entity.*;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -16,9 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class LibraryAction extends ActionSupport implements RequestAware, SessionAware, ModelDriven<LibraryEntity>, Preparable {
-
-
     private LibraryDao libraryDao;
     private LibraryEntity library;
     private Map<String,Object> request;
@@ -27,7 +24,7 @@ public class LibraryAction extends ActionSupport implements RequestAware, Sessio
     private  int page;
 
     public String get() {
-        dataMap = new HashMap<String, Object>();
+      /*  dataMap = new HashMap<String, Object>();
         libraryDao = new LibraryDaoImp();
         List<LibraryEntity> libraryAll;
         int page=1;
@@ -43,12 +40,12 @@ public class LibraryAction extends ActionSupport implements RequestAware, Sessio
             int num = count / 6 +1;
             request.put("num", num);
         }
-        request.put("page",page);
-        return "getall";
+        request.put("page",page);*/
+        return "getcommon";
     }
 
     public String getagain() {
-        dataMap = new HashMap<String, Object>();
+        /*dataMap = new HashMap<String, Object>();
         libraryDao = new LibraryDaoImp();
         List<LibraryEntity> libraryAllagain;
         libraryAllagain=libraryDao.getAll((((UserEntity)session.get("user")).getId_user()),(page-1)*6,(page-1)*0+6);
@@ -63,11 +60,11 @@ public class LibraryAction extends ActionSupport implements RequestAware, Sessio
             int num = count / 6 +1;
             request.put("num", num);
         }
-        request.put("page",page);
-        return "getall";
+        request.put("page",page);*/
+        return "getcommon";
     }
 
-    public String getcommon() {
+    /*public String getcommon() {
         dataMap = new HashMap<String, Object>();
         libraryDao = new LibraryDaoImp();
         List<LibraryEntity> libraryCommon;
@@ -107,10 +104,10 @@ public class LibraryAction extends ActionSupport implements RequestAware, Sessio
         }
         request.put("page",page);
         return "getcommon";
-    }
+    }*/
 
     public String getuser() {
-        dataMap = new HashMap<String, Object>();
+        /*dataMap = new HashMap<String, Object>();
         libraryDao = new LibraryDaoImp();
         List<LibraryEntity> libraryUser;
         int page=1;
@@ -126,13 +123,13 @@ public class LibraryAction extends ActionSupport implements RequestAware, Sessio
         }
         request.put("page",page);
         libraryUser=libraryDao.getUser((((UserEntity)session.get("user")).getId_user()),(page-1)*6,(page-1)*0+6);
-        ActionContext.getContext().getValueStack().set("listuser",libraryUser);
-        return "getuser";
+        ActionContext.getContext().getValueStack().set("listuser",libraryUser);*/
+        return "getpersonalStructure";
     }
 
     public String getuseragain()
     {
-        dataMap = new HashMap<String, Object>();
+        /*dataMap = new HashMap<String, Object>();
         libraryDao = new LibraryDaoImp();
         List<LibraryEntity> libraryUseragain;
         libraryUseragain=libraryDao.getUser((((UserEntity)session.get("user")).getId_user()),(page-1)*6,(page-1)*0+6);
@@ -147,8 +144,8 @@ public class LibraryAction extends ActionSupport implements RequestAware, Sessio
             int num = count / 6 +1;
             request.put("num", num);
         }
-        request.put("page",page);
-        return "getuser";
+        request.put("page",page);*/
+        return "getpersonalStructure";
     }
 
     public String getcase() {
@@ -235,7 +232,7 @@ public class LibraryAction extends ActionSupport implements RequestAware, Sessio
     }
 
     public String Mycollect() {
-        dataMap = new HashMap<String, Object>();
+        /*dataMap = new HashMap<String, Object>();
         libraryDao = new LibraryDaoImp();
         List<LibraryEntity> librarycollectAll;
         int page=1;
@@ -252,12 +249,12 @@ public class LibraryAction extends ActionSupport implements RequestAware, Sessio
             int num = count / 6 +1;
             request.put("num", num);
         }
-        request.put("page",page);
+        request.put("page",page);*/
         return "getMycollect";
     }
 
     public String Mycollectagain(){
-        dataMap = new HashMap<String, Object>();
+       /* dataMap = new HashMap<String, Object>();
         libraryDao = new LibraryDaoImp();
         List<LibraryEntity> librarycollectAllagain;
         librarycollectAllagain=libraryDao.getMycollect((((UserEntity)session.get("user")).getId_user()),(page-1)*6,(page-1)*0+6);
@@ -272,7 +269,7 @@ public class LibraryAction extends ActionSupport implements RequestAware, Sessio
             int num = count / 6 +1;
             request.put("num", num);
         }
-        request.put("page",page);
+        request.put("page",page);*/
         return "getMycollect";
     }
 
@@ -318,12 +315,12 @@ public class LibraryAction extends ActionSupport implements RequestAware, Sessio
     }
 
     public String newLibrary(){
-        dataMap = new HashMap<>();
+        /*dataMap = new HashMap<>();
         libraryDao = new LibraryDaoImp();
         UserEntity user = (UserEntity) session.get("user");
         boolean res = libraryDao.newLibrary(library.getName(),user.getId_user(),library.getId_template(),library.getMention());
-        dataMap.put("res",res);
-        return SUCCESS;
+        dataMap.put("res",res);*/
+        return "getMyrelease";
     }
 
     public String deleteLibrary() {
@@ -333,7 +330,21 @@ public class LibraryAction extends ActionSupport implements RequestAware, Sessio
         dataMap.put("res", res);
         return SUCCESS;
     }
+    /*
+    public String showStructure(){
+        dataMap = new HashMap<String, Object>();
+        LibraryDao = new LibraryDaoImp();
+      //  StructureEntity user = (StructureEntity) ActionContext.getContext().getSession().get("user");
+      //  int ID_user = user.getId_user();
 
+        List<LibraryEntity> list = LibraryDao.getAll();
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+
+        dataMap.put("res",json);
+        return SUCCESS;
+    }
+*/
     @Override
     public LibraryEntity getModel() {
         return library;

@@ -230,11 +230,6 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
         return user1;
     }
 
-    public int Mycollectcount(int id_user){
-        String sql="SELECT COUNT(*) from LIB_COLLECT WHERE ID_USER=? ";
-        int count=Integer.valueOf(getForValue(sql,id_user).toString());
-        return count;
-    }
 
     public int orgManager(int id){
         String sql="select count(*) from ORGANIZATION where ID_USER=?";
