@@ -79,7 +79,7 @@
             <span style="color:black">个项目</span>
         </div>
         <div class="col-md-2 ">
-            <a href="library-get">
+            <a href="structure-getcommon">
                 <img src="<%=basePath %>/img/Home3_change.jpg" style="height:160px; width:160px;border-radius:10%"><br/>
             </a>
             <span style="display:block;margin:20px 0 0 0;color:#658387;font-size:18px;font-weight:bold">文档构件</span>
