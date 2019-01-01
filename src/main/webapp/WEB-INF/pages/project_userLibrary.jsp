@@ -105,164 +105,161 @@
                 <div style="float: left;height: 60px;padding: 20px 20px 0px 20px" class="col-md-11">
                     <div style="float: left;margin: 0px 0px 0px 50px">
                         <div>
-                            <a href="library-get"><div style="font-size: 18px;color: black">官方构件库</div></a>
+                            <a href="library-get"><div style="font-size: 18px;color: black">共享构件库</div></a>
                         </div>
                     </div>
                     <div style="float: left;font-size:18px;width: 30px;text-align: center">|</div>
                     <div style="float: left">
                         <div>
-                            <a href="library-jmpUserLibrary"><div style="float: left;font-size:18px;text-align: left;color: black">用户构件库</div></a>
+                            <a href="library-jmpUserLibrary"><div style="float: left;font-size:18px;text-align: left;color: black">个人构件库</div></a>
                         </div>
                         <div style="border-top: red solid 1.7px;  position: absolute;width: 90px;height: 200px;z-index: 999;overflow: hidden;margin-top: 31px">
                         </div>
                     </div>
-                    <div style="float: left;font-size:18px;width: 30px;text-align: center">|</div>
-                    <div style="float: left">
-                        <div style="float: left;font-size:18px;text-align: left;color: black"><a href="library-Mycollect"><span class="lzf_a">我的收藏</span></a></div>
+                    <div style="float: left;font-size:18px;width: 30px;text-align: center">
+                        <div style="float:left">
+                            <button class="btn btn-custom" style="margin:-3px 30px" data-toggle="modal" data-target="#newLibrary">新建构件库</button>
+                        </div>
                     </div>
-                    <div style="float:left">
-                        <button class="btn btn-custom" style="margin:-3px 30px" data-toggle="modal" data-target="#newLibrary">新建构件库</button>
-                    </div>
+
                 </div>
 
-            </div>
-
-            <div id="view" style="padding: 0px 70px 0px 70px;margin-top:30px;height: 450px">
-                <div class="row">
-                    <s:iterator value="list">
-                        <div class="col-sm-4">
-                            <div class="contact-box">
-                                <div>
-                                    <div style="cursor:pointer" class="structure">
-                                        <input style="display:none" type="text" value="<s:property value="id_template"/>">
-                                        <div style="margin: 10px 10px 10px 15px;float: left">
-                                            <s:if test="#request.id_template==1"><img src="<%=basePath %>/img/div11.png" height="80px" width="80px"/></s:if>
-                                            <s:if test="#request.id_template==2"><img src="<%=basePath %>/img/div2.png" height="80px" width="80px"/></s:if>
-                                            <s:if test="#request.id_template==3"><img src="<%=basePath %>/img/div3.png" height="80px" width="80px"/></s:if>
-                                            <s:if test="#request.id_template==4"><img src="<%=basePath %>/img/div4.png" height="80px" width="80px"/></s:if>
+                <div id="view" style="padding: 0px 70px 0px 70px;margin-top:30px;height: 450px">
+                    <div class="row">
+                        <s:iterator value="list">
+                            <div class="col-sm-4">
+                                <div class="contact-box">
+                                    <div>
+                                        <div style="cursor:pointer" class="structure">
+                                            <input style="display:none" type="text" value="<s:property value="id_template"/>">
+                                            <div style="margin: 10px 10px 10px 15px;float: left">
+                                                <s:if test="#request.id_template==1"><img src="<%=basePath %>/img/div11.png" height="80px" width="80px"/></s:if>
+                                                <s:if test="#request.id_template==2"><img src="<%=basePath %>/img/div2.png" height="80px" width="80px"/></s:if>
+                                                <s:if test="#request.id_template==3"><img src="<%=basePath %>/img/div3.png" height="80px" width="80px"/></s:if>
+                                                <s:if test="#request.id_template==4"><img src="<%=basePath %>/img/div4.png" height="80px" width="80px"/></s:if>
+                                            </div>
+                                            <div style="margin: 10px;float: left">
+                                                <h3><s:property value="name"/></h3>
+                                                <p>类型：<s:property value="title"/><br>发布时间：<s:property value="time"/></p>
+                                            </div>
+                                            <div style="height:60px;clear: both;margin: 0px 10px 0px 10px;overflow: hidden">
+                                                <p>
+                                                    <s:if test='#request.mention==""'>
+                                                        描述：未填写
+                                                    </s:if>
+                                                    <s:else>
+                                                        <s:property value="mention"/>
+                                                    </s:else>
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div style="margin: 10px;float: left">
-                                            <h3><s:property value="name"/></h3>
-                                            <p>类型：<s:property value="title"/><br>发布时间：<s:property value="time"/></p>
+                                        <input id="idLibrary" style="display: none" type="text" value="<s:property value="id_library"/>">
+                                        <div style="float:right;z-index:99999999;margin: -14px -10px 0px 0px">
+                                            <button id="delete" type="submit" class="btn btn-outline btn-danger btn-xs" myvalue="<s:property value="id_library"/>">删除</button>
+                                            <button id="publish" type="submit" class="btn btn-custom btn-xs" myvalue="<s:property value="id_library"/>">发布</button>
                                         </div>
-                                        <div style="height:60px;clear: both;margin: 0px 10px 0px 10px;overflow: hidden">
-                                            <p>
-                                                <s:if test='#request.mention==""'>
-                                                    描述：未填写
-                                                </s:if>
-                                                <s:else>
-                                                    <s:property value="mention"/>
-                                                </s:else>
-                                            </p>
-                                        </div>
+                                            <%--<div style="float: right;z-index:99999999;margin: -14px -19px 0px 0px">--%>
+                                            <%--<s:if test="#request.id_user==#session.user.id_user">--%>
+                                            <%--<a class="btn btn-white btn-bitbucket nocollect" style="border: none" >--%>
+                                            <%--<i class="fa fa-star modal-icon " style="font-size: 20px"></i>--%>
+                                            <%--</a>--%>
+                                            <%--</s:if>--%>
+                                            <%--<s:else>--%>
+                                            <%--<a class="btn btn-white btn-bitbucket collect" style="border: none" >--%>
+                                            <%--<i class="fa fa-star-o modal-icon " style="font-size: 20px"></i>--%>
+                                            <%--</a>--%>
+                                            <%--</s:else>--%>
+                                            <%--<input style="display:none" type="text" value="<s:property value="id_library"/>">--%>
+                                            <%--</div>--%>
                                     </div>
-                                    <input id="idLibrary" style="display: none" type="text" value="<s:property value="id_library"/>">
-                                    <div style="float:right;z-index:99999999;margin: -14px -10px 0px 0px">
-                                        <button id="delete" type="submit" class="btn btn-outline btn-danger btn-xs" myvalue="<s:property value="id_library"/>">删除</button>
-                                        <button id="publish" type="submit" class="btn btn-custom btn-xs" myvalue="<s:property value="id_library"/>">发布</button>
-                                    </div>
-                                        <%--<div style="float: right;z-index:99999999;margin: -14px -19px 0px 0px">--%>
-                                        <%--<s:if test="#request.id_user==#session.user.id_user">--%>
-                                        <%--<a class="btn btn-white btn-bitbucket nocollect" style="border: none" >--%>
-                                        <%--<i class="fa fa-star modal-icon " style="font-size: 20px"></i>--%>
-                                        <%--</a>--%>
-                                        <%--</s:if>--%>
-                                        <%--<s:else>--%>
-                                        <%--<a class="btn btn-white btn-bitbucket collect" style="border: none" >--%>
-                                        <%--<i class="fa fa-star-o modal-icon " style="font-size: 20px"></i>--%>
-                                        <%--</a>--%>
-                                        <%--</s:else>--%>
-                                        <%--<input style="display:none" type="text" value="<s:property value="id_library"/>">--%>
-                                        <%--</div>--%>
                                 </div>
                             </div>
-                        </div>
+                        </s:iterator>
+                    </div>
+                </div>
+            </div>
+            <div id="footer" style="clear: both;text-align: center; margin-top:45px">
+                <div id="pages" style="height: 50px;margin:0px auto;" class="btn-group">
+                    <s:if  test="#request.page==1">
+                        <button type="button" class="btn btn-gray"><i class="fa fa-chevron-left"></i></button>
+                    </s:if>
+                    <s:else><button type="button" class="btn btn-white turnpage lastPage"><i class="fa fa-chevron-left"></i></button></s:else>
+                    <s:iterator begin="1" end="#request.num" step="1" status="st">
+                        <s:if test="#request.page==#st.index+1">
+                            <button type="button" class="btn btn-white active pagenum nowpage"><s:property value='#st.index+1'/></button></s:if>
+                        <s:else ><button type="button" class="btn btn-white pagenum"><s:property value='#st.index+1'/></button></s:else>
                     </s:iterator>
+                    <s:if test="#request.page==#request.num"><button type="button" class="btn btn-gray"><i class="fa fa-chevron-right"></i></button></s:if>
+                    <s:else><button type="button" class="btn btn-white turnpage nextPage"><i class="fa fa-chevron-right"></i></button></s:else>
                 </div>
             </div>
         </div>
-        <div id="footer" style="clear: both;text-align: center; margin-top:45px">
-            <div id="pages" style="height: 50px;margin:0px auto;" class="btn-group">
-                <s:if  test="#request.page==1">
-                    <button type="button" class="btn btn-gray"><i class="fa fa-chevron-left"></i></button>
-                </s:if>
-                <s:else><button type="button" class="btn btn-white turnpage lastPage"><i class="fa fa-chevron-left"></i></button></s:else>
-                <s:iterator begin="1" end="#request.num" step="1" status="st">
-                    <s:if test="#request.page==#st.index+1">
-                        <button type="button" class="btn btn-white active pagenum nowpage"><s:property value='#st.index+1'/></button></s:if>
-                    <s:else ><button type="button" class="btn btn-white pagenum"><s:property value='#st.index+1'/></button></s:else>
-                </s:iterator>
-                <s:if test="#request.page==#request.num"><button type="button" class="btn btn-gray"><i class="fa fa-chevron-right"></i></button></s:if>
-                <s:else><button type="button" class="btn btn-white turnpage nextPage"><i class="fa fa-chevron-right"></i></button></s:else>
+    </div>
+
+    <div  class="modal inmodal" id="publishLibrary" tabindex="-1" role="dialog" aria-hidden="true" >
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                    </button>
+                    <h4 class="modal-title">发布用例库</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group"><label>留言</label> <input id="publish_content" type="text" placeholder="请输入留言(可不填，不超过60字符)"  maxlength="60" class="form-control" required="required"></div>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancel-publish" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                    <button id="publish-button" type="button" class="btn btn-primary" id_library = "<s:property value="id_library"/>">发布</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div  class="modal inmodal" id="publishLibrary" tabindex="-1" role="dialog" aria-hidden="true" >
-    <div class="modal-dialog">
-        <div class="modal-content animated bounceInRight">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
-                </button>
-                <h4 class="modal-title">发布用例库</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group"><label>留言</label> <input id="publish_content" type="text" placeholder="请输入留言(可不填，不超过60字符)"  maxlength="60" class="form-control" required="required"></div>
-            </div>
-            <div class="modal-footer">
-                <button id="cancel-publish" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
-                <button id="publish-button" type="button" class="btn btn-primary" id_library = "<s:property value="id_library"/>">发布</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="<%=basePath%>/js/jquery.min.js?v=2.1.4"></script>
-<script src="<%=basePath%>/js/bootstrap.min.js?v=3.3.6"></script>
-<script src="<%=basePath%>/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
-<script src="<%=basePath%>/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-<script src="<%=basePath%>/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-<script src="<%=basePath%>/js/plugins/layer/layer.min.js"></script>
-<script src="<%=basePath%>/js/hplus.min.js?v=4.1.0"></script>
-<script type="text/javascript" src="<%=basePath%>/js/contabs.min.js"></script>
-<script src="<%=basePath%>/js/plugins/pace/pace.min.js"></script>
-<script src="<%=basePath%>/js/plugins/sweetalert/sweetalert.min.js"></script>
-<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
-<script src="<%=basePath%>/js/plugins/toastr/toastr.min.js"></script>
-<script src="<%=basePath%>/js/mjy.js"></script>
-<script src="<%=basePath %>/js/content.min.js?v=1.0.0"></script>
-<script src="<%=basePath%>/js/plugins/suggest/bootstrap-suggest.min.js"></script>
-<script src="<%=basePath%>/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-<script>
-    $(document).ready(function(){$(".contact-box").each(function(){animationHover(this,"pulse")})});
-</script>
-<script>
-    $(document).ready(function(){
-        $("button.pagenum").click(function(){
-            location.href="library-getUserAllAgain?page="+$(this).html();
+    <script src="<%=basePath%>/js/jquery.min.js?v=2.1.4"></script>
+    <script src="<%=basePath%>/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="<%=basePath%>/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="<%=basePath%>/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="<%=basePath%>/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="<%=basePath%>/js/plugins/layer/layer.min.js"></script>
+    <script src="<%=basePath%>/js/hplus.min.js?v=4.1.0"></script>
+    <script type="text/javascript" src="<%=basePath%>/js/contabs.min.js"></script>
+    <script src="<%=basePath%>/js/plugins/pace/pace.min.js"></script>
+    <script src="<%=basePath%>/js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+    <script src="<%=basePath%>/js/plugins/toastr/toastr.min.js"></script>
+    <script src="<%=basePath%>/js/mjy.js"></script>
+    <script src="<%=basePath %>/js/content.min.js?v=1.0.0"></script>
+    <script src="<%=basePath%>/js/plugins/suggest/bootstrap-suggest.min.js"></script>
+    <script src="<%=basePath%>/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script>
+        $(document).ready(function(){$(".contact-box").each(function(){animationHover(this,"pulse")})});
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("button.pagenum").click(function(){
+                location.href="library-getUserAllAgain?page="+$(this).html();
+            });
         });
-    });
-</script>
-<script>
-    $(document).ready(function(){
-        $("button.turnpage").click(function(){
-            if($(this).hasClass("lastPage"))
-            {   var p=parseInt($("button.nowpage").html())-1;
-                location.href="library-getUserAllAgain?page="+p;}
-            else
-            {   var p=parseInt($("button.nowpage").html())+1;
-                location.href="library-getUserAllAgain?page="+p;}
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("button.turnpage").click(function(){
+                if($(this).hasClass("lastPage"))
+                {   var p=parseInt($("button.nowpage").html())-1;
+                    location.href="library-getUserAllAgain?page="+p;}
+                else
+                {   var p=parseInt($("button.nowpage").html())+1;
+                    location.href="library-getUserAllAgain?page="+p;}
+            });
         });
-    });
-</script>
-<script>
-    $(document).ready(function(){
-        $("div.structure").click(function(){
-            location.href="structure-get?id_library="+$(this).next().val()+'&id_template=' + $(this).children().val()+'&page='+1+'&pagedis='+1;
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("div.structure").click(function(){
+                location.href="structure-get?id_library="+$(this).next().val()+'&id_template=' + $(this).children().val()+'&page='+1+'&pagedis='+1;
+            });
         });
-    });
-</script>
+    </script>
 </body>
 <script>
 

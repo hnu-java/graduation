@@ -41,13 +41,13 @@ function disReload() {
                 else content+=" btn-default ";
                 content+="btn-xs col-lg-push-1 m-l-sm deleteDis'  type='button'  style='margin-top: -3px'>删除</button> ";
                 if(tempDis.accessoryEntityList!=null){
-                content+="<div class='ibox-tools'>";
-                for (var j=0;j<tempDis.accessoryEntityList.length;j++) {
-                    content += '<a class="fa fa-file" href="' + "accessories/"+tempDis.accessoryEntityList[j].path+ '">';
-                    content += tempDis.accessoryEntityList[j].filename;
-                    content += '</a>';
-                }
-                content+="</div> " ;}
+                    content+="<div class='ibox-tools'>";
+                    for (var j=0;j<tempDis.accessoryEntityList.length;j++) {
+                        content += '<a class="fa fa-file" href="' + "accessories/"+tempDis.accessoryEntityList[j].path+ '">';
+                        content += tempDis.accessoryEntityList[j].filename;
+                        content += '</a>';
+                    }
+                    content+="</div> " ;}
                 content+="</div><div class='ibox-content'> <div class=' wrapper'>";
                 content+=tempDis.content+"  </div> </div> </div> </div>";
             }
@@ -60,9 +60,11 @@ function disReload() {
 }
 //目录点击事件
 $(document).on("click",".dic",function () {
-    editable=false;
+    $("#edit").attr("style","display:show");
+    //editable=false;
     nowClick=$(this);
     var catalogIndex=$(nowClick).children("span.catalogIndex").text();
+
     $.ajax({
         url: "catalog-getCatalog",
         data: { documentId:documentId,catalogIndex:catalogIndex},
@@ -72,7 +74,7 @@ $(document).on("click",".dic",function () {
         success: function (result) {
             var content,catalogDisNum=result.catalogDisNum;
             $("#save").attr("style","display:none");
-            $("#edit").attr("style","display:show");
+            // $("#edit").attr("style","display:show");
             $("div.catalogNoneContent").hide();
             $("div.catalogNotNoneContent").show();
             //模板生成
@@ -127,7 +129,7 @@ function loadTemplateOne(entity) {
     if (editable==true)
         $("#describe").summernote("code",content);
     else
-    $("#describe").html(content);
+        $("#describe").html(content);
 }
 //加载模板2的内容
 function loadTemplateTwo(entity) {
@@ -138,7 +140,7 @@ function loadTemplateTwo(entity) {
         $("#describe").summernote("code",describe);
         $("#permissions").summernote("code",permissions);
     }
-else {
+    else {
 
         $("#describe").html(describe);
         $("#permissions").html(permissions);
@@ -158,46 +160,46 @@ function loadTemplateThree(entity) {
     var funUsableList=entity.funUsableList;
     var funRoleContent="";
     if(funRoleList!=null)
-    for (var i=0;i<funRoleList.length;i++){
-        funRoleContent+=" <tr class='funTr'> <th  ><div class='hidenTh' style='display: none'> <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black'></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black ' ></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></div> </th> <th> <select class='form-control  roleName dis' name='roleName'   disabled>";
-        var undefined="true",roleListContent="";
-        for (var j=0;j<roleList.length;j++){
-            roleListContent+="<option";
-            if(funRoleList[i].roleName==roleList[j].roleName){
-                roleListContent+=" selected";
-                undefined="false";
+        for (var i=0;i<funRoleList.length;i++){
+            funRoleContent+=" <tr class='funTr'> <th  ><div class='hidenTh' style='display: none'> <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black'></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black ' ></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></div> </th> <th> <select class='form-control  roleName dis' name='roleName'   disabled>";
+            var undefined="true",roleListContent="";
+            for (var j=0;j<roleList.length;j++){
+                roleListContent+="<option";
+                if(funRoleList[i].roleName==roleList[j].roleName){
+                    roleListContent+=" selected";
+                    undefined="false";
+                }
+                roleListContent+=" >"+roleList[j].roleName+"</option>";
             }
-            roleListContent+=" >"+roleList[j].roleName+"</option>";
+            if(undefined=="true"){
+                funRoleContent+="<option disabled selected>未定义</option>";
+            }funRoleContent+=roleListContent;
+            funRoleContent+="</select> </th> <th> <textarea   class='form-control roleDescribe dis'  name='roleDescribe'   style='resize:vertical; max-width: 100%' disabled>";
+            funRoleContent+=funRoleList[i].roleDescribe+"</textarea> </th>";
+            if(funRoleList[i].usableName==null && funRoleList[i].securityName==null){//新增按钮
+                funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='margin-right: 10px' disabled>安全</button> </th></tr>";
+            }else if(funRoleList[i].usableName==null){
+                funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='display: none; margin-right: 10px' disabled>安全</button> </th></tr>";
+                funRoleContent+="<tr class='securityTr'> <th></th> <th name='securityName' class='securityName'>"+funRoleList[i].securityName+"</th> <th  name='securityPara' class='securityPara' >"+funRoleList[i].securityPara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteSecurity'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px' disabled>删除安全性</button></th> </tr>";
+            }else if(funRoleList[i].securityName==null){
+                funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='display: none; margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='margin-right: 10px' disabled>安全</button> </th></tr>";
+                funRoleContent+="<tr class='usableTr'> <th></th> <th name='usableName' class='usableName'>"+funRoleList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funRoleList[i].usablePara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>";
+            }else{
+                funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='display: none; margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='display: none; margin-right: 10px' disabled>安全</button> </th></tr>";
+                funRoleContent+="<tr class='usableTr'> <th></th> <th name='usableName' class='usableName'>"+funRoleList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funRoleList[i].usablePara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>";
+                funRoleContent+="<tr class='securityTr'> <th></th> <th name='securityName' class='securityName'>"+funRoleList[i].securityName+"</th> <th  name='securityPara' class='securityPara' >"+funRoleList[i].securityPara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteSecurity'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px' disabled>删除安全性</button></th> </tr>";
+            }
         }
-        if(undefined=="true"){
-            funRoleContent+="<option disabled selected>未定义</option>";
-        }funRoleContent+=roleListContent;
-        funRoleContent+="</select> </th> <th> <textarea   class='form-control roleDescribe dis'  name='roleDescribe'   style='resize:vertical; max-width: 100%' disabled>";
-        funRoleContent+=funRoleList[i].roleDescribe+"</textarea> </th>";
-        if(funRoleList[i].usableName==null && funRoleList[i].securityName==null){//新增按钮
-            funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='margin-right: 10px' disabled>安全</button> </th></tr>";
-        }else if(funRoleList[i].usableName==null){
-            funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='display: none; margin-right: 10px' disabled>安全</button> </th></tr>";
-            funRoleContent+="<tr class='securityTr'> <th></th> <th name='securityName' class='securityName'>"+funRoleList[i].securityName+"</th> <th  name='securityPara' class='securityPara' >"+funRoleList[i].securityPara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteSecurity'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px' disabled>删除安全性</button></th> </tr>";
-        }else if(funRoleList[i].securityName==null){
-            funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='display: none; margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='margin-right: 10px' disabled>安全</button> </th></tr>";
-            funRoleContent+="<tr class='usableTr'> <th></th> <th name='usableName' class='usableName'>"+funRoleList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funRoleList[i].usablePara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>";
-        }else{
-            funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='display: none; margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='display: none; margin-right: 10px' disabled>安全</button> </th></tr>";
-            funRoleContent+="<tr class='usableTr'> <th></th> <th name='usableName' class='usableName'>"+funRoleList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funRoleList[i].usablePara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>";
-            funRoleContent+="<tr class='securityTr'> <th></th> <th name='securityName' class='securityName'>"+funRoleList[i].securityName+"</th> <th  name='securityPara' class='securityPara' >"+funRoleList[i].securityPara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteSecurity'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px' disabled>删除安全性</button></th> </tr>";
-        }
-    }
     $(".funTable tbody").prepend(funRoleContent);
     var funUsableContent="";
     if(funUsableList!=null)
-    for (var i=0;i<funUsableList.length;i++){
-        if(funUsableList[i].usableName!=null){
-            funUsableContent+="<tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>"+funUsableList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funUsableList[i].usablePara+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>"
-        }else if(funUsableList[i].securityName!=null){
-            funUsableContent+="<tr class='securityTr'> <th colspan='2' name='securityName' class='securityName'>"+funUsableList[i].securityName+"</th> <th  name='securityPara' class='securityPara' >"+funUsableList[i].securityPara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteSecurity'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px' disabled>删除安全性</button></th> </tr>";
+        for (var i=0;i<funUsableList.length;i++){
+            if(funUsableList[i].usableName!=null){
+                funUsableContent+="<tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>"+funUsableList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funUsableList[i].usablePara+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>"
+            }else if(funUsableList[i].securityName!=null){
+                funUsableContent+="<tr class='securityTr'> <th colspan='2' name='securityName' class='securityName'>"+funUsableList[i].securityName+"</th> <th  name='securityPara' class='securityPara' >"+funUsableList[i].securityPara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteSecurity'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px' disabled>删除安全性</button></th> </tr>";
+            }
         }
-    }
     $(".funTable tfoot").append(funUsableContent);
     if (editable==true){
         $("#describe").summernote("code",entity.describe);
@@ -215,10 +217,238 @@ function loadTemplateThree(entity) {
         $("#alternative").html(entity.alternative);
     }
 }
+function loadTemplateFour(entity){
+    $("input#appname").val(entity.appname);
+    $("input#apptype").val(entity.apptype);
+    var appusage=entity.appusage;
+    var appaddress=entity.appaddress;
+    if (editable==true){
+        $("#appaddress").summernote("code",appaddress);
+        $("#appusage").summernote("code",appusage);
+    }
+    else {
 
+        $("#appaddress").html(appaddress);
+        $("#appusage").html(appusage);
+    }
+
+}
+
+function loadTemplateFive(entity){
+    $("input#communname").val(entity.communname);
+    $("input#communabb").val(entity.communabb);
+    $("input#communtype").val(entity.communtype);
+    var commundescribe=entity.commundescribe;
+    if (editable==true){
+        $("#commundescribe").summernote("code",commundescribe);
+    }
+    else {
+
+        $("#commundescribe").html(commundescribe);
+    }
+
+}
+/*function loadTemplateFour(entity) {
+    $("input#apptype").val(entity.apptype);
+    var applist=entity.applist;
+    var appContent="";
+    if(applist!=null)
+        for (var i=0;i<applist.length;i++){
+            appContent+=" <tr class='funTr'> <th><div class='hidenTh' style='display: none'> <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black'></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black ' ></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></div> </th> <th> <textarea class='form-control  appname dis' name='appname'>"
+            appContent+=applist[i].appname+"</textarea+> </th> <th> <textarea   class='form-control appaddress dis'  name='appaddress'   style='resize:vertical; max-width: 100%' disabled>";
+            appContent+=applist[i].appaddress+"</textarea> </th>";
+            appContent+="<th> <textarea class='form-control  appusage dis' name='appusage'   disabled>";
+            appContent+=applist[i].appusage+"</textarea> </th>";
+
+        }
+    $(".funTable tbody").prepend(appContent);
+    if (editable==true) {
+        $(".dis").removeAttr("disabled")
+    }
+}
+function loadTemplateFive(entity) {
+    $("input#communtype").val(entity.communtype);
+    var communlist=entity.communlist;
+    var communContent="";
+    if(communlist!=null)
+        for (var i=0;i<communlist.length;i++){
+            communContent+=" <tr class='funTr'> <th><div class='hidenTh' style='display: none'> <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black'></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black ' ></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></div> </th> <th> <textarea class='form-control  communabb dis' name='communabb'   disabled>";
+            communContent+=communlist[i]. communabb+"</textarea> </th> <th> <textarea   class='form-control communname dis'  name='communname'   style='resize:vertical; max-width: 100%' disabled>";
+            communContent+=communlist[i].communname+"</textarea> </th>";
+            communContent+="<th> <textarea class='form-control  commundescribe dis' name='commundescribe'   disabled>";
+            communContent+=communlist[i].commundescribe+"</textarea> </th>";
+
+        }
+    $(".funTable tbody").prepend(communContent);
+    if (editable==true) {
+        $(".dis").removeAttr("disabled")
+    }
+}  */
+function loadTemplateSix(entity) {
+    var dataname=entity.dataname;
+    var datatype=entity.datatype;
+    var dataempty=entity.dataempty;
+    var dataconstraint=entity.dataconstraint;
+    var dataexplain=entity.dataexplain;
+
+    if (editable==true){
+        $("#dataconstraint").summernote("code",dataconstraint);
+        $("#dataexplain").summernote("code",dataexplain);
+    }
+    else {
+
+        $("#dataconstraint").html(dataconstraint);
+        $("#dataexplain").html(dataexplain);
+    }
+    $("input#dataname").val(dataname);
+    $("input#datatype").val(datatype);
+    if(dataempty==0)
+        document.getElementById("dataempty")[2].selected = true;
+    else if(dataempty==1)
+        document.getElementById("dataempty")[1].selected = true;
+
+    if($("#dataname").val()==null){
+        $("#dataname").prepend("<option selected disabled>未定义</option>>")
+    }
+}
+
+function loadTemplateSeven(entity) {
+    var environmenttype=entity.environmenttype;
+    var environmentconfigure=entity.environmentconfigure;
+    if (editable==true){
+        $("#environmentconfigure").summernote("code",environmentconfigure);
+    }
+    else {
+
+        $("#environmentconfigure").html(environmentconfigure);
+    }
+    $("#environmenttype").val(environmenttype);
+    if($("#environmenttype").val()==null){
+        $("#environmenttype").prepend("<option selected disabled>未定义</option>>")
+    }
+}
+function loadTemplateEight(entity) {
+    var maindatabase = entity.maindatabase;
+    var databasetype = entity.databasetype;
+    var databaseedition = entity.databaseedition;
+    var databasesummary = entity.databasesummary;
+    $("input#maindatabase").val(maindatabase);
+    alert("11111111112222");
+    alert(databaseedition);
+    //  $("input#databaseedition").val(databaseedition);
+    // if($("#dataname").val()==null){
+    // $("#maindatabase").prepend("<option selected disabled>未定义</option>>")
+    //}
+    if (editable==true){
+        $("#databasesummary").summernote("code",databasesummary);
+        $("#databaseedition").summernote("code",databaseedition);
+    }
+    else {
+        $("#databasesummary").html(databasesummary);
+        $("#databasesummary").html(databaseedition);
+    }
+    if (databasetype == 0) {
+        document.getElementById("databasetype")[1].selected = true;
+    }
+    else if (databasetype == 1) {
+        document.getElementById("databasetype")[2].selected = true;
+    }
+}
+
+function loadTemplateNine(entity){
+    $("input#systemname").val(entity.systemname);
+    $("input#systemtype").val(entity.systemtype);
+    var systemedition=entity.systemedition;
+    var systemsummary=entity.systemsummary;
+    var systemframework=entity.systemframework;
+    if (editable==true){
+        $("#systemedition").summernote("code",systemedition);
+        $("#systemframework").summernote("code",systemframework);
+        $("#systemsummary").summernote("code",systemsummary);
+    }
+    else {
+
+        $("#systemedition").html(systemedition);
+        $("#systemframework").html("code",systemframework);
+        $("#systemsummary").html(systemsummary);
+    }
+
+}
+function loadTemplateTen(entity){
+    $("input#hardwarename").val(entity.hardwarename);
+    $("input#hardwaretype").val(entity.hardwaretype);
+    var hardwarefun=entity.hardwarefun;
+    var hardwarescene=entity.hardwarescene;
+    if (editable==true){
+        $("#hardwarefun").summernote("code",hardwarefun);
+        $("#hardwarescene").summernote("code",hardwarescene);
+    }
+    else {
+
+        $("#hardwarefun").html(hardwarefun);
+        $("#hardwarescene").html(hardwarescene);
+    }
+
+}
+/*function loadTemplateNine(entity) {
+    $("input#systemname").val(entity.systemname);
+    var systemlist=entity.systemlist;
+    var systemContent="";
+    if(systemlist!=null)
+        for (var i=0;i<systemlist.length;i++){
+            systemContent+=" <tr class='funTr'> <th><div class='hidenTh' style='display: none'> <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black'></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black ' ></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></div> </th> <th> <textarea class='form-control  systemtype dis' name='systemtype'   disabled>";
+            systemContent+=systemlist[i].systemtype+"</textarea> </th> <th> <textarea   class='form-control systemedition dis'  name='systemedition'   style='resize:vertical; max-width: 100%' disabled>";
+            systemContent+=systemlist[i].systemedition+"</textarea> </th>";
+            systemContent+="<th> <textarea class='form-control  systemframework dis' name='systemframework'   disabled>";
+            systemContent+=systemlist[i].systemframework+"</textarea> </th>";
+            systemContent+="<th> <textarea class='form-control  systemsummary dis' name='systemsummary'   disabled>";
+            systemContent+=systemlist[i].systemsummary+"</textarea> </th>";
+
+        }
+    $(".funTable tbody").prepend(systemContent);
+    if (editable==true) {
+        $(".dis").removeAttr("disabled")
+    }
+}  */
+
+/*function loadTemplateTen(entity) {
+    $("input#hardwarename").val(entity.hardwarename);
+    var hardwarelist=entity.hardwarelist;
+    var hardwareContent="";
+    if(hardwarelist!=null)
+        for (var i=0;i<hardwarelist.length;i++){
+            hardwareContent+=" <tr class='funTr'> <th><div class='hidenTh' style='display: none'> <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black'></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black ' ></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></div> </th> <th> <textarea class='form-control  hardwaretype dis' name='hardwaretype'   disabled>";
+            hardwareContent+=hardwarelist[i].hardwaretype+"</textarea> </th> <th> <textarea   class='form-control hardwarefun dis'  name='hardwarefun'   style='resize:vertical; max-width: 100%' disabled>";
+            hardwareContent+=hardwarelist[i].hardwarefun+"</textarea> </th>";
+            hardwareContent+="<th> <textarea class='form-control  hardwarescene dis' name='hardwarescene'   disabled>";
+            hardwareContent+=hardwarelist[i].hardwarescene+"</textarea> </th>";
+
+        }
+    $(".funTable tbody").prepend(appContent);
+    if (editable==true) {
+        $(".dis").removeAttr("disabled")
+    }
+}    */
+function loadTemplateEleven(entity) {
+    var webmain=entity.webmain;
+    var webedition=entity.webedition;
+    var websummary=entity.websummary;
+    if (editable==true){
+        $("#websummary").summernote("code",websummary);
+    }
+    else {
+
+        $("#websummary").html(websummary);
+    }
+    $("#webmain").val(webmain);
+    $("#webedition").val(webedition);
+    if($("#webmain").val()==null){
+        $("#webmain").prepend("<option selected disabled>未定义</option>>")
+    }
+}
 //新增弹框初始化
 function addModelInit() {
-$("input#add_title").val("");
+    $("input#add_title").val("");
 }
 //重命名弹框初始化
 function renameModelInit() {
@@ -242,100 +472,100 @@ function templateInit() {
                 $("div#allIndex").html("<div class='spiner-example'><li class='li_head black'> <strong class=‘font-bold’>文档无任何内容</strong> </li></div>");
             }
             else {
-            var content=" ",nowFirst="0",nowSecond="0",nowThird="0",nowFourth="0",tempFirst,tempSecond,tempThird,tempFourth,tempCatalog;
-            var firstEndContent,secondEndContent,thirdEndContent,fourthEndContent;
-            firstEndContent="</li>";
-            secondEndContent="</ul></li>";
-            thirdEndContent="</ul></li>";
-            fourthEndContent="</ul></li>";
-            for (var i=0;i<result.catalogList.length;i++){
-                tempCatalog=result.catalogList[i];
-                tempFirst=tempCatalog.first_index;
-                tempSecond=tempCatalog.second_index;
-                tempThird=tempCatalog.third_index;
-                tempFourth=tempCatalog.fourth_index;
-                //结束符生成，如果下一条内容是子一级内容，不生成结束符；如果是同级内容，生成本级结束符；如果是更高级内容，要生成一次或多次结束符
-                // 第一级目录内容生成（不含结束符）
-                if(tempSecond=="0"&&tempThird=="0"&&tempFourth=="0"){
-                    if (nowFirst=="0") {}//最开头不做任何操作
-                    else if(nowSecond=="0"&&nowThird=="0"&&nowFourth=="0")//同级别
-                    {
-                        content+="</li>";}
-                    else if(nowThird=="0"&&nowFourth=="0")//第二级:关第二级，关第一级（有多层）
-                    {
-                        content+="</li> </ul></li>";}
-                    else if(nowFourth=="0")//上一节是第三级目录
-                    {
-                        content+="</li> </ul></li> </ul></li>";}
-                    else{//上一节是第四级目录
-                        content+="</li> </ul></li> </ul></li> </ul></li>";
-                    }
-                    content+=" <li>";
-                    content+="  <a href='#' class='dic first'> <span class='nav-label'>"+tempFirst+"</span>";
-                    content+=" <span class='catalogIndex' style='display: none'>"+tempFirst+" "+tempSecond+" "+tempThird+" "+tempFourth+"</span>"
-                    content+="<span class='nav-label col-md-offset-1 indexName' >"+tempCatalog.title+"</span>";
-                    content+="  <span class='fa arrow'></span> </a>";
+                var content=" ",nowFirst="0",nowSecond="0",nowThird="0",nowFourth="0",tempFirst,tempSecond,tempThird,tempFourth,tempCatalog;
+                var firstEndContent,secondEndContent,thirdEndContent,fourthEndContent;
+                firstEndContent="</li>";
+                secondEndContent="</ul></li>";
+                thirdEndContent="</ul></li>";
+                fourthEndContent="</ul></li>";
+                for (var i=0;i<result.catalogList.length;i++){
+                    tempCatalog=result.catalogList[i];
+                    tempFirst=tempCatalog.first_index;
+                    tempSecond=tempCatalog.second_index;
+                    tempThird=tempCatalog.third_index;
+                    tempFourth=tempCatalog.fourth_index;
+                    //结束符生成，如果下一条内容是子一级内容，不生成结束符；如果是同级内容，生成本级结束符；如果是更高级内容，要生成一次或多次结束符
+                    // 第一级目录内容生成（不含结束符）
+                    if(tempSecond=="0"&&tempThird=="0"&&tempFourth=="0"){
+                        if (nowFirst=="0") {}//最开头不做任何操作
+                        else if(nowSecond=="0"&&nowThird=="0"&&nowFourth=="0")//同级别
+                        {
+                            content+="</li>";}
+                        else if(nowThird=="0"&&nowFourth=="0")//第二级:关第二级，关第一级（有多层）
+                        {
+                            content+="</li> </ul></li>";}
+                        else if(nowFourth=="0")//上一节是第三级目录
+                        {
+                            content+="</li> </ul></li> </ul></li>";}
+                        else{//上一节是第四级目录
+                            content+="</li> </ul></li> </ul></li> </ul></li>";
+                        }
+                        content+=" <li>";
+                        content+="  <a href='#' class='dic first'> <span class='nav-label'>"+tempFirst+"</span>";
+                        content+=" <span class='catalogIndex' style='display: none'>"+tempFirst+" "+tempSecond+" "+tempThird+" "+tempFourth+"</span>"
+                        content+="<span class='nav-label col-md-offset-1 indexName' >"+tempCatalog.title+"</span>";
+                        content+="  <span class='fa arrow'></span> </a>";
 
+                    }
+                    // 第二级目录内容生成（不含结束符）
+                    else  if(tempThird=="0"&&tempFourth=="0"){
+                        if(nowSecond=="0"&&nowThird=="0"&&nowFourth=="0")//上一节是第一级目录
+                        {
+                            content+="<ul  class='nav nav-second-level'>";
+                        }
+                        else if(nowThird=="0"&&nowFourth=="0")//上一节是第二级目录
+                        {
+                            content+="</li>";}
+                        else if(nowFourth=="0")//上一节是第三级目录
+                        {
+                            content+="</li> </ul></li>"}
+                        else{//上一节是第四级目录
+                            content+="</li> </ul></li> </ul></li>";
+                        }
+                        content+=" <li> <a href='#' class='dic second'>";
+                        content+=" <span class='nav-label'>"+tempSecond+"</span>";
+                        content+=" <span class='catalogIndex' style='display: none'>"+tempFirst+" "+tempSecond+" "+tempThird+" "+tempFourth+"</span>"
+                        content+="<span class='nav-label col-md-offset-1 indexName' >"+tempCatalog.title+"</span></a>";
+
+                    }
+                    // 第三级目录内容生成（不含结束符）
+                    else  if (tempFourth=="0"){
+                        if(nowThird=="0"&&nowFourth=="0")//上一节是第二级目录
+                        {
+                            content+="<ul class='nav nav-third-level'>";
+                        }
+                        else if(nowFourth=="0")//上一节是第三级目录
+                        {
+                            content+="</li>";}
+                        else{//上一节是第四级目录
+                            content+="</li> </ul></li>";
+                        }
+                        content+=" <li> <a href='#' class='dic third'>";
+                        content+=" <span class='nav-label'>"+tempThird+"</span>";
+                        content+=" <span class='catalogIndex' style='display: none'>"+tempFirst+" "+tempSecond+" "+tempThird+" "+tempFourth+"</span>"
+                        content+="<span class='nav-label col-md-offset-1 indexName' >"+tempCatalog.title+"</span></a>";
+
+                    }
+                    // 第四级目录内容生成（不含结束符）
+                    else {
+                        if(nowFourth=="0")//上一节是第三级目录
+                        {
+                            content+="<ul class=' nav nav-fourth-level'>";
+                        }
+                        else{//上一节是第四级目录
+                            content+="</li>";
+                        }
+                        content+=" <li> <a href='#' class='dic fourth'>";
+                        content+=" <span class='nav-label'>"+tempFourth+"</span>";
+                        content+=" <span class='catalogIndex' style='display: none'>"+tempFirst+" "+tempSecond+" "+tempThird+" "+tempFourth+"</span>"
+                        content+="<span class='nav-label col-md-offset-1 indexName' >"+tempCatalog.title+"</span></a>";
+
+
+                    }
+                    nowFirst=tempFirst;nowSecond=tempSecond;nowThird=tempThird;nowFourth=tempFourth;
                 }
-                // 第二级目录内容生成（不含结束符）
-                else  if(tempThird=="0"&&tempFourth=="0"){
-                    if(nowSecond=="0"&&nowThird=="0"&&nowFourth=="0")//上一节是第一级目录
-                    {
-                        content+="<ul  class='nav nav-second-level'>";
-                    }
-                    else if(nowThird=="0"&&nowFourth=="0")//上一节是第二级目录
-                    {
-                        content+="</li>";}
-                    else if(nowFourth=="0")//上一节是第三级目录
-                    {
-                        content+="</li> </ul></li>"}
-                    else{//上一节是第四级目录
-                        content+="</li> </ul></li> </ul></li>";
-                    }
-                    content+=" <li> <a href='#' class='dic second'>";
-                    content+=" <span class='nav-label'>"+tempSecond+"</span>";
-                    content+=" <span class='catalogIndex' style='display: none'>"+tempFirst+" "+tempSecond+" "+tempThird+" "+tempFourth+"</span>"
-                    content+="<span class='nav-label col-md-offset-1 indexName' >"+tempCatalog.title+"</span></a>";
-
-                }
-                // 第三级目录内容生成（不含结束符）
-                else  if (tempFourth=="0"){
-                    if(nowThird=="0"&&nowFourth=="0")//上一节是第二级目录
-                    {
-                        content+="<ul class='nav nav-third-level'>";
-                    }
-                    else if(nowFourth=="0")//上一节是第三级目录
-                    {
-                        content+="</li>";}
-                    else{//上一节是第四级目录
-                        content+="</li> </ul></li>";
-                    }
-                    content+=" <li> <a href='#' class='dic third'>";
-                    content+=" <span class='nav-label'>"+tempThird+"</span>";
-                    content+=" <span class='catalogIndex' style='display: none'>"+tempFirst+" "+tempSecond+" "+tempThird+" "+tempFourth+"</span>"
-                    content+="<span class='nav-label col-md-offset-1 indexName' >"+tempCatalog.title+"</span></a>";
-
-                }
-                // 第四级目录内容生成（不含结束符）
-                else {
-                    if(nowFourth=="0")//上一节是第三级目录
-                    {
-                        content+="<ul class=' nav nav-fourth-level'>";
-                    }
-                    else{//上一节是第四级目录
-                        content+="</li>";
-                    }
-                    content+=" <li> <a href='#' class='dic fourth'>";
-                    content+=" <span class='nav-label'>"+tempFourth+"</span>";
-                    content+=" <span class='catalogIndex' style='display: none'>"+tempFirst+" "+tempSecond+" "+tempThird+" "+tempFourth+"</span>"
-                    content+="<span class='nav-label col-md-offset-1 indexName' >"+tempCatalog.title+"</span></a>";
-
-
-                }
-                nowFirst=tempFirst;nowSecond=tempSecond;nowThird=tempThird;nowFourth=tempFourth;
-            }
-            $("div#allIndex").html(content)
-            $('#side-menu').metisMenu();}
+                $("div#allIndex").html(content)
+                $('#side-menu').metisMenu();}
         },
         error: function (result) {
             showtoast("dangerous","加载失败","加载目录失败")
@@ -345,7 +575,7 @@ function templateInit() {
 }
 //新增按钮点击事件
 $(".li_add").click(function () {
-   if(typeof(nowClick) == "undefined")
+    if(typeof(nowClick) == "undefined")
     {
         showtoast("warning","新增失败","没有选中任何目录","left");
     }
@@ -470,46 +700,46 @@ function UsableInit() {
 }
 //加载详细可用性内容
 function usableClick(obj) {
-var id=parseInt($(obj).val());
+    var id=parseInt($(obj).val());
     $("#uaname").text(usableList[id].name);
     $("#uaproblem").text(usableList[id].rang);
     $("#uasolution").text(usableList[id].solution);
     $("#uaexample").text(usableList[id].example);
 }
 
-    //获取安全性
-    function getSecurity() {
-        $.ajax({
-            url: "catalog-getSecurity",
-            data: {},
-            dataType: "json",
-            type: "Post",
-            async: "false",
-            success: function (result) {
-                securityList = result.securityList;
-            },
-            error: function (result) {
-                showtoast("dangerous", "失败", "获取安全性失败")
-            }
-        })
-    }
-    //安全性初始化
-    function SecurityInit() {
-        var content="";
-        for (var i=0;i<securityList.length;i++){
-            content+=" <option value='"+i+"' onclick='SecurityClick(this)'>"+(i+1)+"."+securityList[i].name+"</option>"
+//获取安全性
+function getSecurity() {
+    $.ajax({
+        url: "catalog-getSecurity",
+        data: {},
+        dataType: "json",
+        type: "Post",
+        async: "false",
+        success: function (result) {
+            securityList = result.securityList;
+        },
+        error: function (result) {
+            showtoast("dangerous", "失败", "获取安全性失败")
         }
-        $("select#seSelect").html(content);
+    })
+}
+//安全性初始化
+function SecurityInit() {
+    var content="";
+    for (var i=0;i<securityList.length;i++){
+        content+=" <option value='"+i+"' onclick='SecurityClick(this)'>"+(i+1)+"."+securityList[i].name+"</option>"
     }
+    $("select#seSelect").html(content);
+}
 
-    //加载详细安全性内容
-    function SecurityClick(obj) {
-        var id=parseInt($(obj).val());
-        $("#sename").text(securityList[id].name);
-        $("#seproblem").text(securityList[id].rang);
-        $("#sesolution").text(securityList[id].solution);
-        $("#seexample").text(securityList[id].example);
-    }
+//加载详细安全性内容
+function SecurityClick(obj) {
+    var id=parseInt($(obj).val());
+    $("#sename").text(securityList[id].name);
+    $("#seproblem").text(securityList[id].rang);
+    $("#sesolution").text(securityList[id].solution);
+    $("#seexample").text(securityList[id].example);
+}
 
 //页面初始化
 $(document).ready(function () {
@@ -552,11 +782,55 @@ function catalogAdd() {
                 showtoast("dangerous", "加载失败", "加载目录失败")
             }
         })
-    } 
+    }
     if(continueFlag==0){
         return false;}
-     if (place == "0") {//同级,传最后一个元素位置
-            catalogIndex = $(nowClick).parent().parent().children("li:last-child").children("a").children("span.catalogIndex").text();
+    if (place == "0") {//同级,传最后一个元素位置
+        catalogIndex = $(nowClick).parent().parent().children("li:last-child").children("a").children("span.catalogIndex").text();
+        $.ajax({
+            url: "catalog-addState2",
+            data: {title: title, id_template: id_template, catalogIndex: catalogIndex, id_document: documentId},
+            dataType: "json",
+            type: "Post",
+            async: "false",
+            success: function (result) {
+                var lastNum, nextNum;
+                lastNum = nowClick.parent().parent().children("li:last-child").children("a").children("span:first-child").text();
+                nextNum = (parseInt(lastNum) + 1);
+                var content = "<li> <a href='#' class='dic " + nowRank + "'> <span class='nav-label'>" + nextNum + "</span><span class='catalogIndex' style='display: none'>" + result.spanText + "</span><span class='nav-label col-md-offset-1 indexName'>" + title + "</span></a></li>";
+                nowClick.parent().parent().append(content);
+            },
+            error: function (result) {
+                showtoast("dangerous", "加载失败", "加载目录失败")
+            }
+        })
+    }
+    else if (place == "1") {//下一级别，需要新增ul，传当前级别位置
+        var nextRank = getNextRank(nowRank), nowNum, nextNum;
+        if (typeof(nowClick.parent().children("ul").html()) == "undefined") {//需要新增一个ul
+            catalogIndex = nowClick.children("span.catalogIndex").text();
+            $.ajax({
+                url: "catalog-addState1",
+                data: {title: title, id_template: id_template, catalogIndex: catalogIndex, id_document: documentId},
+                dataType: "json",
+                type: "Post",
+                async: "false",
+                success: function (result) {
+                    nextNum = 1;
+                    nowClick.parent().append(" <ul class='nav nav-" + nextRank + "-level'></ul>")
+                    var content = "<li> <a href='#' class='dic " + nextRank + "'> <span class='nav-label'>" + nextNum + "</span><span class='catalogIndex' style='display: none'>" + result.spanText + "</span><span class='nav-label col-md-offset-1 indexName'>" + title + "</span></a></li>";
+                    nowClick.parent().children("ul").append(content);
+                    $('#side-menu').metisMenu();
+                    $(nowClick).click();
+                },
+                error: function (result) {
+                    showtoast("dangerous", "加载失败", "加载目录失败")
+                }
+            })
+        }
+        else {//不需要新增，传最后一个元素的位置
+            catalogIndex = nowClick.parent().children("ul").children("li:last-child").children("a").children("span.catalogIndex").text();
+            ;
             $.ajax({
                 url: "catalog-addState2",
                 data: {title: title, id_template: id_template, catalogIndex: catalogIndex, id_document: documentId},
@@ -564,63 +838,19 @@ function catalogAdd() {
                 type: "Post",
                 async: "false",
                 success: function (result) {
-                    var lastNum, nextNum;
-                    lastNum = nowClick.parent().parent().children("li:last-child").children("a").children("span:first-child").text();
-                    nextNum = (parseInt(lastNum) + 1);
-                    var content = "<li> <a href='#' class='dic " + nowRank + "'> <span class='nav-label'>" + nextNum + "</span><span class='catalogIndex' style='display: none'>" + result.spanText + "</span><span class='nav-label col-md-offset-1 indexName'>" + title + "</span></a></li>";
-                    nowClick.parent().parent().append(content);
+                    nowNum = nowClick.parent().children("ul").children("li:last-child").children("a").children("span:first-child").text();
+                    nextNum = (parseInt(nowNum) + 1);
+                    var content = "<li> <a href='#' class='dic " + nextRank + "'> <span class='nav-label'>" + nextNum + "</span><span class='catalogIndex' style='display: none'>" + result.spanText + "</span><span class='nav-label col-md-offset-1 indexName'>" + title + "</span></a></li>";
+                    nowClick.parent().children("ul").append(content);
                 },
                 error: function (result) {
                     showtoast("dangerous", "加载失败", "加载目录失败")
                 }
             })
-        }
-        else if (place == "1") {//下一级别，需要新增ul，传当前级别位置
-            var nextRank = getNextRank(nowRank), nowNum, nextNum;
-            if (typeof(nowClick.parent().children("ul").html()) == "undefined") {//需要新增一个ul
-                catalogIndex = nowClick.children("span.catalogIndex").text();
-                $.ajax({
-                    url: "catalog-addState1",
-                    data: {title: title, id_template: id_template, catalogIndex: catalogIndex, id_document: documentId},
-                    dataType: "json",
-                    type: "Post",
-                    async: "false",
-                    success: function (result) {
-                        nextNum = 1;
-                        nowClick.parent().append(" <ul class='nav nav-" + nextRank + "-level'></ul>")
-                        var content = "<li> <a href='#' class='dic " + nextRank + "'> <span class='nav-label'>" + nextNum + "</span><span class='catalogIndex' style='display: none'>" + result.spanText + "</span><span class='nav-label col-md-offset-1 indexName'>" + title + "</span></a></li>";
-                        nowClick.parent().children("ul").append(content);
-                        $('#side-menu').metisMenu();
-                        $(nowClick).click();
-                    },
-                    error: function (result) {
-                        showtoast("dangerous", "加载失败", "加载目录失败")
-                    }
-                })
-            }
-            else {//不需要新增，传最后一个元素的位置
-                catalogIndex = nowClick.parent().children("ul").children("li:last-child").children("a").children("span.catalogIndex").text();
-                ;
-                $.ajax({
-                    url: "catalog-addState2",
-                    data: {title: title, id_template: id_template, catalogIndex: catalogIndex, id_document: documentId},
-                    dataType: "json",
-                    type: "Post",
-                    async: "false",
-                    success: function (result) {
-                        nowNum = nowClick.parent().children("ul").children("li:last-child").children("a").children("span:first-child").text();
-                        nextNum = (parseInt(nowNum) + 1);
-                        var content = "<li> <a href='#' class='dic " + nextRank + "'> <span class='nav-label'>" + nextNum + "</span><span class='catalogIndex' style='display: none'>" + result.spanText + "</span><span class='nav-label col-md-offset-1 indexName'>" + title + "</span></a></li>";
-                        nowClick.parent().children("ul").append(content);
-                    },
-                    error: function (result) {
-                        showtoast("dangerous", "加载失败", "加载目录失败")
-                    }
-                })
 
 
-            }
         }
+    }
 }
 //第一次新增目录
 function catalogNew() {
@@ -645,28 +875,28 @@ function catalogNew() {
             }
         })
     }
-    
+
 }
 //评论提交
 function commitDis() {
     var discuss=$(".discuss").summernote('code');
     var catalogIndex=$(nowClick).children("span.catalogIndex").text()
     if($('#fileupload').val()=="") {
-    $.ajax({
-        url: "discuss-commit",
-        data: {disContent: discuss,catalogIndex:catalogIndex, id_document:documentId},
-        dataType: "json",
-        type: "Post",
-        async: "false",
-        success: function (result) {
-            showtoast("success","成功","评论提交成功")
-            discussInit()
-            disReload()
-        },
-        error: function (result) {
-            showtoast("dangerous","加载失败","加载目录失败")
-        }
-    })}
+        $.ajax({
+            url: "discuss-commit",
+            data: {disContent: discuss,catalogIndex:catalogIndex, id_document:documentId},
+            dataType: "json",
+            type: "Post",
+            async: "false",
+            success: function (result) {
+                showtoast("success","成功","评论提交成功")
+                discussInit()
+                disReload()
+            },
+            error: function (result) {
+                showtoast("dangerous","加载失败","加载目录失败")
+            }
+        })}
     else {
         $('#fileupload').fileinput('upload').fileinput('clear');
         showtoast("success","成功","评论提交成功");
@@ -733,14 +963,14 @@ function temp_edit() {
     $("#eg").addClass("no-padding");$(".click1edit").summernote({
         minHeight:100,
         lang:"zh-CN",focus:true,toolbar: [
-        // ['style', ['bold', 'italic', 'underline', 'clear']],
-        // ['fontsize', ['fontsize']],
-        // ['color', ['color']],
-        // ['para', ['paragraph']],
-        // ['table', ['table']],
-        ['picture', ['picture']],
-        ['fullscreen', ['fullscreen']]
-    ],
+            // ['style', ['bold', 'italic', 'underline', 'clear']],
+            // ['fontsize', ['fontsize']],
+            // ['color', ['color']],
+            // ['para', ['paragraph']],
+            // ['table', ['table']],
+            ['picture', ['picture']],
+            ['fullscreen', ['fullscreen']]
+        ],
         placeholder: '暂无内容',
         callbacks: {
             onImageUpload: function(files, editor, $editable) {
@@ -763,12 +993,18 @@ function temp_edit() {
         // }
     })
     $("div.hidenTh").show();
+    $("#titleLibrary").hide();
+    $("#titleLibrary1").hide();
+    $(".userLibraryDiv").show();
+
+    //$("#noneUserLibrary").show();
     $("#edit").attr("style","display:none");
     $("#save").attr("style","display:show");
     $(".dis").removeAttr("disabled")
 }
 //图片上传
 function sendFile(files, that) {
+
     var data = new FormData();
     data.append("file", files[0]);
     $.ajax({
@@ -798,7 +1034,7 @@ function temp_save() {
     // $("div.hidenTh").hide();
 
     var id_template = nowCatalog.id_template,id_catalog=nowCatalog.id_catalog;
-        if (id_template == "1") {//通用
+    if (id_template == "1") {//通用
         var describe=$("#describe").summernote('code');
         // alert(describe);
         $.ajax({
@@ -834,92 +1070,92 @@ function temp_save() {
         })
     }
     else  if(id_template == "3"){
-            var funName=$("input#funName").val();
-            var priority=$("select#priority").val();
-            var describe=$("#describe").summernote('code');
-            var inDiv=$("#in").summernote('code');
-            var outDiv=$("#out").summernote('code');
-            var basic=$("#basic").summernote('code');
-            var alternative=$("#alternative").summernote('code');
-            var  funRoleList="[{";
-            var roleName,roleDescribe,usableName,usablePara,securityName,securityPara,last="";
-            $(".funTable tbody").find("tr").each(function () {
-             if ($(this).hasClass("funTr")){//开头
-                  if (last!=""){//第一次，没有,
-                      funRoleList+="},{"
-                 }
-                 roleName=$(this).children("th").eq(1).children(".roleName").find("option:selected").text();
-                  // alert($(this).children("th").eq(2).children(".roleDescribe"))
-                 roleDescribe=$(this).children("th").eq(2).children(".roleDescribe").val();
-                 funRoleList+="\"roleName\":\""+roleName+"\",\"roleDescribe\":\""+roleDescribe+"\"";
-                 last="funTr";
-             }
-            else if ($(this).hasClass("usableTr")){//开头
-                 usableName=$(this).children("th").eq(1).text();
-                 usablePara=$(this).children("th").eq(2).text();
-                 funRoleList+=",\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"";
-                 last="usableTr";
-             }
-             else if ($(this).hasClass("securityTr")){//开头
-                 securityName=$(this).children("th").eq(1).text();
-                 securityPara=$(this).children("th").eq(2).text();
-                 funRoleList+=",\"securityName\":\""+securityName+"\",\"securityPara\":\""+securityPara+"\"";
-                 last="securityTr";
-             }
-            })
-            funRoleList+="}]";
-
-            var funUsableList="[",usableName,usablePara,securityName,securityPara,first="yes";
-            $(".funTable tfoot").find("tr").each(function () {
-                    if (first=="yes"){//第一次，没有,
-                        funUsableList+="{"
-                        if ($(this).hasClass("usableTr")){
-                            usableName=$(this).children("th:first-child").text();
-                            usablePara=$(this).children("th").eq(1).text();
-                            funUsableList+="\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"}";
-                            first="no";
-                        }
-                        else if ($(this).hasClass("securityTr")){//开头
-                            securityName=$(this).children("th:first-child").text();
-                            securityPara=$(this).children("th").eq(1).text();
-                            funUsableList+="\"securityName\":\""+securityName+"\",\"securityPara\":\""+securityPara+"\"}";
-                            first="no";
-                        }
-                    }
-                    else {
-                        funUsableList+=",{"
-                        if ($(this).hasClass("usableTr")){
-                            usableName=$(this).children("th:first-child").text();
-                            usablePara=$(this).children("th").eq(1).text();
-                            funUsableList+="\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"}";
-                            first="no";
-                        }
-                        else if ($(this).hasClass("securityTr")){//开头
-                            securityName=$(this).children("th:first-child").text();
-                            securityPara=$(this).children("th").eq(1).text();
-                            funUsableList+="\"securityName\":\""+securityName+"\",\"securityPara\":\""+securityPara+"\"}";
-                            first="no";
-                        }
-                    }
-            })
-            funUsableList+="]";
-            // alert(describe)
-            $.ajax({
-                url: "catalog-saveTemplateThree",
-                data: {id_catalog: id_catalog,funName: funName, priority: priority,content:describe,
-                    inDiv:inDiv,outDiv:outDiv,basic:basic,alternative:alternative,
-                    funRoleList:funRoleList,funUsableList:funUsableList},
-                dataType: "json",
-                type: "Post",
-                async: "false",
-                success: function (result) {
-                    showtoast("success", "保存成功", "内容保存成功")
-                },
-                error: function (result) {
-                    showtoast("dangerous", "保存失败", "内容保存失败")
+        var funName=$("input#funName").val();
+        var priority=$("select#priority").val();
+        var describe=$("#describe").summernote('code');
+        var inDiv=$("#in").summernote('code');
+        var outDiv=$("#out").summernote('code');
+        var basic=$("#basic").summernote('code');
+        var alternative=$("#alternative").summernote('code');
+        var  funRoleList="[{";
+        var roleName,roleDescribe,usableName,usablePara,securityName,securityPara,last="";
+        $(".funTable tbody").find("tr").each(function () {
+            if ($(this).hasClass("funTr")){//开头
+                if (last!=""){//第一次，没有,
+                    funRoleList+="},{"
                 }
-            })
-        }
+                roleName=$(this).children("th").eq(1).children(".roleName").find("option:selected").text();
+                // alert($(this).children("th").eq(2).children(".roleDescribe"))
+                roleDescribe=$(this).children("th").eq(2).children(".roleDescribe").val();
+                funRoleList+="\"roleName\":\""+roleName+"\",\"roleDescribe\":\""+roleDescribe+"\"";
+                last="funTr";
+            }
+            else if ($(this).hasClass("usableTr")){//开头
+                usableName=$(this).children("th").eq(1).text();
+                usablePara=$(this).children("th").eq(2).text();
+                funRoleList+=",\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"";
+                last="usableTr";
+            }
+            else if ($(this).hasClass("securityTr")){//开头
+                securityName=$(this).children("th").eq(1).text();
+                securityPara=$(this).children("th").eq(2).text();
+                funRoleList+=",\"securityName\":\""+securityName+"\",\"securityPara\":\""+securityPara+"\"";
+                last="securityTr";
+            }
+        })
+        funRoleList+="}]";
+
+        var funUsableList="[",usableName,usablePara,securityName,securityPara,first="yes";
+        $(".funTable tfoot").find("tr").each(function () {
+            if (first=="yes"){//第一次，没有,
+                funUsableList+="{"
+                if ($(this).hasClass("usableTr")){
+                    usableName=$(this).children("th:first-child").text();
+                    usablePara=$(this).children("th").eq(1).text();
+                    funUsableList+="\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"}";
+                    first="no";
+                }
+                else if ($(this).hasClass("securityTr")){//开头
+                    securityName=$(this).children("th:first-child").text();
+                    securityPara=$(this).children("th").eq(1).text();
+                    funUsableList+="\"securityName\":\""+securityName+"\",\"securityPara\":\""+securityPara+"\"}";
+                    first="no";
+                }
+            }
+            else {
+                funUsableList+=",{"
+                if ($(this).hasClass("usableTr")){
+                    usableName=$(this).children("th:first-child").text();
+                    usablePara=$(this).children("th").eq(1).text();
+                    funUsableList+="\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"}";
+                    first="no";
+                }
+                else if ($(this).hasClass("securityTr")){//开头
+                    securityName=$(this).children("th:first-child").text();
+                    securityPara=$(this).children("th").eq(1).text();
+                    funUsableList+="\"securityName\":\""+securityName+"\",\"securityPara\":\""+securityPara+"\"}";
+                    first="no";
+                }
+            }
+        })
+        funUsableList+="]";
+        // alert(describe)
+        $.ajax({
+            url: "catalog-saveTemplateThree",
+            data: {id_catalog: id_catalog,funName: funName, priority: priority,content:describe,
+                inDiv:inDiv,outDiv:outDiv,basic:basic,alternative:alternative,
+                funRoleList:funRoleList,funUsableList:funUsableList},
+            dataType: "json",
+            type: "Post",
+            async: "false",
+            success: function (result) {
+                showtoast("success", "保存成功", "内容保存成功")
+            },
+            error: function (result) {
+                showtoast("dangerous", "保存失败", "内容保存失败")
+            }
+        })
+    }
     // $(".dis").attr("disabled","true");
 }
 //评论编辑按钮
@@ -1022,12 +1258,62 @@ function addSecurityLine() {
         $(nowLine).children("th:last-child").children("button:last-child").hide();
     }
     else{
-    $(nowLine).after(content);
-    $(nowLine).children("th:last-child").children("button:last-child").hide();
+        $(nowLine).after(content);
+        $(nowLine).children("th:last-child").children("button:last-child").hide();
     }
 }
+/*function adduseLine() {    //软件接口
+   //var optionCon = "";
+   //for (var i = 0; i < roleList.length; i++) {
+   var content="   <tr class='funTr'> <th > <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black' ></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black'></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></th> <th> " +
+       "<input class='form-control roleName dis' name='' name='appname '  > "+
+       "</input> " +
+   //var content="   <tr class='funTr'> <th > <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black' ></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black'></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></th> <th> " +
+      // "<select class='form-control roleName dis' name='' name='roleName'  > " +
+      // optionCon +
+     //  "</select> "
+       "</th> <th> <textarea   class='form-control appaddress dis'   style='resize:vertical; max-width: 100%' name='appaddress'    ></textarea> </th> <th> <input class='form-control appusage dis' name='' name='appusage'  >" +
+       "</input></th></tr>"
+   $(".funTable").children("tbody").children("tr:last-child").before(content);
+}
+
+function addcomLine() {    //通讯接口
+   var content="   <tr class='funTr'> <th > <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black' ></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black'></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></th> <th> " +
+       "<input class='form-control communabb dis' name='' name='communabb'  > "+
+       "</input> " +
+       //var content="   <tr class='funTr'> <th > <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black' ></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black'></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></th> <th> " +
+       // "<select class='form-control roleName dis' name='' name='roleName'  > " +
+       // optionCon +
+       //  "</select> "
+
+       "</th> <th><input  class='form-control communname dis' name='' name='communname'  >"+"</input></th> <th> <textarea   class='form-control commundescribe dis'   style='resize:vertical; max-width: 100%' name='commundescribe'>" +
+       "</textarea> </th></tr>"
+   $(".funTable").children("tbody").children("tr:last-child").before(content);
+}
+
+function addsysLine() {    //操作系统
+   var content="   <tr class='funTr'> <th > <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black' ></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black'></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></th> <th> " +
+       "<input class='form-control systemtype dis' name='' name='systemtype'  > "+
+       "</input> " +
 
 
+       "</th> <th><input  class='form-control systemedition dis' name='' name='systemedition'  >"+"</input></th><th><input  class='form-control systemframework dis' name='' name='systemframework'  >"+"</input></th> <th> <textarea   class='form-control  systemsummary dis'   style='resize:vertical; max-width: 100%' name=' systemsummary'>" +
+       "</textarea> </th></tr>"
+   $(".funTable").children("tbody").children("tr:last-child").before(content);
+}
+function addhardLine() {    //硬件设备
+   var content="   <tr class='funTr'> <th > <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black' ></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black'></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></th> <th> " +
+       "<input class='form-control hardwaretype dis' name='' name='hardwaretype'  > "+
+       "</input> " +
+       //var content="   <tr class='funTr'> <th > <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black' ></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black'></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></th> <th> " +
+       // "<select class='form-control roleName dis' name='' name='roleName'  > " +
+       // optionCon +
+       //  "</select> "
+
+       "</th> <th><textarea   class='form-control  hardwarefun dis'  style='resize:vertical;max-width: 100%' name=' hardwarefun'>"+"</textarea></th> <th> <textarea   class='form-control hardwarescene dis'   style='resize:vertical; max-width: 100%' name='hardwarescene'>" +
+       "</textarea> </th></tr>"
+   $(".funTable").children("tbody").children("tr:last-child").before(content);
+}  */
 function addFunlLine() {
     var optionCon="";
     for (var i=0;i<roleList.length;i++){
@@ -1211,139 +1497,6 @@ $(document).on("click",".fun_delete",function () {
 
 //构件JS开始了
 //点击构件类型事件
-var nowTemplate,structureList;
-$("button#edit").click(function(){
-    $("#libraryList").html("")
-    nowTemplate=nowCatalog.id_template;
-    $.ajax({
-        url: "templateLib-getTypeOfLib",
-        data: {id_template:nowTemplate},
-        dataType: "json",
-        type: "Post",
-        async: "false",
-        success: function (result) {
-           var list=result.libraryList,content="";
-           if(list.length!=0){
-               content+=" <option value='0' selected disabled>请选择构件库</option>"
-               for(var i=0;i<list.length;i++){
-               content+=" <option value='"+list[i].id_library+"'>"+list[i].name+"</option>"
-           }
-               $("#libraryList").empty();
-               $("#libraryList").append(content);
-               // alert(content)
-               $(".libraryDiv").show();
-               $("#noneLibrary").hide();
-               $(".structTable").hide();
-           }
-           else {
-               $(".libraryDiv").hide();
-               $("#noneLibrary").show();
-               $(".structTable").empty();
-           }
-
-        },
-        error: function (result) {
-            showtoast("dangerous", "保存失败", "内容保存失败")
-        }
-    })
-})
-
-$("#libraryList").change(function () {
-    var id_library=$(this).val();
-    $(".structTable").show();
-    $.ajax({
-        url: "templateLib-getStructure",
-        data: {id_library:id_library,id_template:nowTemplate},
-        dataType: "json",
-        type: "Post",
-        async: "false",
-        success: function (result) {
-            if(result.structureList === undefined){
-                $("#emptyOfficalLibrary").show();
-            }else{
-                $("#emptyOfficalLibrary").hide();
-            }
-            $(".addTbody").remove();
-            structureList=result.structureList;
-            var content="<tbody class='addTbody'>";
-          if(nowTemplate=="1"){
-              for (var i=0;i<structureList.length;i++){
-                  content+=" <tr><th >图文模板"+(i+1)+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(1,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(1,this,"+i+")'>预览</button></th></tr>";
-              }
-          }
-           else if(nowTemplate=="2"){
-              for (var i=0;i<structureList.length;i++){
-                  content+=" <tr><th >"+structureList[i].roleName+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(2,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(2,this,"+i+")'>预览</button></th></tr>";
-              }
-          }
-          else if(nowTemplate=="3"){
-              for (var i=0;i<structureList.length;i++){
-                  content+=" <tr><th >"+structureList[i].funName+"</th><th > <button class='btn btn-info   btn-xs' onclick='useStructure(3,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(3,this,"+i+")'>预览</button></th></tr>";
-              }
-          }
-             content+="</tbody>";
-          $(".structTable").append(content);
-        },
-        error: function (result) {
-            showtoast("dangerous", "保存失败", "内容保存失败")
-        }
-    })
-
-})
-
-function useStructure(id_template,obj,index) {
-    if(typeof (nowCatalog)=="undefined"||nowCatalog.id_template!=id_template){
-        showtoast("warning", "加载失败", "与模板类型不匹配");return;
-    }
-    var id=parseInt(index)
-    if(id_template=="1"){
-        loadTemplateOne(structureList[id])
-    }
-   else if(id_template=="2"){
-        loadTemplateTwo(structureList[id])
-    }
-    else  if(id_template=="3"){
-        var end=$(".funTable tbody").children(".end");
-        $(".funTable tbody").html(end)
-        $(".funTable tfoot").html("");
-        loadTemplateThree(structureList[id])
-    }
-}
-
-function seeStructure(id_template,obj,index){
-    var id=parseInt(index)
-    if(id_template=="1"){
-        swal({title:"图文模板"+(id+1),text:structureList[id].content})
-    }else if(id_template=="2"){
-        swal(
-            {
-                title:"构件名:"+structureList[id].roleName,
-                text:"用户描述<div>"+structureList[id].describe+"</div>"
-                +"用户权限<div>"+structureList[id].permissions+"</div>",
-                html:true
-            })
-    }else  if(id_template=="3"){
-        var priority;
-        if(structureList[id].priority==1){
-            priority = "高"
-        }else if(structureList[id].priority==2){
-            priority = "中"
-        }else if(structureList[id].priority==3){
-            priority = "低"
-        }
-        swal(
-            {
-                title:"构件名:"+structureList[id].funName,
-                text:"<div>优先级:"+priority+"</div>"
-                +"<div>功能点描述:"+structureList[id].describe+"</div>"
-                +"<div>输入:"+structureList[id].input+"</div>"
-                +"<div>输出:"+structureList[id].output+"</div>"
-                +"<div>基本操作流程:"+structureList[id].basic+"</div>"
-                +"<div>备选操作流程:"+structureList[id].alternative+"</div>",
-                html:true
-            })
-    }
-}
 
 //图文框初始化
 $('#fileupload').fileinput(

@@ -30,7 +30,10 @@
 
 
     <title>模板页面</title>
-    <link rel="shortcut icon" href="favicon.ico"> <link href="<%=basePath %>/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="<%=basePath %>/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="<%=basePath %>/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<%=basePath %>/css/plugins/bootstrap-table/bootstrap-table.css" rel="stylesheet">
     <link href="<%=basePath %>/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
 
     <!-- Sweet Alert -->
@@ -50,6 +53,8 @@
 </head>
 
 <body class="gray-bg">
+
+
 <div  class="modal inmodal" id="Encapsulation" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content animated bounceInRight">
@@ -59,31 +64,15 @@
                 <h4 class="modal-title">封装构件</h4>
             </div>
             <div class="modal-body col-md-12" style="height: 300px" >
-                    <label style="padding-left: 15px" class="col-md-4">选择构建库</label>
-                    <div style="width: 300px" class="col-md-8">
-                        <div class="alert alert-info" id="noneOneLibrary" style="display: none;">
-                            暂无该类型的构件库，请在下方创建
-                        </div>
-                        <div class="oneLibraryDiv" style="display: none;">
-                            <select class="form-control" name="libraryOneList" id="libraryOneList" >
-                            </select>
-                        </div>
-                    </div>
-                <label id="new" style="padding-left: 15px" class="col-md-4">新建构建库</label>
-                <div style="width: 300px" class="col-md-8">
-                <div class="form-group" id="name1" style="display: none;"><label>构件库名</label> <input id="name" type="text" placeholder="请输入构件库名(必填，不超过30字符)" maxlength="40" class="form-control" required="required"></div>
-                <div class="form-group" id="mention1" style="display: none;"><label>构件库描述</label> <input id="mention" type="text" placeholder="请输入构件库描述(不超过100字符)"  maxlength="60" class="form-control" required="required"></div>
-                </div>
                 <br>
                 <br>
                 <br>
-                <div style="font-size: 20px;padding: 10px;display: none;" id="hint">
+                <div style="font-size: 20px;padding: 10px;display: block;" id="hint">
                     将已有内容封装为构件后下次编辑可以直接引用
                 </div>
             </div>
             <div class="modal-footer">
                 <button id="cancel-button" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
-                <button id="new-button" type="button" class="btn btn-primary" onclick="lib_new()">新建构件库</button>
                 <button id="edit-button" type="button" class="btn btn-primary" onclick="lib_save()">封装</button>
             </div>
         </div>
@@ -100,11 +89,402 @@
                 <s:if test='#session.project.state==0'>
                     <a href="user-jmpCompletedProjectList"><span class="lzf_b" style="color:#658387">历史项目</span></a>
                 </s:if>
-                 >> <a href="project-jmpProjectInfo"><span class="lzf_b" style="color:#658387">项目信息</span></a> >>
+                >> <a href="project-jmpProjectInfo"><span class="lzf_b" style="color:#658387">项目信息</span></a> >>
                 需求文档
             </strong>
         </li>
     </ol>
+</div>
+<!--预览图文构件-->
+<div class="modal modal1" id="viewcommon" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span> </button>
+                <h4 class="modal-title" id="Viewcommon_name">
+                    <!--构件名称-->
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="word-break:break-all;"><label>内容</label>
+                    <p id="view_common_content">
+                        <!--构件内容-->
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--预览用户构件-->
+<div class="modal modal1" id="viewuser" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span> </button>
+                <h4 class="modal-title" id="Viewuser_name">
+                    <!--构件名称-->
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="word-break:break-all;"><label>用户名</label>
+                    <p id="view_user_rolename">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>用户描述</label>
+                    <p id="view_user_describe">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>用户权限</label>
+                    <p id="view_user_permissions">
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--预览用例构件-->
+<div class="modal modal1" id="viewfun" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span> </button>
+                <h4 class="modal-title" id="Viewfun_name">
+                    <!--构件名称-->
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="word-break:break-all;"><label>优先级</label>
+                    <p id="view_fun_priority">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>功能点描述</label>
+                    <p id="view_fun_describe">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>用例过程</label>
+                    <p id="view_fun_role">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>可用性</label>
+                    <p id="view_fun_usable">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>输入</label>
+                    <p id="view_fun_input">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>输出</label>
+                    <p id="view_fun_output">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>基本操作流程</label>
+                    <p id="view_fun_basic">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>备选操作流程</label>
+                    <p id="view_fun_alter">
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--预览软件接口构件-->
+<div class="modal modal1" id="viewapp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span> </button>
+                <h4 class="modal-title" id="Viewapp_name">
+                    <!--构件名称-->
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="word-break:break-all;"><label>应用名称</label>
+                    <p id="view_app_name">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>应用类型</label>
+                    <p id="view_app_type">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>接口地址</label>
+                    <p id="view_app_address">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>使用方式</label>
+                    <p id="view_app_usage">
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--预览通讯接口构件-->
+<div class="modal modal1" id="viewcommun" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span> </button>
+                <h4 class="modal-title" id="Viewcommun_name">
+                    <!--构件名称-->
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="word-break:break-all;"><label>协议全名</label>
+                    <p id="view_commun_name">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>协议简称</label>
+                    <p id="view_commun_abb">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>接口类型</label>
+                    <p id="view_commun_type">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>协议描述</label>
+                    <p id="view_commun_describe">
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--预览数据集构件-->
+<div class="modal modal1" id="viewdata" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span> </button>
+                <h4 class="modal-title" id="Viewdata_name">
+                    <!--构件名称-->
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="word-break:break-all;"><label>数据项名</label>
+                    <p id="view_data_name">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>数据格式类型</label>
+                    <p id="view_data_type">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>是否为空</label>
+                    <p id="view_data_empty">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>其他约束</label>
+                    <p id="view_data_constraint">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>说明</label>
+                    <p id="view_data_explain">
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--预览运行环境构件-->
+<div class="modal modal1" id="viewenvironment" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span> </button>
+                <h4 class="modal-title" id="Viewenvironment_name">
+                    <!--构件名称-->
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="word-break:break-all;"><label>类型</label>
+                    <p id="view_environment_type">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>常用配置</label>
+                    <p id="view_environment_configure">
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--预览数据库构件-->
+<div class="modal modal1" id="viewdatabase" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span> </button>
+                <h4 class="modal-title" id="Viewdatabase_name">
+                    <!--构件名称-->
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="word-break:break-all;"><label>主流数据库</label>
+                    <p id="view_database_main">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>类型</label>
+                    <p id="view_database_type">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>稳定版本</label>
+                    <p id="view_database_edition">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>概述</label>
+                    <p id="view_database_summary">
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--预览操作系统构件-->
+<div class="modal modal1" id="viewsystem" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span> </button>
+                <h4 class="modal-title" id="Viewsystem_name">
+                    <!--构件名称-->
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="word-break:break-all;"><label>操作系统</label>
+                    <p id="view_system_name">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>系统类别</label>
+                    <p id="view_system_type">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>版本</label>
+                    <p id="view_system_edition">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>架构</label>
+                    <p id="view_system_framework">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>概述</label>
+                    <p id="view_system_summary">
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--预览硬件要求构件-->
+<div class="modal modal1" id="viewhardware" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span> </button>
+                <h4 class="modal-title" id="Viewhardware_name">
+                    <!--构件名称-->
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="word-break:break-all;"><label>可接硬件设备</label>
+                    <p id="view_hardware_name">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>设备类型</label>
+                    <p id="view_hardware_type">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>功能特点</label>
+                    <p id="view_hardware_fun">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>典型场景</label>
+                    <p id="view_hardware_scene">
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--预览web服务器构件-->
+<div class="modal modal1" id="viewweb" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span> </button>
+                <h4 class="modal-title" id="Viewweb_name">
+                    <!--构件名称-->
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="word-break:break-all;"><label>主流web服务器</label>
+                    <p id="view_web_main">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>最新稳定版本</label>
+                    <p id="view_web_edition">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>概述</label>
+                    <p id="view_web_summary">
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="wrapper wrapper-content">
@@ -120,19 +500,19 @@
 
                                 <li class="li_head black" style="text-align: left">
                                     <button class="btn btn-outline btn-success btn-xs"  onclick="window.location.href='project-jmpProjectInfo'" ><i class="fa fa-home"></i></button>
-                                 <strong class="font-bold col-md-offset-2  " style="text-align: center">需求开发文档</strong>
+                                    <strong class="font-bold col-md-offset-2  " style="text-align: center">需求开发文档</strong>
                                     <input style="display: none" value="${requestScope.documentId}" id="documentId">
                                     <input style="display: none" value="${requestScope.projectId}" id="projectId">
                                     <input style="display: none" value="${requestScope.state}" id="state">
                                 </li>
                                 <li class="li_fun">
                                     <s:if test="#request.rank!=5&&#request.state==0">
-                                    <span class="li_rename li_fa fa col-md-offset-1  fa-pencil-square-o black"   title="重命名" data-toggle="modal" data-target="#myModal3"></span>
-                                    <span class="li_add li_fa fa col-md-offset-1  fa-plus black"   title="新增目录"></span>
-                                    <span class="li_add_hidden li_fa fa col-md-offset-1  fa-plus black" style="display: none" data-toggle="modal" data-target="#myModal"></span>
-                                    <span class="li_up li_fa fa col-md-offset-1  fa-arrow-up black" title="上移目录"></span>
-                                    <span class="li_down fa li_fa col-md-offset-1  fa-arrow-down black" title="下移目录"></span>
-                                    <span class="li_delete li_fa fa col-md-offset-1  fa-times showtoastr black" title="删除目录"></span>
+                                        <span class="li_rename li_fa fa col-md-offset-1  fa-pencil-square-o black"   title="重命名" data-toggle="modal" data-target="#myModal3"></span>
+                                        <span class="li_add li_fa fa col-md-offset-1  fa-plus black"   title="新增目录"></span>
+                                        <span class="li_add_hidden li_fa fa col-md-offset-1  fa-plus black" style="display: none" data-toggle="modal" data-target="#myModal"></span>
+                                        <span class="li_up li_fa fa col-md-offset-1  fa-arrow-up black" title="上移目录"></span>
+                                        <span class="li_down fa li_fa col-md-offset-1  fa-arrow-down black" title="下移目录"></span>
+                                        <span class="li_delete li_fa fa col-md-offset-1  fa-times showtoastr black" title="删除目录"></span>
                                     </s:if>
 
                                     <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -154,6 +534,14 @@
                                                                 <option value="1">纯文本</option>
                                                                 <option value="2">用户</option>
                                                                 <option value="3">用例</option>
+                                                                <option value="4">软件接口</option>
+                                                                <option value="5">通讯接口</option>
+                                                                <option value="6">数据集</option>
+                                                                <option value="7">运行环境</option>
+                                                                <option value="8">数据库</option>
+                                                                <option value="9">操作系统</option>
+                                                                <option value="10">硬件设备</option>
+                                                                <option value="11">WEB服务器</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -198,6 +586,15 @@
                                                                 <option value="1">纯文本</option>
                                                                 <option value="2">用户</option>
                                                                 <option value="3">用例</option>
+                                                                <option value="4">软件接口</option>
+                                                                <option value="5">通讯接口</option>
+                                                                <option value="6">数据集</option>
+                                                                <option value="7">运行环境</option>
+                                                                <option value="8">数据库</option>
+                                                                <option value="9">操作系统</option>
+                                                                <option value="10">硬件设备</option>
+                                                                <option value="11">WEB服务器</option>
+
                                                             </select>
                                                         </div>
                                                     </div>
@@ -242,12 +639,12 @@
                                         <div class="sk-bounce2"></div>
                                         <div class="sk-bounce3"></div>
                                     </div>
-                                        <%--<li class="li_head black">--%>
-                                            <%--<button class="btn btn-primary  btn-xs"  data-toggle="modal" data-target="#myModal2">新建目录</button>--%>
-                                        <%--</li>--%>
+                                    <%--<li class="li_head black">--%>
+                                    <%--<button class="btn btn-primary  btn-xs"  data-toggle="modal" data-target="#myModal2">新建目录</button>--%>
+                                    <%--</li>--%>
 
                                 </div>
-                        </div>
+                            </div>
 
                         </ul>
                     </div>
@@ -262,15 +659,15 @@
                 <div class="row">
                     <div class="ibox float-e-margins">
                         <div class="catalogNoneContent" style="text-align: center">
-                        <img src="<%=basePath %>/img/logo.png" style="height: 50%;width: 50%;margin: 10px 0px 5px 50px;"></div>
+                            <img src="<%=basePath %>/img/logo.png" style="height: 50%;width: 50%;margin: 10px 0px 5px 50px;"></div>
                         <div class="ibox-title catalogNotNoneContent" style="display:none;">
                             <s:if test="#request.rank!=5&&#request.state==0">
-                            <div class="ibox-tools ">
-                                <i class="fa fa-commenting modal-icon discussButton" id="discussButton" style="color: #6D8389" onclick="disReload()"  data-toggle="modal" data-target="#myModal1" > </i>
-                                <button id="" class="btn btn-primary btn-xs m-l-sm" data-toggle="modal" data-target="#Encapsulation" type="button" onclick="packageLib()">封装</button>
-                                <button id="edit" class="btn btn-primary btn-xs m-l-sm" onclick="temp_edit()" type="button">编辑</button>
-                                <button id="save" class="btn btn-primary  btn-xs m-l-sm" onclick="temp_save()" type="button" style="display:none;">保存</button>
-                            </div>
+                                <div class="ibox-tools ">
+                                    <i class="fa fa-commenting modal-icon discussButton" id="discussButton" style="color: #6D8389" onclick="disReload()"  data-toggle="modal" data-target="#myModal1" > </i>
+                                    <button id="" class="btn btn-primary btn-xs m-l-sm" data-toggle="modal" data-target="#Encapsulation" type="button" onclick="packageLib()">封装</button>
+                                    <button id="edit" class="btn btn-primary btn-xs m-l-sm" onclick="temp_edit()" type="button">编辑</button>
+                                    <button id="save" class="btn btn-primary  btn-xs m-l-sm" onclick="temp_save()" type="button" style="display:none;">保存</button>
+                                </div>
                             </s:if>
                         </div>
                         <div class="ibox-content form-horizontal content catalogNotNoneContent" style="display:none">
@@ -314,27 +711,25 @@
                             </div>
                             <!--自己的留言结束-->
                             <div class="allDiscuss">
-                            <!--一行留言-->
-                            <div class="row">
-                                <div class="ibox float-e-margins " style="margin-bottom: 10px">
-                                    <div class="ibox-title">
-                                        <h5></h5>
-                                        <input style="display: none" class="id_dis">
-                                        <button  class="btn btn-danger  btn-xs col-lg-push-1 m-l-sm deleteDis"  type="button" style="margin-top: -3px">删除</button>
-                                        <%--<div class="ibox-tools">--%>
+                                <!--一行留言-->
+                                <div class="row">
+                                    <div class="ibox float-e-margins " style="margin-bottom: 10px">
+                                        <div class="ibox-title">
+                                            <h5></h5>
+                                            <input style="display: none" class="id_dis">
+                                            <button  class="btn btn-danger  btn-xs col-lg-push-1 m-l-sm deleteDis"  type="button" style="margin-top: -3px">删除</button>
+                                            <%--<div class="ibox-tools">--%>
                                             <%--<i class="fa fa-file-text-o " style="color: #26d7d9"  title="下载"> 附件：内容摘要.doc</i>--%>
-                                        <%--</div>--%>
-                                    </div>
-                                    <div class="ibox-content">
-                                        <div class=" wrapper">
+                                            <%--</div>--%>
                                         </div>
+                                        <div class="ibox-content">
+                                            <div class=" wrapper">
+                                            </div>
 
-
-
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!--一行留言结束-->
+                                <!--一行留言结束-->
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -348,17 +743,38 @@
             <s:if test="#request.state==0">
             <div class="col-sm-3" >
                 <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>官方构件库</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
+                    <div class="ibox-title">
+                        <h5>收藏构件</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="ibox-content form-horizontal">
-                    <!--构件库中间部分开始-->
-                    <div class="form-group">
+                    <div class="ibox-content form-horizontal">
+                        <div class="bootstrap-table">
+                            <table  id="template" data-toggle="table" style="display: none;"
+                                    data-classes="table table-no-bordered"
+                                    data-click-to-select="true"
+                                    data-search="true"
+                                    data-show-toggle="true"
+                                    data-toolbar="#toolbar"
+                                    data-query-params="quefryParams"
+                                    data-search-align="right"
+                                    data-buttons-align="right"
+                                    data-pagination="true"
+                                    data-halign="center"
+                                    data-striped="true"
+                                    data-page-size="5"
+                                    data-height="600"
+                                    height="100"
+                            >
+                                <thead>
+                                <tr><th class="col-sm-6 text-muted">构件名</th><th class="col-sm-6 text-muted"> 操作</th></tr>
+                                </thead>
+                            </table>
+                            <!--构件库中间部分开始-->
+                            <!--     <div class="form-group">
                         <%--<label style="padding-left: 15px">选择构建类型</label>--%>
                         <%--<select class="form-control" name="structType" id="structType">--%>
                             <%--<option  selected disabled>请选择构建库类型</option>--%>
@@ -367,37 +783,38 @@
                             <%--<option value="3">用例模板构件库</option>--%>
                         <%--</select>--%>
                         <%--<br>--%>
-                            <div class="alert alert-info" id="titleLibrary" style="display: block">
+                           <div class="alert alert-info" id="titleLibrary" style="display: block">
                                 点击编辑即可使用构件
                             </div>
                         <div class="alert alert-info" id="noneLibrary" style="display: none;">
                             暂无该类型的收藏
                         </div>
                         <div class="libraryDiv" style="display: none;">
-                            <label style="padding-left: 15px">选择构建库</label>
                             <select class="form-control" name="libraryList" id="libraryList" >
-                                <option selected disabled>请选择构件库</option>
+                                <option selected disabled>请选择构件</option>
                             </select>
                         </div>
                             <div class="alert alert-info" id="emptyOfficalLibrary" style="display: none;">
                                 该构件库为空
                             </div>
-                    </div>
-                    <table  class=" col-sm-12 structTable" style="display: none;">
-                        <thead>
-                        <tr><th class="col-sm-6 text-muted">构件名</th><th class="col-sm-6 text-muted"> 操作</th></tr>
-                        </thead>
+                    </div>    -->
+                            <!--   <table   >
+                               <thead>
+                               <tr><th class="col-sm-6 text-muted">构件名</th><th class="col-sm-6 text-muted"> 操作</th></tr>
+                               </thead>
 
-                    </table>
-                    <h6>
-                        <small>.</small>
-                    </h6>
+                           </table>   -->
+                            <h6>
+                                <small>.</small>
+                            </h6>
+
+                        </div>
+                    </div>
                 </div>
-            </div>
 
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>项目组构件库</h5>
+                        <h5>个人构件</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -405,51 +822,75 @@
                         </div>
                     </div>
                     <div class="ibox-content form-horizontal">
-                        <!--构件库中间部分开始-->
-                        <div class="form-group">
-                            <%--<label style="padding-left: 15px">选择构建类型</label>--%>
-                            <%--<select class="form-control" name="structUserType" id="structUserType">--%>
-                                <%--<option  selected disabled>请选择构建库类型</option>--%>
-                                <%--<option value="1">图文模板构件库</option>--%>
-                                <%--<option value="2">用户模板构件库</option>--%>
-                                <%--<option value="3">用例模板构件库</option>--%>
-                            <%--</select>--%>
-                            <%--<br>--%>
-
-                            <div class="alert alert-info" id="noneUserLibrary" style="display: none;">
-                                暂无该类型的构件库
+                        <div class="bootstrap-table">
+                            <table  id="template1" data-toggle="table" style="display: none;"
+                                    data-classes="table table-no-bordered"
+                                    data-click-to-select="true"
+                                    data-search="true"
+                                    data-show-toggle="true"
+                                    data-toolbar="#toolbar"
+                                    data-query-params="quefryParams"
+                                    data-search-align="right"
+                                    data-buttons-align="right"
+                                    data-pagination="true"
+                                    data-halign="center"
+                                    data-striped="true"
+                                    data-page-size="5"
+                                    data-height="600"
+                                    height="100"
+                            >
+                                <thead>
+                                <tr><th class="col-sm-6 text-muted">构件名</th><th class="col-sm-6 text-muted"> 操作</th></tr>
+                                </thead>
+                            </table>
+                            <!--构件库中间部分开始-->
+                            <!--     <div class="form-group">
+                        <%--<label style="padding-left: 15px">选择构建类型</label>--%>
+                        <%--<select class="form-control" name="structType" id="structType">--%>
+                            <%--<option  selected disabled>请选择构建库类型</option>--%>
+                            <%--<option value="1">图文模板构件库</option>--%>
+                            <%--<option value="2">用户模板构件库</option>--%>
+                            <%--<option value="3">用例模板构件库</option>--%>
+                        <%--</select>--%>
+                        <%--<br>--%>
+                           <div class="alert alert-info" id="titleLibrary" style="display: block">
+                                点击编辑即可使用构件
                             </div>
-                            <div class="userLibraryDiv" style="display: none;">
-                                <label style="padding-left: 15px">选择构建库</label>
-                                <select class="form-control" name="libraryUserList" id="libraryUserList" >
-                                    <option selected disabled>请选择构件库</option>
-                                </select>
-                            </div>
-                                <div class="alert alert-info" id="emptyLibrary" style="display: none;">
-                                    该构件库为空
-                                </div>
+                        <div class="alert alert-info" id="noneLibrary" style="display: none;">
+                            暂无该类型的收藏
                         </div>
-                        <table  class=" col-sm-12 structTable2" style="display: none;">
-                            <thead>
-                            <tr><th class="col-sm-6 text-muted">构件名</th><th class="col-sm-6 text-muted"> 操作</th></tr>
-                            </thead>
+                        <div class="libraryDiv" style="display: none;">
+                            <select class="form-control" name="libraryList" id="libraryList" >
+                                <option selected disabled>请选择构件</option>
+                            </select>
+                        </div>
+                            <div class="alert alert-info" id="emptyOfficalLibrary" style="display: none;">
+                                该构件库为空
+                            </div>
+                    </div>    -->
+                            <!--   <table   >
+                               <thead>
+                               <tr><th class="col-sm-6 text-muted">构件名</th><th class="col-sm-6 text-muted"> 操作</th></tr>
+                               </thead>
 
-                        </table>
-                        <h6>
-                            <small>.</small>
-                        </h6>
+                           </table>   -->
+                            <h6>
+                                <small>.</small>
+                            </h6>
+
+                        </div>
                     </div>
                 </div>
+                </s:if>
+                <!--右侧部分结束-->
             </div>
-            </s:if>
-            <!--右侧部分结束-->
         </div>
-    </div>
 
-</div>
+    </div>
 </body>
 <script src="<%=basePath %>/js/jquery.min.js?v=2.1.4"></script>
 <script src="<%=basePath %>/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="<%=basePath %>/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 <script src="<%=basePath %>/js/content.min.js?v=1.0.0"></script>
 <script src="<%=basePath %>/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 <script src="<%=basePath %>/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
@@ -472,140 +913,581 @@
 
 <script src="<%=basePath %>/js/mjy.js"></script>
 <script src="<%=basePath %>/js/template.js"></script>
-
 </html>
+
 <script>
     var count;
     function packageLib() {
-        var id_tmp = nowCatalog.id_template;
-        $.ajax({
-            url: "templateLib-getTypeOfOneLib",
-            data: {id_template:id_tmp},
-            dataType: "json",
-            type: "Post",
-            async: "false",
-            success: function (result) {
-                var list=result.libraryList,content="";
-                count = list.length;
-                if(list.length!=0){
-                    content+=" <option value='0' selected disabled>请选择构件库</option>"
-                    for(var i=0;i<list.length;i++){
-                        content+=" <option value='"+list[i].id_library+"'>"+list[i].name+"</option>"
-                    }
-                    $("#libraryOneList").empty();
-                    $("#libraryOneList").append(content);
-                    $(".oneLibraryDiv").show();
-                    $("#noneOneLibrary").hide();
-                    $("#new").hide();
-                    $("#name1").hide();
-                    $("#mention1").hide();
-                    $("#new-button").hide();
-                    $("#edit-button").show();
-                    $("#hint").show();
-                }
-                else {
-                    $(".oneLibraryDiv").hide();
-                    $("#noneOneLibrary").show();
-                    $("#new").show();
-                    $("#name1").show();
-                    $("#mention1").show();
-                    $("#new-button").show();
-                    $("#edit-button").hide();
-                    $("#hint").hide();
-                }
-
-            },
-            error: function (result) {
-                showtoast("dangerous", "保存失败", "内容保存失败")
-            }
-        })
+        $("#libraryOneList").empty();
+        $("#libraryOneList").append(content);
+        $(".oneLibraryDiv").show();
+        $("#noneOneLibrary").hide();
+        $("#new").hide();
+        $("#name1").hide();
+        $("#mention1").hide();
+        $("#new-button").hide();
+        $("#edit-button").show();
+        $("#hint").show();
     }
 
 </script>
 
 <script>
-    var nowTemplate_jsp,structureList;
-    $("button#edit").click(function(){
-        $("#libraryUserList").html("");
-        nowTemplate_jsp=nowCatalog.id_template;
+    var nowTemplate_jsp,structureList,structureList2;
+    $("button#edit").click(function() {
+        var id_template = $(this).val();
+        nowTemplate_jsp = nowCatalog.id_template;
+        $('#template').show();
+        $('#template1').show();
         $.ajax({
-            url: "templateLib-getTypeOfUserLib",
-            data: {id_template:nowTemplate_jsp},
-            dataType: "json",
-            type: "Post",
-            async: "false",
-            success: function (result) {
-                var list=result.libraryList,content="";
-                if(list.length!=0){
-                    content+=" <option value='0' selected disabled>请选择构件库</option>"
-                    for(var i=0;i<list.length;i++){
-                        content+=" <option value='"+list[i].id_library+"'>"+list[i].name+"</option>"
-                    }
-                    $("#libraryUserList").empty();
-                    $("#libraryUserList").append(content);
-                    // alert(content)
-                    $(".userLibraryDiv").show();
-                    $("#noneUserLibrary").hide();
-                    $("#titleLibrary").hide();
-                    $(".structTable2").hide();
+                url: "templateLib-getStructure2",
+                data: {id_template:nowTemplate_jsp},
+                dataType: "json",
+                type: "Post",
+                async: "false",
+                success:function(json){
+                    var proList = JSON.parse(json.res);
+                    // var tem=JSON.parse(proList.content);
+                    $('#template').bootstrapTable('load',proList);
+                },
+                error:function(){
+                    swal({
+                        icon: "error"
+                    });
                 }
-                else {
-                    $(".structTable2").empty();
-                    $(".userLibraryDiv").hide();
-                    $("#noneUserLibrary").show();
-                }
-
-            },
-            error: function (result) {
-                showtoast("dangerous", "保存失败", "内容保存失败")
             }
-        })
+        );
+        $.ajax({
+                url: "templateLib-getStructure",
+                data: {id_template:nowTemplate_jsp},
+                dataType: "json",
+                type: "Post",
+                async: "false",
+                success:function(json){
+                    var proList1 = JSON.parse(json.res);
+                    // var tem=JSON.parse(proList.content);
+                    $('#template1').bootstrapTable('load',proList1);
+                },
+                error:function(){
+                    swal({
+                        icon: "error"
+                    });
+                }
+            }
+        );
     });
 
-    $("#libraryUserList").change(function () {
-        var id_library=$(this).val();
-        $(".structTable2").show();
-        $.ajax({
-            url: "templateLib-getStructure",
-            data: {id_library:id_library,id_template:nowTemplate_jsp},
-            dataType: "json",
-            type: "Post",
-            async: "false",
-            success: function (result) {
-                if(result.structureList === undefined){
-                    $("#emptyLibrary").show();
-                }else{
-                    $("#emptyLibrary").hide();
+    // nowTemplate_jsp = nowCatalog.id_template;
+    // $( '#qiliangqifei' ).bootstrapTable( { height: 260 } );
+    $('#template').bootstrapTable({
+            height:260,
+            columns: [
+                {
+                    field: 'name',
+                    title: '构件名称',
+                    sortable: true,
+                    align: 'left'
+                },
+                {
+                    field: 'operate',
+                    title: '操作',
+                    searchable: false,
+                    align: 'left',
+                    events: "actionEvents",
+                    formatter: "operateFormatter"
                 }
-                $(".addTbodyUser").remove();
-                structureList=result.structureList;
-                var content="<tbody class='addTbodyUser'>";
-                if(nowTemplate_jsp=="1"){
-                    for (var i=0;i<structureList.length;i++){
-                        content+=" <tr><th >图文模板"+(i+1)+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(1,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(1,this,"+i+")'>预览</button></th></tr>";
-                    }
-                }
-                else if(nowTemplate_jsp=="2"){
-                    for (var i=0;i<structureList.length;i++){
-                        content+=" <tr><th >"+structureList[i].roleName+"</th><th ><button class='btn btn-info   btn-xs' onclick='useStructure(2,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(2,this,"+i+")'>预览</button></th></tr>";
-                    }
-                }
-                else if(nowTemplate_jsp=="3"){
-                    for (var i=0;i<structureList.length;i++){
-                        content+=" <tr><th >"+structureList[i].funName+"</th><th > <button class='btn btn-info   btn-xs' onclick='useStructure(3,this,"+i+")'>引用</button> <button class='btn btn-info   btn-xs' onclick='seeStructure(3,this,"+i+")'>预览</button></th></tr>";
-                    }
-                }
-                content+="</tbody>";
-                $(".structTable2").append(content);
+            ]
+        }
+    );
 
+    function operateFormatter(value,row,index) {
+        return ["<a class='useStructure2'>引用</a>",
+            "<a span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</a>",
+            "<a class='seeStructure2'>浏览</a>"].join('');
+    }
+
+    window.actionEvents = {
+        'click .useStructure2':
+
+            function(id_template, obj, row, index)
+            {
+                var id = parseInt(row.id_structure);
+                alert(row.id_template);
+                if (typeof (nowCatalog) == "undefined" || nowCatalog.id_template != row.id_template) {
+                    showtoast("warning", "加载失败", "与模板类型不匹配");
+                    return;
+                }
+                swal(
+                    {
+                        title: "引用构件将覆盖原有内容",
+                        text: "请谨慎选择",
+                        type: "",
+                        showCancelButton: true,
+                        confirmButtonColor: "#18a689",
+                        confirmButtonText: "引用",
+                        cancelButtonText: "取消",
+                    }, function () {
+                        $("div.hidenTh").show();
+                        var tem=JSON.parse(row.content);
+                        if (row.id_template == "1") {
+                            loadTemplateOne(tem)
+                        }
+                        else if (row.id_template == "2") {
+                            loadTemplateTwo(tem)
+                        }
+                        else if (row.id_template == "3") {
+                            var end = $(".funTable tbody").children(".end");
+                            $(".funTable tbody").html(end)
+                            $(".funTable tfoot").html("");
+                            loadTemplateThree(tem)
+                        }
+                        else if(row.id_template == "4"){
+                            loadTemplateFour(tem)
+                        }
+                        else if(row.id_template == "5"){
+                            // var end = $(".funTable tbody").children(".end");
+                            //  $(".funTable tbody").html(end)
+                            //   $(".funTable tfoot").html("");
+                            loadTemplateFive(tem)
+                        }
+                        else if(row.id_template=="6"){
+                            loadTemplateSix(tem)
+                        }
+                        else if(row.id_template=="7"){
+                            loadTemplateSeven(tem)
+                        }
+                        else if(row.id_template=="8"){
+                            loadTemplateEight(tem)
+                        }
+                        else if(row.id_template == "9"){
+                            //       var end = $(".funTable tbody").children(".end");
+                            //       $(".funTable tbody").html(end)
+                            //      $(".funTable tfoot").html("");
+                            loadTemplateNine(tem)
+                        }
+                        else if(row.id_template == "10"){
+                            //    var end = $(".funTable tbody").children(".end");
+                            //     $(".funTable tbody").html(end)
+                            //     $(".funTable tfoot").html("");
+                            loadTemplateTen(tem)
+                        }
+                        else if(row.id_template=="11"){
+                            loadTemplateEleven(tem)
+                        }
+                    })
             },
-            error: function (result) {
-                showtoast("dangerous", "保存失败", "内容保存失败")
-            }
-        })
-    });
+        'click .seeStructure2':
+            function (id_template, obj, row, index) {
+                var id = row.id_structure;
+                var temp = row.id_template;
+                var tem = JSON.parse(row.content);
+                console.log(tem);
+                var id_template = temp;
+                if ( row.id_template == "1" )
+                {
+                    $('#viewcommon').modal('toggle');
+                    $('#Viewcommon_name').text("构件"+row.name);
+                    $('#view_common_content').text(tem.content);
+                    //swal({title:"图文构件:"+pro.name, text:"tem.content" })
+                }
+                else if ( temp == "2" )
+                {
+                    console.log(tem.roleName);
+                    $('#viewuser').modal('toggle');
+                    $('#Viewuser_name').text("构件"+row.name);
+                    $('#view_user_rolename').text(tem.roleName);
+                    $('#view_user_describe').text(tem.describe);
+                    $('#view_user_permissions').text(tem.permissions);
+                    /*swal(
+                        {
+                            title:"构件名称："+ pro.name,
+                            text:"<div align=left><b>用户名：</b>"+ tem.roleName+"</div>"
+                                +"<div align=left><b>用户描述：</b>"+ tem.describe+"</div>"
+                                +"<div align=left><b>用户权限：</b>"+ tem.permissions+"</div>",
+                            html:true
+                        })*/
+                }
+                else if( row.id_template == "3" )
+                {
+                    var priority;
+                    if ( tem.priority == 1 ){
+                        priority = "高"
+                    }else if( tem.priority == 2 ){
+                        priority = "中"
+                    }
+                    else if( tem.priority == 3 ) {
+                        priority = "低"
+                    }
+                    var funRoleList = "";
+                    var tmp1 = tem.funRoleList.length;
+                    for(var num = 0;num < tmp1; num++){
+                        funRoleList+="<div>角色："+tem.funRoleList[num].roleName+"</div>"
+                            +"<div>描述："+tem.funRoleList[num].roleDescribe+"</div>"
+                        if(tem.funRoleList[num].usableName!=null){
+                            funRoleList+="<div>"+tem.funRoleList[num].usableName+"</div>"
+                                +"<div>"+tem.funRoleList[num].usablePara+"</div>"
+                        }
+                    }
+                    var funUsableList ="";
+                    var tmp2 = tem.funUsableList.length;
+                    for(var num = 0;num < tmp2; num++){
+                        funUsableList+="<div>"+tem.funUsableList[num].usableName+"</div>"
+                            +"<div>"+tem.funUsableList[num].usablePara+"</div>"
+                    }
+                    $('#viewfun').modal('toggle');
+                    $('#Viewfun_name').text("构件"+row.name);
+                    $('#view_fun_priority').text(priority);
+                    $('#view_fun_describe').text(tem.describe);
+                    document.getElementById("view_fun_role").innerHTML = funRoleList;
+                    document.getElementById("view_fun_usable").innerHTML = funUsableList;
+                    $('#view_fun_input').text(tem.input);
+                    $('#view_fun_output').text(tem.output);
+                    $('#view_fun_basic').text(tem.basic);
+                    $('#view_fun_alter').text(tem.alternative);
 
-    function useStructure(id_template,obj,index) {
+
+                }
+                else if ( row.id_template == "4")
+                {
+                    $('#viewapp').modal('toggle');
+                    $('#Viewapp_name').text("构件"+row.name);
+                    $('#view_app_name').text(tem.appname);
+                    $('#view_app_type').text(tem.apptype);
+                    $('#view_app_address').text(tem.appaddress);
+                    $('#view_app_usage').text(tem.appusage);
+                }
+                else if ( row.id_template == "5")
+                {
+                    $('#viewcommun').modal('toggle');
+                    $('#Viewcommun_name').text("构件"+row.name);
+                    $('#view_commun_name').text(tem.communname);
+                    $('#view_commun_abb').text(tem.communabb);
+                    $('#view_commun_type').text(tem.communtype);
+                    $('#view_commun_describe').text(tem.commundescribe);
+                }
+                else if ( row.id_template == "6" )
+                {
+                    $('#viewdata').modal('toggle');
+                    $('#Viewdata_name').text("构件"+row.name);
+                    $('#view_data_name').text(tem.dataname);
+                    $('#view_data_type').text(tem.datatype);
+                    if(tem.dataempty==0) {$('#view_data_empty').text("是");}
+                    else {$('#view_data_empty').text("否");}
+                    $('#view_data_constraint').text(tem.dataconstraint);
+                    $('#view_data_explain').text(tem.dataexplain);
+                }
+                else if ( row.id_template == "7" )
+                {
+                    $('#viewenvironment').modal('toggle');
+                    $('#Viewenvironment_name').text("构件"+row.name);
+                    $('#view_environment_type').text(tem.environmenttype);
+                    $('#view_environment_configure').text(tem.environmentconfigure);
+                }
+                else if ( row.id_template == "8" )
+                {
+                    $('#viewdatabase').modal('toggle');
+                    $('#Viewdatabase_name').text("构件"+row.name);
+                    $('#view_database_main').text(tem.maindatabase);
+                    if(tem.databasetype==0) {$('#view_database_type').text("非关系型");}
+                    else {$('#view_database_type').text("关系型");}
+                    $('#view_database_edition').text(tem.databaseedition);
+                    $('#view_database_summary').text(tem.databasesummary);
+                }
+                else if ( row.id_template == "9")
+                {
+                    $('#viewsystem').modal('toggle');
+                    $('#Viewsystem_name').text("构件"+row.name);
+                    $('#view_system_name').text(tem.systemname);
+                    $('#view_system_type').text(tem.systemtype);
+                    $('#view_system_edition').text(tem.systemedition);
+                    $('#view_system_framework').text(tem.systemframework);
+                    $('#view_system_summary').text(tem.systemsummary);
+                }
+                else if ( row.id_template == "10")
+                {
+                    $('#viewhardware').modal('toggle');
+                    $('#Viewhardware_name').text("构件"+row.name);
+                    $('#view_hardware_name').text(tem.hardwarename);
+                    $('#view_hardware_type').text(tem.hardwaretype);
+                    $('#view_hardware_fun').text(tem.hardwarefun);
+                    $('#view_hardware_scene').text(tem.hardwarescene);
+                }
+                else if ( row.id_template == "11" )
+                {
+                    $('#viewweb').modal('toggle');
+                    $('#Viewweb_name').text("构件"+row.name);
+                    $('#view_web_main').text(tem.webmain);
+                    $('#view_web_edition').text(tem.webedition);
+                    $('#view_web_summary').text(tem.websummary);
+                }
+
+            }
+
+    }
+
+
+
+
+    // nowTemplate_jsp = nowCatalog.id_template;
+    $('#template1').bootstrapTable({
+            height:260,
+            columns: [
+                {
+                    field: 'name',
+                    title: '构件名称',
+                    sortable: true,
+                    align: 'left'
+                },
+                {
+                    field: 'operate',
+                    title: '操作',
+                    searchable: false,
+                    align: 'left',
+                    events: "actionEvents1",
+                    formatter: "operateFormatter1"
+                }
+            ]
+        }
+    );
+
+    function operateFormatter1(value,row,index) {
+        return ["<a class='useStructure'>引用</a>",
+            "<a span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</a>",
+            "<a class='seeStructure'>浏览</a>"].join('');
+    }
+
+    window.actionEvents1 = {
+        'click .useStructure':
+            function(id_template, obj, row, index)
+            {
+                var id = parseInt(row.id_structure);
+                alert(row.id_template);
+                if (typeof (nowCatalog) == "undefined" || nowCatalog.id_template != row.id_template) {
+                    showtoast("warning", "加载失败", "与模板类型不匹配");
+                    return;
+                }
+                swal(
+                    {
+                        title: "引用构件将覆盖原有内容",
+                        text: "请谨慎选择",
+                        type: "",
+                        showCancelButton: true,
+                        confirmButtonColor: "#18a689",
+                        confirmButtonText: "引用",
+                        cancelButtonText: "取消",
+                    }, function () {
+                        var tem=JSON.parse(row.content);
+                        if (row.id_template == "1") {
+                            loadTemplateOne(tem)
+                        }
+                        else if (row.id_template == "2") {
+                            loadTemplateTwo(tem)
+                        }
+                        else if (row.id_template == "3") {
+                            var end = $(".funTable tbody").children(".end");
+                            $(".funTable tbody").html(end)
+                            $(".funTable tfoot").html("");
+                            loadTemplateThree(tem)
+                        }
+                        else if(row.id_template == "4"){
+                            loadTemplateFour(tem)
+                        }
+                        else if(row.id_template == "5"){
+                            // var end = $(".funTable tbody").children(".end");
+                            //  $(".funTable tbody").html(end)
+                            //   $(".funTable tfoot").html("");
+                            loadTemplateFive(tem)
+                        }
+                        else if(row.id_template=="6"){
+                            loadTemplateSix(tem)
+                        }
+                        else if(row.id_template=="7"){
+                            loadTemplateSeven(tem)
+                        }
+                        else if(row.id_template=="8"){
+                            loadTemplateEight(tem)
+                        }
+                        else if(row.id_template == "9"){
+                            //       var end = $(".funTable tbody").children(".end");
+                            //       $(".funTable tbody").html(end)
+                            //      $(".funTable tfoot").html("");
+                            loadTemplateNine(tem)
+                        }
+                        else if(row.id_template == "10"){
+                            //    var end = $(".funTable tbody").children(".end");
+                            //     $(".funTable tbody").html(end)
+                            //     $(".funTable tfoot").html("");
+                            loadTemplateTen(tem)
+                        }
+                        else if(row.id_template=="11"){
+                            loadTemplateEleven(tem)
+                        }
+                    })
+            },
+        'click .seeStructure':
+            function (id_template, obj, row, index) {
+                var id = row.id_structure;
+                var temp = row.id_template;
+                //var proList = JSON.parse(json.res);
+                $.ajax(
+                    {
+                        type: "GET",
+                        url: "structure-Deploy",
+                        data:{ id_structure:id },
+                        dataType: "json",
+                        success: function (json) {
+                            var pro = JSON.parse(json.res);
+                            console.log(pro);
+                            var tem = JSON.parse(pro.content);
+                            var id_template = temp;
+                            if ( id_template == "1" )
+                            {
+                                $('#viewcommon').modal('toggle');
+                                $('#Viewcommon_name').text("构件"+pro.name);
+                                $('#view_common_content').text(tem.content);
+                                //swal({title:"图文构件:"+pro.name, text:"tem.content" })
+                            }
+                            else if ( id_template == "2" )
+                            {
+                                $('#viewuser').modal('toggle');
+                                $('#Viewuser_name').text("构件"+pro.name);
+                                $('#view_user_rolename').text(tem.roleName);
+                                $('#view_user_describe').text(tem.describe);
+                                $('#view_user_permissions').text(tem.permissions);
+                                /*swal(
+                                    {
+                                        title:"构件名称："+ pro.name,
+                                        text:"<div align=left><b>用户名：</b>"+ tem.roleName+"</div>"
+                                            +"<div align=left><b>用户描述：</b>"+ tem.describe+"</div>"
+                                            +"<div align=left><b>用户权限：</b>"+ tem.permissions+"</div>",
+                                        html:true
+                                    })*/
+                            }
+                            else if( id_template == "3" )
+                            {
+                                var priority;
+                                if ( tem.priority == 1 ){
+                                    priority = "高"
+                                }else if( tem.priority == 2 ){
+                                    priority = "中"
+                                }
+                                else if( tem.priority == 3 ) {
+                                    priority = "低"
+                                }
+                                var funRoleList = "";
+                                var tmp1 = tem.funRoleList.length;
+                                for(var num = 0;num < tmp1; num++){
+                                    funRoleList+="<div>角色："+tem.funRoleList[num].roleName+"</div>"
+                                        +"<div>描述："+tem.funRoleList[num].roleDescribe+"</div>"
+                                    if(tem.funRoleList[num].usableName!=null){
+                                        funRoleList+="<div>"+tem.funRoleList[num].usableName+"</div>"
+                                            +"<div>"+tem.funRoleList[num].usablePara+"</div>"
+                                    }
+                                }
+                                var funUsableList ="";
+                                var tmp2 = tem.funUsableList.length;
+                                for(var num = 0;num < tmp2; num++){
+                                    funUsableList+="<div>"+tem.funUsableList[num].usableName+"</div>"
+                                        +"<div>"+tem.funUsableList[num].usablePara+"</div>"
+                                }
+                                $('#viewfun').modal('toggle');
+                                $('#Viewfun_name').text("构件"+pro.name);
+                                $('#view_fun_priority').text(priority);
+                                $('#view_fun_describe').text(tem.describe);
+                                document.getElementById("view_fun_role").innerHTML = funRoleList;
+                                document.getElementById("view_fun_usable").innerHTML = funUsableList;
+                                $('#view_fun_input').text(tem.input);
+                                $('#view_fun_output').text(tem.output);
+                                $('#view_fun_basic').text(tem.basic);
+                                $('#view_fun_alter').text(tem.alternative);
+
+                            }
+                            else if ( id_template == "4")
+                            {
+                                $('#viewapp').modal('toggle');
+                                $('#Viewapp_name').text("构件"+pro.name);
+                                $('#view_app_name').text(tem.appname);
+                                $('#view_app_type').text(tem.apptype);
+                                $('#view_app_address').text(tem.appaddress);
+                                $('#view_app_usage').text(tem.appusage);
+                            }
+                            else if ( id_template == "5")
+                            {
+                                $('#viewcommun').modal('toggle');
+                                $('#Viewcommun_name').text("构件"+pro.name);
+                                $('#view_commun_name').text(tem.communname);
+                                $('#view_commun_abb').text(tem.communabb);
+                                $('#view_commun_type').text(tem.communtype);
+                                $('#view_commun_describe').text(tem.commundescribe);
+                            }
+                            else if ( id_template == "6" )
+                            {
+                                $('#viewdata').modal('toggle');
+                                $('#Viewdata_name').text("构件"+pro.name);
+                                $('#view_data_name').text(tem.dataname);
+                                $('#view_data_type').text(tem.datatype);
+                                if(tem.dataempty==0) {$('#view_data_empty').text("是");}
+                                else {$('#view_data_empty').text("否");}
+                                $('#view_data_constraint').text(tem.dataconstraint);
+                                $('#view_data_explain').text(tem.dataexplain);
+                            }
+                            else if ( id_template == "7" )
+                            {
+                                $('#viewenvironment').modal('toggle');
+                                $('#Viewenvironment_name').text("构件"+pro.name);
+                                $('#view_environment_type').text(tem.environmenttype);
+                                $('#view_environment_configure').text(tem.environmentconfigure);
+                            }
+                            else if ( id_template == "8" )
+                            {
+                                $('#viewdatabase').modal('toggle');
+                                $('#Viewdatabase_name').text("构件"+pro.name);
+                                $('#view_database_main').text(tem.maindatabase);
+                                if(tem.databasetype==0) {$('#view_database_type').text("非关系型");}
+                                else {$('#view_database_type').text("关系型");}
+                                $('#view_database_edition').text(tem.databaseedition);
+                                $('#view_database_summary').text(tem.databasesummary);
+                            }
+                            else if ( id_template == "9")
+                            {
+                                $('#viewsystem').modal('toggle');
+                                $('#Viewsystem_name').text("构件"+pro.name);
+                                $('#view_system_name').text(tem.systemname);
+                                $('#view_system_type').text(tem.systemtype);
+                                $('#view_system_edition').text(tem.systemedition);
+                                $('#view_system_framework').text(tem.systemframework);
+                                $('#view_system_summary').text(tem.systemsummary);
+                            }
+                            else if ( id_template == "10")
+                            {
+                                $('#viewhardware').modal('toggle');
+                                $('#Viewhardware_name').text("构件"+pro.name);
+                                $('#view_hardware_name').text(tem.hardwarename);
+                                $('#view_hardware_type').text(tem.hardwaretype);
+                                $('#view_hardware_fun').text(tem.hardwarefun);
+                                $('#view_hardware_scene').text(tem.hardwarescene);
+                            }
+                            else if ( id_template == "11" )
+                            {
+                                $('#viewweb').modal('toggle');
+                                $('#Viewweb_name').text("构件"+pro.name);
+                                $('#view_web_main').text(tem.webmain);
+                                $('#view_web_edition').text(tem.webedition);
+                                $('#view_web_summary').text(tem.websummary);
+                            }
+                        },
+                        error: function () {
+                            swal({
+                                icon: "error"
+                            });
+                        }
+                    })
+            }
+    }
+
+
+    /*function useStructure(id_template,obj,row,index) {
+        alert(id_template);
         if(typeof (nowCatalog)=="undefined"||nowCatalog.id_template!=id_template){
             showtoast("warning", "加载失败", "与模板类型不匹配");return;
         }
@@ -619,7 +1501,8 @@
                 confirmButtonText: "引用",
                 cancelButtonText: "取消",
             },function () {
-                var id=parseInt(index)
+                var id=parseInt(row.id_structure)
+                alert(id);
                 if(id_template=="1"){
                 loadTemplateOne(structureList[id])
             }
@@ -635,8 +1518,8 @@
             })
     }
 
-    function seeStructure(id_template,obj,index){
-        var id=parseInt(index)
+    function seeStructure(id_template,obj,row,index){
+        var id=parseInt(row.id_structure);
         if(id_template=="1"){
             swal({title:"图文模板"+(id+1),text:structureList[id].content})
         }else if(id_template=="2"){
@@ -679,6 +1562,19 @@
                     +"<div><b>功能点描述:</b>"+structureList[id].describe+"</div>"
                     +"<div><b>用例过程:</b>"+funRoleList
                     +"<div><b>可用性:</b>"+funUsableList
+                    +"<div><b>输入:</b>"+structureList[id].input+"</div>",
+                 //   +"<div><b>输出:</b>"+structureList[id].output+"</div>"
+                 //   +"<div><b>基本操作流程:</b>"+structureList[id].basic+"</div>"
+                  //  +"<div><b>备选操作流程:</b>"+structureList[id].alternative+"</div>",
+                    html:true
+                })
+            swal(
+                {
+                    title:"构件名:"+structureList[id].funName,
+                    text:"<div><b>优先级:</b>"+priority+"</div>"
+                    +"<div><b>功能点描述:</b>"+structureList[id].describe+"</div>"
+                    +"<div><b>用例过程:</b>"+funRoleList
+                    +"<div><b>可用性:</b>"+funUsableList
                     +"<div><b>输入:</b>"+structureList[id].input+"</div>"
                     +"<div><b>输出:</b>"+structureList[id].output+"</div>"
                     +"<div><b>基本操作流程:</b>"+structureList[id].basic+"</div>"
@@ -686,163 +1582,142 @@
                     html:true
                 })
         }
-    }
+    }     */
 
-    function  lib_new() {
+
+    lib_save=function (){
         var id_template = nowCatalog.id_template;
-        var name=$("input#name").val();
-        alert(name);
-        if(name === "" || name === null){
-            swal("新建构件库失败！", "请填写构件库名", "error");
-        }
-        else{
-            $.ajax({
-                url: "library-newLibrary",
-                data: {name: name,id_template: id_template ,mention: $("input#mention").val()},
-                dataType: "json",
-                type: "Post",
-                async: "false",
-                success: function (result) {
-                    if (result.res) {
-                        swal({
-                            title: "新建构件库成功",
-                            text:"可在“首页 >> 文档构件 >> 用户构件库”查看",
-                            type: "success",
-                            confirmButtonColor: "#18a689",
-                            confirmButtonText: "OK"
-                        })
+        if (id_template == "1") {//图文
+            var describe=$("#describe").summernote('code');
+            if(describe.length>2000){
+                swal("您输入内容过长，请重新输入");
+            }
+            else if(describe.length<10){
+                swal("请补充内容");
+            }
+            else {
+
+                $.ajax({
+                    url: "catalog-saveLibOne",
+                    data: {id_template: id_template, content: describe},
+                    dataType: "json",
+                    type: "Post",
+                    async: "false",
+                    success: function (result) {
+                        swal("构件封装成功!", "可直接引用该构件", "success");
                         $('button#cancel-button').click();
-                    } else {
-                        showtoast("dangerous", "新建失败", "服务器异常")
+                    },
+                    error: function (result) {
+                        showtoast("dangerous", "封装失败", "构件封装失败")
                     }
-                }
-            })
-        }
-    }
-
-
-    function lib_save() {
-        var id_lib = $("select#libraryOneList").val();
-        if(count === 0){
-            swal(
-                {
-                    title: "封装构件需选择构件库",
-                    text: "可在构件库模块创建私有构件库",
-                    type: "",
-                    confirmButtonColor: "#18a689",
-                    cancelButtonText: "好的",
-                    closeOnConfirm: false
                 })
-        }else{
-            if(id_lib === null){
-                showtoast("error","请先选择构件库","构件封装将存入对应构件库")
-            }else{
-                $("#eg").removeClass("no-padding");
-                var aHTML=$(".click1edit").summernote('code');
-                // $(".click1edit").summernote('destroy');
-                // $("#save").attr("style","display:none");
-                // $("#edit").attr("style","display:show");
-                // $("div.hidenTh").hide();
-
-                var id_template = nowCatalog.id_template;
-                if (id_template == "1") {//图文
-                    var describe=$("#describe").summernote('code');
-                    $.ajax({
-                        url: "catalog-saveLibOne",
-                        data: {id_lib: id_lib, content: describe},
-                        dataType: "json",
-                        type: "Post",
-                        async: "false",
-                        success: function (result) {
-                            swal("构件封装成功!", "可在对应构件库引用该构件", "success");
-                            $('button#cancel-button').click();
-                        },
-                        error: function (result) {
-                            showtoast("dangerous", "封装失败", "构件封装失败")
-                        }
-                    })
-                }
-                else if (id_template == "2") {//角色
-                    var roleName=$("input#roleName").val();
-                    var describe=$("#describe").summernote('code');
-                    var permissions=$("#permissions").summernote('code');
-                    $.ajax({
-                        url: "catalog-saveLibTwo",
-                        data: {id_lib: id_lib, content: roleName,describe:describe,permissions:permissions},
-                        dataType: "json",
-                        type: "Post",
-                        async: "false",
-                        success: function (result) {
-                            swal("构件封装成功!", "可在对应构件库引用该构件", "success");
-                            $('button#cancel-button').click();
-                        },
-                        error: function (result) {
-                            showtoast("dangerous", "封装失败", "构件封装失败")
-                        }
-                    })
-                }
-                else  if(id_template == "3"){
-                    var funName=$("input#funName").val();
-                    var priority=$("select#priority").val();
-                    var describe=$("#describe").summernote('code');
-                    var inDiv=$("#in").summernote('code');
-                    var outDiv=$("#out").summernote('code');
-                    var basic=$("#basic").summernote('code');
-                    var alternative=$("#alternative").summernote('code');
-                    var  funRoleList="[{";
-                    var roleName,roleDescribe,usableName,usablePara,last="";
-                    $(".funTable tbody").find("tr").each(function () {
-                        if ($(this).hasClass("funTr")){//开头
-                            if (last!=""){//第一次，没有,
-                                funRoleList+="},{"
-                            }
-                            roleName=$(this).children("th").eq(1).children(".roleName").find("option:selected").text();
-                            // alert($(this).children("th").eq(2).children(".roleDescribe"))
-                            roleDescribe=$(this).children("th").eq(2).children(".roleDescribe").val();
-                            funRoleList+="\"roleName\":\""+roleName+"\",\"roleDescribe\":\""+roleDescribe+"\"";
-                            last="funTr";
-                        }
-                        else if ($(this).hasClass("usableTr")){//开头
-                            usableName=$(this).children("th:first-child").text();
-                            usablePara=$(this).children("th").eq(1).text();
-                            funRoleList+=",\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"";
-                            last="usableTr";
-                        }
-                    })
-                    funRoleList+="}]";
-
-                    var funUsableList="[",usableName,usablePara,first="yes";
-                    $(".funTable tfoot").find("tr").each(function () {
-                        if (first=="yes"){//第一次，没有,
-                            funUsableList+="{"
-                        }
-                        else   funUsableList+=",{"
-                        usableName=$(this).children("th:first-child").text();
-                        usablePara=$(this).children("th").eq(1).text();
-                        funUsableList+="\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"}";
-                        first="no";
-                    })
-                    funUsableList+="]";
-                    // alert(describe)
-                    $.ajax({
-                        url: "catalog-saveLibThree",
-                        data: {id_lib: id_lib,funName: funName, priority: priority,content:describe,
-                            inDiv:inDiv,outDiv:outDiv,basic:basic,alternative:alternative,
-                            funRoleList:funRoleList,funUsableList:funUsableList},
-                        dataType: "json",
-                        type: "Post",
-                        async: "false",
-                        success: function (result) {
-                            swal("构件封装成功!", "可在对应构件库引用该构件", "success");
-                            $('button#cancel-button').click();
-                        },
-                        error: function (result) {
-                            showtoast("dangerous", "封装失败", "构件封装失败")
-                        }
-                    })
-                }
-                // $(".dis").attr("disabled","true");
             }
         }
+        else if (id_template == "2") {//角色
+            var roleName=$("input#roleName").val();
+            var describe=$("#describe").summernote('code');
+            var permissions=$("#permissions").summernote('code');
+            // alert(roleName.length+describe.length+permissions.length);
+            if(roleName.length+describe.length+permissions.length>3000) {
+                swal("您输入内容过长，请重新输入");
+            }
+            else if(roleName.length==0){
+                swal("请输入角色名");
+            }
+            else {
+                $.ajax({
+                    url: "catalog-saveLibTwo",
+                    data: {
+                        id_template: id_template,
+                        content: roleName,
+                        describe: describe,
+                        permissions: permissions
+                    },
+                    dataType: "json",
+                    type: "Post",
+                    async: "false",
+                    success: function (result) {
+                        swal("构件封装成功!", "可直接引用该构件", "success");
+                        $('button#cancel-button').click();
+                    },
+                    error: function (result) {
+                        showtoast("dangerous", "封装失败", "构件封装失败")
+                    }
+                })
+            }
+        }
+        else  if(id_template == "3"){
+            var funName=$("input#funName").val();
+            var priority=$("select#priority").val();
+            var describe=$("#describe").summernote('code');
+            var inDiv=$("#in").summernote('code');
+            var outDiv=$("#out").summernote('code');
+            var basic=$("#basic").summernote('code');
+            var alternative=$("#alternative").summernote('code');
+            var  funRoleList="[{";
+            var roleName,roleDescribe,usableName,usablePara,last="";
+            $(".funTable tbody").find("tr").each(function () {
+                if ($(this).hasClass("funTr")){//开头
+                    if (last!=""){//第一次，没有,
+                        funRoleList+="},{"
+                    }
+                    roleName=$(this).children("th").eq(1).children(".roleName").find("option:selected").text();
+                    // alert($(this).children("th").eq(2).children(".roleDescribe"))
+                    roleDescribe=$(this).children("th").eq(2).children(".roleDescribe").val();
+                    funRoleList+="\"roleName\":\""+roleName+"\",\"roleDescribe\":\""+roleDescribe+"\"";
+                    last="funTr";
+                }
+                else if ($(this).hasClass("usableTr")){//开头
+                    usableName=$(this).children("th:first-child").text();
+                    usablePara=$(this).children("th").eq(1).text();
+                    funRoleList+=",\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"";
+                    last="usableTr";
+                }
+            })
+            funRoleList+="}]";
+
+            var funUsableList="[",usableName,usablePara,first="yes";
+            $(".funTable tfoot").find("tr").each(function () {
+                if (first=="yes"){//第一次，没有,
+                    funUsableList+="{"
+                }
+                else   funUsableList+=",{"
+                usableName=$(this).children("th:first-child").text();
+                usablePara=$(this).children("th").eq(1).text();
+                funUsableList+="\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"}";
+                first="no";
+            })
+            funUsableList+="]";
+            alert(funName.length+priority.length+describe.length+inDiv.length+outDiv.length+basic.length+alternative.length);
+
+            if(funName.length+priority.length+describe.length+inDiv.length+outDiv.length+basic.length+alternative.length>6000){
+                swal("您输入内容过长，请重新输入")
+            }
+            else if(funName.length==0){
+                swal("请输入功能点名称");
+            }
+            else {
+                $.ajax({
+                    url: "catalog-saveLibThree",
+                    data: {
+                        id_template: id_template, funName: funName, priority: priority, content: describe,
+                        inDiv: inDiv, outDiv: outDiv, basic: basic, alternative: alternative,
+                        funRoleList: funRoleList, funUsableList: funUsableList
+                    },
+                    dataType: "json",
+                    type: "Post",
+                    async: "false",
+                    success: function (result) {
+                        swal("构件封装成功!", "可在对应构件库引用该构件", "success");
+                        $('button#cancel-button').click();
+                    },
+                    error: function (result) {
+                        showtoast
+                        ("dangerous", "封装失败", "构件封装失败")
+                    }
+                })
+            }
+        }
+        // $(".dis").attr("disabled","true");
     }
 </script>

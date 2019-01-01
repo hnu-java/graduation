@@ -1,6 +1,11 @@
-<%@ page contentType="text/html; charset=UTF-8" language="java" errorPage=""
-         import="java.util.*"%>
-
+<%--
+  Created by IntelliJ IDEA.
+  User: delll
+  Date: 2018/11/18
+  Time: 0:19
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%
     String path = request.getContextPath();
@@ -8,8 +13,8 @@
 %>
 <!DOCTYPE html>
 <html>
-
 <head>
+
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -68,6 +73,7 @@
 
 
 </head>
+<body>
 
 <body class="fixed-sidebar  gray-bg animated fadeInDown" style="overflow:hidden">
 <div  class="modal inmodal" id="newCommon" tabindex="-1" role="dialog" aria-hidden="true">
@@ -111,22 +117,22 @@
 </div>
 <div id="wrapper" style="padding: 0px" class="wrapper wrapper-content ">
     <div id="next1" style="width: 100%;margin: 0 auto;font-weight: 400" class="gray-bg">
-    <div class=" row wrapper white-bg" style="padding: 5px;">
-        <ol class="breadcrumb" style="margin-left: 50px">
-            <li style="font-size: 15px">
-                <strong>
-                    <a href="user-jmpHomepage"><span class="lzf_b" style="color:#658387">首页</span></a> >> <a href="library-get"><span class="lzf_b" style="color:#658387">构件库</span></a> >> 构件
-                </strong>
-            </li>
-        </ol>
-    </div>
+        <div class=" row wrapper white-bg" style="padding: 5px;">
+            <ol class="breadcrumb" style="margin-left: 50px">
+                <li style="font-size: 15px">
+                    <strong>
+                        <a href="user-jmpHomepage"><span class="lzf_b" style="color:#658387">首页</span></a> >> <a href="library-get"><span class="lzf_b" style="color:#658387">构件库</span></a> >> 构件
+                    </strong>
+                </li>
+            </ol>
+        </div>
         <div id="main" style="width:100%;margin-top: 10px ">
             <div id="head" style="width:1200px;font-size:x-small;margin: 0 auto">
                 <div style="float: left;height: 50px;width:300px;padding: 20px 20px 0px 20px;margin-left: 100px">
                     <h2 style="font-weight:700"> ${requestScope.library.name}</h2>
                 </div>
                 <div style="float: left;height: 50px;width:200px;padding: 40px 0px 20px 0px;text-align:center;margin-top:5px">
-                        <p style="font-size: 16px;color: black">贡献人：${requestScope.library.user_name}</p>
+                    <p style="font-size: 16px;color: black">贡献人：${requestScope.library.user_name}</p>
                 </div>
                 <div style="float: left;height: 50px;width:200px;padding: 40px 0px 20px 0px;margin-top:5px;margin-left: 10px">
                     <p style="font-size: 16px;color: black">发布时间：${requestScope.library.time}</p>
@@ -436,121 +442,121 @@
         var roleName = $(this).attr("myRoleName");
         var describe = $(this).attr("myDescribe");
         var permissions = $(this).attr("myPermissions");
-            swal(
-                {
-                    title: "编辑用户构件",
-                    text: "用户名 必填<input type='text' name='myinput' id='roleName1' value = '"+roleName+"'>"
-                        +"用户描述 必填<input type='text' name='myinput' id='describe1' value = '"+describe+"'>"
-                        +"用户权限 必填<input type='text' name='myinput' id='permissions1' value = '"+permissions+"'>",
-                    html: true,
-                    type: "input",
-                    showCancelButton: true,
-                    confirmButtonColor: "#18a689",
-                    confirmButtonText: "确定",
-                    cancelButtonText: "取消",
-                    closeOnConfirm: false,
-                    inputValue:roleName
-                }, function () {
-                    if ($("input#roleName1").val() === "") {
-                        swal("请输入修改的用户名");
-                        return false
-                    }
-                    if ($("input#describe1").val() === "") {
-                        swal("请输入修改的用户描述");
-                        return false
-                    }
-                    if ($("input#permissions1").val() === "") {
-                        swal("请输入修改的用户权限");
-                        return false
-                    }
-                    var content = "{\"roleName\":\"" + $("input#roleName1").val() + "\",\"describe\":\"" + $("input#describe1").val() + "\",\"permissions\":\"" + $("input#permissions1").val() + "\"}";
-                    $.ajax({
-                        url: "structure-edit",
-                        data: {
-                            content: content,
-                            id_structure:id_structure
-                        },
-                        dataType: "json",
-                        type: "Post",
-                        async: "false",
-                        success: function (result) {
-                            if (result.res){
-                                swal({
-                                    title: "修改成功",
-                                    type:"success",
-                                    confirmButtonColor: "#18a689",
-                                    confirmButtonText: "OK"
-                                },function(){
-                                    location.href="structure-get?pagedis="+1+'&id_template=' + $("input.id_template").val()+'&id_library='+$("input.id_library").val()+'&page='+${requestScope.page};
-                                })
-                            }
-                            else {
-                                swal("修改失败", "输入的机构不存在", "error");
-                            }
-
-                        },
-                        error: function () {
+        swal(
+            {
+                title: "编辑用户构件",
+                text: "用户名 必填<input type='text' name='myinput' id='roleName1' value = '"+roleName+"'>"
+                    +"用户描述 必填<input type='text' name='myinput' id='describe1' value = '"+describe+"'>"
+                    +"用户权限 必填<input type='text' name='myinput' id='permissions1' value = '"+permissions+"'>",
+                html: true,
+                type: "input",
+                showCancelButton: true,
+                confirmButtonColor: "#18a689",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                closeOnConfirm: false,
+                inputValue:roleName
+            }, function () {
+                if ($("input#roleName1").val() === "") {
+                    swal("请输入修改的用户名");
+                    return false
+                }
+                if ($("input#describe1").val() === "") {
+                    swal("请输入修改的用户描述");
+                    return false
+                }
+                if ($("input#permissions1").val() === "") {
+                    swal("请输入修改的用户权限");
+                    return false
+                }
+                var content = "{\"roleName\":\"" + $("input#roleName1").val() + "\",\"describe\":\"" + $("input#describe1").val() + "\",\"permissions\":\"" + $("input#permissions1").val() + "\"}";
+                $.ajax({
+                    url: "structure-edit",
+                    data: {
+                        content: content,
+                        id_structure:id_structure
+                    },
+                    dataType: "json",
+                    type: "Post",
+                    async: "false",
+                    success: function (result) {
+                        if (result.res){
                             swal({
-                                icon: "error"
-                            });
+                                title: "修改成功",
+                                type:"success",
+                                confirmButtonColor: "#18a689",
+                                confirmButtonText: "OK"
+                            },function(){
+                                location.href="structure-get?pagedis="+1+'&id_template=' + $("input.id_template").val()+'&id_library='+$("input.id_library").val()+'&page='+${requestScope.page};
+                            })
                         }
-                    })
+                        else {
+                            swal("修改失败", "输入的机构不存在", "error");
+                        }
+
+                    },
+                    error: function () {
+                        swal({
+                            icon: "error"
+                        });
+                    }
                 })
+            })
     })
     $("button#editCommon").click(function () {
         var id_structure = $(this).attr("myvalue");
         var content = $(this).attr("mycontent");
         //content = "{\"content\":\"" + content + "\"}";
-            swal(
-                {
-                    title: "编辑图文构件",
-                    text: "内容 必填<input type='text' name='myinput' id='name1'>",
-                    html: true,
-                    type: "input",
-                    showCancelButton: true,
-                    confirmButtonColor: "#18a689",
-                    confirmButtonText: "确定",
-                    cancelButtonText: "取消",
-                    closeOnConfirm: false,
-                    inputValue:content
-                }, function () {
-                    if ($("input#name1").val() === "") {
-                        swal("请输入修改的图文构件内容");
-                        return false
-                    }
-                    content = "{\"content\":\"" + $("input#name1").val() + "\"}";
-                    $.ajax({
-                        url: "structure-edit",
-                        data: {
-                            content: content,
-                            id_structure:id_structure
-                        },
-                        dataType: "json",
-                        type: "Post",
-                        async: "false",
-                        success: function (result) {
-                            if (result.res){
-                                swal({
-                                    title: "修改成功",
-                                    type:"success",
-                                    confirmButtonColor: "#18a689",
-                                    confirmButtonText: "OK"
-                                },function(){
-                                    location.href="structure-get?pagedis="+1+'&id_template=' + $("input.id_template").val()+'&id_library='+$("input.id_library").val()+'&page='+${requestScope.page};
-                                })
-                            }
-                            else {
-                                swal("修改失败", "服务器异常", "error");
-                            }
-
-                        },
-                        error: function () {
+        swal(
+            {
+                title: "编辑图文构件",
+                text: "内容 必填<input type='text' name='myinput' id='name1'>",
+                html: true,
+                type: "input",
+                showCancelButton: true,
+                confirmButtonColor: "#18a689",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                closeOnConfirm: false,
+                inputValue:content
+            }, function () {
+                if ($("input#name1").val() === "") {
+                    swal("请输入修改的图文构件内容");
+                    return false
+                }
+                content = "{\"content\":\"" + $("input#name1").val() + "\"}";
+                $.ajax({
+                    url: "structure-edit",
+                    data: {
+                        content: content,
+                        id_structure:id_structure
+                    },
+                    dataType: "json",
+                    type: "Post",
+                    async: "false",
+                    success: function (result) {
+                        if (result.res){
                             swal({
-                                icon: "error"
-                            });
+                                title: "修改成功",
+                                type:"success",
+                                confirmButtonColor: "#18a689",
+                                confirmButtonText: "OK"
+                            },function(){
+                                location.href="structure-get?pagedis="+1+'&id_template=' + $("input.id_template").val()+'&id_library='+$("input.id_library").val()+'&page='+${requestScope.page};
+                            })
                         }
-                    })
+                        else {
+                            swal("修改失败", "服务器异常", "error");
+                        }
+
+                    },
+                    error: function () {
+                        swal({
+                            icon: "error"
+                        });
+                    }
                 })
+            })
     })
 
     $("button#editFun").click(function() {
@@ -715,7 +721,6 @@
     $("button#newCommon-button").click(function () {
         var content = $("textarea#content").val();
         var id_library = ${requestScope.library.id_library};
-        alert(id_library);
         if(content === "" || content === null) {
             swal("创建失败！", "请填写构件内容", "error");
         }
@@ -771,7 +776,6 @@
         var content2 = $("textarea#content3").val();
         var content3 = $("textarea#content4").val();
         var id_library = ${requestScope.library.id_library};
-        alert(id_library);
         if(content1 === "" || content === null) {
             swal("创建失败！", "请填写用户名", "error");
         }
@@ -830,105 +834,6 @@
     })
 </script>
 </body>
-<script>
-    function commitSend() {
-        var content=$(".discuss").summernote('code');
-        $.ajax({
-            url: "librarydiscuss-commit",
-            data: {content:content,id_library:${requestScope.id_library}, id_user:${sessionScope.user.id_user}},
-            dataType: "json",
-            type: "Post",
-            async: "false",
-            success: function (result) {
-                if(result.res===true)  {
-                    showtoast1("success", "成功", "发布评论成功")
-                    location.href="structure-get?pagedis="+1+'&id_template=' + $("input.id_template").val()+'&id_library='+$("input.id_library").val()+'&page='+${requestScope.page};
-                }
-                else  showtoast1("error", "失败", "未输入任何内容")
-            },
-            error: function (result) {
-                showtoast1("error", "失败", "发布评论失败")
-            }
-        })
-    }
-</script>
-<script>
-    $(document).on("click",".deleteDis",function () {
-        if ($(this).hasClass("btn-danger")){
-            var id_lib_discuss=$(this).prev("input.id_dis").val()
-            swal({
-                title: "删除评论？",
-                text: "一旦删除无法恢复，请谨慎操作！",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "删除",
-                closeOnConfirm: false
-            }, function () {
-                $.ajax({
-                    url: "librarydiscuss-delete",
-                    data: {id_lib_discuss: id_lib_discuss},
-                    dataType: "json",
-                    type: "Post",
-                    async: "false",
-                    success: function (result) {
-                        if(result.res===true)  {
-                            showtoast1("success", "成功", "删除评论成功")
-                            location.href="structure-get?pagedis="+1+'&id_template=' + $("input.id_template").val()+'&id_library='+$("input.id_library").val()+'&page='+${requestScope.page};
-                        }
-                        else  showtoast1("error", "失败", "删除评论失败")
-                    },
-                    error: function (result) {
-                        showtoast1("error", "失败", "删除评论失败")
-                    }
-                })
-            });}
-    })
-</script>
-<script>
-    $(".click2edit").addClass("no-padding");
-    $(".click2edit").summernote({
-        height: 100,
-        minHeight: 50,
-        maxHeight: 200,
-        lang: "zh-CN",
-        focus: true,
-        toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['table', ['table']],
-            ['picture', ['picture']],
-            ['fullscreen', ['fullscreen']]
-        ],
-        callbacks: {
-            onImageUpload: function(files, editor, $editable) {
-                that=$(this);
-                sendFile(files,that);
-            }
-        }
-    })
-    function sendFile(files, that) {
-        var data = new FormData();
-        data.append("file", files[0]);
-        $.ajax({
-            data : data,
-            type : "POST",
-            url : "librarydiscuss-image", //图片上传出来的url，返回的是图片上传后的路径，http格式
-            cache : false,
-            contentType : false,
-            processData : false,
-            dataType : "json",
-            success: function(data) {//data是返回的hash,key之类的值，key是定义的文件名
-                $(that).summernote('insertImage', data.path);
-            },
-            error:function(){
-                alert("上传失败");
-            }
-        });
-    }
 
-</script>
-<!-- Mirrored from www.zi-han.net/theme/hplus/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:17:11 GMT -->
+</body>
 </html>
