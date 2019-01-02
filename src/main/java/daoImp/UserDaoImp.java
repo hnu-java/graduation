@@ -302,4 +302,34 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
         }
         return 0;
     }
+
+    public boolean pay(int id_user,int id_share,int point){
+        String sql = "select points from user where ID_USER = ?";
+        int points = getForValue(sql,id_user);
+        points=points-point;
+        sql = "select ID_Publisher from sha_structure where ID_share = ?";
+        int id_publisher = getForValue(sql,id_share);
+        sql= "select points from user  WHERE ID_USER = ?";
+        int points_publisher=getForValue(sql,id_publisher);
+        points_publisher=points_publisher+point;
+        sql= "select PurchaseTimes from sha_structure  WHERE ID_share = ?";
+        long time=getForValue(sql,id_share);
+        time=time+1;
+        sql= "UPDATE sha_structure SET PurchaseTimes=? WHERE ID_share = ?";
+        update(sql,time,id_share);
+        sql= "UPDATE user SET points=? WHERE ID_USER = ?";
+        update(sql,points_publisher,id_publisher);
+        update(sql,points,id_user);
+        return true;
+    }
+
+    public boolean points_enough(int id_user,int point){
+        String sql = "select points from user where ID_USER = ?";
+        int points = getForValue(sql,id_user);
+        if(points-point>=0)
+        {return true;}
+        else
+        {return false;}
+    }
+
 }

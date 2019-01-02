@@ -37,5 +37,6 @@ public interface UserDao {
 	int JudgmentOne(String user_name);
 
 	boolean changepwd(String oldpwd, String newpwd, String username);
-
+	boolean points_enough(int id_user,int point);
+	boolean pay(int id_user,int id_publisher,int point);
 }

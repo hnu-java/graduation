@@ -58,7 +58,7 @@
             <result name="pointsRecordPage">/WEB-INF/pages/project_pointsRecord.jsp</result>
         <interceptor-ref name="myStack"/>
             <allowed-methods>
-                jmpHomepage,jmpHomePage,warn,showPointsRecord,jmpPointsRecord,proPayment,jmpPayment,jmpMessageCenter,jmpMyProfile,jmpMycollect,editProfile,jmpSysManager1,jmpSysManager2,jmpNewproject,jmpTemp,jmpCasecomponent,jmpUsercomponent,jmpCurrentProjectList,jmpCompletedProjectList,changePassword
+                pay,jmpHomepage,jmpHomePage,warn,showPointsRecord,jmpPointsRecord,proPayment,jmpPayment,jmpMessageCenter,jmpMyProfile,jmpMycollect,editProfile,jmpSysManager1,jmpSysManager2,jmpNewproject,jmpTemp,jmpCasecomponent,jmpUsercomponent,jmpCurrentProjectList,jmpCompletedProjectList,changePassword
             </allowed-methods>
         </action>
         
