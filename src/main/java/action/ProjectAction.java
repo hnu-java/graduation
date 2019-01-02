@@ -49,31 +49,27 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         projectDao = new ProjectDaoImp();
         userDao = new UserDaoImp();
         OrganizationDao organizationDao = new OrganizationDaoImp();
-//        System.out.println(project.getName()+" "+project.getDocument_Name());
-        System.out.println(project.getOrgName());
+        System.out.println(project.getName()+" "+project.getDocument_Name());
+        System.out.println(project.getId_Organization());
         UserEntity sessionUser=(UserEntity)session.get("user");
+        String orgName = organizationDao.getOrgName(project.getId_Organization());
         int points = sessionUser.getPoints();
         int Npoints = (Integer)session.get("Mpoint5");
         dataMap.put("points",points);
         if(points >= Npoints) {
-          if (project.getOrgName() != null && project.getOrgName() != "") {
-//                int days = organizationDao.days(project.getOrgName());
-//                if (days < 0) {
-//                    dataMap.put("days", days);
-//                } else {
-//                    dataMap.put("days", days);
-//              boolean res = projectDao.save(project);
-//              dataMap.put("res", res);
-              boolean exist = projectDao.exist(project.getOrgName());
-              boolean belong = projectDao.belong(project.getOrgName(),sessionUser.getId_user());
-              System.out.println(belong);
+          if (project.getId_Organization() != 0) {
+              int flag = organizationDao.usable(project.getId_Organization());
+              boolean res = projectDao.save(project);
+              dataMap.put("res", res);
+              boolean exist = projectDao.exist(orgName);
+              boolean belong = projectDao.belong(orgName,sessionUser.getId_user());
+              System.out.println(belong+"dd");
               dataMap.put("belong", belong);
               dataMap.put("exist", exist);
+              dataMap.put("flag", flag);
 //                }
            } else {
-//                dataMap.put("days", 0);
-//              boolean res = projectDao.save(project);
-//              dataMap.put("res", res);
+              dataMap.put("flag", 0);
               dataMap.put("exist", true);
               dataMap.put("belong", true);
           }

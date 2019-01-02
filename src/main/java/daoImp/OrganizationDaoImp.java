@@ -5,6 +5,7 @@
 
 package daoImp;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import dao.DAO;
 import dao.OrganizationDao;
 import entity.ApplyOrganizationEntity;
@@ -100,23 +101,11 @@ public class OrganizationDaoImp extends DAO<OrganizationEntity> implements Organ
     }
 
     @Override
-    public int days(String org_name) throws ParseException {
-        String sql1="select ID_ORGANIZATION from ORGANIZATION where name=?";
-        String sql2="select deadline from view_admin_org where ID_ORGANIZATION = ? and STATU = 1";
-        String sql3="SELECT DATEDIFF(?,?) AS DiffDate";
-        String tmp1;
-        java.util.Date date1;
-        int days;
-        int id_org = Integer.valueOf(getForValue(sql1,org_name).toString());
-        tmp1 = getForValue(sql2,id_org).toString();
-        java.text.SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd");
-        date1 = formatter.parse(tmp1);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        java.util.Date date2 = new java.util.Date();
-        String tmp2 = sdf.format(date2);
-        date2 = formatter.parse(tmp2);
-        days = Integer.valueOf(getForValue(sql3,date1,date2).toString());
-        return days;
+    public int usable(int id_org){
+        String sql1="select USABLE from organization where ID_ORGANIZATION=?";
+        int flag = Integer.parseInt(getForValue(sql1,id_org));
+        System.out.println(flag+"zz");
+        return flag;
     }
 
 
@@ -127,5 +116,13 @@ public class OrganizationDaoImp extends DAO<OrganizationEntity> implements Organ
             return true;
         else
             return false;
+    }
+
+    @Override
+    public String getOrgName(int id_org){
+        String sql1="select NAME from organization where ID_ORGANIZATION=?";
+        String orgName = getForValue(sql1,id_org);
+        System.out.println(orgName+"zz");
+        return orgName;
     }
 }
