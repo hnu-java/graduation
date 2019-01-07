@@ -85,13 +85,9 @@
                 field: 'date',
                 title: '创建日期',
                 sortable: true,
-                align: 'left'
+                align: 'left',
             },
             {
-                field: 'document_Name',
-                title: '文档名称',
-                align: 'left'
-            }, {
                 field: 'orgName',
                 title: '所属机构',
                 sortable: true,
@@ -124,6 +120,7 @@
             }
         }
     );
+
 
     function nameFormatter(value,row,index) {
         if (row.rank == 3) {

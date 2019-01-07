@@ -124,6 +124,38 @@
     </div>
 </div>
 
+<div class="modal inmodal" id="doc_create" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <i class="fa fa-plus modal-icon"></i>
+                <h4 class="modal-title">新建文档</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group"><label>文档名称</label>
+                    <input name="add_title" id="add_title" placeholder="请输入文档名称" class="form-control"></div>
+                <div class="form-group">
+                    <label>文档类型：</label>
+                    <div class="form-group">
+                        <select class="form-control" name="add_id_template" id="add_id_template">
+                            <option value="1">远景范围文档</option>
+                            <option value="2">需求文档</option>
+                            <option value="3">概要设计文档</option>
+                            <option value="4">测试文档</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary showtoastr" onclick="" data-dismiss="modal">新建</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="animated fadeInDown" style="overflow:hidden">
     <div class=" row wrapper white-bg" style="padding:5px">
         <ol class="breadcrumb" style="margin-left: 40px">
@@ -187,8 +219,6 @@
                 <div class="col-sm-7">
                     <dl class="dl-horizontal">
 
-                        <dt><h3>当前版本：</h3></dt>
-                        <dd><h3><s:property value="#session.version"/></h3></dd>
 
                         <dt><h3>所属机构：</h3></dt>
                         <dd><h3><s:property value="#session.project.orgName"/></h3></dd>
@@ -223,6 +253,9 @@
                                     </li>
                                     <li>
                                         <a href="#tab-3" data-toggle="tab">讨论区</a>
+                                    </li>
+                                    <li>
+                                        <a href="#tab-4" data-toggle="tab">团队管理</a>
                                     </li>
                                 </ul>
                             </div>
@@ -294,12 +327,15 @@
                                 <div class="tab-pane active" id="tab-1">
 
                                     <div id="toolbar2">
-<s:if test='#session.project.state==1'>
-    <s:if test='#session.rank==3'>
-        <button id="createDoc" class="btn btn-success" style="display:none"><i class="fa fa-file"></i>新建文档</button>
-    </s:if>
-</s:if>
+                                        <s:if test='#session.rank==3'>
+                                                <button id="createDoc_test" class="btn btn-success" data-toggle="modal" data-target="#doc_create">
+                                                    <i class="fa fa-file"></i>新建文档</button>
+                                        </s:if>
+                                        <button id="alterPM" class="btn btn-warning" >
+                                            <i class="glyphicon"></i>上传相关文献
+                                        </button>&nbsp;
                                     </div>
+                                    <!--
                                     <div class="bootstrap-table" >
                                         <table id="projectDocs" data-toggle="table"
                                                data-classes="table table-no-bordered"
@@ -308,7 +344,7 @@
                                                data-show-refresh="true"
                                                data-show-toggle="true"
                                                data-show-columns="true"
-                                               data-toolbar="#toolbar2"
+                                               data-toolbar="#toolbar"
                                                data-query-params="quefryParams"
                                                data-pagination="true"
                                                data-halign="center"
@@ -318,18 +354,286 @@
                                         >
                                         </table>
                                     </div>
+                                    -->
+                                    <div class="wrapper wrapper-content animated fadeInRight">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="ibox float-e-margins">
+                                                    <div class="ibox-title">
+                                                        <h5>项目文档</h5>
+                                                        <div class="ibox-tools">
+                                                            <a class="collapse-link">
+                                                                <i class="fa fa-chevron-up"></i>
+                                                            </a>
+                                                            <a class="dropdown-toggle" data-toggle="dropdown" href="table_basic.html#">
+                                                                <i class="fa fa-wrench"></i>
+                                                            </a>
+                                                            <ul class="dropdown-menu dropdown-user">
+                                                                <li><a href="table_basic.html#">选项1</a>
+                                                                </li>
+                                                                <li><a href="table_basic.html#">选项2</a>
+                                                                </li>
+                                                            </ul>
+                                                            <a class="close-link">
+                                                                <i class="fa fa-times"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ibox-content">
+
+                                                        <table class="table">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>文档名</th>
+                                                                <th>文档类型</th>
+                                                                <th>创建时间</th>
+                                                                <th>文档版本</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>1</td>
+                                                                <td>电力系统控制更新</td>
+                                                                <td>需求文档</td>
+                                                                <td>2018-9-30</td>
+                                                                <td>2.0</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>2</td>
+                                                                <td>电力系统控制更新</td>
+                                                                <td>概要与设计文档</td>
+                                                                <td>2018-10-7</td>
+                                                                <td>1.0</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>3</td>
+                                                                <td>电力系统控制更新</td>
+                                                                <td>测试文档</td>
+                                                                <td>2018-11-27</td>
+                                                                <td>3.0</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="ibox float-e-margins">
+                                                    <div class="ibox-title">
+                                                        <h5>参考文献</h5>
+                                                        <div class="ibox-tools">
+                                                            <a class="collapse-link">
+                                                                <i class="fa fa-chevron-up"></i>
+                                                            </a>
+                                                            <a class="dropdown-toggle" data-toggle="dropdown" href="table_basic.html#">
+                                                                <i class="fa fa-wrench"></i>
+                                                            </a>
+                                                            <ul class="dropdown-menu dropdown-user">
+                                                                <li><a href="table_basic.html#">选项1</a>
+                                                                </li>
+                                                                <li><a href="table_basic.html#">选项2</a>
+                                                                </li>
+                                                            </ul>
+                                                            <a class="close-link">
+                                                                <i class="fa fa-times"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ibox-content">
+
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>文献名</th>
+                                                                <th>上传用户</th>
+                                                                <th>上传时间</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>1</td>
+                                                                <td><span class="line">srs.doc</span>
+                                                                </td>
+                                                                <td>张三</td>
+                                                                <td>2018-11-11</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>2</td>
+                                                                <td><span class="line">国家电力系统执行标准.doc</span>
+                                                                </td>
+                                                                <td>李四</td>
+                                                                <td>2018-12-25</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>3</td>
+                                                                <td><span class="line">电力系统相关操作手册.docx</span>
+                                                                </td>
+                                                                <td>王麻子</td>
+                                                                <td>2019-1-1</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane active" id="tab-4">
+                                    <div class="wrapper wrapper-content animated fadeInRight">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="ibox">
+                                                    <div class="ibox-title">
+                                                        <span class="label label-primary pull-right">NEW</span>
+                                                        <h5>测试文档组</h5>
+                                                    </div>
+                                                    <div class="ibox-content">
+                                                        <p>创建于2018-12-28</p>
+                                                        <p>预计于2019-2-23日完成文档编写</p>
+                                                        <h4>小组成员</h4>
+                                                        <table class="table">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>用户名</th>
+                                                                <th>用户级别</th>
+                                                                <th>操作</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>1</td>
+                                                                <td>张三</td>
+                                                                <td>小组长</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>2</td>
+                                                                <td>李四</td>
+                                                                <td>组员</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>3</td>
+                                                                <td>王五</td>
+                                                                <td>组员</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <div>
+                                                            <span>当前文档进度：</span>
+                                                            <div class="stat-percent">48%</div>
+                                                            <div class="progress progress-mini">
+                                                                <div style="width: 48%;" class="progress-bar"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="ibox">
+                                                    <div class="ibox-title">
+                                                        <h5>设计与概要文档组</h5>
+                                                    </div>
+                                                    <div class="ibox-content">
+                                                        <p>创建于2018-11-28</p>
+                                                        <p>预计于2019-12-23日完成文档编写</p>
+                                                        <h4>小组成员</h4>
+                                                        <table class="table">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>用户名</th>
+                                                                <th>用户级别</th>
+                                                                <th>操作</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>1</td>
+                                                                <td>张三</td>
+                                                                <td>小组长</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>2</td>
+                                                                <td>李四</td>
+                                                                <td>组员</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>3</td>
+                                                                <td>王五</td>
+                                                                <td>组员</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <div>
+                                                            <span>当前文档进度：</span>
+                                                            <div class="stat-percent">98%</div>
+                                                            <div class="progress progress-mini">
+                                                                <div style="width: 98%;" class="progress-bar"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="ibox">
+                                                    <div class="ibox-title">
+                                                        <h5>需求文档组</h5>
+                                                    </div>
+                                                    <div class="ibox-content">
+                                                        <p>创建于2018-10-28</p>
+                                                        <p>预计于2019-11-23日完成文档编写</p>
+                                                        <h4>小组成员</h4>
+                                                        <table class="table">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>用户名</th>
+                                                                <th>用户级别</th>
+                                                                <th>操作</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>1</td>
+                                                                <td>张三</td>
+                                                                <td>小组长</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>2</td>
+                                                                <td>李四</td>
+                                                                <td>组员</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>3</td>
+                                                                <td>王五</td>
+                                                                <td>组员</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <div>
+                                                            <span>当前文档进度：</span>
+                                                            <div class="stat-percent">100%</div>
+                                                            <div class="progress progress-mini">
+                                                                <div style="width: 100%;" class="progress-bar"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-
 </div>
 </body>
 <script src="<%=basePath %>/js/jquery.min.js?v=2.1.4"></script>
@@ -461,11 +765,15 @@
         if (row.rank==5){
             return ['<a class="mod img-info"><img src="<%=basePath%>/img/deputyleader.png" height="20px" width="20px" title="设为副组长" alt="设为副组长"></a>',
                 '<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>',
+                "<a class='deploy '><img src='<%=basePath%>/img/release.png' height='20px' width='20px' title='设为小组长' alt='设为小组长'></a>",
+                "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
                 '<a class="delete"><img src="<%=basePath%>/img/deletemember.png" height="20px" width="20px" title="移除成员" alt="移除成员"></a>'].join('');
         }
         else if (row.rank==4){
             return ['<a class="mod img-danger"><img src="<%=basePath%>/img/undeputyleader.png" height="20px" width="20px" title="撤销副组长" alt="撤销副组长"></a>',
                 '<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>',
+                "<a class='deploy '><img src='<%=basePath%>/img/release.png' height='20px' width='20px' title='撤销小组长' alt='撤销小组长'></a>",
+                "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
                 '<a class="delete"><img src="<%=basePath%>/img/deletemember.png" height="20px" width="20px" title="移除成员" alt="移除成员"></a>'].join('');
         }</s:if>
     }
@@ -589,6 +897,11 @@
                     sortable: true,
                     align: 'center'
                 },{
+                    field: 'document_type',
+                    title: '文档类型',
+                    sortable: true,
+                    align: 'center'
+                }, {
                     field: 'version',
                     title: '版本',
                     align: 'center'
@@ -864,6 +1177,8 @@
         })
     });
 
+
+
     $("button#modified2").click(function () {
         swal(
             {
@@ -896,7 +1211,7 @@
                     }
                 })
             })
-    })
+    });
 
     $("button#modified1").click(function () {
         swal(

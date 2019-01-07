@@ -67,6 +67,7 @@
         <br/>
     </div>
 
+    <!--
     <div class="form-group has-feedback">
         <label class="control-label col-sm-3"><button class="btn-circle btn-default"><img src="<%=basePath %>img/u12.png" style="height: 18px;width: 20px"></button>　文档名称 <span style="color: red">*</span></label>
             <div class="col-sm-4">
@@ -74,6 +75,7 @@
             <i id="warning2"></i>
         </div>
     </div>
+    -->
 
     <div class="form-group">
         <br/>
@@ -115,9 +117,11 @@
         <br/>
     </div>
 
+    <!--
     <div class="col-xs-9" style="text-align: center">
         <h4 style="font-size: 13px;color: red">创建该项目需要${sessionScope.Mpoint5}积分，点击提交并确认后扣除</h4>
     </div>
+    -->
 
     <div class="col-md-12">
         <br/><br/><br/>
