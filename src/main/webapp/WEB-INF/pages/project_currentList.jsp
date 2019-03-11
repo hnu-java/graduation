@@ -157,6 +157,7 @@
                     },
                     error: function () {
                         swal({
+                            title:"错误",
                             icon: "error"
                         });
                     }

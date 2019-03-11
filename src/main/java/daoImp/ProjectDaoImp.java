@@ -18,8 +18,8 @@ import java.util.List;
 public class ProjectDaoImp extends DAO<ProjectEntity> implements ProjectDao {
 
     public boolean save(ProjectEntity p) {
-        String sql0 = "insert into PROJECT(NAME,DATE,DOCUMENT_NAME,STATE,INTRO) values(?,?,?,?,?)";
-        String sql1 = "insert into PROJECT(NAME,DATE,DOCUMENT_NAME,STATE,ID_ORGANIZATION,INTRO) values(?,?,?,?,?,?)";
+        String sql0 = "insert into PROJECT(NAME,DATE,STATE,INTRO) values(?,?,?,?)";
+        String sql1 = "insert into PROJECT(NAME,DATE,STATE,ID_ORGANIZATION,INTRO) values(?,?,?,?,?)";
         String sql2 = "select ID_ORGANIZATION from ORGANIZATION where NAME = ?";
         String sql3 = "insert into PROJECT_MEMBER(ID_PROJECT,ID_USER,RANK) values(?,?,?)";
 
@@ -58,15 +58,14 @@ public class ProjectDaoImp extends DAO<ProjectEntity> implements ProjectDao {
 //          新增项目，同时获取自增项目ID
             int Id_Project = 0;
             if (ID_Org>0) {
-                Id_Project = insert(sql1, p.getName(), createDate, p.getDocument_Name(), 1, ID_Org, p.getIntro());
+                Id_Project = insert(sql1, p.getName(), createDate,  1, ID_Org, p.getIntro());
             }
             else {
-                Id_Project = insert(sql0, p.getName(), createDate, p.getDocument_Name(), 1, p.getIntro());
+                Id_Project = insert(sql0, p.getName(), createDate, 1, p.getIntro());
             }
 
-//            新建文档
-            DocumentDao documentDao = new DocumentDaoImp();
-            documentDao.create(Id_Project,1,time,ID_User);
+
+
 //          set PM of one Project
             updateThrowException(sql3,Id_Project,ID_User,3);
 

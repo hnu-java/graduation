@@ -43,14 +43,13 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     private int documentId;
     private UserDao userDao;
     private UserEntity user;
+    private int DocType;
 
     public String create_test() throws ParseException {
         dataMap = new HashMap<String, Object>();
         projectDao = new ProjectDaoImp();
         userDao = new UserDaoImp();
         OrganizationDao organizationDao = new OrganizationDaoImp();
-        System.out.println(project.getName()+" "+project.getDocument_Name());
-        System.out.println(project.getId_Organization());
         UserEntity sessionUser=(UserEntity)session.get("user");
         String orgName = organizationDao.getOrgName(project.getId_Organization());
         int points = sessionUser.getPoints();
@@ -90,13 +89,16 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     public String createDoc() {
         dataMap = new HashMap<String, Object>();
         int Id_Project = (Integer)request.get("id_Project");
+        String DocName = (request.get("name")).toString();
+        DocType = (Integer) request.get("DocType");
+        System.out.println(DocName+"  "+DocType);
         UserEntity user = (UserEntity)ActionContext.getContext().getSession().get("user");
         int ID_User = user.getId_user();
         Timestamp time = new Timestamp(new java.util.Date().getTime());
         DocumentDao documentDao = new DocumentDaoImp();
         int version = documentDao.getVersion(Id_Project)+1;
         int id_document=documentDao.getDocumentId(Id_Project);
-        int new_idDocument = documentDao.create(Id_Project,version,time,ID_User);
+        int new_idDocument = documentDao.create(Id_Project,version,time,ID_User,DocName,DocType);
         if (id_document!=-1){
             projectDao=new ProjectDaoImp();
             projectDao.copyAll(id_document,new_idDocument,version);
@@ -228,7 +230,7 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         DocumentDao documentDao = new DocumentDaoImp();
 
         try {
-            List<DocumentEntity> list = documentDao.getAll(project.getId_Project());
+            List<DocumentEntity> list = documentDao.getAlltype(project.getId_Project());
             int addOrNot=1;//1为可编辑，0为不可编辑
             if(list.size()!=0&&list.get(0).getState()==0)//有未发布文档，不可编辑
             {
@@ -434,5 +436,13 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     @Override
     public ProjectEntity getModel() {
         return project;
+    }
+
+    public int getDocType() {
+        return DocType;
+    }
+
+    public void setDocType(int docType) {
+        DocType = docType;
     }
 }

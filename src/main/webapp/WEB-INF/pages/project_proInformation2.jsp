@@ -124,38 +124,34 @@
         </div>
     </div>
 </div>
-<div  class="modal inmodal" id="newDocument" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content animated bounceInRight">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
-                </button>
-                <h4 class="modal-title">新建文档</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>文档名</label>
-                    <input id="DocName" type="text" placeholder="请输入文档名" class="form-control" required="true" autocomplete="off">
-                </div>
-                <div class="form-group">
-                    <label>选择创建的文档类型</label>
-                    <select class="form-control m-b dis"  name="type" id="type" >
-                        <option value="1">需求文档</option>
-                        <option value="2">远景与范围文档</option>
-                        <option value="3">概要设计文档</option>
-                        <option value="3">测试文档</option>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
-                <button id="newDoc" type="button" class="btn btn-primary">新建</button>
-            </div>
-        </div>
-    </div>
+<div class="row border-bottom white-bg">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header"><a  href="user-jmpHomePage"><img src="<%=basePath %>/img/logo.png" style="height: 50px;margin: 10px 0px 5px 50px;"> </a></div>
+        <ul class="nav navbar-top-links navbar-right">
+            <a id="yourName" class="dropdown J_tabClose" data-toggle="dropdown">${sessionScope.user.name}<span class="caret"></span></a>
+            <ul  role="menu" class="dropdown-menu dropdown-menu-right">
+                <li  class="J_tabShowActive"><a href="user-jmpMyProfile">个人中心</a>
+                </li>
+                <li class="divider"></li>
+                <li  class="J_tabShowActive"><a href="user-jmpMessageCenter">消息中心</a>
+                </li>
+                <li class="divider"></li>
+                <s:if test='#session.orgManager!="0"'>
+                    <li class="J_tabShowActive"><a href="Organization-jmpOrgManager">机构管理</a>
+                    </li>
+                    <li class="divider"></li>
+                </s:if>
+                <li class="J_tabCloseAll"><a id="exit" class="J_menuItem" >安全退出</a>
+                </li>
+            </ul>
+            <li class="dropdown hidden-xs">
+                <a id="exit1" class="right-sidebar-toggle" aria-expanded="false" >
+                    <img src="<%=basePath %>/img/exit.png">
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>
-
 <div class="animated fadeInDown" style="overflow:hidden">
     <div class=" row wrapper white-bg" style="padding:5px">
         <ol class="breadcrumb" style="margin-left: 40px">
@@ -168,7 +164,7 @@
                     <s:if test='#session.project.state==0'>
                         <a href="user-jmpCompletedProjectList"><span class="lzf_b" style="color:#658387">历史项目</span></a>
                     </s:if>
-                     >> <a href="project-jmpProjectInfo"><span class="lzf_b">项目信息</span></a>
+                    >> <a href="project-jmpProjectInfo"><span class="lzf_b">项目信息</span></a>
                 </strong>
             </li>
         </ol>
@@ -224,20 +220,20 @@
 
                         <dt><h3>所属机构：</h3></dt>
                         <dd><h3><s:property value="#session.project.orgName"/></h3></dd>
-                    <s:if test='#session.project.state==1'>
-                        <s:if test='#session.rank==3'>
-                        <s:if test='#session.project.id_Organization!=""'>
-                            <dt><h3>文档权限：</h3></dt>
-                            <dd><h3><span id="open">
+                        <s:if test='#session.project.state==1'>
+                            <s:if test='#session.rank==3'>
+                                <s:if test='#session.project.id_Organization!=""'>
+                                    <dt><h3>文档权限：</h3></dt>
+                                    <dd><h3><span id="open">
                                         开放 <button id="modified1" class="btn btn-success btn-xs">更改</button>
                                     </span>
-                                    <span id="close">
+                                        <span id="close">
                                         封闭 <button id="modified2" class="btn btn-success btn-xs">更改</button>
                                     </span>
-                            </h3></dd>
+                                    </h3></dd>
+                                </s:if>
+                            </s:if>
                         </s:if>
-                        </s:if>
-                    </s:if>
                     </dl>
                 </div>
             </div>
@@ -295,9 +291,9 @@
                                     <div id="toolbar1">
                                         <s:if test='#session.project.state==1'>
                                             <s:if test="#session.rank==3">
-                                                    <button id="searchUser" class="btn btn-success" data-toggle="modal" data-target="#newUser">
-                                                        <i class="glyphicon glyphicon-zoom-in"></i>邀请成员
-                                                    </button>&nbsp;
+                                                <button id="searchUser" class="btn btn-success" data-toggle="modal" data-target="#newUser">
+                                                    <i class="glyphicon glyphicon-zoom-in"></i>邀请成员
+                                                </button>&nbsp;
                                                 <button id="alterPM" class="btn btn-warning" data-toggle="modal" data-target="#switchPM">
                                                     <i class="glyphicon"></i>转移组长
                                                 </button>
@@ -326,11 +322,11 @@
                                 <div class="tab-pane active" id="tab-1">
 
                                     <div id="toolbar2">
-
-
-        <button id="createDoc" class="btn btn-success" data-toggle="modal" data-target="#newDocument"><i class="fa fa-file"></i>新建文档</button>
-
-
+                                        <s:if test='#session.project.state==1'>
+                                            <s:if test='#session.rank==3'>
+                                                <button id="createDoc" class="btn btn-success" style="display:none"><i class="fa fa-file"></i>新建文档</button>
+                                            </s:if>
+                                        </s:if>
                                     </div>
                                     <div class="bootstrap-table" >
                                         <table id="projectDocs" data-toggle="table"
@@ -644,21 +640,6 @@
             }
     };
 
-    function typeFormatter(value,row,index) {
-        if (row.type===1) {
-            return '需求文档';
-        }
-        else if (row.type===2){
-            return '概要设计文档';
-        }
-        else if (row.type===3){
-            return '远景范围文档';
-        }
-        else {
-            return '测试文档';
-        }
-    }
-
     $('#projectDocs').bootstrapTable({
             columns: [
                 {
@@ -675,12 +656,6 @@
                     title: '提交时间',
                     sortable: true,
                     align: 'center'
-                },{
-                    field: 'type',
-                    title: '文档类型',
-                    sortable: true,
-                    align: 'center',
-                    formatter: "typeFormatter"
                 },{
                     field: 'view',
                     title: '操作',
@@ -702,17 +677,17 @@
                 var docList = JSON.parse(json.res);
                 //finishingTask为table的id
                 var addOrNot=json.addOrNot;
-                // if(addOrNot=="0"){
-                //     $("#createDoc").css("display","none")
-                //     $("#createDoc").attr("disabled","")
-                //     $("#createDoc").removeClass("btn-success")
-                //     $("#createDoc").addClass("btn-default")}
-                //     else
-                // {
-                //     $("#createDoc").css("display","")
-                //     $("#createDoc").removeClass("btn-default")
-                //     $("#createDoc").addClass("btn-success")
-                // }
+                if(addOrNot=="0"){
+                    $("#createDoc").css("display","none")
+                    $("#createDoc").attr("disabled","")
+                    $("#createDoc").removeClass("btn-success")
+                    $("#createDoc").addClass("btn-default")}
+                else
+                {
+                    $("#createDoc").css("display","")
+                    $("#createDoc").removeClass("btn-default")
+                    $("#createDoc").addClass("btn-success")
+                }
                 $('#projectDocs').bootstrapTable('load',docList);
             },
             error:function(){
@@ -722,59 +697,59 @@
     );
 
     function viewFormatter(value,row,index) {
-<s:if test='#session.project.state==1'>
+        <s:if test='#session.project.state==1'>
         <s:if test='#session.rank==3'>//项目组长
-            if (row.state===0) {
-                return ["<a class='edit img-success'><img src='<%=basePath%>/img/edit.png' height='20px' width='20px' title='编辑' alt='编辑'></a>",
-                        "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                        "<a class='deploy '><img src='<%=basePath%>/img/release.png' height='20px' width='20px' title='发布' alt='发布'></a>",
-                        "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                        "<a class='generateContract img-primary'><img src='<%=basePath%>/img/export_pdf.png' height='20px' width='20px' title='导出pdf' alt='导出pdf'></a>",
-                        "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                        "<a class='generateContractRtf img-primary'><img src='<%=basePath%>/img/export_word.png' height='20px' width='20px' title='导出word' alt='导出word'></a>",
-                        "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                        "<a class='delete'><img src='<%=basePath%>/img/delete.png' height='20px' width='20px' title='删除' alt='删除'></a>"
-                ].join('');
-            }
-            else {
-                return ["<a class='view'><img src='<%=basePath%>/img/view.png' height='20px' width='20px' title='查看' alt='查看'></a>",
-                    "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                    "<a class='generateContract img-primary'><img src='<%=basePath%>/img/export_pdf.png' height='20px' width='20px' title='导出pdf' alt='导出pdf'></a>",
-                    "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                    "<a class='generateContractRtf img-primary'><img src='<%=basePath%>/img/export_word.png' height='20px' width='20px' title='导出word' alt='导出word'></a>",
-                    "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                    "<a class='delete'><img src='<%=basePath%>/img/delete.png' height='20px' width='20px' title='删除' alt='删除'></a>"
-                ].join('');
+        if (row.state===0) {
+            return ["<a class='edit img-success'><img src='<%=basePath%>/img/edit.png' height='20px' width='20px' title='编辑' alt='编辑'></a>",
+                "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
+                "<a class='deploy '><img src='<%=basePath%>/img/release.png' height='20px' width='20px' title='发布' alt='发布'></a>",
+                "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
+                "<a class='generateContract img-primary'><img src='<%=basePath%>/img/export_pdf.png' height='20px' width='20px' title='导出pdf' alt='导出pdf'></a>",
+                "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
+                "<a class='generateContractRtf img-primary'><img src='<%=basePath%>/img/export_word.png' height='20px' width='20px' title='导出word' alt='导出word'></a>",
+                "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
+                "<a class='delete'><img src='<%=basePath%>/img/delete.png' height='20px' width='20px' title='删除' alt='删除'></a>"
+            ].join('');
+        }
+        else {
+            return ["<a class='view'><img src='<%=basePath%>/img/view.png' height='20px' width='20px' title='查看' alt='查看'></a>",
+                "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
+                "<a class='generateContract img-primary'><img src='<%=basePath%>/img/export_pdf.png' height='20px' width='20px' title='导出pdf' alt='导出pdf'></a>",
+                "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
+                "<a class='generateContractRtf img-primary'><img src='<%=basePath%>/img/export_word.png' height='20px' width='20px' title='导出word' alt='导出word'></a>",
+                "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
+                "<a class='delete'><img src='<%=basePath%>/img/delete.png' height='20px' width='20px' title='删除' alt='删除'></a>"
+            ].join('');
 //                return ["<a class='view btn-xs btn-info'>查看</a>",
 //                    "<a class='delete btn-xs btn-danger' >删除</a>"
 //                ].join();
-            }
+        }
         </s:if>
 
         <s:if test='#session.rank==4'>//项目副组长
-            if (row.state===0) {
-                return ["<a class='edit'><img src='<%=basePath%>/img/edit.png' height='20px' width='20px' title='编辑' alt='编辑'></a>",
-                        "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                    "<a class='generateContract img-primary'><img src='<%=basePath%>/img/export_pdf.png' height='20px' width='20px' title='导出pdf' alt='导出pdf'></a>",
-                    "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                    "<a class='generateContractRtf img-primary'><img src='<%=basePath%>/img/export_word.png' height='20px' width='20px' title='导出word' alt='导出word'></a>",
-                ].join('');
-            }
-            else {
-                return ["<a class='view'><img src='<%=basePath%>/img/view.png' height='20px' width='20px' title='查看' alt='查看'></a>",
-                        "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                    "<a class='generateContract img-primary'><img src='<%=basePath%>/img/export_pdf.png' height='20px' width='20px' title='导出pdf' alt='导出pdf'></a>",
-                    "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                    "<a class='generateContractRtf img-primary'><img src='<%=basePath%>/img/export_word.png' height='20px' width='20px' title='导出word' alt='导出word'></a>",
-                ].join('');
-            }
+        if (row.state===0) {
+            return ["<a class='edit'><img src='<%=basePath%>/img/edit.png' height='20px' width='20px' title='编辑' alt='编辑'></a>",
+                "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
+                "<a class='generateContract img-primary'><img src='<%=basePath%>/img/export_pdf.png' height='20px' width='20px' title='导出pdf' alt='导出pdf'></a>",
+                "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
+                "<a class='generateContractRtf img-primary'><img src='<%=basePath%>/img/export_word.png' height='20px' width='20px' title='导出word' alt='导出word'></a>",
+            ].join('');
+        }
+        else {
+            return ["<a class='view'><img src='<%=basePath%>/img/view.png' height='20px' width='20px' title='查看' alt='查看'></a>",
+                "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
+                "<a class='generateContract img-primary'><img src='<%=basePath%>/img/export_pdf.png' height='20px' width='20px' title='导出pdf' alt='导出pdf'></a>",
+                "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
+                "<a class='generateContractRtf img-primary'><img src='<%=basePath%>/img/export_word.png' height='20px' width='20px' title='导出word' alt='导出word'></a>",
+            ].join('');
+        }
         </s:if>
 
         <s:if test='#session.rank==5'>
-            return '<a class="view"><img src="<%=basePath%>/img/view.png" height="20px" width="20px" title="查看" alt="查看"></a>';
+        return '<a class="view"><img src="<%=basePath%>/img/view.png" height="20px" width="20px" title="查看" alt="查看"></a>';
         </s:if>
-    </s:if>
-    <s:if test='#session.project.state==0'>
+        </s:if>
+        <s:if test='#session.project.state==0'>
         return '<a class="view"><img src="<%=basePath%>/img/view.png" height="20px" width="20px" title="查看" alt="查看"></a>';
         </s:if>
     }
@@ -914,29 +889,27 @@
 
 
     $("button#endProject").click(function() {
-            swal(
-                {
-                    title: "您确定要结束此项目吗",
-                    text: "结束后将不能重新开始，请谨慎操作！",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "结束",
-                    cancelButtonText: "取消",
-                    closeOnConfirm: true
-                },function () {
-                    location.href="project-end?id_Project=<s:property value="#session.project.id_project"/>"
-                }
-            );
-        });
+        swal(
+            {
+                title: "您确定要结束此项目吗",
+                text: "结束后将不能重新开始，请谨慎操作！",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "结束",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            },function () {
+                location.href="project-end?id_Project=<s:property value="#session.project.id_project"/>"
+            }
+        );
+    });
 
-    $("button#newDoc").click(function() {
+    $("button#createDoc").click(function() {
         $.ajax({
             url: "project-createDoc",
             data: {
-                Id_Project: id_Project,
-                Name: $("input#DocName").val(),
-                DocType: $("select#type").val()
+                Id_Project: id_Project
             },
             dataType: "json",
             type: "Post",
@@ -1136,7 +1109,7 @@
 
     //评论提交
     function commitDiscuss() {
-         discuss = $(".discuss").summernote('code');
+        discuss = $(".discuss").summernote('code');
         if($('#fileupload').val()==""&&discuss.trim()=="") {
             showtoast("error","失败","评论不能为空");
             return;
@@ -1200,7 +1173,7 @@
     );
 
     //评论跳转按钮
-   function shift(id_document) {
+    function shift(id_document) {
         //var id = row.id_Project;
         location.href = "catalog-jmpTemplate?documentId="+id_document+"&rank="+rank+"&projectId="+id_Project+"&state="+state;
     };
@@ -1241,22 +1214,22 @@
     function edit() {
         $("#eg").addClass("no-padding");
         $(".click2edit").summernote(
-        {
-            height:50,
-            minHeight:50,
-            lang:"zh-CN",
-            focus:true,
-            toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['picture', ['picture']]
+            {
+                height:50,
+                minHeight:50,
+                lang:"zh-CN",
+                focus:true,
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['picture', ['picture']]
                 ],
-            callbacks: {
-                onImageUpload: function(files, editor, $editable) {
-                    var that=$(this);
-                    sendFile(files,that);
+                callbacks: {
+                    onImageUpload: function(files, editor, $editable) {
+                        var that=$(this);
+                        sendFile(files,that);
+                    }
                 }
-            }
-        })
+            })
     }
     function sendFile(files, that) {
         var data = new FormData();

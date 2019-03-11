@@ -168,18 +168,11 @@
         else {
             $("#warning1").html("<i class='glyphicon glyphicon-ok-sign pull-right' style='color: green'></i>");
         }
-        if ($.trim(docName)==""){
-            $("#warning2").html("<i class='glyphicon glyphicon-remove pull-right' style='color: red'>必填项!</i>");
-            return;
-        }
-        else {
-            $("#warning2").html("<i class='glyphicon glyphicon-ok-sign pull-right' style='color: green'></i>");
-        }
         var r = document.getElementById("orgList").value;
         $.ajax({
             url: "project-create_test",
             data: {
-                name: $("input#proName").val(), document_Name: $("input#docName").val(),
+                name: $("input#proName").val(),
                 id_Organization: r, intro: $("textarea#intro").val()
             },
             dataType: "json",
@@ -205,7 +198,7 @@
                                     $.ajax({
                                         url: "project-create",
                                         data: {
-                                            name: $("input#proName").val(), document_Name: $("input#docName").val(),
+                                            name: $("input#proName").val(),
                                             id_Organization: r, intro: $("textarea#intro").val()
                                         },
                                         dataType: "json",
