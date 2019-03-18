@@ -45,7 +45,7 @@
 
     <link href="<%=basePath %>/css/xzw.css" rel="stylesheet">
     <link href="<%=basePath %>/css/plugins/bootstrap-fileinput/fileinput.min.css" rel="stylesheet">
-
+    <link href="<%=basePath %>/css/button.css" rel="stylesheet">
 </head>
 
 <body class="gray-bg animated fadeInDown">
@@ -144,7 +144,7 @@
                         <option value="1">需求文档</option>
                         <option value="2">远景与范围文档</option>
                         <option value="3">概要设计文档</option>
-                        <option value="3">测试文档</option>
+                        <option value="4">测试文档</option>
                     </select>
                 </div>
             </div>
@@ -722,125 +722,36 @@
     );
 
     function viewFormatter(value,row,index) {
-<s:if test='#session.project.state==1'>
-        <s:if test='#session.rank==3'>//项目组长
-            if (row.state===0) {
-                return ["<a class='edit img-success'><img src='<%=basePath%>/img/edit.png' height='20px' width='20px' title='编辑' alt='编辑'></a>",
-                        "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                        "<a class='deploy '><img src='<%=basePath%>/img/release.png' height='20px' width='20px' title='发布' alt='发布'></a>",
-                        "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                        "<a class='generateContract img-primary'><img src='<%=basePath%>/img/export_pdf.png' height='20px' width='20px' title='导出pdf' alt='导出pdf'></a>",
-                        "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                        "<a class='generateContractRtf img-primary'><img src='<%=basePath%>/img/export_word.png' height='20px' width='20px' title='导出word' alt='导出word'></a>",
-                        "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                        "<a class='delete'><img src='<%=basePath%>/img/delete.png' height='20px' width='20px' title='删除' alt='删除'></a>"
-                ].join('');
-            }
-            else {
-                return ["<a class='view'><img src='<%=basePath%>/img/view.png' height='20px' width='20px' title='查看' alt='查看'></a>",
-                    "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                    "<a class='generateContract img-primary'><img src='<%=basePath%>/img/export_pdf.png' height='20px' width='20px' title='导出pdf' alt='导出pdf'></a>",
-                    "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                    "<a class='generateContractRtf img-primary'><img src='<%=basePath%>/img/export_word.png' height='20px' width='20px' title='导出word' alt='导出word'></a>",
-                    "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                    "<a class='delete'><img src='<%=basePath%>/img/delete.png' height='20px' width='20px' title='删除' alt='删除'></a>"
-                ].join('');
-//                return ["<a class='view btn-xs btn-info'>查看</a>",
-//                    "<a class='delete btn-xs btn-danger' >删除</a>"
-//                ].join();
-            }
-        </s:if>
-
-        <s:if test='#session.rank==4'>//项目副组长
-            if (row.state===0) {
-                return ["<a class='edit'><img src='<%=basePath%>/img/edit.png' height='20px' width='20px' title='编辑' alt='编辑'></a>",
-                        "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                    "<a class='generateContract img-primary'><img src='<%=basePath%>/img/export_pdf.png' height='20px' width='20px' title='导出pdf' alt='导出pdf'></a>",
-                    "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                    "<a class='generateContractRtf img-primary'><img src='<%=basePath%>/img/export_word.png' height='20px' width='20px' title='导出word' alt='导出word'></a>",
-                ].join('');
-            }
-            else {
-                return ["<a class='view'><img src='<%=basePath%>/img/view.png' height='20px' width='20px' title='查看' alt='查看'></a>",
-                        "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                    "<a class='generateContract img-primary'><img src='<%=basePath%>/img/export_pdf.png' height='20px' width='20px' title='导出pdf' alt='导出pdf'></a>",
-                    "<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>",
-                    "<a class='generateContractRtf img-primary'><img src='<%=basePath%>/img/export_word.png' height='20px' width='20px' title='导出word' alt='导出word'></a>",
-                ].join('');
-            }
-        </s:if>
-
-        <s:if test='#session.rank==5'>
-            return '<a class="view"><img src="<%=basePath%>/img/view.png" height="20px" width="20px" title="查看" alt="查看"></a>';
-        </s:if>
-    </s:if>
-    <s:if test='#session.project.state==0'>
-        return '<a class="view"><img src="<%=basePath%>/img/view.png" height="20px" width="20px" title="查看" alt="查看"></a>';
-        </s:if>
+        return '<a class="mod fa fa-folder btn btn-custom"> 查看文档组</a>'
     }
 
-    var rank = "<s:property value="#session.rank"/>";
     //表格  - 操作 - 事件
     window.viewEvents = {
-        'click .edit':
+        'click .mod':
             function(e, value, row, index) {
-                var id = row.id_document;
-                location.href = "catalog-jmpTemplate?documentId="+id+"&rank="+rank+"&projectId="+id_Project+"&state="+row.state;
-                var a = "catalog-jmpTemplate?documentId="+id+"&rank="+rank+"&projectId="+id_Project+"&state="+row.state;
+                //修改操作
+                var id_Project = parseInt(row.id_project);
+                var type = parseInt(row.type);
+                $.ajax({
+                    type: "GET",
+                    url: "sgroup-getSGroupInfo",
+                    data: {Id_Project:id_Project,DocType:type},
+                    dataType: "json",
+                    success: function (result) {
+                        location.href = "sgroup-jmpSGroupInfo";
+                    },
+                    error: function () {
+                        swal({
+                            title:"错误",
+                            icon: "error"
+                        });
+                    }
+                })
             },
-        'click .delete':
-            function(e, value, row, index) {
-                var id = row.id_document;
-                swal(
-                    {
-                        title: "您确定要删除这份文档吗",
-                        text: "请谨慎操作！",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "确认",
-                        cancelButtonText: "取消",
-                        closeOnConfirm: true
-                    },function () {
-                        swal("删除成功！", "您已成功删除此版本需求文档", "success");
-                        location.href = "project-delete?documentId=" + id;
-                    })
-            },
-        'click .deploy':
-            function(e, value, row, index) {
-                var id = row.id_document;
-                swal(
-                    {
-                        title: "您确定要发布这份文档吗",
-                        text: "请谨慎操作！",
-                        type: "",
-                        showCancelButton: true,
-                        confirmButtonColor: "#18a689",
-                        confirmButtonText: "确认",
-                        cancelButtonText: "取消",
-                        closeOnConfirm: true
-                    },function () {
-                        swal("发布成功！", "您已成功发布此版本需求文档。", "success");
-                        location.href = "project-deploy?documentId=" + id;
-                    })
-            },
-        'click .view':
-            function(e, value, row, index) {
-                var id = row.id_document;
-                location.href = "catalog-jmpTemplate?documentId="+id+"&rank="+rank+"&projectId="+id_Project+"&state="+row.state;
-            },
-        'click .generateContract':
-            function(e, value, row, index) {
-                var id = row.id_document;
-                location.href = "catalog-generateContract?documentId="+id;
-            },
-        'click .generateContractRtf':
-            function(e, value, row, index) {
-                var id = row.id_document;
-                location.href = "catalog-generateContractRtf?documentId="+id;
-            }
+        'click .delete' : function(e, value, row, index) {
+            //删除操作
+        }
     };
-
 
 
     $("button#button_invite").click(function () {
@@ -945,7 +856,7 @@
                 location.href = "catalog-jmpTemplate?documentId="+result.id+"&rank=3&projectId="+id_Project+"&state=0";
             },
             error: function (result) {
-                showtoast("error", "转移失败", "用户名不存在!")
+                showtoast("error", "新建失败", "文档名不存在!")
             }
         })
     });

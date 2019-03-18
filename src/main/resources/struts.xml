@@ -202,6 +202,14 @@
             <allowed-methods>deleteLibrary,newLibrary,getUserAllAgain,jmpUserLibrary,get,getagain,getuser,getuseragain,getcase,getcaseagain,getpicture,getpictureagain,Mycollect,Mycollectagain</allowed-methods>
         </action>
 
+        <action name="sgroup-*" class="action.SGroupAction" method="{1}">
+            <result name="success" type="json">
+                <param name="root">dataMap</param>
+            </result>
+            <result name="sGroupInformation">/WEB-INF/pages/project_groInformation.jsp</result>
+            <interceptor-ref name="myStack"/>
+            <allowed-methods>getSGroupInfo,jmpSGroupInfo</allowed-methods>
+        </action>
 
         <action name="librarycollect-*" class="action.LibrarycollectAction" method="{1}">
             <result name="RES" type="json"><param name="root">dataMap</param></result>

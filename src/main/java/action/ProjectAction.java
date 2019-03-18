@@ -91,7 +91,6 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         int Id_Project = (Integer)request.get("id_Project");
         String DocName = (request.get("name")).toString();
         DocType = (Integer) request.get("DocType");
-        System.out.println(DocName+"  "+DocType);
         UserEntity user = (UserEntity)ActionContext.getContext().getSession().get("user");
         int ID_User = user.getId_user();
         Timestamp time = new Timestamp(new java.util.Date().getTime());

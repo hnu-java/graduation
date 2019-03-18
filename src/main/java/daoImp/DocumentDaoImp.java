@@ -16,10 +16,16 @@ public class DocumentDaoImp extends DAO<DocumentEntity> implements DocumentDao {
         String sql2="update USER set points = points - ? WHERE ID_USER=?";
         String sql3="insert into points_record(id_user,content,date) values(?,?,?)";
         String sql4="select name from project where id_project = ?";
+        String sql6 = "insert into SGROUP(DOC_TYPE, ID_PROJECT, ID_USER, VERSION, DATE) VALUES (?,?,?,?,?)";
+        String sql7 = "insert into SGROUP_MEMBER(ID_SGROUP, ID_USER, RANK) VALUES (?,?,?)";
         //String sql5="select document_name from project where id_project = ?";
         Timestamp createDate = new Timestamp(new java.util.Date().getTime());
         try {
             int id =  insert(sql,id_project,version,timestamp,id_user,type,DocName);
+            //创建小组
+            int id_sgroup = insert(sql6,type,id_project,id_user,version,timestamp);
+            //小组长
+            updateThrowException(sql7,id_sgroup,id_user,3);
             //扣分，记录
             int points = getForValue(sql1,5);
             update(sql2,points,id_user);
