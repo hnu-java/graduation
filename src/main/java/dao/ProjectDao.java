@@ -28,4 +28,5 @@ public interface ProjectDao {
     boolean modified(int flag,int id_project);
     boolean exist(String org_name);
     boolean belong(String org_name,int id_user);
+    boolean isIn(int id_user,int id_project);
 }

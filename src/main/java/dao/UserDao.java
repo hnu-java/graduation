@@ -21,7 +21,7 @@ public interface UserDao {
 	boolean edit(String username,String qq,String realname,String address,String tel,String introduce,String gender);
 
 	UserEntity getOne(String name) throws ParseException;
-
+	UserEntity getOne1(int id_user) throws ParseException;
     List<UserEntity> getAll();
 
     int orgManager(int id);

@@ -40,6 +40,17 @@ public class DocumentDaoImp extends DAO<DocumentEntity> implements DocumentDao {
         return 0;
     }
 
+    public int create(int id_project, int version, Timestamp timestamp, int id_user) {
+        String sql = "insert into DOCUMENT(ID_PROJECT, VERSION, DATE, ID_USER) VALUES (?,?,?,?)";
+        try {
+            int id =  insert(sql,id_project,version,timestamp,id_user);
+            return id;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     @Override
     public void deploy(int Id_Document) {
         String sql = "update DOCUMENT set state = 1 where ID_DOCUMENT = ?";
@@ -77,6 +88,12 @@ public class DocumentDaoImp extends DAO<DocumentEntity> implements DocumentDao {
     public List<DocumentEntity> getAlltype(int id) {
         String sql = "select * from DOCUMENT where ID_PROJECT = ? and STATE = 0";
         List<DocumentEntity> list = getForList(sql,id);
+        return list;
+    }
+
+    public List<DocumentEntity> getOnetype(int id,int type){
+        String sql = "select * from DOCUMENT where ID_PROJECT = ? and TYPE = ?";
+        List<DocumentEntity> list = getForList(sql,id,type);
         return list;
     }
 

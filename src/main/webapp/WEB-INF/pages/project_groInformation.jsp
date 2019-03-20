@@ -124,34 +124,6 @@
         </div>
     </div>
 </div>
-<div class="row border-bottom white-bg">
-    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header"><a  href="user-jmpHomePage"><img src="<%=basePath %>/img/logo.png" style="height: 50px;margin: 10px 0px 5px 50px;"> </a></div>
-        <ul class="nav navbar-top-links navbar-right">
-            <a id="yourName" class="dropdown J_tabClose" data-toggle="dropdown">${sessionScope.user.name}<span class="caret"></span></a>
-            <ul  role="menu" class="dropdown-menu dropdown-menu-right">
-                <li  class="J_tabShowActive"><a href="user-jmpMyProfile">个人中心</a>
-                </li>
-                <li class="divider"></li>
-                <li  class="J_tabShowActive"><a href="user-jmpMessageCenter">消息中心</a>
-                </li>
-                <li class="divider"></li>
-                <s:if test='#session.orgManager!="0"'>
-                    <li class="J_tabShowActive"><a href="Organization-jmpOrgManager">机构管理</a>
-                    </li>
-                    <li class="divider"></li>
-                </s:if>
-                <li class="J_tabCloseAll"><a id="exit" class="J_menuItem" >安全退出</a>
-                </li>
-            </ul>
-            <li class="dropdown hidden-xs">
-                <a id="exit1" class="right-sidebar-toggle" aria-expanded="false" >
-                    <img src="<%=basePath %>/img/exit.png">
-                </a>
-            </li>
-        </ul>
-    </nav>
-</div>
 <div class="animated fadeInDown" style="overflow:hidden">
     <div class=" row wrapper white-bg" style="padding:5px">
         <ol class="breadcrumb" style="margin-left: 40px">
@@ -164,7 +136,8 @@
                     <s:if test='#session.project.state==0'>
                         <a href="user-jmpCompletedProjectList"><span class="lzf_b" style="color:#658387">历史项目</span></a>
                     </s:if>
-                    >> <a href="project-jmpProjectInfo"><span class="lzf_b">项目信息</span></a>
+                    >> <a href="project-jmpProjectInfo"><span class="lzf_b" style="color:#658387">项目信息</span></a>
+                    >> <a href="sgroup-jmpSGroupInfo"><span class="lzf_b">文档组信息</span></a>
                 </strong>
             </li>
         </ol>
@@ -177,39 +150,31 @@
                     <div class="m-b-md">
                         <h2>
                             <strong><s:property value="#session.project.name"/></strong>
-                            <s:if test='#session.project.state==1'>
-                                <span class="label label-info">进行中</span>
+                            <s:if test='#session.sgroup.doc_type==1'>
+                                <span class="label label-info">需求文档组</span>
                             </s:if>
-                            <s:if test='#session.project.state==0'>
-                                <span class="label label-default">已完成</span>
+                            <s:if test='#session.sgroup.doc_type==2'>
+                                <span class="label label-info">设计文档组</span>
                             </s:if>
-
-
+                            <s:if test='#session.sgroup.doc_type==3'>
+                                <span class="label label-info">远景文档组</span>
+                            </s:if>
+                            <s:if test='#session.sgroup.doc_type==4'>
+                                <span class="label label-info">测试文档组</span>
+                            </s:if>
                         </h2>
                     </div>
-                </div>
-                <div class="col-sm-6">
-                    <s:if test='#session.project.state==1'>
-                        <s:if test='#session.rank==3'>
-                            <%--<button id="createDoc" class="btn btn-success"><i class="fa fa-file"></i>新建文档</button>--%>
-                            <div style="float: right;margin-right: 20px">
-                                <button id="endProject"  class="btn btn-danger">结束项目</button>
-                            </div>
-                        </s:if>
-                    </s:if>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-5">
                     <dl class="dl-horizontal">
-                        <dt><h3>项目组长：</h3></dt>
+                        <dt><h3>文档组长：</h3></dt>
                         <dd><h3><s:property value="#session.PM.name"/></h3></dd>
 
                         <dt><h3>创建时间：</h3></dt>
                         <dd><h3><s:property value="#session.project_date"/></h3></dd>
 
-                        <dt><h3>项目简介：</h3></dt>
-                        <dd><p style="font-size: 14px;font-family: Arial"><s:property value="#session.project.intro"/></p></dd>
                     </dl>
                 </div>
                 <div class="col-sm-7">
@@ -217,23 +182,6 @@
 
                         <dt><h3>当前版本：</h3></dt>
                         <dd><h3><s:property value="#session.version"/></h3></dd>
-
-                        <dt><h3>所属机构：</h3></dt>
-                        <dd><h3><s:property value="#session.project.orgName"/></h3></dd>
-                        <s:if test='#session.project.state==1'>
-                            <s:if test='#session.rank==3'>
-                                <s:if test='#session.project.id_Organization!=""'>
-                                    <dt><h3>文档权限：</h3></dt>
-                                    <dd><h3><span id="open">
-                                        开放 <button id="modified1" class="btn btn-success btn-xs">更改</button>
-                                    </span>
-                                        <span id="close">
-                                        封闭 <button id="modified2" class="btn btn-success btn-xs">更改</button>
-                                    </span>
-                                    </h3></dd>
-                                </s:if>
-                            </s:if>
-                        </s:if>
                     </dl>
                 </div>
             </div>
@@ -456,15 +404,16 @@
         }
     );
 
-    var id_Project = "<s:property value="#session.project.id_Project"/>";
+    var id_Project = "<s:property value="#session.project.Id_project"/>";
     var id_User = "<s:property value="#session.user.id_user"/>";
+    var id_sgroup = "<s:property value="#session.sgroup.id_sgroup"/>";
     var discuss="";
 
     $.ajax(
         {
             type: "post",
-            url: "project-getProjectMember",
-            data: {Id_Project: id_Project},
+            url: "sgroup-getSGroupMember",
+            data: {id_sgroup: id_sgroup},
             dataType: "json",
             success: function (json) {
                 var proList = JSON.parse(json.res);
@@ -670,8 +619,8 @@
     $.ajax(
         {
             type:"post",
-            url:"project-getDocument",
-            data: {Id_Project: id_Project},
+            url:"sgroup-getDocument",
+            data: {id_sgroup: id_sgroup},
             dataType:"json",
             success:function(json){
                 var docList = JSON.parse(json.res);
@@ -821,9 +770,9 @@
     $("button#button_invite").click(function () {
         var username = $("input#UserName").val();
         $.ajax({
-            url: "project-inviteMember",
+            url: "sgroup-inviteMember",
             data: {
-                Id_Project: id_Project,
+                id_sgroup: id_sgroup,
                 Username: username
             },
             dataType: "json",
@@ -838,7 +787,7 @@
                     if(result.One === 1){
                         swal("邀请失败！", "该用户已在项目中。", "error");
                     }else if(result.isIn === false){
-                        swal("邀请失败！", "该用户不在“"+result.orgName+"”机构中。", "error");
+                        swal("邀请失败！", "该用户不在“"+result.orgName+"”项目中。", "error");
                     }else {
                         swal("邀请失败！", "用户名不存在。", "error");
                     }
@@ -907,8 +856,9 @@
 
     $("button#createDoc").click(function() {
         $.ajax({
-            url: "project-createDoc",
+            url: "sgroup-createDoc",
             data: {
+                id_sgroup: id_sgroup,
                 Id_Project: id_Project
             },
             dataType: "json",

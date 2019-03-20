@@ -14,10 +14,7 @@ import dao.*;
 import daoImp.*;
 
 
-import entity.DocumentEntity;
-import entity.OrganizationEntity;
-import entity.ProjectEntity;
-import entity.UserEntity;
+import entity.*;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.json.JSONArray;
@@ -44,6 +41,7 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     private UserDao userDao;
     private UserEntity user;
     private int DocType;
+    private SGroupDao sGroupDao;
 
     public String create_test() throws ParseException {
         dataMap = new HashMap<String, Object>();
@@ -95,14 +93,14 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         int ID_User = user.getId_user();
         Timestamp time = new Timestamp(new java.util.Date().getTime());
         DocumentDao documentDao = new DocumentDaoImp();
-        int version = documentDao.getVersion(Id_Project)+1;
-        int id_document=documentDao.getDocumentId(Id_Project);
-        int new_idDocument = documentDao.create(Id_Project,version,time,ID_User,DocName,DocType);
-        if (id_document!=-1){
-            projectDao=new ProjectDaoImp();
-            projectDao.copyAll(id_document,new_idDocument,version);
+        boolean already = false;
+        sGroupDao = new SGroupDaoImp();
+        already = sGroupDao.has(Id_Project,DocType);
+        if(already == false){
+            int new_idDocument = documentDao.create(Id_Project,1,time,ID_User,DocName,DocType);
+            dataMap.put("id",new_idDocument);
         }
-        dataMap.put("id",new_idDocument);
+        else dataMap.put("already",true);
         return SUCCESS;
     }
 
@@ -226,19 +224,12 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
 
     public String getDocument(){
         dataMap = new HashMap<String, Object>();
-        DocumentDao documentDao = new DocumentDaoImp();
+        SGroupDao sgroupDao = new SGroupDaoImp();
 
         try {
-            List<DocumentEntity> list = documentDao.getAlltype(project.getId_Project());
-            int addOrNot=1;//1为可编辑，0为不可编辑
-            if(list.size()!=0&&list.get(0).getState()==0)//有未发布文档，不可编辑
-            {
-//                System.out.println(list.get(list.size()-1).getState()+"  "+list.size());
-                addOrNot=0;
-            }
+            List<SGroupEntity> list = sgroupDao.getAll(project.getId_Project());
             Gson gson = new Gson();
             String jsonString = gson.toJson(list);
-            dataMap.put("addOrNot",addOrNot);
             dataMap.put("res", jsonString);
         }catch (Exception e){
             e.printStackTrace();
@@ -390,7 +381,7 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         DocumentDao documentDao = new DocumentDaoImp();
 //        System.out.println(documentId);
         documentDao.delete(documentId);
-        return "projectInformation";
+        return "deploy";
     }
 
     @Override

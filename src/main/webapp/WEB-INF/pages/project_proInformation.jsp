@@ -131,7 +131,7 @@
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
                 </button>
-                <h4 class="modal-title">新建文档</h4>
+                <h4 class="modal-title">新建文档组</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -139,7 +139,7 @@
                     <input id="DocName" type="text" placeholder="请输入文档名" class="form-control" required="true" autocomplete="off">
                 </div>
                 <div class="form-group">
-                    <label>选择创建的文档类型</label>
+                    <label>选择创建的文档组类型</label>
                     <select class="form-control m-b dis"  name="type" id="type" >
                         <option value="1">需求文档</option>
                         <option value="2">远景与范围文档</option>
@@ -218,9 +218,6 @@
                 </div>
                 <div class="col-sm-7">
                     <dl class="dl-horizontal">
-
-                        <dt><h3>当前版本：</h3></dt>
-                        <dd><h3><s:property value="#session.version"/></h3></dd>
 
                         <dt><h3>所属机构：</h3></dt>
                         <dd><h3><s:property value="#session.project.orgName"/></h3></dd>
@@ -328,7 +325,7 @@
                                     <div id="toolbar2">
 
 
-        <button id="createDoc" class="btn btn-success" data-toggle="modal" data-target="#newDocument"><i class="fa fa-file"></i>新建文档</button>
+        <button id="createDoc" class="btn btn-success" data-toggle="modal" data-target="#newDocument"><i class="fa fa-file"></i>新建文档组</button>
 
 
                                     </div>
@@ -645,13 +642,13 @@
     };
 
     function typeFormatter(value,row,index) {
-        if (row.type===1) {
+        if (row.doc_type===1) {
             return '需求文档';
         }
-        else if (row.type===2){
+        else if (row.doc_type===2){
             return '概要设计文档';
         }
-        else if (row.type===3){
+        else if (row.doc_type===3){
             return '远景范围文档';
         }
         else {
@@ -662,25 +659,20 @@
     $('#projectDocs').bootstrapTable({
             columns: [
                 {
-                    field: 'document_name',
-                    title: '文档名',
+                    field: 'type',
+                    title: '文档组类型',
                     sortable: true,
-                    align: 'center'
+                    align: 'center',
+                    formatter: "typeFormatter"
                 },{
                     field: 'version',
                     title: '版本',
                     align: 'center'
                 },{
                     field: 'date',
-                    title: '提交时间',
+                    title: '创建时间',
                     sortable: true,
                     align: 'center'
-                },{
-                    field: 'type',
-                    title: '文档类型',
-                    sortable: true,
-                    align: 'center',
-                    formatter: "typeFormatter"
                 },{
                     field: 'view',
                     title: '操作',
@@ -731,7 +723,7 @@
             function(e, value, row, index) {
                 //修改操作
                 var id_Project = parseInt(row.id_project);
-                var type = parseInt(row.type);
+                var type = parseInt(row.doc_type);
                 $.ajax({
                     type: "GET",
                     url: "sgroup-getSGroupInfo",
@@ -853,7 +845,21 @@
             type: "Post",
             async: "false",
             success: function (result) {
-                location.href = "catalog-jmpTemplate?documentId="+result.id+"&rank=3&projectId="+id_Project+"&state=0";
+                if (result.already===true) {
+                    swal(
+                        {
+                            title: "新建失败",
+                            text: "已存在该类型文档组！",
+                            type: "warning",
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: true
+                        },function () {
+                            location.href = "project-jmpProjectInfo";
+                        }
+                        )
+                }
+                else  location.href = "catalog-jmpTemplate?documentId="+result.id+"&rank=3&projectId="+id_Project+"&state=0";
             },
             error: function (result) {
                 showtoast("error", "新建失败", "文档名不存在!")
