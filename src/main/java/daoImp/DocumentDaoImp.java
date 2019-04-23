@@ -58,10 +58,10 @@ public class DocumentDaoImp extends DAO<DocumentEntity> implements DocumentDao {
     }
 
     @Override
-    public int getVersion(int id) {
+    public int getVersion(int id,int type) {
         try {
-            String sql = "select max(VERSION) from DOCUMENT where ID_PROJECT = ?";
-            int version = Integer.valueOf(getForValue(sql,id).toString());
+            String sql = "select max(VERSION) from DOCUMENT where ID_PROJECT = ? and TYPE=?";
+            int version = Integer.valueOf(getForValue(sql,id,type).toString());
             return version;
         }
         catch (Exception e){
@@ -98,10 +98,10 @@ public class DocumentDaoImp extends DAO<DocumentEntity> implements DocumentDao {
     }
 
     @Override
-    public int getDocumentId(int id_project) {
+    public int getDocumentId(int id_project,int type) {
         try {
-            String sql="select max(ID_DOCUMENT) from DOCUMENT where ID_PROJECT=? ";
-            int id_document = Integer.valueOf(getForValue(sql,id_project).toString());
+            String sql="select max(ID_DOCUMENT) from DOCUMENT where ID_PROJECT=? and TYPE=?";
+            int id_document = Integer.valueOf(getForValue(sql,id_project,type).toString());
             return  id_document;
         }
         catch (Exception e)

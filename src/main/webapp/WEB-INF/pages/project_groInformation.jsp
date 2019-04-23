@@ -709,8 +709,8 @@
         'click .edit':
             function(e, value, row, index) {
                 var id = row.id_document;
-                location.href = "catalog-jmpTemplate?documentId="+id+"&rank="+rank+"&projectId="+id_Project+"&state="+row.state;
-                var a = "catalog-jmpTemplate?documentId="+id+"&rank="+rank+"&projectId="+id_Project+"&state="+row.state;
+                location.href = "catalog-jmpTemplate?documentId="+id+"&rank="+rank+"&projectId="+id_Project+"&state="+row.state+"&type="+row.type;
+                var a = "catalog-jmpTemplate?documentId="+id+"&rank="+rank+"&projectId="+id_Project+"&state="+row.state+"&type="+row.type;
             },
         'click .delete':
             function(e, value, row, index) {
@@ -813,9 +813,9 @@
                 closeOnConfirm: true
             },function () {
                 $.ajax({
-                    url: "project-alterPM",
+                    url: "sgroup-alterPM",
                     data: {
-                        Id_Project: id_Project,
+                        id_sgroup: id_sgroup,
                         Username: username
                     },
                     dataType: "json",
@@ -837,23 +837,6 @@
     });
 
 
-    $("button#endProject").click(function() {
-        swal(
-            {
-                title: "您确定要结束此项目吗",
-                text: "结束后将不能重新开始，请谨慎操作！",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "结束",
-                cancelButtonText: "取消",
-                closeOnConfirm: true
-            },function () {
-                location.href="project-end?id_Project=<s:property value="#session.project.id_project"/>"
-            }
-        );
-    });
-
     $("button#createDoc").click(function() {
         $.ajax({
             url: "sgroup-createDoc",
@@ -868,7 +851,7 @@
                 location.href = "catalog-jmpTemplate?documentId="+result.id+"&rank=3&projectId="+id_Project+"&state=0";
             },
             error: function (result) {
-                showtoast("error", "转移失败", "用户名不存在!")
+                showtoast("error", "新建失败", "出错!")
             }
         })
     });

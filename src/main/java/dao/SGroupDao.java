@@ -16,4 +16,5 @@ public interface SGroupDao {
     boolean has(int idProject,int docType);
     List<SGroupEntity> getAll(int idProject);
     boolean setVersion(int version,int id);
+    boolean alterPM(int idUser,int idSGroup);
 }

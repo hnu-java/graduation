@@ -90,7 +90,18 @@
                     <a href="user-jmpCompletedProjectList"><span class="lzf_b" style="color:#658387">历史项目</span></a>
                 </s:if>
                 >> <a href="project-jmpProjectInfo"><span class="lzf_b" style="color:#658387">项目信息</span></a> >>
-                需求文档
+                <s:if test="#request.type==1">
+                    远景与范围
+                </s:if>
+                <s:if test="#request.type==2">
+                    概要设计文档
+                </s:if>
+                <s:if test="#request.type==3">
+                    需求文档
+                </s:if>
+                <s:if test="#request.type==4">
+                    测试文档
+                </s:if>
             </strong>
         </li>
     </ol>
@@ -500,7 +511,18 @@
 
                                 <li class="li_head black" style="text-align: left">
                                     <button class="btn btn-outline btn-success btn-xs"  onclick="window.location.href='project-jmpProjectInfo'" ><i class="fa fa-home"></i></button>
-                                    <strong class="font-bold col-md-offset-2  " style="text-align: center">需求开发文档</strong>
+                                    <s:if test="#request.type==1">
+                                        <strong class="font-bold col-md-offset-2  " style="text-align: center">远景范围文档</strong>
+                                    </s:if>
+                                    <s:if test="#request.type==2">
+                                        <strong class="font-bold col-md-offset-2  " style="text-align: center">概要设计文档</strong>
+                                    </s:if>
+                                    <s:if test="#request.type==3">
+                                        <strong class="font-bold col-md-offset-2  " style="text-align: center">需求开发文档</strong>
+                                    </s:if>
+                                    <s:if test="#request.type==4">
+                                        <strong class="font-bold col-md-offset-2  " style="text-align: center">测试文档</strong>
+                                    </s:if>
                                     <input style="display: none" value="${requestScope.documentId}" id="documentId">
                                     <input style="display: none" value="${requestScope.projectId}" id="projectId">
                                     <input style="display: none" value="${requestScope.state}" id="state">
@@ -532,16 +554,29 @@
                                                         <div class="form-group">
                                                             <select class="form-control" name="add_id_template" id="add_id_template">
                                                                 <option value="1">纯文本</option>
-                                                                <option value="2">用户</option>
-                                                                <option value="3">用例</option>
-                                                                <option value="4">软件接口</option>
-                                                                <option value="5">通讯接口</option>
-                                                                <option value="6">数据集</option>
-                                                                <option value="7">运行环境</option>
-                                                                <option value="8">数据库</option>
-                                                                <option value="9">操作系统</option>
-                                                                <option value="10">硬件设备</option>
-                                                                <option value="11">WEB服务器</option>
+                                                                <s:if test="#request.type==1">
+                                                                    <option value="12">利益相关者</option>
+                                                                    <option value="13">项目管理约束</option>
+                                                                    <option value="14">迭代</option>
+                                                                </s:if>
+                                                                <s:if test="#request.type==2">
+                                                                    <option value="15">概要设计</option>
+                                                                </s:if>
+                                                                <s:if test="#request.type==3">
+                                                                    <option value="2">用户</option>
+                                                                    <option value="3">用例</option>
+                                                                    <option value="4">软件接口</option>
+                                                                    <option value="5">通讯接口</option>
+                                                                    <option value="6">数据集</option>
+                                                                    <option value="7">运行环境</option>
+                                                                    <option value="8">数据库</option>
+                                                                    <option value="9">操作系统</option>
+                                                                    <option value="10">硬件设备</option>
+                                                                    <option value="11">WEB服务器</option>
+                                                                </s:if>
+                                                                <s:if test="#request.type==4">
+                                                                    <option value="16">测试用例</option>
+                                                                </s:if>
                                                             </select>
                                                         </div>
                                                     </div>

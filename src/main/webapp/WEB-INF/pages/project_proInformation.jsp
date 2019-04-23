@@ -141,10 +141,10 @@
                 <div class="form-group">
                     <label>选择创建的文档组类型</label>
                     <select class="form-control m-b dis"  name="type" id="type" >
-                        <option value="1">需求文档</option>
-                        <option value="2">远景与范围文档</option>
-                        <option value="3">概要设计文档</option>
-                        <option value="4">测试文档</option>
+                        <option value="1">远景与范围文档</option>
+                        <option value="2">设计文档</option>
+                        <option value="3">需求文档</option>
+                        <option value="4">测试计划文档</option>
                     </select>
                 </div>
             </div>
@@ -245,7 +245,7 @@
                             <div class="panel-options">
                                 <ul class="nav nav-tabs">
                                     <li class="active">
-                                        <a href="#tab-1" data-toggle="tab">文档管理</a>
+                                        <a href="#tab-1" data-toggle="tab">文档组管理</a>
                                     </li>
                                     <li>
                                         <a href="#tab-2" data-toggle="tab">成员管理</a>
@@ -643,16 +643,16 @@
 
     function typeFormatter(value,row,index) {
         if (row.doc_type===1) {
-            return '需求文档';
+            return '远景与范围文档';
         }
         else if (row.doc_type===2){
-            return '概要设计文档';
+            return '设计文档';
         }
         else if (row.doc_type===3){
-            return '远景范围文档';
+            return '需求文档';
         }
         else {
-            return '测试文档';
+            return '测试计划文档';
         }
     }
 
@@ -979,7 +979,7 @@
     //评论加载
     function discussReload2(page1) {
         $.ajax({
-            url: "discuss-getProjectDis",
+            url: "discuss-getProjectDis2",
             data: {
                 id_Project: id_Project,
                 id_user: id_User,
@@ -1060,7 +1060,7 @@
         }
         if($('#fileupload').val()=="") {
             $.ajax({
-                url: "discuss-commit2Project",
+                url: "discuss-commit2Project2",
                 data: {'disContent':discuss,'id_Project':id_Project,'id_user':id_User},
                 type: "Post",
                 async: false,
@@ -1106,7 +1106,7 @@
             removeLabel: "清除",
             removeIcon: "<i class=\"glyphicon glyphicon-trash\"></i> ",
             uploadAsync: false,
-            uploadUrl: "discuss-commit2Project",
+            uploadUrl: "discuss-commit2Project2",
             maxFileSize: 1536,
             uploadExtraData: function (previewId, index) {
                 var info = {disContent: $(".discuss").summernote('code'), id_Project: id_Project, id_user: id_User};
@@ -1137,7 +1137,7 @@
                 closeOnConfirm: true
             }, function () {
                 $.ajax({
-                    url: "discuss-delete",
+                    url: "discuss-delete2",
                     data: {id_pro_discuss: id_pro_discuss},
                     dataType: "json",
                     type: "Post",

@@ -61,7 +61,7 @@ function disReload() {
 //目录点击事件
 $(document).on("click",".dic",function () {
     $("#edit").attr("style","display:show");
-    //editable=false;
+    editable=false;
     nowClick=$(this);
     var catalogIndex=$(nowClick).children("span.catalogIndex").text();
 
@@ -106,6 +106,15 @@ $(document).on("click",".dic",function () {
             else if (template.id_template=="1"){
                 loadTemplateOne(entity)
             }
+            else if(template.id_template=="12"){
+                loadTemplateTwelve(entity)
+            }
+            else if(template.id_template=="13"){
+                loadTemplateThirteen(entity)
+            }
+            else if(template.id_template=="14"){
+                loadTemplateFourteen(entity)
+            }
             $("#libraryUserList").empty();
             $(".structTable2").empty();
             $(".userLibraryDiv").hide();
@@ -144,7 +153,8 @@ function loadTemplateTwo(entity) {
 
         $("#describe").html(describe);
         $("#permissions").html(permissions);
-    }  $("#roleName").val(roleName);
+    }
+    $("#roleName").val(roleName);
     if($("#roleName").val()==null){
         $("#roleName").prepend("<option selected disabled>未定义</option>>")
     }
@@ -444,6 +454,80 @@ function loadTemplateEleven(entity) {
     $("#webedition").val(webedition);
     if($("#webmain").val()==null){
         $("#webmain").prepend("<option selected disabled>未定义</option>>")
+    }
+}
+
+function loadTemplateTwelve(entity) {
+    var stakeHoldersList=entity.stakeHoldersList;
+    var Content="";
+    if(stakeHoldersList!=null){
+        for (var i=0;i<stakeHoldersList.length;i++) {
+            if(stakeHoldersList[i].name!=null&&stakeHoldersList[i].value!=null&&stakeHoldersList[i].attitude!=null&&stakeHoldersList[i].interest!=null&&stakeHoldersList[i].constraints!=null) {
+                Content += " <tr class='funTr'> <th  ><div class='hidenTh' style='display: none'> <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black'></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black ' ></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></div> </th> ";
+                Content += " <th> <textarea   class='form-control name dis'  name='name'   style='resize:vertical; max-width: 100%' disabled>";
+                Content += stakeHoldersList[i].name + "</textarea> </th>";
+                Content += " <th> <textarea   class='form-control value dis'  name='value'   style='resize:vertical; max-width: 100%' disabled>";
+                Content += stakeHoldersList[i].value + "</textarea> </th>";
+                Content += " <th> <textarea   class='form-control attitude dis'  name='attitude'   style='resize:vertical; max-width: 100%' disabled>";
+                Content += stakeHoldersList[i].attitude + "</textarea> </th>";
+                Content += " <th> <textarea   class='form-control interest dis'  name='interest'   style='resize:vertical; max-width: 100%' disabled>";
+                Content += stakeHoldersList[i].interest + "</textarea> </th>";
+                Content += " <th> <textarea   class='form-control constraints dis'  name='constraints'   style='resize:vertical; max-width: 100%' disabled>";
+                Content += stakeHoldersList[i].constraints + "</textarea> </th> </tr>";
+            }
+        }
+        $(".funTable tbody").prepend(Content);
+    }
+}
+
+function loadTemplateThirteen(entity) {
+    var constraintList=entity.constraintList;
+    var Content="";
+    if(constraintList!=null){
+        for (var i=0;i<constraintList.length;i++) {
+            if(constraintList[i].title!=null&&constraintList[i].content!=null) {
+                Content += " <tr class='funTr'> <th  ><div class='hidenTh' style='display: none'> <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black'></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black ' ></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></div> </th> ";
+                Content += " <th> <textarea   class='form-control name dis'  name='value'   style='resize:vertical; max-width: 100%' disabled>";
+                Content += constraintList[i].title + "</textarea> </th>";
+                Content += " <th> <textarea   class='form-control value dis'  name='content'   style='resize:vertical; max-width: 100%' disabled>";
+                Content += constraintList[i].content + "</textarea> </th> </tr>";
+            }
+        }
+        $(".funTable tbody").prepend(Content);
+    }
+    if (editable==true){
+        $("#features").summernote("code",entity.features);
+        $("#quality").summernote("code",entity.quality);
+        $("#schedule").summernote("code",entity.schedule);
+        $("#cost").summernote("code",entity.cost);
+        $("#staff").summernote("code",entity.staff);
+        $(".dis").removeAttr("disabled")
+    }
+    else {
+        $("#features").html(entity.features);
+        $("#quality").html(entity.quality);
+        $("#schedule").html(entity.schedule);
+        $("#cost").html(entity.cost);
+        $("#staff").html(entity.staff);
+    }
+}
+
+function loadTemplateFourteen(entity) {
+    var featureList=entity.featureList;
+    var Content="";
+    if(featureList!=null){
+        for (var i=0;i<featureList.length;i++) {
+            if(featureList[i].title!=null&&featureList[i].content!=null&&featureList[i].number!=null) {
+            Content += " <tr class='funTr'> <th  ><div class='hidenTh' style='display: none'> <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black'></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black ' ></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></div> </th> ";
+            Content+=" <th> <input   class='form-control number dis'  name='number'   style='resize:vertical; max-width: 100%' disabled value='";
+            Content+=featureList[i].number+"'> </input> </th>";
+            Content+=" <th> <input   class='form-control title dis'  name='title'   style='resize:vertical; max-width: 100%' disabled value='";
+            Content+=featureList[i].title+"'> </input> </th>";
+            Content+=" <th> <textarea   class='form-control content dis'  name='content'   style='resize:vertical; max-width: 100%' disabled>";
+            Content+=featureList[i].content+"</textarea> </th> </tr>";
+            }
+        }
+        $(".funTable tbody").prepend(Content);
     }
 }
 //新增弹框初始化
@@ -1156,7 +1240,107 @@ function temp_save() {
             }
         })
     }
-    // $(".dis").attr("disabled","true");
+    else  if(id_template == "12") {
+        var stakeHolderList = "[{";
+        var name, value, attitude, interest, constraints, last = "";
+        $(".funTable tbody").find("tr").each(function () {
+            if ($(this).hasClass("funTr")) {//开头
+                if (last != "") {//第一次，没有,
+                    stakeHolderList += "},{"
+                }
+                name = $(this).children("th").eq(1).children(".name").val();
+                 //alert($(this).children("th").eq(1).children(".name").val())
+                value = $(this).children("th").eq(2).children(".value").val();
+                attitude = $(this).children("th").eq(3).children(".attitude").val();
+                interest = $(this).children("th").eq(4).children(".interest").val();
+                constraints = $(this).children("th").eq(5).children(".constraints").val();
+                stakeHolderList += "\"name\":\"" + name + "\",\"value\":\"" + value + "\",\"attitude\":\"" + attitude + "\",\"interest\":\"" + interest + "\",\"constraints\":\"" + constraints + "\"";
+                last = "funTr";
+            }
+        })
+        stakeHolderList += "}]";
+        $.ajax({
+            url: "catalog-saveTemplateTwelve",
+            data: {id_catalog: id_catalog, stakeHolderList: stakeHolderList},
+            dataType: "json",
+            type: "Post",
+            async: "false",
+            success: function (result) {
+                showtoast("success", "保存成功", "内容保存成功")
+            },
+            error: function (result) {
+                showtoast("dangerous", "保存失败", "内容保存失败")
+            }
+        })
+        // $(".dis").attr("disabled","true");
+    }
+    else  if(id_template == "13") {
+        var features=$("#features").summernote('code');
+        var quality=$("#quality").summernote('code');
+        var schedule=$("#schedule").summernote('code');
+        var cost=$("#cost").summernote('code');
+        var staff=$("#staff").summernote('code');
+        var constraintList = "[{";
+        var title,content, last = "";
+        $(".funTable tbody").find("tr").each(function () {
+            if ($(this).hasClass("funTr")) {//开头
+                if (last != "") {//第一次，没有,
+                    constraintList += "},{"
+                }
+                title = $(this).children("th").eq(1).children(".title").val();
+                content = $(this).children("th").eq(2).children(".content").val();
+                constraintList += "\"title\":\"" + title + "\",\"content\":\"" + content + "\"";
+                last = "funTr";
+            }
+        })
+        constraintList += "}]";
+        $.ajax({
+            url: "catalog-saveTemplateThirteen",
+            data: {id_catalog: id_catalog,features: features, quality: quality,schedule:schedule,
+                cost:cost,staff:staff,constraintList: constraintList},
+            dataType: "json",
+            type: "Post",
+            async: "false",
+            success: function (result) {
+                showtoast("success", "保存成功", "内容保存成功")
+            },
+            error: function (result) {
+                showtoast("dangerous", "保存失败", "内容保存失败")
+            }
+        })
+        // $(".dis").attr("disabled","true");
+    }
+    else  if(id_template == "14") {
+        var featureList = "[{";
+        var number, title, content, last = "";
+        $(".funTable tbody").find("tr").each(function () {
+            if ($(this).hasClass("funTr")) {//开头
+                if (last != "") {//第一次，没有,
+                    featureList += "},{"
+                }
+                number = $(this).children("th").eq(1).children(".number").val();
+                title = $(this).children("th").eq(2).children(".title").val();
+                content = $(this).children("th").eq(3).children(".content").val();
+                featureList += "\"number\":\"" + number + "\",\"title\":\"" + title + "\",\"content\":\"" + content + "\"";
+                last = "funTr";
+            }
+        })
+        featureList += "}]";
+        $.ajax({
+            url: "catalog-saveTemplateFourteen",
+            data: {id_catalog: id_catalog, featureList: featureList},
+            dataType: "json",
+            type: "Post",
+            async: "false",
+            success: function (result) {
+                showtoast("success", "保存成功", "内容保存成功")
+            },
+            error: function (result) {
+                showtoast("dangerous", "保存失败", "内容保存失败")
+            }
+        })
+        // $(".dis").attr("disabled","true");
+    }
 }
 //评论编辑按钮
 function edit() {
@@ -1324,6 +1508,28 @@ function addFunlLine() {
         optionCon +
         "</select> " +
         "</th> <th> <textarea   class='form-control roleDescribe dis'   style='resize:vertical; max-width: 100%' name='roleDescribe'    ></textarea> </th> <th> <button  class='btn btn-primary  btn-xs col-lg-push-1'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px'>可用</button> <button class='btn btn-primary  btn-xs col-lg-push-1'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='margin-right: 10px'>安全</button> </th> </tr>"
+    $(".funTable").children("tbody").children("tr:last-child").before(content);
+}
+
+function addStakeholder() {
+    var content="   <tr class='funTr'> <th > <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black' ></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black'></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></th> "
+        + " <th> <textarea   class='form-control name dis'   style='resize:vertical; max-width: 100%' name='name'    ></textarea> </th> <th> <textarea   class='form-control value dis'   style='resize:vertical; max-width: 100%' name='value'    ></textarea> </th> <th> <textarea   class='form-control attitude dis'   style='resize:vertical; max-width: 100%' name='attitude'    ></textarea> </th><th> <textarea   class='form-control interest dis'   style='resize:vertical; max-width: 100%' name='interest'    ></textarea> </th>"
+        + "<th> <textarea   class='form-control constraints dis'   style='resize:vertical; max-width: 100%' name='constraints'    ></textarea> </th> </tr>"
+    $(".funTable").children("tbody").children("tr:last-child").before(content);
+}
+
+function addConstraint() {
+    var content="   <tr class='funTr'> <th > <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black' ></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black'></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></th> "
+        + "<th> <textarea   class='form-control title dis'   style='resize:vertical; max-width: 100%' name='title'    ></textarea> </th> "
+        + "<th> <textarea   class='form-control content dis'   style='resize:vertical; max-width: 100%' name='content'    ></textarea> </th> </tr>"
+    $(".funTable").children("tbody").children("tr:last-child").before(content);
+}
+
+function addFeature(){
+    var content="   <tr class='funTr'> <th > <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black' ></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black'></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></th> "
+        + "<th> <input  class='form-control number dis'   style='resize:vertical; max-width: 100%' name='number'    ></input> </th> "
+        + "<th> <input   class='form-control title dis'   style='resize:vertical; max-width: 100%' name='title'    ></input> </th> "
+        + "<th> <textarea   class='form-control content dis'   style='resize:vertical; max-width: 100%' name='content'    ></textarea> </th> </tr>"
     $(".funTable").children("tbody").children("tr:last-child").before(content);
 }
 

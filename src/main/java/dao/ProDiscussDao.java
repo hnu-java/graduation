@@ -17,15 +17,21 @@ public interface ProDiscussDao {
 
     void commit(int id_user, int id_project, Timestamp time, String content, List<String> MyFileFileName, List<String> Path);
 
+    void commit2(int id_user, int id_project, Timestamp time, String content, List<String> MyFileFileName, List<String> Path);
+
     void commitToCatalog(int id_user, int id_catalog, Timestamp time, String content, List<String> MyFileFileName, List<String> Path);
 
     List<ProDiscussEntity> getCatalogDis(int id_catalog);
 
     List<ProDiscussEntity> getProjectDis(int id_project,int page);
 
+    List<ProDiscussEntity> getProjectDis2(int id_project,int page);
+
     int getProDisNum(int id_project);
 
     void delete(int id_pro_discuss);
+
+    void delete2(int id_pro_discuss);
 
     int getCatalogDisNum(int id_catalog);
 }

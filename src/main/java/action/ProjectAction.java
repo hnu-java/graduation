@@ -56,8 +56,8 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         if(points >= Npoints) {
           if (project.getId_Organization() != 0) {
               int flag = organizationDao.usable(project.getId_Organization());
-              boolean res = projectDao.save(project);
-              dataMap.put("res", res);
+//              boolean res = projectDao.save(project);
+//              dataMap.put("res", res);
               boolean exist = projectDao.exist(orgName);
               boolean belong = projectDao.belong(orgName,sessionUser.getId_user());
               System.out.println(belong+"dd");
@@ -191,8 +191,8 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
 
         int rank = projectDao.getRank(id_Project,user.getId_user());
         DocumentDao documentDao = new DocumentDaoImp();
-        double version = documentDao.getVersion(id_Project);
-        session.put("version",String.valueOf(version));
+//        double version = documentDao.getVersion(id_Project);
+//        session.put("version",String.valueOf(version));
         session.put("rank",rank);
         session.put("PM",pm);
         session.put("project",project);

@@ -46,6 +46,7 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
     private  int projectId;
     private int state;
     private int rank;
+    private int type;
     //3
     private int index;
     private int layer;
@@ -57,6 +58,14 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
     private String alternative;
     private String funRoleList;
     private String funUsableList;
+    private String stakeHolderList;
+    private String features;
+    private String quality;
+    private String schedule;
+    private String cost;
+    private String staff;
+    private String constraintList;
+    private String featureList;
     private InputStream pdfStream;
     private InputStream rtfStream;
     public String getIndex(){
@@ -73,6 +82,7 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         session.put("projectId",projectId);
         request.put("state",state);
         request.put("rank",rank);
+        request.put("type",type);
         return "document";
     }
 
@@ -199,6 +209,15 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
             //这个是内容类
                 dataMap.put("entity", entity);
                 dataMap.put("roleList", roleList);
+        }else if(catalogEntity.getId_template() == 12){
+            StakeHolderEntity entity = gson.fromJson(catalogEntity.getContent(), StakeHolderEntity.class);
+            dataMap.put("entity", entity);
+        }else if(catalogEntity.getId_template() == 13){
+            ProgramConstraint entity = gson.fromJson(catalogEntity.getContent(), ProgramConstraint.class);
+            dataMap.put("entity", entity);
+        } else if(catalogEntity.getId_template() == 14){
+            Release entity = gson.fromJson(catalogEntity.getContent(), Release.class);
+            dataMap.put("entity", entity);
         }
             dataMap.put("template", templateEntity);
             //这个包括目录
@@ -286,6 +305,39 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         funRoles=gson.fromJson(funRoleList,type);
         FunStructureEntity funStructureEntity=new FunStructureEntity(funName,priority,content,funRoles,funUsables,inDiv,outDiv,basic,alternative);
         catalogDao.saveLib(id_lib,gson.toJson(funStructureEntity));
+        return "Re";
+    }
+
+    public String saveTemplateTwelve(){
+        Gson gson=new Gson();
+        CatalogDao catalogDao=new CatalogDaoImp();
+        Type type= new TypeToken<ArrayList<StakeHolder>>() {}.getType();
+        List<StakeHolder> stakeHolder;
+        stakeHolder=gson.fromJson(stakeHolderList,type);
+        StakeHolderEntity stakeHolderEntity=new StakeHolderEntity(stakeHolder);
+        catalogDao.saveContent(id_catalog,gson.toJson(stakeHolderEntity));
+        return "Re";
+    }
+
+    public String saveTemplateThirteen(){
+        Gson gson=new Gson();
+        CatalogDao catalogDao=new CatalogDaoImp();
+        Type type= new TypeToken<ArrayList<Constraint>>() {}.getType();
+        List<Constraint> constraint;
+        constraint=gson.fromJson(constraintList,type);
+        ProgramConstraint programConstraint=new ProgramConstraint(features,quality,schedule,cost,staff,constraint);
+        catalogDao.saveContent(id_catalog,gson.toJson(programConstraint));
+        return "Re";
+    }
+
+    public String saveTemplateFourteen(){
+        Gson gson=new Gson();
+        CatalogDao catalogDao=new CatalogDaoImp();
+        Type type= new TypeToken<ArrayList<Feature>>() {}.getType();
+        List<Feature> feature;
+        feature=gson.fromJson(featureList,type);
+        Release release=new Release(feature);
+        catalogDao.saveContent(id_catalog,gson.toJson(release));
         return "Re";
     }
 
@@ -446,6 +498,38 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         this.funUsableList = funUsableList;
     }
 
+    public void setStakeHolderList(String stakeHolderList) {
+        this.stakeHolderList = stakeHolderList;
+    }
+
+    public void setFeatures(String features) {
+        this.features = features;
+    }
+
+    public void setQuality(String quality) {
+        this.quality = quality;
+    }
+
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+    }
+
+    public void setCost(String cost) {
+        this.cost = cost;
+    }
+
+    public void setStaff(String staff) {
+        this.staff = staff;
+    }
+
+    public void setConstraintList(String constraintList) {
+        this.constraintList = constraintList;
+    }
+
+    public void setFeatureList(String featureList) {
+        this.featureList = featureList;
+    }
+
     public void setPriority(int priority) {
         this.priority = priority;
     }
@@ -460,6 +544,10 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
 
     public void setRank(int rank) {
         this.rank = rank;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public InputStream getPdfStream() {

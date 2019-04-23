@@ -55,6 +55,27 @@ public class ProDiscussDaoImp extends DAO<ProDiscussEntity> implements ProDiscus
     }
 
     @Override
+    public void commit2(int id_user, int id_project, Timestamp time, String content, List<String> MyFileFileName, List<String> Path) {
+        String sql="insert into PRO_DISCUSS2 (id_user,id_project,time,content) values (?,?,?,?)";
+
+        int id_pro_discuss = 0;
+        try {
+            id_pro_discuss = insert(sql,id_user,id_project,time,content);
+        }catch (SQLException s){
+            id_pro_discuss = 0;
+        }
+
+        String sql1="insert into ACCESSORY (id_pro_discuss,filename,path) values(?,?,?)";
+
+        if (MyFileFileName != null) {
+            for (int i = 0; i < MyFileFileName.size(); i++) {
+                update(sql1, id_pro_discuss, MyFileFileName.get(i),Path.get(i));
+            }
+        }
+
+    }
+
+    @Override
     public void commitToCatalog(int id_user, int id_catalog, Timestamp time, String content, List<String> MyFileFileName, List<String> Path) {
         String sql="insert into PRO_DISCUSS (id_user,id_catalog,time,content) values (?,?,?,?)";
 
@@ -114,10 +135,34 @@ public class ProDiscussDaoImp extends DAO<ProDiscussEntity> implements ProDiscus
         return proDiscussEntityList;
     }
 
+    @Override
+    public List<ProDiscussEntity> getProjectDis2(int id_project,int page) {
+        String sql="select * from PRO_DISCUSS2 where ID_PROJECT = ? LIMIT ?,3;";
+
+        List<ProDiscussEntity> proDiscussEntityList = getForList(sql,id_project,page);
+
+        AccessoryDao accessoryDao = new AccessoryDaoImp();
+
+        int id_pro_discuss = 0;
+
+        for (int i=0;i<proDiscussEntityList.size();i++){
+            id_pro_discuss = proDiscussEntityList.get(i).getId_pro_discuss();
+            proDiscussEntityList.get(i).setAccessoryEntityList(accessoryDao.getAll(id_pro_discuss));
+        }
+        return proDiscussEntityList;
+    }
 
     @Override
     public void delete(int id_pro_discuss) {
         String sql="delete from PRO_DISCUSS where id_pro_discuss=?";
+        String sql1="delete from ACCESSORY where id_pro_discuss=?";
+        update(sql,id_pro_discuss);
+        update(sql1,id_pro_discuss);
+    }
+
+    @Override
+    public void delete2(int id_pro_discuss) {
+        String sql="delete from PRO_DISCUSS2 where id_pro_discuss=?";
         String sql1="delete from ACCESSORY where id_pro_discuss=?";
         update(sql,id_pro_discuss);
         update(sql1,id_pro_discuss);

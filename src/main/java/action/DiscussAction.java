@@ -136,14 +136,54 @@ public class DiscussAction extends ActionSupport implements RequestAware, Sessio
         return "Re";
     }
 
+    public String commit2Project2(){
+        int id_project = proDiscussEntity.getId_Project();
+        int id_user = ((UserEntity)ActionContext.getContext().getSession().get("user")).getId_user();
+        List<File> MyFile = proDiscussEntity.getMyFile();
+        List<String> MyFileFileName = proDiscussEntity.getMyFileFileName();
+
+        List<String> Path = new LinkedList<>();
+
+        if (MyFile!=null) {
+            HttpServletRequest request2 = (HttpServletRequest) ActionContext.getContext().get(StrutsStatics.HTTP_REQUEST);
+            String savePath = ServletActionContext.getServletContext().getRealPath("accessories");
+
+            SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+            String ymd=sdf.format(new Date());
+            savePath+="/"+ymd+"/";
+            File dirFile=new File(savePath);
+            if(!dirFile.exists()){
+                dirFile.mkdir();
+            }
+            for (int i = 0; i < MyFile.size(); i++) {
+                String fileExt=MyFileFileName.get(i).substring(MyFileFileName.get(i).lastIndexOf(".")+1).trim().toLowerCase();
+                SimpleDateFormat sdfForFileName=new SimpleDateFormat("yyyyMMddHHmmss");
+                String newName=sdfForFileName.format(new Date())+"_"+new Random().nextInt(1000)+"."+fileExt;
+                File destFile=new File(dirFile,newName);
+                Path.add("/"+ymd+"/"+newName);
+                try {
+                    FileUtils.copyFile(MyFile.get(i), destFile);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        proDiscussDao = new ProDiscussDaoImp();
+        if (id_project!=0)
+            proDiscussDao.commit2(id_user,id_project,new Timestamp(new Date().getTime()),disContent,MyFileFileName,Path);
+        return "Re";
+    }
+
     public String getCatalogDis(){
-        catalogDao=new CatalogDaoImp();
         proDiscussDao=new ProDiscussDaoImp();
         dataMap=new HashMap<>();
         String[] tempList=catalogIndex.split(" ");
         int first=Integer.valueOf(tempList[0]);
         int second=Integer.valueOf(tempList[1]);
         int third=Integer.valueOf(tempList[2]);
+        catalogDao=new CatalogDaoImp();
         int fourth=Integer.valueOf(tempList[3]);
         int id_catalog=catalogDao.getIdCatalog(id_document,first,second,third,fourth);
         List<ProDiscussEntity> discussList=proDiscussDao.getCatalogDis(id_catalog);
@@ -158,6 +198,29 @@ public class DiscussAction extends ActionSupport implements RequestAware, Sessio
         proDiscussDao=new ProDiscussDaoImp();
         dataMap=new HashMap<>();
         List<ProDiscussEntity> discussList = proDiscussDao.getProjectDis(id_project,page*3);
+        List<ProDIscussWrapper> wrapperList = ProDIscussWrapper.getWrapperList(discussList,id_user,id_project);
+
+        proDiscussDao = new ProDiscussDaoImp();
+        int disNum = proDiscussDao.getProDisNum(id_project);
+
+        int disPage=0;
+
+        if (disNum%3==0)
+            disPage = disNum/3;
+        else
+            disPage = disNum/3 + 1;
+        dataMap.put("disNum",disNum);
+        dataMap.put("disPage",disPage);
+        dataMap.put("wrapperList",wrapperList);
+        return "Re";
+    }
+
+    public String getProjectDis2(){
+        int id_project = proDiscussEntity.getId_Project();
+        int id_user = proDiscussEntity.getId_user();
+        proDiscussDao=new ProDiscussDaoImp();
+        dataMap=new HashMap<>();
+        List<ProDiscussEntity> discussList = proDiscussDao.getProjectDis2(id_project,page*3);
         List<ProDIscussWrapper> wrapperList = ProDIscussWrapper.getWrapperList(discussList,id_user,id_project);
 
         proDiscussDao = new ProDiscussDaoImp();
@@ -191,6 +254,25 @@ public class DiscussAction extends ActionSupport implements RequestAware, Sessio
             }
         }
         proDiscussDao.delete(id_pro_discuss);
+        return "Re";
+    }
+
+    public String delete2(){
+
+        proDiscussDao=new ProDiscussDaoImp();
+        accessoryDao = new AccessoryDaoImp();
+        int id_pro_discuss = proDiscussEntity.getId_pro_discuss();
+
+        List<AccessoryEntity> accessoryEntityList = accessoryDao.getAll(id_pro_discuss);
+        if (accessoryEntityList.size()>0) {
+            String savePath = ServletActionContext.getServletContext().getRealPath("accessories");
+            for (int i = 0; i < accessoryEntityList.size(); i++) {
+                savePath += accessoryEntityList.get(i).getPath();
+                File file = new File(savePath);
+                file.delete();
+            }
+        }
+        proDiscussDao.delete2(id_pro_discuss);
         return "Re";
     }
 

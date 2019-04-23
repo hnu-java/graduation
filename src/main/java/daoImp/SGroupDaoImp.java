@@ -90,4 +90,23 @@ public class SGroupDaoImp extends DAO<SGroupEntity> implements SGroupDao {
         update(sql,version,id);
         return true;
     }
+
+    public boolean alterPM(int idUser,int idSGroup){
+        //        判断被转移人是否在组内
+        String sql = "select count(*) from SGROUP_MEMBER where ID_SGROUP = ? and ID_USER = ?";
+        if (Integer.valueOf(getForValue(sql,idSGroup,idUser).toString())<1){
+            return false;
+        }
+        else {
+            try {
+                String sql1="update SGROUP_MEMBER set RANK=5 where ID_SGROUP = ? and RANK = 3";
+                update(sql1,idSGroup);
+                String sql2 = "update SGROUP_MEMBER set RANK=3 where ID_SGROUP = ? and ID_USER = ?";
+                updateThrowException(sql2, idSGroup, idUser);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+    }
 }

@@ -5,10 +5,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
-import dao.DocumentDao;
-import dao.ProjectDao;
-import dao.SGroupDao;
-import dao.UserDao;
+import dao.*;
 import daoImp.*;
 import entity.DocumentEntity;
 import entity.ProjectEntity;
@@ -44,7 +41,7 @@ public class SGroupAction extends ActionSupport implements RequestAware, Session
         UserEntity user = (UserEntity)ActionContext.getContext().getSession().get("user");
         int rank = sGroupDao.getRank(id_SGroup,user.getId_user());
         DocumentDao documentDao = new DocumentDaoImp();
-        double version = documentDao.getVersion(id_SGroup);
+        double version = documentDao.getVersion(id_SGroup,DocType);
         session.put("version",String.valueOf(version));
         session.put("rank",rank);
         session.put("PM",pm);
@@ -142,8 +139,10 @@ public class SGroupAction extends ActionSupport implements RequestAware, Session
         int ID_User = user.getId_user();
         Timestamp time = new Timestamp(new java.util.Date().getTime());
         DocumentDao documentDao = new DocumentDaoImp();
-        int version = documentDao.getVersion(Id_Project)+1;
-        int id_document=documentDao.getDocumentId(Id_Project);
+        int id_document=documentDao.getDocumentId(Id_Project,sgroup.getDoc_type());
+        System.out.println(id_document);
+        int version = documentDao.getVersion(Id_Project,sgroup.getDoc_type())+1;
+        System.out.println(version);
         int new_idDocument = documentDao.create(Id_Project,version,time,ID_User);
         sGroupDao.setVersion(version,sgroup.getId_sgroup());
         if (id_document!=-1){
@@ -151,6 +150,31 @@ public class SGroupAction extends ActionSupport implements RequestAware, Session
             projectDao.copyAll(id_document,new_idDocument,version);
         }
         dataMap.put("id",new_idDocument);
+        return SUCCESS;
+    }
+
+    public String alterPM() throws ParseException {
+        dataMap = new HashMap<String, Object>();
+        String username = sgroup.getUsername();
+        UserDao userDao = new UserDaoImp();
+        UserEntity user = userDao.getOne(username);
+
+//        System.out.println(username);
+        int id_SGroup = sgroup.getId_sgroup();
+
+//        System.out.println(id_Project);
+
+        sGroupDao = new SGroupDaoImp();
+        boolean res = sGroupDao.alterPM(user.getId_user(),id_SGroup);
+
+        sgroup = sGroupDao.getOne(id_SGroup);
+
+//        发送消息
+        InformationDao informationDao = new InformationDaoImp();
+        String content = "你已成为的组长";//要改
+        informationDao.toMember(id_SGroup,user.getId_user(),content);
+        dataMap.put("res",res);
+
         return SUCCESS;
     }
 
