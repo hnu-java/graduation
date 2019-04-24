@@ -498,6 +498,94 @@
     </div>
 </div>
 
+<!--预览利益相关者构件-->
+<div class="modal modal1" id="viewstakeholder" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span> </button>
+                <h4 class="modal-title" id="Viewholder_name">
+                    <!--构件名称-->
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="word-break:break-all;"><label>利益相关者列表</label>
+                    <p id="view_holderlist">
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--预览项目管理约束构件-->
+<div class="modal modal1" id="viewconstraints" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span> </button>
+                <h4 class="modal-title" id="Viewcon_name">
+                    <!--构件名称-->
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="word-break:break-all;"><label>项目功能范围</label>
+                    <p id="view_con_feature">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>项目功能范围</label>
+                    <p id="view_con_quality">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>项目进度约束</label>
+                    <p id="view_con_schedule">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>项目成本约束</label>
+                    <p id="view_con_cost">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>项目团队约束</label>
+                    <p id="view_con_staff">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>其他约束</label>
+                    <p id="view_con_other">
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--预览迭代构件-->
+<div class="modal modal1" id="viewrelease" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span> </button>
+                <h4 class="modal-title" id="Viewrelease_name">
+                    <!--构件名称-->
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="word-break:break-all;"><label>迭代构件</label>
+                    <p id="view_featureList">
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="wrapper wrapper-content">
     <div class="row">
         <div class="col-sm-12 " style="margin-left: 10px;margin-top: 20px">
@@ -1048,7 +1136,6 @@
             function(id_template, obj, row, index)
             {
                 var id = parseInt(row.id_structure);
-                alert(row.id_template);
                 if (typeof (nowCatalog) == "undefined" || nowCatalog.id_template != row.id_template) {
                     showtoast("warning", "加载失败", "与模板类型不匹配");
                     return;
@@ -1109,6 +1196,24 @@
                         }
                         else if(row.id_template=="11"){
                             loadTemplateEleven(tem)
+                        }
+                        else if(row.id_template=="12"){
+                            var end = $(".funTable tbody").children(".end");
+                            $(".funTable tbody").html(end)
+                            $(".funTable tfoot").html("");
+                            loadTemplateTwelve(tem)
+                        }
+                        else if(row.id_template=="13"){
+                            var end = $(".funTable tbody").children(".end");
+                            $(".funTable tbody").html(end)
+                            $(".funTable tfoot").html("");
+                            loadTemplateThirteen(tem)
+                        }
+                        else if(row.id_template=="14"){
+                            var end = $(".funTable tbody").children(".end");
+                            $(".funTable tbody").html(end)
+                            $(".funTable tfoot").html("");
+                            loadTemplateFourteen(tem)
                         }
                     })
             },
@@ -1256,7 +1361,48 @@
                     $('#view_web_edition').text(tem.webedition);
                     $('#view_web_summary').text(tem.websummary);
                 }
-
+                else if( row.id_template == "12" ){
+                    var stakeHoldersList = "";
+                    var tmp1 = tem.stakeHoldersList.length;
+                    for(var num = 0;num < tmp1; num++){
+                        stakeHoldersList+="<div>相关者名称："+tem.stakeHoldersList[num].name+"</div>"
+                            +"<div>关注的业务价值："+tem.stakeHoldersList[num].value+"</div>"
+                            +"<div>持有的态度："+tem.stakeHoldersList[num].attitude+"</div>"
+                            +"<div>预期的系统特征："+tem.stakeHoldersList[num].interest+"</div>"
+                            +"<div>约束："+tem.stakeHoldersList[num].constraints+"</div>"
+                    }
+                    $('#viewstakeholder').modal('toggle');
+                    $('#Viewholder_name').text("构件"+row.name);
+                    document.getElementById("view_holderlist").innerHTML = stakeHoldersList;
+                }
+                else if( row.id_template == "13" ){
+                    var constraintList = "";
+                    var tmp1 = tem.constraintList.length;
+                    for(var num = 0;num < tmp1; num++){
+                        constraintList+="<div>约束项："+tem.constraintList[num].title+"</div>"
+                            +"<div>具体内容："+tem.constraintList[num].content+"</div>"
+                    }
+                    $('#viewconstraints').modal('toggle');
+                    $('#Viewcon_name').text("构件"+row.name);
+                    $('#view_con_feature').text(tem.features);
+                    $('#view_con_quality').text(tem.quality);
+                    $('#view_con_schedule').text(tem.schedule);
+                    $('#view_con_cost').text(tem.cost);
+                    $('#view_con_staff').text(tem.staff);
+                    document.getElementById("view_con_other").innerHTML = constraintList;
+                }
+                else if( row.id_template == "14" ){
+                    var featureList = "";
+                    var tmp1 = tem.featureList.length;
+                    for(var num = 0;num < tmp1; num++){
+                        featureList+="<div>功能编号："+tem.featureList[num].number+"</div>"
+                            +"<div>功能名称："+tem.featureList[num].title+"</div>"
+                            +"<div>功能描述："+tem.featureList[num].content+"</div>"
+                    }
+                    $('#viewrelease').modal('toggle');
+                    $('#Viewrelease_name').text("构件"+row.name);
+                    document.getElementById("view_featureList").innerHTML = featureList;
+                }
             }
 
     }
@@ -1297,7 +1443,6 @@
             function(id_template, obj, row, index)
             {
                 var id = parseInt(row.id_structure);
-                alert(row.id_template);
                 if (typeof (nowCatalog) == "undefined" || nowCatalog.id_template != row.id_template) {
                     showtoast("warning", "加载失败", "与模板类型不匹配");
                     return;
@@ -1357,6 +1502,24 @@
                         }
                         else if(row.id_template=="11"){
                             loadTemplateEleven(tem)
+                        }
+                        else if(row.id_template=="12"){
+                            var end = $(".funTable tbody").children(".end");
+                            $(".funTable tbody").html(end)
+                            $(".funTable tfoot").html("");
+                            loadTemplateTwelve(tem)
+                        }
+                        else if(row.id_template=="13"){
+                            var end = $(".funTable tbody").children(".end");
+                            $(".funTable tbody").html(end)
+                            $(".funTable tfoot").html("");
+                            loadTemplateThirteen(tem)
+                        }
+                        else if(row.id_template=="14"){
+                            var end = $(".funTable tbody").children(".end");
+                            $(".funTable tbody").html(end)
+                            $(".funTable tfoot").html("");
+                            loadTemplateFourteen(tem)
                         }
                     })
             },
@@ -1510,6 +1673,48 @@
                                 $('#view_web_main').text(tem.webmain);
                                 $('#view_web_edition').text(tem.webedition);
                                 $('#view_web_summary').text(tem.websummary);
+                            }
+                            else if( row.id_template == "12" ){
+                                var stakeHoldersList = "";
+                                var tmp1 = tem.stakeHoldersList.length;
+                                for(var num = 0;num < tmp1; num++){
+                                    stakeHoldersList+="<div>相关者名称："+tem.stakeHoldersList[num].name+"</div>"
+                                        +"<div>关注的业务价值："+tem.stakeHoldersList[num].value+"</div>"
+                                        +"<div>持有的态度："+tem.stakeHoldersList[num].attitude+"</div>"
+                                        +"<div>预期的系统特征："+tem.stakeHoldersList[num].interest+"</div>"
+                                        +"<div>约束："+tem.stakeHoldersList[num].constraints+"</div>"
+                                }
+                                $('#viewstakeholder').modal('toggle');
+                                $('#Viewholder_name').text("构件"+row.name);
+                                document.getElementById("view_holderlist").innerHTML = stakeHoldersList;
+                            }
+                            else if( row.id_template == "13" ){
+                                var constraintList = "";
+                                var tmp1 = tem.constraintList.length;
+                                for(var num = 0;num < tmp1; num++){
+                                    constraintList+="<div>约束项："+tem.constraintList[num].title+"</div>"
+                                        +"<div>具体内容："+tem.constraintList[num].content+"</div>"
+                                }
+                                $('#viewconstraints').modal('toggle');
+                                $('#Viewcon_name').text("构件"+row.name);
+                                $('#view_con_feature').text(tem.features);
+                                $('#view_con_quality').text(tem.quality);
+                                $('#view_con_schedule').text(tem.schedule);
+                                $('#view_con_cost').text(tem.cost);
+                                $('#view_con_staff').text(tem.staff);
+                                document.getElementById("view_con_other").innerHTML = constraintList;
+                            }
+                            else if( row.id_template == "14" ){
+                                var featureList = "";
+                                var tmp1 = tem.featureList.length;
+                                for(var num = 0;num < tmp1; num++){
+                                    featureList+="<div>功能编号："+tem.featureList[num].number+"</div>"
+                                        +"<div>功能名称："+tem.featureList[num].title+"</div>"
+                                        +"<div>功能描述："+tem.featureList[num].content+"</div>"
+                                }
+                                $('#viewrelease').modal('toggle');
+                                $('#Viewrelease_name').text("构件"+row.name);
+                                document.getElementById("view_featureList").innerHTML = featureList;
                             }
                         },
                         error: function () {
@@ -1753,6 +1958,107 @@
                     }
                 })
             }
+        }
+        else  if(id_template == "12") {
+            var stakeHolderList = "[{";
+            var name, value, attitude, interest, constraints, last = "";
+            $(".funTable tbody").find("tr").each(function () {
+                if ($(this).hasClass("funTr")) {//开头
+                    if (last != "") {//第一次，没有,
+                        stakeHolderList += "},{"
+                    }
+                    name = $(this).children("th").eq(1).children(".name").val();
+                    //alert($(this).children("th").eq(1).children(".name").val())
+                    value = $(this).children("th").eq(2).children(".value").val();
+                    attitude = $(this).children("th").eq(3).children(".attitude").val();
+                    interest = $(this).children("th").eq(4).children(".interest").val();
+                    constraints = $(this).children("th").eq(5).children(".constraints").val();
+                    stakeHolderList += "\"name\":\"" + name + "\",\"value\":\"" + value + "\",\"attitude\":\"" + attitude + "\",\"interest\":\"" + interest + "\",\"constraints\":\"" + constraints + "\"";
+                    last = "funTr";
+                }
+            })
+            stakeHolderList += "}]";
+            $.ajax({
+                url: "catalog-saveLibTwelve",
+                data: {id_template: id_template, stakeHolderList: stakeHolderList},
+                dataType: "json",
+                type: "Post",
+                async: "false",
+                success: function (result) {
+                    showtoast("success", "保存成功", "内容保存成功")
+                },
+                error: function (result) {
+                    showtoast("dangerous", "保存失败", "内容保存失败")
+                }
+            })
+            // $(".dis").attr("disabled","true");
+        }
+        else  if(id_template == "13") {
+            var features=$("#features").summernote('code');
+            var quality=$("#quality").summernote('code');
+            var schedule=$("#schedule").summernote('code');
+            var cost=$("#cost").summernote('code');
+            var staff=$("#staff").summernote('code');
+            var constraintList = "[{";
+            var title,content, last = "";
+            $(".funTable tbody").find("tr").each(function () {
+                if ($(this).hasClass("funTr")) {//开头
+                    if (last != "") {//第一次，没有,
+                        constraintList += "},{"
+                    }
+                    title = $(this).children("th").eq(1).children(".title").val();
+                    content = $(this).children("th").eq(2).children(".content").val();
+                    constraintList += "\"title\":\"" + title + "\",\"content\":\"" + content + "\"";
+                    last = "funTr";
+                }
+            })
+            constraintList += "}]";
+            $.ajax({
+                url: "catalog-saveLibThirteen",
+                data: {id_template: id_template,features: features, quality: quality,schedule:schedule,
+                    cost:cost,staff:staff,constraintList: constraintList},
+                dataType: "json",
+                type: "Post",
+                async: "false",
+                success: function (result) {
+                    showtoast("success", "保存成功", "内容保存成功")
+                },
+                error: function (result) {
+                    showtoast("dangerous", "保存失败", "内容保存失败")
+                }
+            })
+            // $(".dis").attr("disabled","true");
+        }
+        else  if(id_template == "14") {
+            var featureList = "[{";
+            var number, title, content, last = "";
+            $(".funTable tbody").find("tr").each(function () {
+                if ($(this).hasClass("funTr")) {//开头
+                    if (last != "") {//第一次，没有,
+                        featureList += "},{"
+                    }
+                    number = $(this).children("th").eq(1).children(".number").val();
+                    title = $(this).children("th").eq(2).children(".title").val();
+                    content = $(this).children("th").eq(3).children(".content").val();
+                    featureList += "\"number\":\"" + number + "\",\"title\":\"" + title + "\",\"content\":\"" + content + "\"";
+                    last = "funTr";
+                }
+            })
+            featureList += "}]";
+            $.ajax({
+                url: "catalog-saveLibFourteen",
+                data: {id_template: id_template, featureList: featureList},
+                dataType: "json",
+                type: "Post",
+                async: "false",
+                success: function (result) {
+                    showtoast("success", "保存成功", "内容保存成功")
+                },
+                error: function (result) {
+                    showtoast("dangerous", "保存失败", "内容保存失败")
+                }
+            })
+            // $(".dis").attr("disabled","true");
         }
         // $(".dis").attr("disabled","true");
     }

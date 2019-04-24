@@ -478,6 +478,10 @@ function loadTemplateTwelve(entity) {
         }
         $(".funTable tbody").prepend(Content);
     }
+    if (editable==true){
+        $(".dis").removeAttr("disabled");
+        $("div.hidenTh").show();
+    }
 }
 
 function loadTemplateThirteen(entity) {
@@ -487,7 +491,7 @@ function loadTemplateThirteen(entity) {
         for (var i=0;i<constraintList.length;i++) {
             if(constraintList[i].title!=null&&constraintList[i].content!=null) {
                 Content += " <tr class='funTr'> <th  ><div class='hidenTh' style='display: none'> <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black'></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black ' ></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></div> </th> ";
-                Content += " <th> <textarea   class='form-control name dis'  name='value'   style='resize:vertical; max-width: 100%' disabled>";
+                Content += " <th> <textarea   class='form-control title dis'  name='title'   style='resize:vertical; max-width: 100%' disabled>";
                 Content += constraintList[i].title + "</textarea> </th>";
                 Content += " <th> <textarea   class='form-control value dis'  name='content'   style='resize:vertical; max-width: 100%' disabled>";
                 Content += constraintList[i].content + "</textarea> </th> </tr>";
@@ -501,7 +505,8 @@ function loadTemplateThirteen(entity) {
         $("#schedule").summernote("code",entity.schedule);
         $("#cost").summernote("code",entity.cost);
         $("#staff").summernote("code",entity.staff);
-        $(".dis").removeAttr("disabled")
+        $(".dis").removeAttr("disabled");
+        $("div.hidenTh").show();
     }
     else {
         $("#features").html(entity.features);
@@ -528,6 +533,10 @@ function loadTemplateFourteen(entity) {
             }
         }
         $(".funTable tbody").prepend(Content);
+    }
+    if (editable==true){
+        $(".dis").removeAttr("disabled");
+        $("div.hidenTh").show();
     }
 }
 //新增弹框初始化

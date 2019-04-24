@@ -156,7 +156,7 @@
                 <param name="bufferSize">2048</param>
             </result>
         <interceptor-ref name="myStack"/>
-            <allowed-methods>getTitle,saveLibOne,saveLibThree,saveLibTwo,jmpOrgTemplate,generateContract,generateContractRtf,getIndex,jmpTemplate,addState1,addState2,up,down,newCatalog,getCatalog,rename,getRoleCount,saveTemplateOne,saveTemplateThree,saveTemplateTwo,saveTemplateTwelve,saveTemplateThirteen,saveTemplateFourteen,getUsable,getSecurity</allowed-methods>
+            <allowed-methods>getTitle,saveLibOne,saveLibThree,saveLibTwo,saveLibTwelve,saveLibThirteen,saveLibFourteen,jmpOrgTemplate,generateContract,generateContractRtf,getIndex,jmpTemplate,addState1,addState2,up,down,newCatalog,getCatalog,rename,getRoleCount,saveTemplateOne,saveTemplateThree,saveTemplateTwo,saveTemplateTwelve,saveTemplateThirteen,saveTemplateFourteen,getUsable,getSecurity</allowed-methods>
         </action>
 
         <action name="commonStructureId-*" class="action.CommonStructureIdAction" method="{1}">

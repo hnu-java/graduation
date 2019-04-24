@@ -7,6 +7,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import dao.*;
 import daoImp.*;
 import entity.*;
@@ -39,7 +40,7 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
     private int place;
     private String title;
     private String content;
-    private int id_lib;
+    private int id_template;
     private int  id_catalog;
     private String describe;
     private String permissions;
@@ -259,7 +260,8 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         CatalogDao catalogDao=new CatalogDaoImp();
         CommonStructureEntity structureEntity=new CommonStructureEntity(content);
         Gson gson = new Gson();
-        catalogDao.saveLib(id_lib,gson.toJson(structureEntity));
+        UserEntity User=(UserEntity)session.get("user");
+        catalogDao.saveLib(User.getId_user(),id_template,gson.toJson(structureEntity));
         return "Re";
     }
 
@@ -276,7 +278,8 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         UserStructureEntity structureEntity=new UserStructureEntity(content,describe,permissions);
         Gson gson = new Gson();
         System.out.println(gson.toJson(structureEntity));
-        catalogDao.saveLib(id_lib,gson.toJson(structureEntity));
+        UserEntity User=(UserEntity)session.get("user");
+        catalogDao.saveLib(User.getId_user(),id_template,gson.toJson(structureEntity));
         return "Re";
     }
 
@@ -304,7 +307,8 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         List<FunRole> funRoles;
         funRoles=gson.fromJson(funRoleList,type);
         FunStructureEntity funStructureEntity=new FunStructureEntity(funName,priority,content,funRoles,funUsables,inDiv,outDiv,basic,alternative);
-        catalogDao.saveLib(id_lib,gson.toJson(funStructureEntity));
+        UserEntity User=(UserEntity)session.get("user");
+        catalogDao.saveLib(User.getId_user(),id_template,gson.toJson(funStructureEntity));
         return "Re";
     }
 
@@ -319,6 +323,18 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         return "Re";
     }
 
+    public String saveLibTwelve(){
+        UserEntity User=(UserEntity)session.get("user");
+        Gson gson=new Gson();
+        CatalogDao catalogDao=new CatalogDaoImp();
+        Type type= new TypeToken<ArrayList<StakeHolder>>() {}.getType();
+        List<StakeHolder> stakeHolder;
+        stakeHolder=gson.fromJson(stakeHolderList,type);
+        StakeHolderEntity stakeHolderEntity=new StakeHolderEntity(stakeHolder);
+        catalogDao.saveLib(User.getId_user(),id_template,gson.toJson(stakeHolderEntity));
+        return "Re";
+    }
+
     public String saveTemplateThirteen(){
         Gson gson=new Gson();
         CatalogDao catalogDao=new CatalogDaoImp();
@@ -330,6 +346,18 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         return "Re";
     }
 
+    public String saveLibThirteen(){
+        Gson gson=new Gson();
+        CatalogDao catalogDao=new CatalogDaoImp();
+        Type type= new TypeToken<ArrayList<Constraint>>() {}.getType();
+        List<Constraint> constraint;
+        constraint=gson.fromJson(constraintList,type);
+        ProgramConstraint programConstraint=new ProgramConstraint(features,quality,schedule,cost,staff,constraint);
+        UserEntity User=(UserEntity)session.get("user");
+        catalogDao.saveLib(User.getId_user(),id_template,gson.toJson(programConstraint));
+        return "Re";
+    }
+
     public String saveTemplateFourteen(){
         Gson gson=new Gson();
         CatalogDao catalogDao=new CatalogDaoImp();
@@ -338,6 +366,18 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         feature=gson.fromJson(featureList,type);
         Release release=new Release(feature);
         catalogDao.saveContent(id_catalog,gson.toJson(release));
+        return "Re";
+    }
+
+    public String saveLibFourteen(){
+        Gson gson=new Gson();
+        CatalogDao catalogDao=new CatalogDaoImp();
+        Type type= new TypeToken<ArrayList<Feature>>() {}.getType();
+        List<Feature> feature;
+        feature=gson.fromJson(featureList,type);
+        Release release=new Release(feature);
+        UserEntity User=(UserEntity)session.get("user");
+        catalogDao.saveLib(User.getId_user(),id_template,gson.toJson(release));
         return "Re";
     }
 
@@ -453,8 +493,8 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         this.content = content;
     }
 
-    public void setId_lib(int id_lib) {
-        this.id_lib = id_lib;
+    public void setId_template(int id_template) {
+        this.id_template = id_template;
     }
 
     public void setId_catalog(int id_catalog) {

@@ -151,13 +151,13 @@
                         <h2>
                             <strong><s:property value="#session.project.name"/></strong>
                             <s:if test='#session.sgroup.doc_type==1'>
-                                <span class="label label-info">需求文档组</span>
+                                <span class="label label-info">远景文档组</span>
                             </s:if>
                             <s:if test='#session.sgroup.doc_type==2'>
                                 <span class="label label-info">设计文档组</span>
                             </s:if>
                             <s:if test='#session.sgroup.doc_type==3'>
-                                <span class="label label-info">远景文档组</span>
+                                <span class="label label-info">需求文档组</span>
                             </s:if>
                             <s:if test='#session.sgroup.doc_type==4'>
                                 <span class="label label-info">测试文档组</span>

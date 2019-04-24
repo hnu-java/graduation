@@ -60,5 +60,5 @@ void update(int id_document, int first, int second);
 
     List<CatalogEntity> getAllByDocument(int id_document);
 
-    void saveLib(int id_lib,String content);
+    void saveLib(int id_user,int id_template,String content);
 }

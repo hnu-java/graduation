@@ -4,6 +4,8 @@ import dao.CatalogDao;
 import dao.DAO;
 import entity.CatalogEntity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -235,10 +237,12 @@ public class CatalogDaoImp extends DAO<CatalogEntity> implements CatalogDao {
     }
 
     @Override
-    public void saveLib(int id_lib, String content) {
-        String sql = "insert into STRUCTURE(ID_LIBRARY,CONTENT) value(?,?)";
+    public void saveLib(int id_user, int id_template, String content) {
+        String sql = "insert into pri_structure(ID_USER,CreationTime,ID_TEMPLATE,CONTENT) value(?,?,?,?)";
+        Date dateStr = new Date();
+        String date= new SimpleDateFormat("yyyy-MM-dd").format(dateStr);
         try{
-            update(sql,id_lib,content);
+            update(sql,id_user,date,id_template,content);
 
         }catch (Exception e){
         }
