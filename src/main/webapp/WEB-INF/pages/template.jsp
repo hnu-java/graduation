@@ -586,6 +586,42 @@
     </div>
 </div>
 
+<!--预览测试用例构件-->
+<div class="modal modal1" id="viewtestcase" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span> </button>
+                <h4 class="modal-title" id="Viewtest_name">
+                    <!--构件名称-->
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="word-break:break-all;"><label>功能描述</label>
+                    <p id="view_tes_describe">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>用例目的</label>
+                    <p id="view_tes_purpose">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>前提条件</label>
+                    <p id="view_test_premise">
+
+                    </p>
+                </div>
+                <div class="form-group" style="word-break:break-all;"><label>用例列表</label>
+                    <p id="view_testList">
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="wrapper wrapper-content">
     <div class="row">
         <div class="col-sm-12 " style="margin-left: 10px;margin-top: 20px">
@@ -707,16 +743,29 @@
                                                         <div class="form-group">
                                                             <select class="form-control" name="add_id_template" id="new_id_template">
                                                                 <option value="1">纯文本</option>
-                                                                <option value="2">用户</option>
-                                                                <option value="3">用例</option>
-                                                                <option value="4">软件接口</option>
-                                                                <option value="5">通讯接口</option>
-                                                                <option value="6">数据集</option>
-                                                                <option value="7">运行环境</option>
-                                                                <option value="8">数据库</option>
-                                                                <option value="9">操作系统</option>
-                                                                <option value="10">硬件设备</option>
-                                                                <option value="11">WEB服务器</option>
+                                                                <s:if test="#request.type==1">
+                                                                    <option value="12">利益相关者</option>
+                                                                    <option value="13">项目管理约束</option>
+                                                                    <option value="14">迭代</option>
+                                                                </s:if>
+                                                                <s:if test="#request.type==2">
+                                                                    <option value="15">概要设计</option>
+                                                                </s:if>
+                                                                <s:if test="#request.type==3">
+                                                                    <option value="2">用户</option>
+                                                                    <option value="3">用例</option>
+                                                                    <option value="4">软件接口</option>
+                                                                    <option value="5">通讯接口</option>
+                                                                    <option value="6">数据集</option>
+                                                                    <option value="7">运行环境</option>
+                                                                    <option value="8">数据库</option>
+                                                                    <option value="9">操作系统</option>
+                                                                    <option value="10">硬件设备</option>
+                                                                    <option value="11">WEB服务器</option>
+                                                                </s:if>
+                                                                <s:if test="#request.type==4">
+                                                                    <option value="16">测试用例</option>
+                                                                </s:if>
 
                                                             </select>
                                                         </div>
@@ -1215,6 +1264,12 @@
                             $(".funTable tfoot").html("");
                             loadTemplateFourteen(tem)
                         }
+                        else if(row.id_template=="16"){
+                            var end = $(".funTable tbody").children(".end");
+                            $(".funTable tbody").html(end)
+                            $(".funTable tfoot").html("");
+                            loadTemplateSixteen(tem)
+                        }
                     })
             },
         'click .seeStructure2':
@@ -1403,6 +1458,23 @@
                     $('#Viewrelease_name').text("构件"+row.name);
                     document.getElementById("view_featureList").innerHTML = featureList;
                 }
+                else if( row.id_template == "16" ){
+                    var testCaseList = "";
+                    var tmp1 = tem.testCaseList.length;
+                    for(var num = 0;num < tmp1; num++){
+                        testCaseList+="<div>用例编号："+tem.testCaseList[num].number+"</div>"
+                            +"<div>用例名称："+tem.testCaseList[num].title+"</div>"
+                            +"<div>输入："+tem.testCaseList[num].input+"</div>"
+                            +"<div>期望输出："+tem.testCaseList[num].output+"</div>"
+                            +"<div>备注："+tem.testCaseList[num].content+"</div>"
+                    }
+                    $('#viewtestcase').modal('toggle');
+                    $('#Viewtest_namee').text("构件"+row.name);
+                    $('#view_tes_describe').text(tem.describe);
+                    $('#view_tes_purpose').text(tem.purpose);
+                    $('#view_test_premise').text(tem.premise);
+                    document.getElementById("view_testList").innerHTML = testCaseList;
+                }
             }
 
     }
@@ -1520,6 +1592,12 @@
                             $(".funTable tbody").html(end)
                             $(".funTable tfoot").html("");
                             loadTemplateFourteen(tem)
+                        }
+                        else if(row.id_template=="16"){
+                            var end = $(".funTable tbody").children(".end");
+                            $(".funTable tbody").html(end)
+                            $(".funTable tfoot").html("");
+                            loadTemplateSixteen(tem)
                         }
                     })
             },
@@ -1716,6 +1794,23 @@
                                 $('#Viewrelease_name').text("构件"+row.name);
                                 document.getElementById("view_featureList").innerHTML = featureList;
                             }
+                            else if( row.id_template == "16" ){
+                                var testCaseList = "";
+                                var tmp1 = tem.testCaseList.length;
+                                for(var num = 0;num < tmp1; num++){
+                                    testCaseList+="<div>用例编号："+tem.testCaseList[num].number+"</div>"
+                                        +"<div>用例名称："+tem.testCaseList[num].title+"</div>"
+                                        +"<div>输入："+tem.testCaseList[num].input+"</div>"
+                                        +"<div>期望输出："+tem.testCaseList[num].output+"</div>"
+                                        +"<div>备注："+tem.testCaseList[num].content+"</div>"
+                                }
+                                $('#viewtestcase').modal('toggle');
+                                $('#Viewtest_namee').text("构件"+row.name);
+                                $('#view_tes_describe').text(tem.describe);
+                                $('#view_tes_purpose').text(tem.purpose);
+                                $('#view_test_premise').text(tem.premise);
+                                document.getElementById("view_testList").innerHTML = testCaseList;
+                            }
                         },
                         error: function () {
                             swal({
@@ -1846,7 +1941,7 @@
                     async: "false",
                     success: function (result) {
                         swal("构件封装成功!", "可直接引用该构件", "success");
-                        $('button#cancel-button').click();
+                        //$('button#cancel-button').click();
                     },
                     error: function (result) {
                         showtoast("dangerous", "封装失败", "构件封装失败")
@@ -1985,10 +2080,10 @@
                 type: "Post",
                 async: "false",
                 success: function (result) {
-                    showtoast("success", "保存成功", "内容保存成功")
+                    showtoast("success", "封装成功", "可在对应构件库引用该构件")
                 },
                 error: function (result) {
-                    showtoast("dangerous", "保存失败", "内容保存失败")
+                    showtoast("dangerous", "封装失败", "构件封装失败")
                 }
             })
             // $(".dis").attr("disabled","true");
@@ -2021,10 +2116,10 @@
                 type: "Post",
                 async: "false",
                 success: function (result) {
-                    showtoast("success", "保存成功", "内容保存成功")
+                    showtoast("success", "封装成功", "可在对应构件库引用该构件")
                 },
                 error: function (result) {
-                    showtoast("dangerous", "保存失败", "内容保存失败")
+                    showtoast("dangerous", "封装失败", "构件封装失败")
                 }
             })
             // $(".dis").attr("disabled","true");
@@ -2052,14 +2147,52 @@
                 type: "Post",
                 async: "false",
                 success: function (result) {
-                    showtoast("success", "保存成功", "内容保存成功")
+                    showtoast("success", "封装成功", "可在对应构件库引用该构件")
                 },
                 error: function (result) {
-                    showtoast("dangerous", "保存失败", "内容保存失败")
+                    showtoast("dangerous", "封装失败", "构件封装失败")
                 }
             })
             // $(".dis").attr("disabled","true");
         }
-        // $(".dis").attr("disabled","true");
+        else  if(id_template == "16") {
+            var describe=$("#describe").summernote('code');
+            var purpose=$("#purpose").summernote('code');
+            var premise=$("#premise").summernote('code');
+            var testCaseList = "[{";
+            var number,title,input,output,content, last = "";
+            $(".funTable tbody").find("tr").each(function () {
+                if ($(this).hasClass("funTr")) {//开头
+                    if (last != "") {//第一次，没有,
+                        testCaseList += "},{"
+                    }
+                    number = $(this).children("th").eq(1).children(".number").val();
+                    title = $(this).children("th").eq(2).children(".title").val();
+                    input = $(this).children("th").eq(3).children(".input").val();
+                    output = $(this).children("th").eq(4).children(".output").val();
+                    content = $(this).children("th").eq(5).children(".content").val();
+                    testCaseList += "\"number\":\"" + number + "\",\"title\":\"" + title + "\",\"input\":\"" + input + "\",\"output\":\"" + output + "\",\"content\":\"" + content + "\"";
+                    last = "funTr";
+                }
+            })
+            testCaseList += "}]";
+            $.ajax({
+                url: "catalog-saveLibSixteen",
+                data: {id_template: id_template,describe: describe, purpose: purpose,premise:premise,
+                    testCaseList: testCaseList},
+                dataType: "json",
+                type: "Post",
+                async: "false",
+                success: function (result) {
+                    showtoast("success", "封装成功", "可在对应构件库引用该构件")
+                },
+                error: function (result) {
+                    showtoast("dangerous", "封装失败", "构件封装失败")
+                }
+            })
+            // $(".dis").attr("disabled","true");
+        }
+
+         $(".dis").attr("disabled","true");
     }
 </script>

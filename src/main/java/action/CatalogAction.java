@@ -67,6 +67,9 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
     private String staff;
     private String constraintList;
     private String featureList;
+    private String purpose;
+    private String premise;
+    private String testCaseList;
     private InputStream pdfStream;
     private InputStream rtfStream;
     public String getIndex(){
@@ -218,6 +221,9 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
             dataMap.put("entity", entity);
         } else if(catalogEntity.getId_template() == 14){
             Release entity = gson.fromJson(catalogEntity.getContent(), Release.class);
+            dataMap.put("entity", entity);
+        }else if(catalogEntity.getId_template() == 16){
+            TestEntity entity = gson.fromJson(catalogEntity.getContent(), TestEntity.class);
             dataMap.put("entity", entity);
         }
             dataMap.put("template", templateEntity);
@@ -381,6 +387,29 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         return "Re";
     }
 
+    public String saveTemplateSixteen(){
+        Gson gson=new Gson();
+        CatalogDao catalogDao=new CatalogDaoImp();
+        Type type= new TypeToken<ArrayList<TestCase>>() {}.getType();
+        List<TestCase> testCases;
+        testCases=gson.fromJson(testCaseList,type);
+        TestEntity testEntity=new TestEntity(describe,purpose,premise,testCases);
+        catalogDao.saveContent(id_catalog,gson.toJson(testEntity));
+        return "Re";
+    }
+
+    public String saveLibSixteen(){
+        Gson gson=new Gson();
+        CatalogDao catalogDao=new CatalogDaoImp();
+        Type type= new TypeToken<ArrayList<TestCase>>() {}.getType();
+        List<TestCase> testCases;
+        testCases=gson.fromJson(testCaseList,type);
+        TestEntity testEntity=new TestEntity(describe,purpose,premise,testCases);
+        UserEntity User=(UserEntity)session.get("user");
+        catalogDao.saveLib(User.getId_user(),id_template,gson.toJson(testEntity));
+        return "Re";
+    }
+
     public String getUsable(){
         UsableDao usableDao=new UsableDaoImp();
         List<UsableEntity> usableEntityList=usableDao.getUsable();
@@ -401,7 +430,7 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
     public String generateContract() {
         try {
              Template2Pdf template2Pdf = new Template2Pdf();
-             pdfStream= template2Pdf.createPdf(documentId);
+             pdfStream= template2Pdf.createPdf(documentId,type);
              pdfStream.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -418,7 +447,7 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
     public String generateContractRtf() {
         try {
             Template2rtf template2rtf = new Template2rtf();
-            rtfStream=template2rtf.createRtf(documentId);
+            rtfStream=template2rtf.createRtf(documentId,type);
             rtfStream.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -568,6 +597,18 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
 
     public void setFeatureList(String featureList) {
         this.featureList = featureList;
+    }
+
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
+    }
+
+    public void setPremise(String premise) {
+        this.premise = premise;
+    }
+
+    public void setTestCaseList(String testCaseList) {
+        this.testCaseList = testCaseList;
     }
 
     public void setPriority(int priority) {

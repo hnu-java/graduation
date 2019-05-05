@@ -64,7 +64,6 @@ $(document).on("click",".dic",function () {
     editable=false;
     nowClick=$(this);
     var catalogIndex=$(nowClick).children("span.catalogIndex").text();
-
     $.ajax({
         url: "catalog-getCatalog",
         data: { documentId:documentId,catalogIndex:catalogIndex},
@@ -114,6 +113,9 @@ $(document).on("click",".dic",function () {
             }
             else if(template.id_template=="14"){
                 loadTemplateFourteen(entity)
+            }
+            else if(template.id_template=="16"){
+                loadTemplateSixteen(entity)
             }
             $("#libraryUserList").empty();
             $(".structTable2").empty();
@@ -493,7 +495,7 @@ function loadTemplateThirteen(entity) {
                 Content += " <tr class='funTr'> <th  ><div class='hidenTh' style='display: none'> <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black'></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black ' ></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></div> </th> ";
                 Content += " <th> <textarea   class='form-control title dis'  name='title'   style='resize:vertical; max-width: 100%' disabled>";
                 Content += constraintList[i].title + "</textarea> </th>";
-                Content += " <th> <textarea   class='form-control value dis'  name='content'   style='resize:vertical; max-width: 100%' disabled>";
+                Content += " <th> <textarea   class='form-control content dis'  name='content'   style='resize:vertical; max-width: 100%' disabled>";
                 Content += constraintList[i].content + "</textarea> </th> </tr>";
             }
         }
@@ -539,6 +541,42 @@ function loadTemplateFourteen(entity) {
         $("div.hidenTh").show();
     }
 }
+
+function loadTemplateSixteen(entity) {
+    var testCaseList=entity.testCaseList;
+    var Content="";
+    if(testCaseList!=null){
+        for (var i=0;i<testCaseList.length;i++) {
+            if(testCaseList[i].title!=null&&testCaseList[i].content!=null&&testCaseList[i].number!=null&&testCaseList[i].input!=null&&testCaseList[i].output!=null) {
+                Content += " <tr class='funTr'> <th  ><div class='hidenTh' style='display: none'> <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black'></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black ' ></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></div> </th> ";
+                Content += " <th> <textarea   class='form-control number dis'  name='number'   style='resize:vertical; max-width: 100%' disabled>";
+                Content += testCaseList[i].number + "</textarea> </th>";
+                Content += " <th> <textarea   class='form-control title dis'  name='title'   style='resize:vertical; max-width: 100%' disabled>";
+                Content += testCaseList[i].title + "</textarea> </th>";
+                Content += " <th> <textarea   class='form-control input dis'  name='input'   style='resize:vertical; max-width: 100%' disabled>";
+                Content += testCaseList[i].input + "</textarea> </th>";
+                Content += " <th> <textarea   class='form-control output dis'  name='output'   style='resize:vertical; max-width: 100%' disabled>";
+                Content += testCaseList[i].output + "</textarea> </th>";
+                Content += " <th> <textarea   class='form-control content dis'  name='content'   style='resize:vertical; max-width: 100%' disabled>";
+                Content += testCaseList[i].content + "</textarea> </th> </tr>";
+            }
+        }
+        $(".funTable tbody").prepend(Content);
+    }
+    if (editable==true){
+        $("#describe").summernote("code",entity.describe);
+        $("#purpose").summernote("code",entity.purpose);
+        $("#premise").summernote("code",entity.premise);
+        $(".dis").removeAttr("disabled");
+        $("div.hidenTh").show();
+    }
+    else {
+        $("#describe").html(entity.describe);
+        $("#purpose").html(entity.purpose);
+        $("#premise").html(entity.premise);
+    }
+}
+
 //新增弹框初始化
 function addModelInit() {
     $("input#add_title").val("");
@@ -1350,6 +1388,43 @@ function temp_save() {
         })
         // $(".dis").attr("disabled","true");
     }
+    else  if(id_template == "16") {
+        var describe=$("#describe").summernote('code');
+        var purpose=$("#purpose").summernote('code');
+        var premise=$("#premise").summernote('code');
+        var testCaseList = "[{";
+        var number,title,input,output,content, last = "";
+        $(".funTable tbody").find("tr").each(function () {
+            if ($(this).hasClass("funTr")) {//开头
+                if (last != "") {//第一次，没有,
+                    testCaseList += "},{"
+                }
+                number = $(this).children("th").eq(1).children(".number").val();
+                title = $(this).children("th").eq(2).children(".title").val();
+                input = $(this).children("th").eq(3).children(".input").val();
+                output = $(this).children("th").eq(4).children(".output").val();
+                content = $(this).children("th").eq(5).children(".content").val();
+                testCaseList += "\"number\":\"" + number + "\",\"title\":\"" + title + "\",\"input\":\"" + input + "\",\"output\":\"" + output + "\",\"content\":\"" + content + "\"";
+                last = "funTr";
+            }
+        })
+        testCaseList += "}]";
+        $.ajax({
+            url: "catalog-saveTemplateSixteen",
+            data: {id_catalog: id_catalog,describe: describe, purpose: purpose,premise:premise,
+                testCaseList: testCaseList},
+            dataType: "json",
+            type: "Post",
+            async: "false",
+            success: function (result) {
+                showtoast("success", "保存成功", "内容保存成功")
+            },
+            error: function (result) {
+                showtoast("dangerous", "保存失败", "内容保存失败")
+            }
+        })
+        // $(".dis").attr("disabled","true");
+    }
 }
 //评论编辑按钮
 function edit() {
@@ -1542,6 +1617,16 @@ function addFeature(){
     $(".funTable").children("tbody").children("tr:last-child").before(content);
 }
 
+function addTestCase() {
+    var content="   <tr class='funTr'> <th > <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black' ></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black'></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></th> "
+        + "<th> <input  class='form-control number dis'   style='resize:vertical; max-width: 100%' name='number'    ></input> </th> "
+        + "<th> <input   class='form-control title dis'   style='resize:vertical; max-width: 100%' name='title'    ></input> </th> "
+        + "<th> <textarea   class='form-control input dis'   style='resize:vertical; max-width: 100%' name='input'    ></textarea> </th> "
+        + "<th> <textarea   class='form-control output dis'   style='resize:vertical; max-width: 100%' name='output'    ></textarea> </th> "
+        + "<th> <textarea   class='form-control content dis'   style='resize:vertical; max-width: 100%' name='content'    ></textarea> </th> </tr>"
+    $(".funTable").children("tbody").children("tr:last-child").before(content);
+}
+
 $(document).on("click",".fun_down",function () {
     if($(this).parent().parent().hasClass("funTr")){
         var thisLine=$(this).parent().parent();
@@ -1676,7 +1761,7 @@ $(document).on("click",".fun_up",function () {
 })
 
 
-$(document).on("click",".fun_delete",function () {
+/*$(document).on("click",".fun_delete",function () {
     if ($(this).parent().parent().hasClass("funTr")) {
         var thisLine = $(this).parent().parent();
     }
@@ -1687,6 +1772,40 @@ $(document).on("click",".fun_delete",function () {
         {
             title: "您确认删除该用例过程吗",
             text: "删除后对应局部安全性和局部可用性也将一并删除",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            closeOnConfirm: true
+        },function () {
+            if (thisLine.next().hasClass("usableTr") && thisLine.next().next().hasClass("securityTr")) {
+                thisLine.next().next().remove();
+                thisLine.next().remove();
+                thisLine.remove();
+            }
+            else if (thisLine.next().hasClass("funTr") || thisLine.next().hasClass("end")) {
+                thisLine.remove();
+            }
+            else {
+                thisLine.next().remove();
+                thisLine.remove();
+            }
+        })
+})
+*/
+
+$(document).on("click",".fun_delete",function () {
+    if ($(this).parent().parent().hasClass("funTr")) {
+        var thisLine = $(this).parent().parent();
+    }
+    else {
+        var thisLine = $(this).parent().parent().parent();
+    }
+    swal(
+        {
+            title: "您确认删除吗",
+            text: "删除后对应下属内容也将一并删除",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",

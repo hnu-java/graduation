@@ -146,17 +146,17 @@
             <result name="pdf" type="stream">
                 <param name="contentType">application/pdf; charset=gb2312</param>
                 <param name="inputName">pdfStream</param>
-                <param name="contentDisposition">attachment; filename="ReqDocument.pdf"</param>
+                <param name="contentDisposition">attachment; filename="Document.pdf"</param>
                 <param name="bufferSize">2048</param>
             </result>
             <result name="rtf" type="stream">
                 <param name="contentType">application/rtf; charset=gb2312</param>
                 <param name="inputName">rtfStream</param>
-                <param name="contentDisposition">attachment; filename="ReqDocument.doc"</param>
+                <param name="contentDisposition">attachment; filename="Document.doc"</param>
                 <param name="bufferSize">2048</param>
             </result>
         <interceptor-ref name="myStack"/>
-            <allowed-methods>getTitle,saveLibOne,saveLibThree,saveLibTwo,saveLibTwelve,saveLibThirteen,saveLibFourteen,jmpOrgTemplate,generateContract,generateContractRtf,getIndex,jmpTemplate,addState1,addState2,up,down,newCatalog,getCatalog,rename,getRoleCount,saveTemplateOne,saveTemplateThree,saveTemplateTwo,saveTemplateTwelve,saveTemplateThirteen,saveTemplateFourteen,getUsable,getSecurity</allowed-methods>
+            <allowed-methods>getTitle,saveLibOne,saveLibThree,saveLibTwo,saveLibTwelve,saveLibThirteen,saveLibFourteen,saveLibSixteen,jmpOrgTemplate,generateContract,generateContractRtf,getIndex,jmpTemplate,addState1,addState2,up,down,newCatalog,getCatalog,rename,getRoleCount,saveTemplateOne,saveTemplateThree,saveTemplateTwo,saveTemplateTwelve,saveTemplateThirteen,saveTemplateFourteen,saveTemplateSixteen,getUsable,getSecurity</allowed-methods>
         </action>
 
         <action name="commonStructureId-*" class="action.CommonStructureIdAction" method="{1}">

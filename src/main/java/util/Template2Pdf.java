@@ -416,7 +416,7 @@ public class Template2Pdf {
         return 2;//只有文字
     }
 
-    public InputStream createPdf(int id_document) throws com.lowagie.text.DocumentException, IOException {
+    public InputStream createPdf(int id_document,int doc_type) throws com.lowagie.text.DocumentException, IOException {
         //创建文档，并设置纸张大小
         Gson gson = new Gson();
         CatalogDao catalogDao = new CatalogDaoImp();
@@ -445,7 +445,20 @@ public class Template2Pdf {
         p.setAlignment(com.itextpdf.text.Element.ALIGN_RIGHT);
         p.setSpacingAfter(6);
         doc.add(p);
-        Paragraph p1 = new Paragraph("需求规格说明书", Title);//楷体小一
+        String paperTitle = "";
+        if(doc_type == 1){
+            paperTitle = "远景与范围文档";
+        }
+        else if(doc_type == 2){
+            paperTitle = "概要设计文档";
+        }
+        else if(doc_type == 3){
+            paperTitle = "需求规格说明书";
+        }
+        else if(doc_type == 4){
+            paperTitle = "测试计划文档";
+        }
+        Paragraph p1 = new Paragraph(paperTitle,new Font(stChinese,24,Font.NORMAL,new Color(0,0,0)));//楷体小一
         p1.setSpacingBefore(6);
         p1.setAlignment(com.itextpdf.text.Element.ALIGN_RIGHT);
         p1.setSpacingAfter(6);
@@ -466,7 +479,6 @@ public class Template2Pdf {
         }
         //文档机构（如果有）
         String org_name = showOrgProjectDao.getOrgName(id_document);
-        System.out.println(org_name + " " + id_document);
         if (org_name != null && org_name != "") {
             paragraph = new Paragraph(org_name,new Font(stChinese,14,Font.NORMAL,new Color(0,0,0)));//黑体四号
             paragraph.setSpacingBefore(6);
@@ -718,6 +730,185 @@ public class Template2Pdf {
                     tmpline = entity.getAlternative();
                     html2pdf(tmpline,doc);
                 }
+
+                if (e.getId_template() == 12) {//模板类型12
+                    StakeHolderEntity entity = gson.fromJson(e.getContent(), StakeHolderEntity.class);
+                    List<StakeHolder> stakeHolderList = entity.getStakeHoldersList();
+                    for (int i = 0; i < stakeHolderList.size(); i++) {
+                        StakeHolder stakeHolder = stakeHolderList.get(i);
+                        lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "利益相关者" + (i + 1), minTitle);
+                        lineParagraph.setLeading(24f);
+                        doc.add(lineParagraph);
+                        if (stakeHolder.getName() != null) {
+                            lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "相关者名称：" + stakeHolder.getName(), black);
+                            lineParagraph.setLeading(24f);
+                            doc.add(lineParagraph);
+                        }
+                        if (stakeHolder.getValue() != null) {
+                            lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "关注的业务价值：" + stakeHolder.getValue(), black);
+                            lineParagraph.setLeading(24f);
+                            doc.add(lineParagraph);
+                        }
+                        if (stakeHolder.getAttitude() != null) {
+                            lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "持有的态度：" + stakeHolder.getAttitude(), black);
+                            lineParagraph.setLeading(24f);
+                            doc.add(lineParagraph);
+                        }
+                        if (stakeHolder.getInterest() != null) {
+                            lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "预期的系统特征："+ stakeHolder.getInterest(), black);
+                            lineParagraph.setLeading(24f);
+                            doc.add(lineParagraph);
+                        }
+                        if (stakeHolder.getConstraints() != null) {
+                            lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "约束："+ stakeHolder.getConstraints(), black);
+                            lineParagraph.setLeading(24f);
+                            doc.add(lineParagraph);
+                        }
+                    }
+                }
+
+                if (e.getId_template() == 13) {//模板类型13
+                    ProgramConstraint entity = gson.fromJson(e.getContent(), ProgramConstraint.class);
+
+                    lineParagraph = new com.lowagie.text.Paragraph("    " + "项目功能范围：" , minTitle);
+                    lineParagraph.setLeading(24f);
+                    doc.add(lineParagraph);
+                    tmpline = entity.getFeatures();
+                    html2pdf(tmpline,doc);
+
+                    lineParagraph = new com.lowagie.text.Paragraph("    " + "项目质量约束：", minTitle);
+                    lineParagraph.setLeading(24f);
+                    doc.add(lineParagraph);
+                    tmpline = entity.getQuality();
+                    html2pdf(tmpline,doc);
+
+                    lineParagraph = new com.lowagie.text.Paragraph("    " + "项目进度约束：", minTitle);
+                    lineParagraph.setLeading(24f);
+                    doc.add(lineParagraph);
+                    tmpline = entity.getSchedule();
+                    html2pdf(tmpline,doc);
+
+                    lineParagraph = new com.lowagie.text.Paragraph("    " + "项目成本约束：", minTitle);
+                    lineParagraph.setLeading(24f);
+                    doc.add(lineParagraph);
+                    tmpline = entity.getCost();
+                    html2pdf(tmpline,doc);
+
+                    lineParagraph = new com.lowagie.text.Paragraph("    " + "项目团队约束：", minTitle);
+                    lineParagraph.setLeading(24f);
+                    doc.add(lineParagraph);
+                    tmpline = entity.getStaff();
+                    html2pdf(tmpline,doc);
+
+                    lineParagraph = new com.lowagie.text.Paragraph("    " + "其他约束：", minTitle);
+                    lineParagraph.setLeading(24f);
+                    doc.add(lineParagraph);
+                    List<Constraint> constraintList = entity.getConstraintList();
+                    for (int i = 0; i < constraintList.size(); i++) {
+                        Constraint constraint = constraintList.get(i);
+                        lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "其他约束" + (i + 1), minTitle);
+                        lineParagraph.setLeading(24f);
+                        doc.add(lineParagraph);
+                        if (constraint.getTitle() != null) {
+                            lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "约束项：" + constraint.getTitle(), black);
+                            lineParagraph.setLeading(24f);
+                            doc.add(lineParagraph);
+                        }
+                        if (constraint.getContent() != null) {
+                            lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "具体内容：" + constraint.getContent(), black);
+                            lineParagraph.setLeading(24f);
+                            doc.add(lineParagraph);
+                        }
+                    }
+                }
+
+                if (e.getId_template() == 14) {//模板类型14
+                    Release entity = gson.fromJson(e.getContent(), Release.class);
+                    lineParagraph = new com.lowagie.text.Paragraph("    " + "迭代构件：", minTitle);
+                    lineParagraph.setLeading(24f);
+                    doc.add(lineParagraph);
+                    List<Feature> featureList = entity.getFeatureList();
+                    for (int i = 0; i < featureList.size(); i++) {
+                        Feature feature = featureList.get(i);
+                        lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "系统功能" + (i + 1), minTitle);
+                        lineParagraph.setLeading(24f);
+                        doc.add(lineParagraph);
+                        if (feature.getNumber() != null) {
+                            lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "功能编号：" + feature.getNumber(), black);
+                            lineParagraph.setLeading(24f);
+                            doc.add(lineParagraph);
+                        }
+                        if (feature.getTitle() != null) {
+                            lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "功能名称：" + feature.getTitle(), black);
+                            lineParagraph.setLeading(24f);
+                            doc.add(lineParagraph);
+                        }
+                        if (feature.getContent() != null) {
+                            lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "功能描述：" + feature.getContent(), black);
+                            lineParagraph.setLeading(24f);
+                            doc.add(lineParagraph);
+                        }
+                    }
+                }
+
+                if (e.getId_template() == 16) {//模板类型16
+                    TestEntity entity = gson.fromJson(e.getContent(), TestEntity.class);
+
+                    lineParagraph = new com.lowagie.text.Paragraph("    " + "功能描述：" , minTitle);
+                    lineParagraph.setLeading(24f);
+                    doc.add(lineParagraph);
+                    tmpline = entity.getDescribe();
+                    html2pdf(tmpline,doc);
+
+                    lineParagraph = new com.lowagie.text.Paragraph("    " + "用例目的：", minTitle);
+                    lineParagraph.setLeading(24f);
+                    doc.add(lineParagraph);
+                    tmpline = entity.getPurpose();
+                    html2pdf(tmpline,doc);
+
+                    lineParagraph = new com.lowagie.text.Paragraph("    " + "前提条件：", minTitle);
+                    lineParagraph.setLeading(24f);
+                    doc.add(lineParagraph);
+                    tmpline = entity.getPremise();
+                    html2pdf(tmpline,doc);
+
+                    lineParagraph = new com.lowagie.text.Paragraph("    " + "测试用例：", minTitle);
+                    lineParagraph.setLeading(24f);
+                    doc.add(lineParagraph);
+                    List<TestCase> testCaseList = entity.getTestCaseList();
+                    for (int i = 0; i < testCaseList.size(); i++) {
+                        TestCase testCase = testCaseList.get(i);
+                        lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "测试用例" + (i + 1), minTitle);
+                        lineParagraph.setLeading(24f);
+                        doc.add(lineParagraph);
+                        if (testCase.getNumber() != null) {
+                            lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "用例编号：" + testCase.getNumber(), black);
+                            lineParagraph.setLeading(24f);
+                            doc.add(lineParagraph);
+                        }
+                        if (testCase.getTitle() != null) {
+                            lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "用例名称：" + testCase.getTitle(), black);
+                            lineParagraph.setLeading(24f);
+                            doc.add(lineParagraph);
+                        }
+                        if (testCase.getInput() != null) {
+                            lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "输入：" + testCase.getInput(), black);
+                            lineParagraph.setLeading(24f);
+                            doc.add(lineParagraph);
+                        }
+                        if (testCase.getOutput() != null) {
+                            lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "期望输出：" + testCase.getOutput(), black);
+                            lineParagraph.setLeading(24f);
+                            doc.add(lineParagraph);
+                        }
+                        if (testCase.getContent() != null) {
+                            lineParagraph = new com.lowagie.text.Paragraph("    " + "    " + "    " + "备注：" + testCase.getContent(), black);
+                            lineParagraph.setLeading(24f);
+                            doc.add(lineParagraph);
+                        }
+                    }
+                }
+
             }
         }
 //        com.lowagie.text.Image img = com.lowagie.text.Image.getInstance("D:/SAO.jpg");

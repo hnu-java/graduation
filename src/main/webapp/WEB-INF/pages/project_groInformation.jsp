@@ -756,12 +756,14 @@
         'click .generateContract':
             function(e, value, row, index) {
                 var id = row.id_document;
-                location.href = "catalog-generateContract?documentId="+id;
+                var type = row.type;
+                location.href = "catalog-generateContract?documentId="+id+"&type="+type;
             },
         'click .generateContractRtf':
             function(e, value, row, index) {
                 var id = row.id_document;
-                location.href = "catalog-generateContractRtf?documentId="+id;
+                var type = row.type;
+                location.href = "catalog-generateContractRtf?documentId="+id+"&type="+type;
             }
     };
 
