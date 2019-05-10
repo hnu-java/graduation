@@ -260,7 +260,8 @@
                 var id_ORG = row.ID_ORGANIZATION;
                 var ID_ORGANIZATION = parseInt(id_ORG);
                 var ID_PROJECT = parseInt(row.ID_PROJECT);
-                if (isNaN(ID_ORGANIZATION)) {
+                var ID_SGROUP = parseInt(row.ID_SGROUP);
+                if (!isNaN(ID_PROJECT)) {
                     $.ajax({
                         url: "infomation-Accept?ID_PROJECT=" + ID_PROJECT,
                         dataType: "json",
@@ -283,9 +284,32 @@
                         }
                     })
                 }
-                else if (isNaN(ID_PROJECT)) {
+                else if (!isNaN(ID_ORGANIZATION)) {
                     $.ajax({
                         url: "infomation-Accept?ID_ORGANIZATION=" + ID_ORGANIZATION,
+                        dataType: "json",
+                        type: "Post",
+                        async: "false",
+                        success: function (result) {
+                            if (result.res === true) {
+                                swal({
+                                    title: "同意成功",
+                                    type: "success",
+                                    confirmButtonColor: "#18a689",
+                                    confirmButtonText: "OK"
+                                }, function () {
+                                    location.href = "user-jmpMessageCenter";
+                                })
+                            }
+                            else swal("接受失败！", "接受失败", "failed");
+                        }, error: function () {
+                            swal("接收失败！", "请检查你的网络", "failed");
+                        }
+                    })
+                }
+                else if (!isNaN(ID_SGROUP)) {
+                    $.ajax({
+                        url: "infomation-Accept?ID_SGROUP=" + ID_SGROUP,
                         dataType: "json",
                         type: "Post",
                         async: "false",
@@ -323,7 +347,8 @@
                 var id_ORG = row.ID_ORGANIZATION;
                 var ID_ORGANIZATION = parseInt(id_ORG);
                 var ID_PROJECT = parseInt(row.ID_PROJECT);
-                if (isNaN(ID_ORGANIZATION)) {
+                var ID_SGROUP = parseInt(row.ID_SGROUP);
+                if (!isNaN(ID_PROJECT)) {
                     $.ajax({
                         url: "infomation-Refuse?ID_PROJECT=" + ID_PROJECT,
                         dataType: "json",
@@ -346,9 +371,32 @@
                         }
                     })
                 }
-                else if (isNaN(ID_PROJECT)) {
+                else if (!isNaN(ID_ORGANIZATION)) {
                     $.ajax({
                         url: "infomation-Refuse?ID_ORGANIZATION=" + ID_ORGANIZATION,
+                        dataType: "json",
+                        type: "Post",
+                        async: "false",
+                        success: function (result) {
+                            if (result.res === true) {
+                                swal({
+                                    title: "拒绝成功",
+                                    type: "success",
+                                    confirmButtonColor: "#18a689",
+                                    confirmButtonText: "OK"
+                                }, function () {
+                                    location.href = "user-jmpMessageCenter";
+                                })
+                            }
+                            else swal("拒绝失败！", "拒绝失败", "failed");
+                        }, error: function () {
+                            swal("拒绝失败！", "请检查你的网络", "failed");
+                        }
+                    })
+                }
+                else if (!isNaN(ID_SGROUP)) {
+                    $.ajax({
+                        url: "infomation-Refuse?ID_SGROUP=" + ID_SGROUP,
                         dataType: "json",
                         type: "Post",
                         async: "false",

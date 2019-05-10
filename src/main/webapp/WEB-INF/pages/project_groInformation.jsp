@@ -173,7 +173,7 @@
                         <dd><h3><s:property value="#session.PM.name"/></h3></dd>
 
                         <dt><h3>创建时间：</h3></dt>
-                        <dd><h3><s:property value="#session.project_date"/></h3></dd>
+                        <dd><h3><s:property value="#session.sgroup_date"/></h3></dd>
 
                     </dl>
                 </div>
@@ -249,7 +249,7 @@
                                         </s:if>
                                     </div>
                                     <div class="bootstrap-table" >
-                                        <table id="projectMember" data-toggle="table"
+                                        <table id="sGroupMember" data-toggle="table"
                                                data-classes="table table-no-bordered"
                                                data-click-to-select="true"
                                                data-search="true"
@@ -364,7 +364,7 @@
             })
     });
 
-    $('#projectMember').bootstrapTable({
+    $('#sGroupMember').bootstrapTable({
             columns: [
                 {
                     field: 'name',
@@ -407,6 +407,7 @@
     var id_Project = "<s:property value="#session.project.Id_project"/>";
     var id_User = "<s:property value="#session.user.id_user"/>";
     var id_sgroup = "<s:property value="#session.sgroup.id_sgroup"/>";
+    var type = "<s:property value="#session.sgroup.doc_type"/>"
     var discuss="";
 
     $.ajax(
@@ -418,7 +419,7 @@
             success: function (json) {
                 var proList = JSON.parse(json.res);
                 //finishingTask为table的id
-                $('#projectMember').bootstrapTable('load', proList);
+                $('#sGroupMember').bootstrapTable('load', proList);
                 discussInit();
                 discussReload2();
             },
@@ -430,17 +431,17 @@
         }
     );
 
-    function proMemberReload() {
+    function sGroMemberReload() {
         $.ajax(
             {
                 type: "post",
-                url: "project-getProjectMember",
-                data: {Id_Project: id_Project},
+                url: "sgroup-getSGroupMember",
+                data: {id_sgroup: id_sgroup},
                 dataType: "json",
                 success: function (json) {
                     var proList = JSON.parse(json.res);
                     //finishingTask为table的id
-                    $('#projectMember').bootstrapTable('load', proList);
+                    $('#sGroupMember').bootstrapTable('load', proList);
 //                    discussInit();
 //                    discussReload2();
                 },
@@ -499,12 +500,12 @@
                         }, function () {
                             $.ajax({
                                 type: "post",
-                                url: "project-setVPM",
-                                data: {id_User: id_user, id_Project: id_Project},
+                                url: "sgroup-setVPM",
+                                data: {id_User: id_user, id_sGroup: id_sgroup},
                                 dataType: "json",
                                 success: function () {
                                     showtoast("success", "设置成功", "成功设为副组长");
-                                    proMemberReload();
+                                    sGroMemberReload();
                                     /*elem.text("撤销副组长");*/
                                     elem.removeClass("img-info");
                                     elem.addClass("img-warning");
@@ -531,12 +532,12 @@
                         }, function () {
                             $.ajax({
                                 type: "post",
-                                url: "project-dismissVPM",
-                                data: {id_User: id_user, id_Project: id_Project},
+                                url: "sgroup-dismissVPM",
+                                data: {id_User: id_user, id_sGroup: id_sgroup},
                                 dataType: "json",
                                 success: function () {
                                     showtoast("success", "撤销成功", "成功撤销该副组长");
-                                    proMemberReload();
+                                    sGroMemberReload();
                                     /*elem.text("设为副组长");*/
                                     elem.removeClass("img-warning");
                                     elem.addClass("img-info");
@@ -567,12 +568,12 @@
                     },function () {
                         $.ajax({
                             type: "post",
-                            url: "project-deleteMember",
-                            data: {id_User: id_user,id_Project:id_Project},
+                            url: "sgroup-deleteMember",
+                            data: {id_User: id_user,id_sGroup:id_sgroup},
                             dataType: "json",
                             success: function () {
                                 swal("移除成功！", "您已经移除了这名成员。", "success");
-                                $('#projectMember').bootstrapTable('remove', {
+                                $('#sGroupMember').bootstrapTable('remove', {
                                     field: 'name',
                                     values: [row.name]
                                 });
@@ -751,7 +752,7 @@
         'click .view':
             function(e, value, row, index) {
                 var id = row.id_document;
-                location.href = "catalog-jmpTemplate?documentId="+id+"&rank="+rank+"&projectId="+id_Project+"&state="+row.state;
+                location.href = "catalog-jmpTemplate?documentId="+id+"&rank="+rank+"&projectId="+id_Project+"&state="+row.state+"&type="+row.type;
             },
         'click .generateContract':
             function(e, value, row, index) {
@@ -850,7 +851,7 @@
             type: "Post",
             async: "false",
             success: function (result) {
-                location.href = "catalog-jmpTemplate?documentId="+result.id+"&rank=3&projectId="+id_Project+"&state=0";
+                location.href = "catalog-jmpTemplate?documentId="+result.id+"&rank=3&projectId="+id_Project+"&state=0"+"&type="+type;
             },
             error: function (result) {
                 showtoast("error", "新建失败", "出错!")
@@ -1010,7 +1011,7 @@
                         content+="-文档版本 ";
                         content+=tempDis.version+" 目录 "+tempDis.location+" </h5>";
                         var template = "";
-                        template+="catalog-jmpTemplate?documentId="+tempDis.id_Document+"&rank="+rank+"&projectId="+tempDis.id_Project+"&state="+tempDis.state;
+                        template+="catalog-jmpTemplate?documentId="+tempDis.id_Document+"&rank="+rank+"&projectId="+tempDis.id_Project+"&state="+tempDis.state+"&type="+tempDis.type;
                         content+="<a href=\"catalog-jmpTemplate?documentId=";
                         content+=tempDis.id_Document;
                         content+="&rank=";
@@ -1019,6 +1020,8 @@
                         content+=tempDis.id_Project;
                         content+="&state=";
                         content+=tempDis.state;
+                        content+="&type=";
+                        content+=tempDis.type;
                         content+="\">";
                         content+="<img style='margin-top:-7px' src='<%=basePath%>/img/jump.png' height='27px' width='27px' title='跳转到评论文档' alt='跳转'></a>";
                     }
@@ -1110,7 +1113,7 @@
     //评论跳转按钮
     function shift(id_document) {
         //var id = row.id_Project;
-        location.href = "catalog-jmpTemplate?documentId="+id_document+"&rank="+rank+"&projectId="+id_Project+"&state="+state;
+        location.href = "catalog-jmpTemplate?documentId="+id_document+"&rank="+rank+"&projectId="+id_Project+"&state="+state+"&type="+type;
     };
 
     //评论删除按钮

@@ -735,6 +735,7 @@
                     error: function () {
                         swal({
                             title:"错误",
+                            text:"您的权限不够",
                             icon: "error"
                         });
                     }
@@ -834,6 +835,7 @@
         });
 
     $("button#newDoc").click(function() {
+        var type = $("select#type").val();
         $.ajax({
             url: "project-createDoc",
             data: {
@@ -859,7 +861,7 @@
                         }
                         )
                 }
-                else  location.href = "catalog-jmpTemplate?documentId="+result.id+"&rank=3&projectId="+id_Project+"&state=0";
+                else  location.href = "catalog-jmpTemplate?documentId="+result.id+"&rank=3&projectId="+id_Project+"&state=0"+"&type="+type;
             },
             error: function (result) {
                 showtoast("error", "新建失败", "文档名不存在!")

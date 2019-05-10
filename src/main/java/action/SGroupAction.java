@@ -171,10 +171,118 @@ public class SGroupAction extends ActionSupport implements RequestAware, Session
 
 //        发送消息
         InformationDao informationDao = new InformationDaoImp();
-        String content = "你已成为的组长";//要改
+        int doc_type = sgroup.getDoc_type();
+        String sgroup_name = "";
+        if(doc_type == 1){
+            sgroup_name = "远景与范围文档小组";
+        }
+        else if(doc_type == 2){
+            sgroup_name = "概要设计文档小组";
+        }
+        else if(doc_type == 3){
+            sgroup_name = "需求文档小组";
+        }
+        else if(doc_type == 4){
+            sgroup_name = "测试计划文档小组";
+        }
+        String content = "你已成为"+sgroup_name+"组长";
         informationDao.toMember(id_SGroup,user.getId_user(),content);
         dataMap.put("res",res);
 
+        return SUCCESS;
+    }
+
+    public String setVPM(){
+
+        int id_User = sgroup.getId_user();
+        int id_SGroup = sgroup.getId_sgroup();
+
+        sGroupDao = new SGroupDaoImp();
+        sgroup = sGroupDao.getOne(id_SGroup);
+        sGroupDao.setVPM(id_User,id_SGroup);
+        int id_Project = sgroup.getId_project();
+
+        int doc_type = sgroup.getDoc_type();
+        String sgroup_name = "";
+        if(doc_type == 1){
+            sgroup_name = "远景与范围文档小组";
+        }
+        else if(doc_type == 2){
+            sgroup_name = "概要设计文档小组";
+        }
+        else if(doc_type == 3){
+            sgroup_name = "需求文档小组";
+        }
+        else if(doc_type == 4){
+            sgroup_name = "测试计划文档小组";
+        }
+//        发送消息
+        InformationDao informationDao = new InformationDaoImp();
+        String content = "你已被任命为"+sgroup_name+"的副组长";
+        informationDao.toMember(id_Project,id_User,content);
+
+        return SUCCESS;
+    }
+
+    public String dismissVPM(){
+        int id_User = sgroup.getId_user();
+        int id_SGroup = sgroup.getId_sgroup();
+
+        sGroupDao = new SGroupDaoImp();
+        sgroup = sGroupDao.getOne(id_SGroup);
+        int id_Project = sgroup.getId_project();
+        sGroupDao.dismissVPM(id_User,id_SGroup);
+
+        int doc_type = sgroup.getDoc_type();
+        String sgroup_name = "";
+        if(doc_type == 1){
+            sgroup_name = "远景与范围文档小组";
+        }
+        else if(doc_type == 2){
+            sgroup_name = "概要设计文档小组";
+        }
+        else if(doc_type == 3){
+            sgroup_name = "需求文档小组";
+        }
+        else if(doc_type == 4){
+            sgroup_name = "测试计划文档小组";
+        }
+//        发送消息
+        InformationDao informationDao = new InformationDaoImp();
+        String content = "你已被撤除"+sgroup_name+"的副组长职位";
+        informationDao.toMember(id_Project,id_User,content);
+
+        return SUCCESS;
+    }
+
+    public String deleteMember(){
+        int id_User = sgroup.getId_user();
+        int id_SGroup = sgroup.getId_sgroup();
+
+        sGroupDao = new SGroupDaoImp();
+        sgroup = sGroupDao.getOne(id_SGroup);
+        int id_Project = sgroup.getId_project();
+        sGroupDao.deleteMember(id_User,id_SGroup);
+
+
+        int doc_type = sgroup.getDoc_type();
+        String sgroup_name = "";
+        if(doc_type == 1){
+            sgroup_name = "远景与范围文档小组";
+        }
+        else if(doc_type == 2){
+            sgroup_name = "概要设计文档小组";
+        }
+        else if(doc_type == 3){
+            sgroup_name = "需求文档小组";
+        }
+        else if(doc_type == 4){
+            sgroup_name = "测试计划文档小组";
+        }
+//      发送消息
+        InformationDao informationDao = new InformationDaoImp();
+        String content = "你已被从"+sgroup_name+"中移除";
+        informationDao.toMember(id_Project,id_User,content);
         return SUCCESS;
     }
 

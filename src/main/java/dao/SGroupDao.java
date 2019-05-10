@@ -17,4 +17,8 @@ public interface SGroupDao {
     List<SGroupEntity> getAll(int idProject);
     boolean setVersion(int version,int id);
     boolean alterPM(int idUser,int idSGroup);
+    void setVPM(int idUser,int idSGroup);
+    void dismissVPM(int idUser,int idSGroup);
+    void deleteMember(int idUser,int idSGroup);
+    String findAdminName(int idSGroup);
 }

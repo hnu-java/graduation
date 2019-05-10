@@ -22,6 +22,7 @@ public class InformationEntity {
      */
     private String PRO_NAME;
     private  Integer ID_PROJECT;
+    private  Integer ID_SGROUP;
     //获取机构名
 
 
@@ -97,10 +98,18 @@ public class InformationEntity {
         this.ID_PROJECT = ID_PROJECT;
     }
 
+    public Integer getID_SGROUP() {
+        return ID_SGROUP;
+    }
+
+    public void setID_SGROUP(Integer ID_SGROUP) {
+        this.ID_SGROUP = ID_SGROUP;
+    }
+
     public InformationEntity() {
     }
 
-    public InformationEntity(String ORG_NAME, Integer ID_ORGANIZATION, String NAME, int ID_USER, Timestamp DATE, int STATE, String MESSAGE, String PRO_NAME, Integer ID_PROJECT) {
+    public InformationEntity(String ORG_NAME, Integer ID_ORGANIZATION, String NAME, int ID_USER, Timestamp DATE, int STATE, String MESSAGE, String PRO_NAME, Integer ID_PROJECT, Integer ID_SGROUP) {
         this.ORG_NAME = ORG_NAME;
         this.ID_ORGANIZATION = ID_ORGANIZATION;
         this.NAME = NAME;
@@ -110,5 +119,6 @@ public class InformationEntity {
         this.MESSAGE = MESSAGE;
         this.PRO_NAME = PRO_NAME;
         this.ID_PROJECT = ID_PROJECT;
+        this.ID_SGROUP = ID_SGROUP;
     }
 }

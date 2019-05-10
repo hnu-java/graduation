@@ -16,9 +16,12 @@ public class InformationDaoImp extends DAO<InformationEntity> implements Informa
         List list1 = getForList(sql1,ID);
         String sql2 = "select * from VIEW_PROJECT_APPLY where STATE = 0 and ID_USER = ?";
         List list2 = getForList(sql2,ID);
+        String sql3 = "select * from VIEW_SGROUP_APPLY where STATE = 0 and ID_USER = ?";
+        List list3 = getForList(sql3,ID);
         List list = new ArrayList();
         list.addAll(list1);
         list.addAll(list2);
+        list.addAll(list3);
 //        System.out.println("list1:"+list1.size()+"list2:"+list2.size());
 //        while(list1.size() != 0 || list2.size() != 0){
 //            InformationEntity info1 = (InformationEntity) list1.get(0);
@@ -60,6 +63,12 @@ public class InformationDaoImp extends DAO<InformationEntity> implements Informa
         return true;
     }
     @Override
+    public boolean acceptGro(Integer ID_SGROUP, int ID_USER) {
+        String sql = "update SGROUP_APPLY set STATE=1 where ID_SGROUP=? and ID_USER=?";
+        update(sql,ID_SGROUP,ID_USER);
+        return true;
+    }
+    @Override
     public boolean refuseOrg(Integer ID_ORGANIZATION, int ID_USER) {
         if(ID_ORGANIZATION != null) {
             String sql = "update ORG_USER_APPLY set STATE=-1 where ID_ORGANIZATION=? and ID_USER=?";
@@ -76,6 +85,14 @@ public class InformationDaoImp extends DAO<InformationEntity> implements Informa
     }
 
     @Override
+    public boolean refuseGro(Integer ID_SGROUP, int ID_USER) {
+        System.out.println("hello refusegro");
+        String sql = "update SGROUP_APPLY set STATE=-1 where ID_SGROUP=? and ID_USER=?";
+        update(sql,ID_SGROUP,ID_USER);
+        return true;
+    }
+
+    @Override
     public void joinPro(Integer ID_PROJECT, int ID_USER) {
         String sql = "insert into PROJECT_MEMBER(ID_PROJECT,ID_USER,RANK) values(?,?,?)";
         update(sql,ID_PROJECT,ID_USER,5);
@@ -86,6 +103,13 @@ public class InformationDaoImp extends DAO<InformationEntity> implements Informa
         String sql = "insert into ORG_MEMBER(ID_ORGANIZATION,ID_USER) values(?,?)";
         update(sql,ID_ORGANIZATION,ID_USER);
     }
+
+    @Override
+    public void joinGro(Integer ID_SGROUP, int ID_USER) {
+        String sql = "insert into SGROUP_MEMBER(ID_SGROUP,ID_USER) values(?,?)";
+        update(sql,ID_SGROUP,ID_USER);
+    }
+
     @Override
     public void toMember(int id_project, int id_user,String content) {
         String sql = "insert into MESSAGE(ID_USER,CONTENT,DATE,ID_PRO) VALUES (?,?,?,?)";

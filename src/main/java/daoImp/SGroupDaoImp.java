@@ -109,4 +109,32 @@ public class SGroupDaoImp extends DAO<SGroupEntity> implements SGroupDao {
             }
         }
     }
+
+    @Override
+    public void setVPM(int idUser,int idSGroup) {
+        String sql="update SGROUP_MEMBER set RANK=4 where ID_USER = ? and ID_SGROUP = ?";
+        update(sql,idUser,idSGroup);
+    }
+
+    @Override
+    public void dismissVPM(int idUser,int idSGroup) {
+        String sql="update SGROUP_MEMBER set RANK=5 where ID_USER = ? and ID_SGROUP = ?";
+        update(sql,idUser,idSGroup);
+    }
+
+    @Override
+    public void deleteMember(int idUser,int idSGroup) {
+        String sql="delete from SGROUP_MEMBER where ID_USER = ? and ID_SGROUP = ?";
+        update(sql,idUser,idSGroup);
+    }
+
+    //查询项目组长名
+    @Override
+    public String findAdminName(int idSGroup){
+        String sql = "select ID_USER from SGROUP_MEMBER where ID_SGROUP = ? and RANK = 3";
+        int id_admin = getForValue(sql,idSGroup);
+        String sql0 = "select NAME from USER where ID_USER = ?";
+        String name = getForValue(sql0,id_admin);
+        return name;
+    }
 }

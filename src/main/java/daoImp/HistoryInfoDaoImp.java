@@ -31,6 +31,13 @@ public class HistoryInfoDaoImp extends DAO<HistoryInfoEntity> implements History
     }
 
     @Override
+    public void hasAcceptorRefuseGRO(int ID_USER, String content, Date date, int ID_GRO) {
+        System.out.println("content:"+content+" date:"+date);
+        String sql = "insert into MESSAGE (ID_USER,CONTENT,DATE,ID_GRO) values(?,?,?,?)";
+        update(sql,ID_USER,content,date,ID_GRO);
+    }
+
+    @Override
     public void hasAcceptorGrantORG(int ID_USER, String content, Date date, String ORG_NAME) {
         String sql1 = "select ID_ORGANIZATION from ORGANIZATION where NAME=?";
         int id_org = getForValue(sql1,ORG_NAME);

@@ -208,7 +208,7 @@
             </result>
             <result name="sGroupInformation">/WEB-INF/pages/project_groInformation.jsp</result>
             <interceptor-ref name="myStack"/>
-            <allowed-methods>getSGroupInfo,jmpSGroupInfo,getSGroupMember,inviteMember,getDocument,createDoc,alterPM</allowed-methods>
+            <allowed-methods>getSGroupInfo,jmpSGroupInfo,getSGroupMember,inviteMember,getDocument,createDoc,alterPM,setVPM,dismissVPM,deleteMember</allowed-methods>
         </action>
 
         <action name="librarycollect-*" class="action.LibrarycollectAction" method="{1}">
