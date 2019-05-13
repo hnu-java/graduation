@@ -10,6 +10,7 @@ public interface DocumentDao {
     int create(int id_project, int version, Timestamp timestamp, int id_user);
     void deploy(int Id_Document);
     int getVersion(int id,int type);
+    int getSVersion(int id);
     DocumentEntity getOne(int id);
     List<DocumentEntity> getAll(int id);
     List<DocumentEntity> getAlltype(int id);

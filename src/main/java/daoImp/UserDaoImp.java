@@ -273,7 +273,9 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
         int count1 = Integer.valueOf(getForValue(sql1,id).toString());
         String sql2="select count(*) from VIEW_ORG_USER_APPLY where ID_USER=? and STATE=0";
         int count2 = Integer.valueOf(getForValue(sql2,id).toString());
-        int count=count1+count2;
+        String sql3="select count(*) from VIEW_SGROUP_APPLY where ID_USER=? and STATE=0";
+        int count3 = Integer.valueOf(getForValue(sql3,id).toString());
+        int count=count1+count2+count3;
         return count;
     }
 

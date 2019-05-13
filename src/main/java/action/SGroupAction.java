@@ -41,10 +41,10 @@ public class SGroupAction extends ActionSupport implements RequestAware, Session
         UserEntity user = (UserEntity)ActionContext.getContext().getSession().get("user");
         int rank = sGroupDao.getRank(id_SGroup,user.getId_user());
         DocumentDao documentDao = new DocumentDaoImp();
-        double version = documentDao.getVersion(id_SGroup,DocType);
+        double version = documentDao.getSVersion(id_SGroup);
         session.put("version",String.valueOf(version));
         session.put("rank",rank);
-        session.put("PM",pm);
+        session.put("gPM",pm);
         session.put("sgroup",sgroup);
         session.put("sgroup_date",String.valueOf(sgroup.getDate()));
         return SUCCESS;
@@ -87,9 +87,23 @@ public class SGroupAction extends ActionSupport implements RequestAware, Session
             System.out.println(id_SGroup);
             isIn = projectDao.isIn(user.getId_user(),sgroup.getId_project());
             ProjectEntity projectEntity = projectDao.getOne(sgroup.getId_project());
+            int doc_type = sgroup.getDoc_type();
             if(isIn==true){
                 UserEntity pm = sGroupDao.getPM(sgroup);
-                String content = pm.getName() + "邀请你加入";
+                String sgroup_name = "";
+                if(doc_type == 1){
+                    sgroup_name = "远景与范围文档小组";
+                }
+                else if(doc_type == 2){
+                    sgroup_name = "概要设计文档小组";
+                }
+                else if(doc_type == 3){
+                    sgroup_name = "需求文档小组";
+                }
+                else if(doc_type == 4){
+                    sgroup_name = "测试计划文档小组";
+                }
+                String content = pm.getName() + "邀请你加入"+projectEntity.getName()+"项目"+sgroup_name;
                 boolean res = sGroupDao.inviteMember(user.getId_user(), id_SGroup, content);
                 int One = userDao.JudgmentOne(username);
                 dataMap.put("One",One);

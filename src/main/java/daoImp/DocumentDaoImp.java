@@ -72,6 +72,20 @@ public class DocumentDaoImp extends DAO<DocumentEntity> implements DocumentDao {
     }
 
     @Override
+    public int getSVersion(int id) {
+        try {
+            String sql = "select VERSION from SGROUP where ID_SGROUP = ?";
+            int version = Integer.valueOf(getForValue(sql,id).toString());
+            return version;
+        }
+        catch (Exception e){
+            return 0;
+        }
+
+
+    }
+
+    @Override
     public DocumentEntity getOne(int id) {
         String sql = "select * from DOCUMENT where ID_DOCUMENT = ?";
         DocumentEntity document = get(sql,id);

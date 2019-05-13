@@ -170,7 +170,7 @@
                 <div class="col-sm-5">
                     <dl class="dl-horizontal">
                         <dt><h3>文档组长：</h3></dt>
-                        <dd><h3><s:property value="#session.PM.name"/></h3></dd>
+                        <dd><h3><s:property value="#session.gPM.name"/></h3></dd>
 
                         <dt><h3>创建时间：</h3></dt>
                         <dd><h3><s:property value="#session.sgroup_date"/></h3></dd>
@@ -990,7 +990,7 @@
                 var title = "";
                 for (var i=0;i<result.wrapperList.length;i++){
                     tempDis=result.wrapperList[i].proDiscussEntity;
-                    if (tempDis.name === "<s:property value="#session.PM.name"/>"){
+                    if (tempDis.name === "<s:property value="#session.gPM.name"/>"){
                         title += "<span class=\"label label-danger\">组长</span>&nbsp;";
                     }
                     else if (tempDis.name === "<s:property value="#session.user.name"/>"){

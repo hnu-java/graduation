@@ -683,9 +683,11 @@
                                                                     <option value="13">项目管理约束</option>
                                                                     <option value="14">迭代</option>
                                                                 </s:if>
+                                                                <!--
                                                                 <s:if test="#request.type==2">
                                                                     <option value="15">概要设计</option>
                                                                 </s:if>
+                                                                -->
                                                                 <s:if test="#request.type==3">
                                                                     <option value="2">用户</option>
                                                                     <option value="3">用例</option>
@@ -748,9 +750,11 @@
                                                                     <option value="13">项目管理约束</option>
                                                                     <option value="14">迭代</option>
                                                                 </s:if>
+                                                                <!--
                                                                 <s:if test="#request.type==2">
                                                                     <option value="15">概要设计</option>
                                                                 </s:if>
+                                                                -->
                                                                 <s:if test="#request.type==3">
                                                                     <option value="2">用户</option>
                                                                     <option value="3">用例</option>
